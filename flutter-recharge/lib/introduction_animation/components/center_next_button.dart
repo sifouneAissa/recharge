@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class CenterNextButton extends StatelessWidget {
@@ -134,6 +135,7 @@ class CenterNextButton extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8),
             child: SlideTransition(
               position: _loginTextMoveAnimation,
+
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -145,14 +147,26 @@ class CenterNextButton extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Color(0xff132137),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return LoginScreen();
+                            },
+                          ),
+                        );
+                      },
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Color(0xff132137),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

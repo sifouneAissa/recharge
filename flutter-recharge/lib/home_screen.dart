@@ -1,4 +1,8 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
+import 'package:best_flutter_ui_templates/fitness_app/ui_view/body_measurement.dart';
+import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
+import 'package:best_flutter_ui_templates/home/account_card_view.dart';
 import 'package:flutter/material.dart';
 import 'model/homelist.dart';
 
@@ -11,11 +15,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   List<HomeList> homeList = HomeList.homeList;
+
   AnimationController? animationController;
   bool multiple = true;
 
   @override
   void initState() {
+//    print('home list');
+//    print('home listsfdsdfsd');
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
@@ -69,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               homeList.length,
                               (int index) {
                                 final int count = homeList.length;
+                                print(count);
                                 final Animation<double> animation =
                                     Tween<double>(begin: 0.0, end: 1.0).animate(
                                   CurvedAnimation(
@@ -78,25 +86,44 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   ),
                                 );
                                 animationController?.forward();
-                                return HomeListView(
-                                  animation: animation,
-                                  animationController: animationController,
-                                  listData: homeList[index],
-                                  callBack: () {
-                                    Navigator.push<dynamic>(
-                                      context,
-                                      MaterialPageRoute<dynamic>(
-                                        builder: (BuildContext context) =>
-                                            homeList[index].navigateScreen!,
-                                      ),
-                                    );
-                                  },
-                                );
+                                return homeList[index].cardName != null
+                                    ? HomeListCard(
+                                        animation: animation,
+                                        animationController:
+                                            animationController,
+                                        listData: homeList[index],
+                                        callBack: () {
+                                          Navigator.push<dynamic>(
+                                            context,
+                                            MaterialPageRoute<dynamic>(
+                                              builder: (BuildContext context) =>
+                                                  homeList[index]
+                                                      .navigateScreen!,
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    : HomeListView(
+                                        animation: animation,
+                                        animationController:
+                                            animationController,
+                                        listData: homeList[index],
+                                        callBack: () {
+                                          Navigator.push<dynamic>(
+                                            context,
+                                            MaterialPageRoute<dynamic>(
+                                              builder: (BuildContext context) =>
+                                                  homeList[index]
+                                                      .navigateScreen!,
+                                            ),
+                                          );
+                                        },
+                                      );
                               },
                             ),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: multiple ? 2 : 1,
+                              crossAxisCount: multiple ? 1 : 1,
                               mainAxisSpacing: 12.0,
                               crossAxisSpacing: 12.0,
                               childAspectRatio: 1.5,
@@ -135,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               child: Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Flutter UI',
+                  'Recharge app',
                   style: TextStyle(
                     fontSize: 22,
                     color: isLightMode ? AppTheme.darkText : AppTheme.white,
@@ -175,6 +202,49 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 }
 
+class HomeListCard extends StatelessWidget {
+  const HomeListCard(
+      {Key? key,
+      this.listData,
+      this.callBack,
+      this.animationController,
+      this.animation})
+      : super(key: key);
+
+  final HomeList? listData;
+  final VoidCallback? callBack;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget mchild = AccountCardView(
+        animationController: animationController, animation: animation);
+    // if(listData!.cardName=='profile_data')
+    //   mchild = BodyMeasurementView(animationController: animationController,animation: animation);
+
+    return AnimatedBuilder(
+      animation: animationController!,
+      builder: (BuildContext context, Widget? child) {
+        return FadeTransition(
+          opacity: animation!,
+          child: Transform(
+            transform: Matrix4.translationValues(
+                0.0, 50 * (1.0 - animation!.value), 0.0),
+            child: AspectRatio(
+              aspectRatio: 1.5,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                child: mchild,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class HomeListView extends StatelessWidget {
   const HomeListView(
       {Key? key,
@@ -194,38 +264,45 @@ class HomeListView extends StatelessWidget {
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
-        return FadeTransition(
-          opacity: animation!,
-          child: Transform(
-            transform: Matrix4.translationValues(
-                0.0, 50 * (1.0 - animation!.value), 0.0),
-            child: AspectRatio(
-              aspectRatio: 1.5,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: <Widget>[
-                    Positioned.fill(
-                      child: Image.asset(
-                        listData!.imagePath,
-                        fit: BoxFit.cover,
-                      ),
+        return Stack(
+
+          children: [
+            FadeTransition(
+              opacity: animation!,
+              child: Transform(
+                transform: Matrix4.translationValues(
+                    0.0, 50 * (1.0 - animation!.value), 0.0),
+                child: AspectRatio(
+                  aspectRatio: 1.5,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: <Widget>[
+                        Stack(
+                          children: [
+                            Image.asset(
+                              listData!.imagePath,
+                              fit: BoxFit.cover,
+                            ),
+                          ],
+                        ),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            splashColor: Colors.grey.withOpacity(0.2),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(4.0)),
+                            onTap: callBack,
+                          ),
+                        ),
+                      ],
                     ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Colors.grey.withOpacity(0.2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
-                        onTap: callBack,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            )
+          ],
         );
       },
     );

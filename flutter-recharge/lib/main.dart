@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/introduction_animation/introduction_animation_screen.dart';
+import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
@@ -14,6 +17,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  static const login = false;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -33,7 +37,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: NavigationHomeScreen(),
+      home: IntroductionAnimationScreen(),
     );
   }
 }

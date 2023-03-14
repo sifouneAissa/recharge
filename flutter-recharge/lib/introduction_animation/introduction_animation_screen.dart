@@ -5,6 +5,8 @@ import 'package:best_flutter_ui_templates/introduction_animation/components/rela
 import 'package:best_flutter_ui_templates/introduction_animation/components/splash_view.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/top_back_skip_view.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/welcome_view.dart';
+import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
+import 'package:best_flutter_ui_templates/screens/Signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class IntroductionAnimationScreen extends StatefulWidget {
@@ -112,6 +114,14 @@ class _IntroductionAnimationScreenState
   }
 
   void _signUpClick() {
-    Navigator.pop(context);
+//    Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return SignUpScreen();
+          },
+        ),
+    );
   }
 }
