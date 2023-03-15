@@ -10,6 +10,7 @@ import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class DashScreen extends StatefulWidget {
@@ -67,8 +68,8 @@ class _DashScreenState extends State<DashScreen>
 
     listViews.add(
       TitleView(
-        titleTxt: 'Jawaker Accelerator Shipping',
-        subTxt: 'Shop',
+        titleTxt: S().jawaker_accelerator_shipping,
+        subTxt: S().shop,
         onChangeBody: (){
           widget.onChangeBody('jawaker_acceleration');
         },
@@ -94,8 +95,8 @@ class _DashScreenState extends State<DashScreen>
     
     listViews.add(
       TitleView(
-        titleTxt: 'Jawaker Shipping',
-        subTxt: 'Shop',
+        titleTxt: S().token_shipping,
+        subTxt: S().shop,
         onChangeBody: (){
           widget.onChangeBody('token');
         },
@@ -121,8 +122,8 @@ class _DashScreenState extends State<DashScreen>
 
     listViews.add(
       TitleView(
-        titleTxt: 'Notifications',
-        subTxt: 'details',
+        titleTxt: S().notifications,
+        subTxt: S().details,
         onChangeBody: (){
           widget.onChangeBody('notification');
         },
@@ -148,8 +149,8 @@ class _DashScreenState extends State<DashScreen>
 
     listViews.add(
       TitleView(
-        titleTxt: 'Transactions',
-        subTxt: 'Details',
+        titleTxt: S().transactions,
+        subTxt: S().details,
         onChangeBody: (){
           widget.onChangeBody('transaction');
         },
@@ -174,8 +175,8 @@ class _DashScreenState extends State<DashScreen>
 
     listViews.add(
       TitleView(
-        titleTxt: 'History',
-        subTxt: 'Details',
+        titleTxt: S().history,
+        subTxt: S().details,
         onChangeBody: (){
           widget.onChangeBody('history');
         },
@@ -302,8 +303,8 @@ class _DashScreenState extends State<DashScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'My Dashboard',
-                                  textAlign: TextAlign.left,
+                                  S.of(context).my_dashboard,
+                                  textAlign: TextAlign.right,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
                                     fontWeight: FontWeight.w700,

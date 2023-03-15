@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -104,7 +105,7 @@ class CenterNextButton extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Sign Up',
+                                    S.of(context).sign_up,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -140,7 +141,7 @@ class CenterNextButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Already have an account? ',
+                    S.of(context).have_account,
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -159,7 +160,7 @@ class CenterNextButton extends StatelessWidget {
                         );
                       },
                     child: Text(
-                      'Login',
+                      S.of(context).login,
                       style: TextStyle(
                         color: Color(0xff132137),
                         fontSize: 16,

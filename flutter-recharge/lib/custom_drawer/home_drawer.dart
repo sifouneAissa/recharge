@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatefulWidget {
@@ -29,33 +30,33 @@ class _HomeDrawerState extends State<HomeDrawer> {
     drawerList = <DrawerList>[
       DrawerList(
         index: DrawerIndex.HOME,
-        labelName: 'Home',
+        labelName: S().home,
         icon: Icon(Icons.home),
       ),
       DrawerList(
         index: DrawerIndex.Help,
-        labelName: 'Help',
+        labelName: S().help,
         isAssetsImage: true,
         imageName: 'assets/images/supportIcon.png',
       ),
       DrawerList(
         index: DrawerIndex.FeedBack,
-        labelName: 'FeedBack',
+        labelName: S().feedback,
         icon: Icon(Icons.help),
       ),
       DrawerList(
         index: DrawerIndex.Invite,
-        labelName: 'Invite Friend',
+        labelName: S().invite_friend,
         icon: Icon(Icons.group),
       ),
       DrawerList(
         index: DrawerIndex.Share,
-        labelName: 'Rate the app',
+        labelName: S().rate_the_app,
         icon: Icon(Icons.share),
       ),
       DrawerList(
         index: DrawerIndex.About,
-        labelName: 'About Us',
+        labelName: S().about_us,
         icon: Icon(Icons.info),
       ),
     ];
@@ -153,10 +154,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
             color: AppTheme.grey.withOpacity(0.6),
           ),
           Column(
+            textDirection: TextDirection.rtl,
             children: <Widget>[
               ListTile(
                 title: Text(
-                  'Sign Out',
+                S().sign_out,
                   style: TextStyle(
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w600,

@@ -37,7 +37,7 @@ class TitleView extends StatelessWidget {
                     Expanded(
                       child: Text(
                         titleTxt,
-                        textAlign: TextAlign.left,
+                        // textAlign: TextAlign.right,
                         style: TextStyle(
                           fontFamily: FitnessAppTheme.fontName,
                           fontWeight: FontWeight.w500,

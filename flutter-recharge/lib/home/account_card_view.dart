@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class AccountCardView extends StatelessWidget {
@@ -28,7 +29,7 @@ class AccountCardView extends StatelessWidget {
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
                       bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(68.0)),
+                      topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                         color: FitnessAppTheme.grey.withOpacity(0.2),
@@ -49,7 +50,7 @@ class AccountCardView extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 left: 4, bottom: 8, top: 16),
                             child: Text(
-                              'Balance',
+                              S.of(context).balance,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: FitnessAppTheme.fontName,
@@ -192,7 +193,7 @@ class AccountCardView extends StatelessWidget {
                                       child:  Icon(
                                         Icons.info_rounded,
                                         color: Colors.pink,
-                                        size: 24.0,
+                                        size: 20.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
                                     ),
@@ -225,7 +226,7 @@ class AccountCardView extends StatelessWidget {
                                       child:  Icon(
                                         Icons.notifications_active,
                                         color: Colors.pink,
-                                        size: 24.0,
+                                        size: 20.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
                                     ),
@@ -258,7 +259,7 @@ class AccountCardView extends StatelessWidget {
                                       child:  Icon(
                                           Icons.money_sharp,
                                           color: Colors.pink,
-                                          size: 24.0,
+                                          size: 20.0,
                                           semanticLabel: 'Text to announce in accessibility modes',
                                         ),
                                     ),

@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class SignUpForm extends StatelessWidget {
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
             decoration: InputDecoration(
-              hintText: "Your Name",
+              hintText: S.of(context).your_name,
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
@@ -36,7 +37,7 @@ class SignUpForm extends StatelessWidget {
               cursorColor: kPrimaryColor,
               onSaved: (email) {},
               decoration: InputDecoration(
-                hintText: "Your Phone",
+                hintText: S.of(context).your_phone,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.phone),
@@ -52,7 +53,7 @@ class SignUpForm extends StatelessWidget {
               cursorColor: kPrimaryColor,
               onSaved: (email) {},
               decoration: InputDecoration(
-                hintText: "Your email",
+                hintText: S.of(context).your_email,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.email),
@@ -67,7 +68,7 @@ class SignUpForm extends StatelessWidget {
               obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
-                hintText: "Your password",
+                hintText: S.of(context).your_password,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
@@ -90,7 +91,7 @@ class SignUpForm extends StatelessWidget {
                 ),
               );
             },
-            child: Text("Sign Up".toUpperCase()),
+            child: Text(S.of(context).sign_up.toUpperCase()),
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(

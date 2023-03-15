@@ -1,3 +1,5 @@
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
+
 class JawakerListData {
   JawakerListData({
     this.imagePath = '',
@@ -18,7 +20,7 @@ class JawakerListData {
   static List<JawakerListData> tabIconsList = <JawakerListData>[
     JawakerListData(
       imagePath: 'assets/fitness_app/jawaker100.png',
-      titleTxt: 'Point accelerators',
+      titleTxt: S().point_accelerator,
       kacl: 100,
       meals: <String>['100 %'],
       startColor: '#FA7D82',
@@ -26,15 +28,15 @@ class JawakerListData {
     ),
     JawakerListData(
       imagePath: 'assets/fitness_app/jawaker150.png',
-      titleTxt: 'Point accelerators',
+      titleTxt: S().point_accelerator,
       kacl: 150,
-      meals: <String>['Recommend','150 %'],
+      meals: <String>[S().recommended,'150 %'],
       startColor: '#738AE6',
       endColor: '#5C5EDD',
     ),
     JawakerListData(
       imagePath: 'assets/fitness_app/jawaker300.png',
-      titleTxt: 'Point accelerators',
+      titleTxt: S().point_accelerator,
       kacl: 300,
       meals: <String>['300 %'],
       startColor: '#FE95B6',

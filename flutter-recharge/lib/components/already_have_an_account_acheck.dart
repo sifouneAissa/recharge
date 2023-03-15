@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:best_flutter_ui_templates/constants.dart';
 
@@ -16,13 +17,13 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          login ? "Don’t have an Account ? " : "Already have an Account ? ",
+          login ? S.of(context).dont_have_account : S.of(context).have_account,
           style: const TextStyle(color: kPrimaryColor),
         ),
         GestureDetector(
           onTap: press as void Function()?,
           child: Text(
-            login ? "Sign Up" : "Sign In",
+            login ? S.of(context).sign_up : S.of(context).login,
             style: const TextStyle(
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,

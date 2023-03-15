@@ -12,6 +12,7 @@ import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/screens/Login/components/login_form.dart';
 import 'package:flutter/material.dart';
 
@@ -69,7 +70,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
 
     listViews.add(
       TitleView(
-        titleTxt: 'Jawaker Accelerator Shipping',
+        titleTxt: S().jawaker_accelerator_shipping,
         // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
@@ -93,7 +94,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
     
     listViews.add(
       TitleView(
-        titleTxt: 'add Jawaker accelaration',
+        titleTxt: S().add_jawaker_accelaration,
         // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
@@ -290,8 +291,8 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Jawaker Acceleration',
-                                  textAlign: TextAlign.left,
+                                  S().jawaker_accelerator_shipping,
+                                  textAlign: TextAlign.right,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
                                     fontWeight: FontWeight.w700,

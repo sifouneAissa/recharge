@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class AddJawakerAcceleratorForm extends StatelessWidget {
             cursorColor: kPrimaryColor,
             onSaved: (quantity) {},
             decoration: InputDecoration(
-              hintText: "Your quantity",
+              hintText: S.of(context).your_quantity,
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.numbers),
@@ -58,7 +59,7 @@ class AddJawakerAcceleratorForm extends StatelessWidget {
                 // );
               },
               child: Text(
-                "Confirm".toUpperCase(),
+                S().confirm.toUpperCase(),
               ),
             ),
           ),
@@ -67,7 +68,7 @@ class AddJawakerAcceleratorForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          "Cost : ",
+          S().cost,
           style: const TextStyle(color: kPrimaryColor),
         ),
         // GestureDetector(

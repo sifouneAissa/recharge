@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class AddTokenForm extends StatelessWidget {
             cursorColor: kPrimaryColor,
             onSaved: (quantity) {},
             decoration: InputDecoration(
-              hintText: "Your quantity",
+              hintText: S.of(context).your_quantity,
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.numbers),
@@ -34,7 +35,7 @@ class AddTokenForm extends StatelessWidget {
               obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
-                hintText: "Your Id",
+                hintText: S.of(context).your_id,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.person_2),
@@ -58,7 +59,7 @@ class AddTokenForm extends StatelessWidget {
                 // );
               },
               child: Text(
-                "Confirm".toUpperCase(),
+                S.of(context).confirm.toUpperCase(),
               ),
             ),
           ),
@@ -67,7 +68,7 @@ class AddTokenForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          "Cost : ",
+          S.of(context).cost,
           style: const TextStyle(color: kPrimaryColor),
         ),
         // GestureDetector(
