@@ -5,11 +5,10 @@ import 'package:best_flutter_ui_templates/fitness_app/screens/jawaker_accelerati
 import 'package:best_flutter_ui_templates/fitness_app/screens/notification_screen.dart';
 import 'package:best_flutter_ui_templates/fitness_app/screens/token_screen.dart';
 import 'package:best_flutter_ui_templates/fitness_app/screens/transaction_screen.dart';
-import 'package:best_flutter_ui_templates/fitness_app/training/training_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'fitness_app_theme.dart';
-import 'my_diary/my_diary_screen.dart';
 
 class FitnessAppHomeScreen extends StatefulWidget {
   @override
@@ -21,7 +20,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   AnimationController? animationController;
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
-  
+
   Widget tabBody = Container(
     color: FitnessAppTheme.background,
   );
@@ -35,7 +34,11 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
-    tabBody = MyDiaryScreen(animationController: animationController);
+    tabBody = DashScreen(animationController: animationController,onChangeBody: (param) {
+                      setState(() {
+                        setBody(param);
+                      });
+                    });
     super.initState();
   }
 
@@ -47,7 +50,6 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(tabIconsList.length);
     return Container(
       color: FitnessAppTheme.background,
       child: Scaffold(
@@ -69,6 +71,34 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
         ),
       ),
     );
+  }
+
+  void setBody(name) {
+    print('name');
+    print(name);
+    if (name == 'dash')
+      tabBody = DashScreen(
+          animationController: animationController,
+          onChangeBody: (param) {
+            setState(() {
+              setBody(param);
+            });
+          });
+    else if (name == 'jawaker_acceleration')
+      tabBody = JawakerAccelerationScreen(animationController: animationController);
+    else if (name == 'token')
+      tabBody = TokenScreen(animationController: animationController);
+    else if (name == 'notification')
+      tabBody = NotificationScreen(animationController: animationController);
+    else if (name == 'transaction')
+      tabBody = TransactionScreen(animationController: animationController);
+    else if (name == 'history')
+      tabBody = HistoryScreen(animationController: animationController);
+
+    tabIconsList.forEach((element) {
+      element.isSelected = false;
+      if (element.name == name) element.isSelected = true;
+    });
   }
 
   Future<bool> getData() async {
@@ -93,8 +123,14 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      DashScreen(animationController: animationController);
+                  tabBody = DashScreen(
+                    animationController: animationController,
+                    onChangeBody: (param) {
+                      setState(() {
+                        setBody(param);
+                      });
+                    },
+                  );
                 });
               });
             } else if (name == 'jawaker_acceleration') {
@@ -103,11 +139,11 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      JawakerAccelerationScreen(animationController: animationController);
+                  tabBody = JawakerAccelerationScreen(
+                      animationController: animationController);
                 });
               });
-            }else if (name == 'token') {
+            } else if (name == 'token') {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -117,27 +153,27 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                       TokenScreen(animationController: animationController);
                 });
               });
-            }else if (name == 'notification') {
+            } else if (name == 'notification') {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      NotificationScreen(animationController: animationController);
+                  tabBody = NotificationScreen(
+                      animationController: animationController);
                 });
               });
-            }else if (name == 'transaction') {
+            } else if (name == 'transaction') {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      TransactionScreen(animationController: animationController);
+                  tabBody = TransactionScreen(
+                      animationController: animationController);
                 });
               });
-            }else if (name == 'history') {
+            } else if (name == 'history') {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;

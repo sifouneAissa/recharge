@@ -13,7 +13,8 @@ import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:flutter/material.dart';
 
 class DashScreen extends StatefulWidget {
-  const DashScreen({Key? key, this.animationController}) : super(key: key);
+  const DashScreen({Key? key, this.animationController,this.onChangeBody}) : super(key: key);
+  final onChangeBody;
 
   final AnimationController? animationController;
   @override
@@ -68,6 +69,9 @@ class _DashScreenState extends State<DashScreen>
       TitleView(
         titleTxt: 'Jawaker Accelerator Shipping',
         subTxt: 'Shop',
+        onChangeBody: (){
+          widget.onChangeBody('jawaker_acceleration');
+        },
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
@@ -92,6 +96,9 @@ class _DashScreenState extends State<DashScreen>
       TitleView(
         titleTxt: 'Jawaker Shipping',
         subTxt: 'Shop',
+        onChangeBody: (){
+          widget.onChangeBody('token');
+        },
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
@@ -116,6 +123,9 @@ class _DashScreenState extends State<DashScreen>
       TitleView(
         titleTxt: 'Notifications',
         subTxt: 'details',
+        onChangeBody: (){
+          widget.onChangeBody('notification');
+        },
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
@@ -140,6 +150,9 @@ class _DashScreenState extends State<DashScreen>
       TitleView(
         titleTxt: 'Transactions',
         subTxt: 'Details',
+        onChangeBody: (){
+          widget.onChangeBody('transaction');
+        },
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
@@ -163,6 +176,9 @@ class _DashScreenState extends State<DashScreen>
       TitleView(
         titleTxt: 'History',
         subTxt: 'Details',
+        onChangeBody: (){
+          widget.onChangeBody('history');
+        },
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
