@@ -10,7 +10,7 @@ class TitleView extends StatelessWidget {
   const TitleView(
       {Key? key,
       this.titleTxt: "",
-      this.subTxt: "",
+      this.subTxt : "",
       this.animationController,
       this.animation})
       : super(key: key);
@@ -66,7 +66,7 @@ class TitleView extends StatelessWidget {
                               height: 38,
                               width: 26,
                               child: Icon(
-                                Icons.arrow_forward,
+                                subTxt!=""   ? Icons.arrow_forward : Icons.info,
                                 color: FitnessAppTheme.darkText,
                                 size: 18,
                               ),

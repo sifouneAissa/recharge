@@ -1,6 +1,8 @@
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator/add_jawaker_accelerator_form.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/list_view/accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/notification_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/transaction_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/body_measurement.dart';
@@ -10,6 +12,7 @@ import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
+import 'package:best_flutter_ui_templates/screens/Login/components/login_form.dart';
 import 'package:flutter/material.dart';
 
 class JawakerAccelerationScreen extends StatefulWidget {
@@ -67,7 +70,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
     listViews.add(
       TitleView(
         titleTxt: 'Jawaker Accelerator Shipping',
-        subTxt: 'Shop',
+        // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
@@ -88,28 +91,29 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
     );
 
     
-    // listViews.add(
-    //   TitleView(
-    //     titleTxt: 'Jawaker Shipping',
-    //     subTxt: 'Shop',
-    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-    //         parent: widget.animationController!,
-    //         curve:
-    //             Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
-    //     animationController: widget.animationController!,
-    //   ),
-    // );
+    listViews.add(
+      TitleView(
+        titleTxt: 'add Jawaker accelaration',
+        // subTxt: 'Shop',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve:
+                Interval(0.7, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+      ),
+    );
 
-    // listViews.add(
-    //   JawakerListView(
-    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-    //         CurvedAnimation(
-    //             parent: widget.animationController!,
-    //             curve: Interval((1 / count) * 7, 1.0,
-    //                 curve: Curves.fastOutSlowIn))),
-    //     mainScreenAnimationController: widget.animationController!,
-    //   ),
-    // );
+
+    listViews.add(
+      AcceleratorListView(
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.animationController!,
+                curve: Interval(0.8, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.animationController!,
+      ),
+    );
     
 
     // listViews.add(

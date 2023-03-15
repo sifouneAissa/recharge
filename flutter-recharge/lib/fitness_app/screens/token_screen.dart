@@ -1,6 +1,7 @@
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/list_view/token_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/notification_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/transaction_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/body_measurement.dart';
@@ -10,6 +11,7 @@ import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
+import 'package:best_flutter_ui_templates/home/account_card_view.dart';
 import 'package:flutter/material.dart';
 
 class TokenScreen extends StatefulWidget {
@@ -64,28 +66,52 @@ class _TokenScreenState extends State<TokenScreen>
   void addAllListData() {
     // const int count = 1;
 
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'Jawaker Accelerator Shipping',
+    //     subTxt: 'Shop',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
     listViews.add(
+      AccountCardView(
+         animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.animationController!,
+                curve: Interval(0.6, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController,
+    )
+  );
+
+listViews.add(
       TitleView(
-        titleTxt: 'Jawaker Accelerator Shipping',
-        subTxt: 'Shop',
+        titleTxt: 'Token Shipping',
+        // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
+                Interval(0.7, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
 
-    // listViews.add(
-    //   JawakerAcceleratorListView(
-    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-    //         CurvedAnimation(
-    //             parent: widget.animationController!,
-    //             curve: Interval((1 / count) * 3, 1.0,
-    //                 curve: Curves.fastOutSlowIn))),
-    //     mainScreenAnimationController: widget.animationController,
-    //   ),
-    // );
+    listViews.add(
+      TokenListView(
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.animationController!,
+                curve: Interval(0.8, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.animationController,
+      ),
+    );
+    
 
     
     // listViews.add(
