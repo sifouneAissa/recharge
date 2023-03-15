@@ -489,6 +489,36 @@ class S {
       args: [],
     );
   }
+
+  /// `تحميل صورة عن طريق`
+  String get choose_image {
+    return Intl.message(
+      'تحميل صورة عن طريق',
+      name: 'choose_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `معرض الصور`
+  String get gallery {
+    return Intl.message(
+      'معرض الصور',
+      name: 'gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `كاميرا`
+  String get camera {
+    return Intl.message(
+      'كاميرا',
+      name: 'camera',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

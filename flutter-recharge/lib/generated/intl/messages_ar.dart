@@ -27,13 +27,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),
         "app_name": MessageLookupByLibrary.simpleMessage("Recharge App"),
         "balance": MessageLookupByLibrary.simpleMessage("الرصيد"),
+        "camera": MessageLookupByLibrary.simpleMessage("كاميرا"),
         "care": MessageLookupByLibrary.simpleMessage("اهتم"),
+        "choose_image":
+            MessageLookupByLibrary.simpleMessage("تحميل صورة عن طريق"),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
         "cost": MessageLookupByLibrary.simpleMessage("الكلفة : "),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "dont_have_account":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب !"),
         "feedback": MessageLookupByLibrary.simpleMessage("تعليق"),
+        "gallery": MessageLookupByLibrary.simpleMessage("معرض الصور"),
         "have_account": MessageLookupByLibrary.simpleMessage("هل لديك حساب؟"),
         "help": MessageLookupByLibrary.simpleMessage("مساعدة"),
         "history": MessageLookupByLibrary.simpleMessage("معاملات سابقة"),

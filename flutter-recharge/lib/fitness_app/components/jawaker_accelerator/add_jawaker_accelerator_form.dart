@@ -1,15 +1,101 @@
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
-import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
-class AddJawakerAcceleratorForm extends StatelessWidget {
-  const AddJawakerAcceleratorForm({
-    Key? key,
-  }) : super(key: key);
+class AddJawakerAcceleratorForm extends StatefulWidget {
+  const AddJawakerAcceleratorForm({Key? key}) : super(key: key);
 
+  @override
+  _AddJawakerAcceleratorForm createState() => _AddJawakerAcceleratorForm();
+}
+
+
+class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
+  
+  final ImagePicker _picker = ImagePicker();
+
+  PickedFile? _imageFile;
+
+ Widget imageProfile() {
+    return Center(
+      child: Stack(children: <Widget>[
+        AspectRatio(
+           aspectRatio: 1.5, 
+          child: Image(image: _imageFile ==null ? 
+              AssetImage("assets/fitness_app/account_id.png")
+              : FileImage(File(_imageFile!.path)) as ImageProvider,fit: BoxFit.cover),
+        ),
+        Positioned(
+          bottom: 20.0,
+          right: 20.0,
+          child: InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: ((builder) => bottomSheet()),
+              );
+            },
+            child: Icon(
+              Icons.camera_alt,
+              color: Colors.teal,
+              size: 28.0,
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100.0,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
+            S.of(context).choose_image,
+            style: TextStyle(
+              fontSize: 15.0,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            TextButton.icon(
+              icon: Icon(Icons.camera),
+              onPressed: () {
+                takePhoto(ImageSource.camera);
+              },
+              label: Text(S.of(context).camera),
+            ),
+            TextButton.icon(
+              icon: Icon(Icons.image),
+              onPressed: () {
+                takePhoto(ImageSource.gallery);
+              },
+              label: Text(S.of(context).gallery),
+            ),
+          ])
+        ],
+      ),
+    );
+  }
+
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await _picker.getImage(
+      source: source,
+    );
+    setState(() {
+      _imageFile = pickedFile;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -30,18 +116,7 @@ class AddJawakerAcceleratorForm extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              textInputAction: TextInputAction.done,
-              obscureText: true,
-              cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
-                hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
-                ),
-              ),
-            ),
+            child: imageProfile(),
           ),
           const SizedBox(height: defaultPadding),
           Hero(
