@@ -1,6 +1,9 @@
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -20,10 +23,22 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList>? drawerList;
+  var user;
+
   @override
   void initState() {
     setDrawerListArray();
+    _getUser();
     super.initState();
+  }
+
+  _getUser() async {
+      var auth = await GetData().getAuth();
+      print('auth');
+      print(auth);
+      setState(() {
+        user = auth;
+      });
   }
 
   void setDrawerListArray() {
@@ -120,7 +135,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      'USER NAME',
+                      user != null ? user['name'] : '',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: isLightMode ? AppTheme.grey : AppTheme.white,
@@ -185,8 +200,17 @@ class _HomeDrawerState extends State<HomeDrawer> {
     );
   }
 
-  void onTapped() {
+  void onTapped()  async {
     print('Doing Something...'); // Print to console.
+    await GetData().logout();
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return LoginScreen();
+                  },
+                ),
+              );
   }
 
   Widget inkwell(DrawerList listData) {

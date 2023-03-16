@@ -36,12 +36,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "dont_have_account":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب !"),
+        "email_taken":
+            MessageLookupByLibrary.simpleMessage("البريد الالكتروني مأخود"),
         "feedback": MessageLookupByLibrary.simpleMessage("تعليق"),
         "gallery": MessageLookupByLibrary.simpleMessage("معرض الصور"),
         "have_account": MessageLookupByLibrary.simpleMessage("هل لديك حساب؟"),
         "help": MessageLookupByLibrary.simpleMessage("مساعدة"),
         "history": MessageLookupByLibrary.simpleMessage("معاملات سابقة"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+        "invalid_email":
+            MessageLookupByLibrary.simpleMessage("بريد الكتروني خاطئ"),
+        "invalid_email_password": MessageLookupByLibrary.simpleMessage(
+            "البريد الالكتروني او كلمة السر خاطئة"),
+        "invalid_name": MessageLookupByLibrary.simpleMessage("الاسم خاطىء"),
+        "invalid_password":
+            MessageLookupByLibrary.simpleMessage("كلمة السر خاطئة"),
+        "invalid_phone":
+            MessageLookupByLibrary.simpleMessage("رقم الهاتف خاطىء"),
         "invite_friend": MessageLookupByLibrary.simpleMessage("دعوة صديق"),
         "jawaker_accelerator_shipping":
             MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),

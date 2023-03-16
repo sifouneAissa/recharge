@@ -41,6 +41,10 @@ class AddTokenForm extends StatelessWidget {
                   child: Icon(Icons.person_2),
                 ),
               ),
+              validator: (value) {
+                  if(value == null || value.isEmpty)
+                  return 'Please enter valid id';
+              },
             ),
           ),
           const SizedBox(height: defaultPadding),

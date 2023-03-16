@@ -45,5 +45,11 @@
     "cost" : "الكلفة : ",
     "choose_image" : "تحميل صورة عن طريق",
     "gallery" : "معرض الصور",
-    "camera" : "كاميرا"
+    "camera" : "كاميرا",
+    "invalid_email_password" : "البريد الالكتروني او كلمة السر خاطئة",
+    "invalid_password" : "كلمة السر خاطئة",
+    "invalid_email" : "بريد الكتروني خاطئ",
+    "invalid_phone" : "رقم الهاتف خاطىء",
+    "email_taken" : "البريد الالكتروني مأخود",
+    "invalid_name" : "الاسم خاطىء"
 }

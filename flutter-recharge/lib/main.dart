@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/introduction_animation_screen.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
@@ -14,14 +15,22 @@ import 'generated/l10n.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+  var token = await GetData().getToken();
+
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then((_) => runApp(MyApp(hasToken: token !=null,)));
 }
 
 class MyApp extends StatelessWidget {
-  static const login = false;
+
+  const MyApp({
+    this.hasToken = false
+  });
+
+  final bool hasToken;
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -33,6 +42,8 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
+
+
     return MaterialApp(
       title: "Recharge App",
       localizationsDelegates: [
@@ -50,7 +61,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: IntroductionAnimationScreen(),
+      home: hasToken ? NavigationHomeScreen() : IntroductionAnimationScreen(),
     );
   }
 }

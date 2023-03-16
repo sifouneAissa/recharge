@@ -519,6 +519,66 @@ class S {
       args: [],
     );
   }
+
+  /// `البريد الالكتروني او كلمة السر خاطئة`
+  String get invalid_email_password {
+    return Intl.message(
+      'البريد الالكتروني او كلمة السر خاطئة',
+      name: 'invalid_email_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `كلمة السر خاطئة`
+  String get invalid_password {
+    return Intl.message(
+      'كلمة السر خاطئة',
+      name: 'invalid_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `بريد الكتروني خاطئ`
+  String get invalid_email {
+    return Intl.message(
+      'بريد الكتروني خاطئ',
+      name: 'invalid_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `رقم الهاتف خاطىء`
+  String get invalid_phone {
+    return Intl.message(
+      'رقم الهاتف خاطىء',
+      name: 'invalid_phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `البريد الالكتروني مأخود`
+  String get email_taken {
+    return Intl.message(
+      'البريد الالكتروني مأخود',
+      name: 'email_taken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `الاسم خاطىء`
+  String get invalid_name {
+    return Intl.message(
+      'الاسم خاطىء',
+      name: 'invalid_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
