@@ -1,24 +1,47 @@
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
-class AccountCardView extends StatelessWidget {
+class AccountCardView extends StatefulWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
 
   const AccountCardView({Key? key, this.animationController, this.animation})
       : super(key: key);
 
+
+  @override
+  _AccountCardView createState() => _AccountCardView();
+
+  }
+
+class _AccountCardView extends State<AccountCardView> {
+  var user;
+
+   @override
+  void initState() {
+    _getUser();
+    super.initState();
+  }
+
+  _getUser() async {
+      var auth = await GetData().getAuth();
+      setState(() {
+        user = auth;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController!,
+      animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
-          opacity: animation!,
+          opacity: widget.animation!,
           child: new Transform(
             transform: new Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation!.value), 0.0),
+                0.0, 30 * (1.0 - widget.animation!.value), 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 24, right: 24, top: 16, bottom: 18),
@@ -72,13 +95,13 @@ class AccountCardView extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         left: 4, bottom: 3),
                                     child: Text(
-                                      '206.8',
+                                      user!=null ? user['cash'].toString() : '0',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 32,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: Color.fromARGB(255, 4, 4, 5),
                                       ),
                                     ),
                                   ),
@@ -135,7 +158,7 @@ class AccountCardView extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         top: 4, bottom: 14),
                                     child: Text(
-                                      'USER NAME',
+                                      user != null ? user['name'] : '',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
@@ -175,7 +198,7 @@ class AccountCardView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  '0',
+                                  user!=null ? user['tcount'].toString() : '0',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -211,7 +234,7 @@ class AccountCardView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      '0',
+                                      user!=null ? user['ncount'].toString() : '0',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
