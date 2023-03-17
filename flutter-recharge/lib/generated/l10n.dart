@@ -579,6 +579,36 @@ class S {
       args: [],
     );
   }
+
+  /// `الرصيد غير كافي`
+  String get invalid_cash {
+    return Intl.message(
+      'الرصيد غير كافي',
+      name: 'invalid_cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `الكمية خاطئة`
+  String get invalid_quantity {
+    return Intl.message(
+      'الكمية خاطئة',
+      name: 'invalid_quantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `المعرف خاطئ`
+  String get invalid_id {
+    return Intl.message(
+      'المعرف خاطئ',
+      name: 'invalid_id',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

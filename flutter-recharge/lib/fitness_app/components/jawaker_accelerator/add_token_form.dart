@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,34 @@ class _AddTokenForm extends State<AddTokenForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _hasError = false;
+  double _cost = 0;
+  bool _hasCash = true;
+
+  @override
+void initState() {
+  super.initState();
+  quantity.addListener(() {
+    final isV = quantity.value.text.isEmpty;
+    if(!isV) {
+      setState(() {
+        _cost = double.parse(quantity.value.text);
+        // validate the cash of the user 
+        _checkCash();
+      });
+    }
+    else 
+      setState(() {
+        _cost = 0;
+      });
+  });
+}
+
+void _checkCash() async {
+        var user = await GetData().getAuth();
+        setState(() {
+          _hasCash = user['cash'] + .0 >= _cost;
+        });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +64,16 @@ class _AddTokenForm extends State<AddTokenForm> {
         children: [
           Padding(
               padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-              child: _hasError
+              child: _hasError || !_hasCash
                   ? Text(
-                      S.of(context).invalid_email_password,
+                      S.of(context).invalid_cash,
                       style: TextStyle(color: Colors.red),
                     )
                   : null),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => value!.isEmpty
-                ? S.of(context).invalid_email
+            validator: (value) => value!.isEmpty || (value.isNotEmpty && int.parse(value)==0)
+                ? S.of(context).invalid_quantity
                 : null,
             keyboardType: TextInputType.number,
             controller: quantity,
@@ -63,9 +92,10 @@ class _AddTokenForm extends State<AddTokenForm> {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               controller: id,
+              keyboardType: TextInputType.number,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) =>
-                  value!.isEmpty ? S.of(context).invalid_password : null,
+                  value!.isEmpty ? S.of(context).invalid_id : null,
               textInputAction: TextInputAction.done,
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
@@ -81,7 +111,7 @@ class _AddTokenForm extends State<AddTokenForm> {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              onPressed: _isLoading ? null : handleAddToken,
+              onPressed: !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
                 S.of(context).confirm.toUpperCase(),
               ),
@@ -92,8 +122,8 @@ class _AddTokenForm extends State<AddTokenForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          S.of(context).cost,
-          style: const TextStyle(color: kPrimaryColor),
+          S.of(context).cost + _cost.toString(),
+          style: const TextStyle(color: Colors.pink),
         ),
         // GestureDetector(
         //   onTap: () => {
@@ -113,16 +143,19 @@ class _AddTokenForm extends State<AddTokenForm> {
       ),
     );
   }
-
    handleAddToken() async {
+    if(!_hasCash){
+      
     if (_formKey.currentState!.validate()) {
       print('Form is valid');
+
+      // here test the cost if is it bigger then the cash of the user
 
       setState(() {
         _isLoading = true;
       });
 
-      var data = {'account_id': id.text, 'count': quantity.text , 'cost' : 0};
+      var data = {'account_id': id.text, 'count': quantity.text , 'cost' : _cost};
 
       var res = await AuthApi().addToken(data);
 
@@ -134,7 +167,6 @@ class _AddTokenForm extends State<AddTokenForm> {
         await AuthApi().updateUser(data);
 
       } else {
-        print(body);
         setState(() {
           _hasError = true;
         });
@@ -149,6 +181,7 @@ class _AddTokenForm extends State<AddTokenForm> {
       setState(() {
         _hasError = true;
       });
+    }
     }
   }
 

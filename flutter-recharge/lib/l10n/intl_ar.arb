@@ -51,5 +51,9 @@
     "invalid_email" : "بريد الكتروني خاطئ",
     "invalid_phone" : "رقم الهاتف خاطىء",
     "email_taken" : "البريد الالكتروني مأخود",
-    "invalid_name" : "الاسم خاطىء"
+    "invalid_name" : "الاسم خاطىء",
+    "invalid_cash" : "الرصيد غير كافي",
+    "invalid_quantity" : "الكمية خاطئة",
+    "invalid_id" : "المعرف خاطئ"
+
 }

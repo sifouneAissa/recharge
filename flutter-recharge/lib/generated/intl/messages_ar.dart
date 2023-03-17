@@ -44,15 +44,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "help": MessageLookupByLibrary.simpleMessage("مساعدة"),
         "history": MessageLookupByLibrary.simpleMessage("معاملات سابقة"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+        "invalid_cash": MessageLookupByLibrary.simpleMessage("الرصيد غير كافي"),
         "invalid_email":
             MessageLookupByLibrary.simpleMessage("بريد الكتروني خاطئ"),
         "invalid_email_password": MessageLookupByLibrary.simpleMessage(
             "البريد الالكتروني او كلمة السر خاطئة"),
+        "invalid_id": MessageLookupByLibrary.simpleMessage("المعرف خاطئ"),
         "invalid_name": MessageLookupByLibrary.simpleMessage("الاسم خاطىء"),
         "invalid_password":
             MessageLookupByLibrary.simpleMessage("كلمة السر خاطئة"),
         "invalid_phone":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف خاطىء"),
+        "invalid_quantity":
+            MessageLookupByLibrary.simpleMessage("الكمية خاطئة"),
         "invite_friend": MessageLookupByLibrary.simpleMessage("دعوة صديق"),
         "jawaker_accelerator_shipping":
             MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),
