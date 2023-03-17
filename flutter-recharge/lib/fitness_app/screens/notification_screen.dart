@@ -1,3 +1,6 @@
+import 'package:best_flutter_ui_templates/components/datatables/notification_datatable.dart';
+import 'package:best_flutter_ui_templates/components/sortable_page.dart';
+import 'package:best_flutter_ui_templates/components/table.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
@@ -61,7 +64,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     });
     super.initState();
   }
-
+  
   void addAllListData() {
     // const int count = 1;
 
@@ -76,6 +79,8 @@ class _NotificationScreenState extends State<NotificationScreen>
         animationController: widget.animationController!,
       ),
     );
+
+    listViews.add(NotificationDatatable());
 
     // listViews.add(
     //   JawakerAcceleratorListView(

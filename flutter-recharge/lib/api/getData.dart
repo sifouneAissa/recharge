@@ -6,13 +6,27 @@ class GetData {
     
     getAuth() async {
         var storage = await getInstance();
-        print(storage.getString('user'));
         return jsonDecode(storage.getString('user'));
     }
 
   getToken() async {
         var storage = await getInstance();
         return storage.getString('token');
+    }
+
+  getTransaction() async {
+        var storage = await getInstance();
+        return storage.getString('transactions');
+    }
+
+  getNotification() async {
+        var storage = await getInstance();
+        return storage.getString('notifications');
+    }
+
+  getOTransaction() async {
+        var storage = await getInstance();
+        return storage.getString('transactions');
     }
 
   getInstance() async{

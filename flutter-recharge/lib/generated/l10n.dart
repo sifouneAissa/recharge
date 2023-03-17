@@ -609,6 +609,76 @@ class S {
       args: [],
     );
   }
+
+  /// `الكمية`
+  String get count {
+    return Intl.message(
+      'الكمية',
+      name: 'count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `الكلفة`
+  String get cost_d {
+    return Intl.message(
+      'الكلفة',
+      name: 'cost_d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `التاريخ`
+  String get date {
+    return Intl.message(
+      'التاريخ',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `معاملاتك الجديدة`
+  String get new_transactions {
+    return Intl.message(
+      'معاملاتك الجديدة',
+      name: 'new_transactions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `معاملاتك القدية`
+  String get old_transactions {
+    return Intl.message(
+      'معاملاتك القدية',
+      name: 'old_transactions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تاوكنز`
+  String get token {
+    return Intl.message(
+      'تاوكنز',
+      name: 'token',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نقاط تسريع`
+  String get point {
+    return Intl.message(
+      'نقاط تسريع',
+      name: 'point',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

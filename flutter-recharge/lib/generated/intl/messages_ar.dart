@@ -33,6 +33,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تحميل صورة عن طريق"),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
         "cost": MessageLookupByLibrary.simpleMessage("الكلفة : "),
+        "cost_d": MessageLookupByLibrary.simpleMessage("الكلفة"),
+        "count": MessageLookupByLibrary.simpleMessage("الكمية"),
+        "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "dont_have_account":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب !"),
@@ -67,7 +70,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "my_history": MessageLookupByLibrary.simpleMessage("تاريخ معاملاتي"),
         "my_notifications": MessageLookupByLibrary.simpleMessage("اشعاراتي"),
         "my_transactions": MessageLookupByLibrary.simpleMessage("معاملاتي"),
+        "new_transactions":
+            MessageLookupByLibrary.simpleMessage("معاملاتك الجديدة"),
         "notifications": MessageLookupByLibrary.simpleMessage("اشعارات"),
+        "old_transactions":
+            MessageLookupByLibrary.simpleMessage("معاملاتك القدية"),
+        "point": MessageLookupByLibrary.simpleMessage("نقاط تسريع"),
         "point_accelerator":
             MessageLookupByLibrary.simpleMessage("مسرع النقاط"),
         "rate_the_app": MessageLookupByLibrary.simpleMessage("قيم التطبيق"),
@@ -79,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sign_up": MessageLookupByLibrary.simpleMessage("تسجيل"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطى"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم 8:26"),
+        "token": MessageLookupByLibrary.simpleMessage("تاوكنز"),
         "token_shipping":
             MessageLookupByLibrary.simpleMessage("شحن توكنز جواكر"),
         "transactions": MessageLookupByLibrary.simpleMessage("معاملات"),

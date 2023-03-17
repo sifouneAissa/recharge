@@ -54,6 +54,14 @@
     "invalid_name" : "الاسم خاطىء",
     "invalid_cash" : "الرصيد غير كافي",
     "invalid_quantity" : "الكمية خاطئة",
-    "invalid_id" : "المعرف خاطئ"
+    "invalid_id" : "المعرف خاطئ",
+    "count" : "الكمية",
+    "cost_d" : "الكلفة",
+    "date" : "التاريخ",
+    "new_transactions" : "معاملاتك الجديدة",
+    "old_transactions" : "معاملاتك القدية",
+    "token" : "تاوكنز",
+    "point" : "نقاط تسريع"
+
 
 }

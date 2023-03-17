@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
@@ -17,6 +21,37 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   final ImagePicker _picker = ImagePicker();
 
   PickedFile? _imageFile;
+  TextEditingController quantity =  TextEditingController();final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  bool _hasError = false;
+  double _cost = 0;
+  bool _hasCash = true;
+
+void _checkCash() async {
+        var user = await GetData().getAuth();
+        setState(() {
+          _hasCash = user['cash'] + .0 >= _cost;
+        });
+}
+  
+  @override
+void initState() {
+  super.initState();
+  quantity.addListener(() {
+    final isV = quantity.value.text.isEmpty;
+    if(!isV) {
+      setState(() {
+        _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
+        // validate the cash of the user 
+        _checkCash();
+      });
+    }
+    else 
+      setState(() {
+        _cost = 0;
+      });
+  });
+}
 
  Widget imageProfile() {
     return Center(
@@ -39,7 +74,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             },
             child: Icon(
               Icons.camera_alt,
-              color: Colors.teal,
+              color: _imageFile!=null ? Colors.teal : Colors.red,
               size: 28.0,
             ),
           ),
@@ -99,9 +134,23 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+              child: _hasError || !_hasCash
+                  ? Text(
+                      S.of(context).invalid_cash,
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : null),
           TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) => value!.isEmpty || (value.isNotEmpty && int.parse(value)==0)
+                ? S.of(context).invalid_quantity
+                : null,
+            controller: quantity,
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
@@ -122,17 +171,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              onPressed: () {
-                // print('you click the login button');
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return NavigationHomeScreen();
-                //     },
-                //   ),
-                // );
-              },
+                  onPressed: !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
                 S().confirm.toUpperCase(),
               ),
@@ -143,8 +182,8 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          S().cost,
-          style: const TextStyle(color: kPrimaryColor),
+          S().cost + _cost.toString(),
+          style: const TextStyle(color: Colors.pink),
         ),
         // GestureDetector(
         //   onTap: () => {
@@ -164,4 +203,45 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
       ),
     );
   }
+  
+   handleAddToken() async {
+    if(!_hasCash && _imageFile!=null){
+      
+    if (_formKey.currentState!.validate()) {
+      print('Form is valid');
+
+      // here test the cost if is it bigger then the cash of the user
+      setState(() {
+        _isLoading = true;
+      });
+
+      var data = {'count': quantity.text , 'cost' : _cost,'type' : 'point'};
+
+      var res = await AuthApi().addPoint(data,_imageFile);
+      var body = res.data;
+
+      if (body['status']) {
+
+        var data = AuthApi().getData(body);
+        await AuthApi().updateUser(data);
+
+      } else {
+        setState(() {
+          _hasError = true;
+        });
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      print('Form is invalid');
+
+      setState(() {
+        _hasError = true;
+      });
+    }
+    }
+  }
+
 }

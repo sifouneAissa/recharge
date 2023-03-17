@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+import 'package:async/async.dart';
+import 'package:dio/dio.dart';
 
 class AuthApi{
 
@@ -36,6 +40,40 @@ class AuthApi{
  
   }
 
+  addPoint(data,PickedFile? file) async{
+      
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+      FormData formData =  FormData.fromMap({
+        'count': data['count'],
+        'cost': data['cost'],
+        'type': data['type'],
+        'file': await MultipartFile.fromFile(file!.path)
+      });
+      
+      var fullUrl = _url + 'transactions/'+auth['id'].toString();
+      
+      
+       Dio dio = Dio();
+
+       return await dio.post(fullUrl,
+       data: formData,
+       options: Options(headers: _setHeadersAuthorization(token))
+       );
+
+  }
+
+  getTransactions() async{
+
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+
+      var fullUrl = _url + 'transactions/'+auth['id'].toString();
+      
+     return await http.get(Uri.parse(fullUrl),headers: _setHeadersAuthorization(token));
+ 
+  }
+
 
   getData(data){
     return data['data'];
@@ -55,11 +93,19 @@ class AuthApi{
   };
 
   _setHeadersAuthorization(var token) => {
-      'Content-Type': 'application/json; charset=UTF-8',
+      // 'Content-Type': 'application/json; charset=UTF-8',
       'Accept': "*/*",
       'connection': 'keep-alive',
       'Accept-Encoding' : 'gzip, deflate, br',
       'Authorization': 'Bearer $token',
+  };
+
+   _setHeadersAuthorizationFile(var token) => {
+      'Content-Type': 'multipart/form-data; charset=UTF-8',
+      'Accept': "*/*",
+      'connection': 'keep-alive',
+      'Accept-Encoding' : 'gzip, deflate, br',
+      'Authorization': 'Bearer $token'
   };
 
 }

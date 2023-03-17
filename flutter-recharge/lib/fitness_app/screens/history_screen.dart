@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/components/datatables/history_datatable.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
@@ -65,10 +66,11 @@ class _HistoryScreenState extends State<HistoryScreen>
   void addAllListData() {
     // const int count = 1;
 
+    
     listViews.add(
       TitleView(
-        titleTxt: 'Jawaker Accelerator Shipping',
-        subTxt: 'Shop',
+        titleTxt: S().old_transactions,
+        // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
@@ -76,6 +78,16 @@ class _HistoryScreenState extends State<HistoryScreen>
         animationController: widget.animationController!,
       ),
     );
+
+
+    listViews.add(HistoryDatatable(
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.animationController!,
+                curve: Interval(0.7, 1.0,
+                    curve: Curves.slowMiddle))),
+        mainScreenAnimationController: widget.animationController,
+    ));
 
     // listViews.add(
     //   JawakerAcceleratorListView(
