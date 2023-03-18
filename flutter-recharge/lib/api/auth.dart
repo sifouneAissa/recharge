@@ -74,6 +74,17 @@ class AuthApi{
  
   }
 
+   getNotifications() async{
+
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+
+      var fullUrl = _url + 'notifications/'+auth['id'].toString();
+
+     return await http.get(Uri.parse(fullUrl),headers: _setHeadersAuthorization(token));
+ 
+  }
+
   filterDates(data) async{
 
       var auth = await GetData().getAuth();

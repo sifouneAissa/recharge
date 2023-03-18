@@ -719,6 +719,56 @@ class S {
       args: [],
     );
   }
+
+  /// `لقد قمت بطلب `
+  String get transaction_request {
+    return Intl.message(
+      'لقد قمت بطلب ',
+      name: 'transaction_request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `بقيمة : `
+  String get transaction_value {
+    return Intl.message(
+      'بقيمة : ',
+      name: 'transaction_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `يوم `
+  String get day {
+    return Intl.message(
+      'يوم ',
+      name: 'day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `آخر الاشعارات `
+  String get last_notifications {
+    return Intl.message(
+      'آخر الاشعارات ',
+      name: 'last_notifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نوع المعاملة`
+  String get transaction_type {
+    return Intl.message(
+      'نوع المعاملة',
+      name: 'transaction_type',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

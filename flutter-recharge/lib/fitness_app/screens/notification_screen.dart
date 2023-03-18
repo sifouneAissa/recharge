@@ -70,8 +70,8 @@ class _NotificationScreenState extends State<NotificationScreen>
 
     listViews.add(
       TitleView(
-        titleTxt: 'Jawaker Accelerator Shipping',
-        subTxt: 'Shop',
+        titleTxt: S().last_notifications,
+        // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:

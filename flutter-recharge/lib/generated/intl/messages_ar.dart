@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cost_d": MessageLookupByLibrary.simpleMessage("الكلفة"),
         "count": MessageLookupByLibrary.simpleMessage("الكمية"),
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
+        "day": MessageLookupByLibrary.simpleMessage("يوم "),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "dont_have_account":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب !"),
@@ -65,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),
         "last_notification":
             MessageLookupByLibrary.simpleMessage("اخر اشعار : "),
+        "last_notifications":
+            MessageLookupByLibrary.simpleMessage("آخر الاشعارات "),
         "last_o_trasaction":
             MessageLookupByLibrary.simpleMessage("اخر معاملة : "),
         "last_shop": MessageLookupByLibrary.simpleMessage("اخر تسوق : "),
@@ -97,6 +100,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "token": MessageLookupByLibrary.simpleMessage("تاوكنز"),
         "token_shipping":
             MessageLookupByLibrary.simpleMessage("شحن توكنز جواكر"),
+        "transaction_request":
+            MessageLookupByLibrary.simpleMessage("لقد قمت بطلب "),
+        "transaction_type":
+            MessageLookupByLibrary.simpleMessage("نوع المعاملة"),
+        "transaction_value": MessageLookupByLibrary.simpleMessage("بقيمة : "),
         "transactions": MessageLookupByLibrary.simpleMessage("معاملات"),
         "welcome": MessageLookupByLibrary.simpleMessage("مرحبا"),
         "welcome_text": MessageLookupByLibrary.simpleMessage(

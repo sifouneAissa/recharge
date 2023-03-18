@@ -25,7 +25,7 @@ class _TransactionDatatable extends State<TransactionDatatable> with TickerProvi
       '#',
       S().count,
       S().cost_d,
-      S().cost_d,
+      S().transaction_type,
       S().date
     ];
 

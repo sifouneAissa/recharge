@@ -65,7 +65,13 @@
     "last_shop" : "اخر تسوق : ",
     "last_notification" : "اخر اشعار : ",
     "last_trasanction" : "اخر معاملة : ",
-    "last_o_trasaction" : "اخر معاملة : "
+    "last_o_trasaction" : "اخر معاملة : ",
+    "transaction_request" : "لقد قمت بطلب ",
+    "transaction_value" : "بقيمة : ",
+    "day" : "يوم ",
+    "last_notifications" : "آخر الاشعارات ",
+    
+    "transaction_type" : "نوع المعاملة"
 
 
 }
