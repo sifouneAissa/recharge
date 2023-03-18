@@ -69,10 +69,28 @@ class AuthApi{
       var token = await GetData().getToken();
 
       var fullUrl = _url + 'transactions/'+auth['id'].toString();
-      
+
      return await http.get(Uri.parse(fullUrl),headers: _setHeadersAuthorization(token));
  
   }
+
+  filterDates(data) async{
+
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+
+      var fullUrl = _url + 'transactions/date/'+auth['id'].toString();
+        print(fullUrl);
+        
+       Dio dio = Dio();
+
+      return await dio.get(fullUrl,
+          data: data,
+          options: Options(headers: _setHeadersAuthorization(token))
+       );
+ 
+  }
+
 
 
   getData(data){

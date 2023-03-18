@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/components/charts/history_chart.dart';
 import 'package:best_flutter_ui_templates/components/datatables/history_datatable.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
@@ -13,7 +14,6 @@ import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.d
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
-
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key, this.animationController}) : super(key: key);
 
@@ -65,28 +65,38 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   void addAllListData() {
     // const int count = 1;
+ listViews.add(
+      TitleView(
+        titleTxt: 'احصائياتك لهذه السنة',
+        // subTxt: 'Shop',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+      ),
+    );
+    listViews.add(HistoryChart());
 
-    
+
     listViews.add(
       TitleView(
         titleTxt: S().old_transactions,
         // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
 
 
+
     listViews.add(HistoryDatatable(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval(0.7, 1.0,
-                    curve: Curves.slowMiddle))),
-        mainScreenAnimationController: widget.animationController,
+      mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: widget.animationController!,
+              curve: Interval(0.7, 1.0, curve: Curves.slowMiddle))),
+      mainScreenAnimationController: widget.animationController,
     ));
 
     // listViews.add(
@@ -100,7 +110,6 @@ class _HistoryScreenState extends State<HistoryScreen>
     //   ),
     // );
 
-    
     // listViews.add(
     //   TitleView(
     //     titleTxt: 'Jawaker Shipping',
@@ -123,7 +132,6 @@ class _HistoryScreenState extends State<HistoryScreen>
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-    
 
     // listViews.add(
     //   TitleView(
@@ -147,7 +155,6 @@ class _HistoryScreenState extends State<HistoryScreen>
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-    
 
     // listViews.add(
     //   TitleView(
@@ -170,7 +177,6 @@ class _HistoryScreenState extends State<HistoryScreen>
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-  
 
     // listViews.add(
     //   TitleView(
