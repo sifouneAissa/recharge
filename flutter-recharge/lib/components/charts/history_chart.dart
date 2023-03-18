@@ -52,9 +52,9 @@ class _HistoryChartState extends State<HistoryChart> {
   }
 
   _getData() async {
-
+    __getOldMonths();
     var res = await AuthApi().filterDates({});
-
+    
     var body = res.data;
     if (body['status']) {
       var dataa = AuthApi().getData(body);
@@ -62,8 +62,23 @@ class _HistoryChartState extends State<HistoryChart> {
       setState(() {
         data = dataa['months'];
       });
+
+      
+      await GetData().updateMonths(data);
     }
   }
+
+  
+  __getOldMonths() async{
+    var t = await GetData().getMonths();
+    
+    if(t!=null){
+      setState(() {
+          data = jsonDecode(t);
+      });
+    }
+  }
+
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) async {
     var startDate = args.value.startDate;

@@ -127,6 +127,11 @@ class _LoginForm extends State<LoginForm> {
 
         localeStorage.setString('token', data['token']);
         localeStorage.setString('user', jsonEncode(data['user']));
+        
+        localeStorage.setString('transactions', jsonEncode(data['transactions']));
+        localeStorage.setString('notifications', jsonEncode(data['transactions']));
+        localeStorage.setString('months', jsonEncode(data['months']));
+
 
         var user = localeStorage.getString('user');
         var token = localeStorage.getString('token');

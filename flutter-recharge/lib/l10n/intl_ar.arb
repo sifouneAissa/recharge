@@ -61,7 +61,11 @@
     "new_transactions" : "معاملاتك الجديدة",
     "old_transactions" : "معاملاتك القدية",
     "token" : "تاوكنز",
-    "point" : "نقاط تسريع"
+    "point" : "نقاط تسريع",
+    "last_shop" : "اخر تسوق : ",
+    "last_notification" : "اخر اشعار : ",
+    "last_trasanction" : "اخر معاملة : ",
+    "last_o_trasaction" : "اخر معاملة : "
 
 
 }

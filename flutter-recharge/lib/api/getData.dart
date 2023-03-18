@@ -14,10 +14,33 @@ class GetData {
         return storage.getString('token');
     }
 
+  getMonths() async {
+        var storage = await getInstance();
+        return storage.getString('months');
+    }
+
+  updateMonths(months) async {
+        var storage = await getInstance();
+        return storage.setString('months',jsonEncode(months));
+  }
+
   getTransaction() async {
         var storage = await getInstance();
         return storage.getString('transactions');
     }
+
+    updateTransactions(transactions) async {
+        var storage = await getInstance();
+        return storage.setString('transactions',jsonEncode(transactions));
+    }
+
+    
+    updateNotifications(notifications) async {
+        var storage = await getInstance();
+        return storage.setString('notifications',jsonEncode(notifications));
+    }
+
+
 
   getNotification() async {
         var storage = await getInstance();
@@ -41,6 +64,8 @@ class GetData {
     
         SharedPreferences storage = await getInstance();
         storage.remove('user');
+        storage.remove('transactions');
+        storage.remove('notifications');
         storage.remove('token');
   }
 }

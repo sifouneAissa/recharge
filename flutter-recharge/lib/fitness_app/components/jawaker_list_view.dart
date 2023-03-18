@@ -1,5 +1,7 @@
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/wave_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,22 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
+  }
+
+  var user;
+
+  @override
+  void initState(){
+    _getUser();
+    super.initState();
+  }
+
+  _getUser() async{
+      var auth = await GetData().getAuth();
+      setState(() {
+        user = auth;
+        print(user);
+      });
   }
 
   @override
@@ -41,7 +59,7 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
                       bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(68.0)),
+                      topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                         color: FitnessAppTheme.grey.withOpacity(0.2),
@@ -69,7 +87,7 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                                       padding: const EdgeInsets.only(
                                           left: 4, bottom: 3),
                                       child: Text(
-                                        '0',
+                                        user !=null ? user['ttcount'].toString() : '0',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -149,7 +167,7 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                                         padding:
                                             const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          'Last shop 8:26 AM',
+                                          user !=null ? S.of(context).last_shop + user['lst_shop_token'].toString() : '',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:

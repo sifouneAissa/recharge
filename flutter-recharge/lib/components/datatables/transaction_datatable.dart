@@ -41,13 +41,31 @@ class _TransactionDatatable extends State<TransactionDatatable> with TickerProvi
     
 
   __getTransactions() async {
+    __getOldTransactions();
       var t = await AuthApi().getTransactions();
       var body = jsonDecode(t.body);
       if(body['status'])
+      {
+        setState(() {
+          var data = AuthApi().getData(body);
+          transactions = data['transactions'];
+        });
+
+        await GetData().updateTransactions(transactions);
+
+      }
+
+      
+  }
+
+
+  __getOldTransactions() async{
+    var t = await GetData().getTransaction();
+    if(t!=null){
       setState(() {
-        var data = AuthApi().getData(body);
-        transactions = data['transactions'];
+          transactions = jsonDecode(t);
       });
+    }
   }
 
   

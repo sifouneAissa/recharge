@@ -64,7 +64,7 @@ class _DashScreenState extends State<DashScreen>
   }
 
   void addAllListData() {
-    const int count = 11;
+    const int count = 10;
 
     listViews.add(
       TitleView(
@@ -198,15 +198,15 @@ class _DashScreenState extends State<DashScreen>
         mainScreenAnimationController: widget.animationController!,
       ),
     );
-    listViews.add(
-      GlassView(
-          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                  parent: widget.animationController!,
-                  curve: Interval((1 / count) * 8, 1.0,
-                      curve: Curves.fastOutSlowIn))),
-          animationController: widget.animationController!),
-    );
+    // listViews.add(
+    //   GlassView(
+    //       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //           CurvedAnimation(
+    //               parent: widget.animationController!,
+    //               curve: Interval((1 / count) * 8, 1.0,
+    //                   curve: Curves.fastOutSlowIn))),
+    //       animationController: widget.animationController!),
+    // );
   }
 
   Future<bool> getData() async {

@@ -679,6 +679,46 @@ class S {
       args: [],
     );
   }
+
+  /// `اخر تسوق : `
+  String get last_shop {
+    return Intl.message(
+      'اخر تسوق : ',
+      name: 'last_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `اخر اشعار : `
+  String get last_notification {
+    return Intl.message(
+      'اخر اشعار : ',
+      name: 'last_notification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `اخر معاملة : `
+  String get last_trasanction {
+    return Intl.message(
+      'اخر معاملة : ',
+      name: 'last_trasanction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `اخر معاملة : `
+  String get last_o_trasaction {
+    return Intl.message(
+      'اخر معاملة : ',
+      name: 'last_o_trasaction',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

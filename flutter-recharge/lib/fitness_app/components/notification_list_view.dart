@@ -1,5 +1,7 @@
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/wave_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
+import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +22,24 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
   }
+
+  
+  var user;
+
+  @override
+  void initState(){
+    _getUser();
+    super.initState();
+  }
+
+  _getUser() async{
+      var auth = await GetData().getAuth();
+      setState(() {
+        user = auth;
+        print(user);
+      });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +89,7 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
                                       padding: const EdgeInsets.only(
                                           left: 4, bottom: 3),
                                       child: Text(
-                                        '0',
+                                        user !=null ? user['ncount'].toString() : '0',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -149,7 +169,7 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
                                         padding:
                                             const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          'Last notification 8:26 AM',
+                                          user !=null ? S.of(context).last_notification + user['lst_notification'].toString() : '0',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:

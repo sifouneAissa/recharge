@@ -63,6 +63,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "invite_friend": MessageLookupByLibrary.simpleMessage("دعوة صديق"),
         "jawaker_accelerator_shipping":
             MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),
+        "last_notification":
+            MessageLookupByLibrary.simpleMessage("اخر اشعار : "),
+        "last_o_trasaction":
+            MessageLookupByLibrary.simpleMessage("اخر معاملة : "),
+        "last_shop": MessageLookupByLibrary.simpleMessage("اخر تسوق : "),
+        "last_trasanction":
+            MessageLookupByLibrary.simpleMessage("اخر معاملة : "),
         "lets_begin": MessageLookupByLibrary.simpleMessage("لنبدأ"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "mood": MessageLookupByLibrary.simpleMessage("غير مزاجك"),
