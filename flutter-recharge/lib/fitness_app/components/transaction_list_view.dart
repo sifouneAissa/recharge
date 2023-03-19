@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 
 class TransactionListView extends StatefulWidget {
   const TransactionListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final onChangeBody;
 
   @override
   _TransactionListViewState createState() => _TransactionListViewState();
@@ -50,7 +51,7 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
                 0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 24, right: 24, top: 16, bottom: 18),
+                  left: 5, right: 5, top: 5, bottom: 5),
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.white,
@@ -76,23 +77,34 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
                           children: <Widget>[
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
+                                  GestureDetector(
+                                    child: Icon(
+                                    IconData(0xe481, fontFamily: 'MaterialIcons')
+                                    ,size: 45,
+                                    color: FitnessAppTheme.nearlyDarkBlue,
+                                    ),
+                                    onTap: () {
+                                      widget.onChangeBody();
+                                    },
+                                  ),
+                                Text('المعاملات'),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 4, bottom: 3),
+                                          left: 0, bottom: 3),
                                       child: Text(
                                         user !=null ? user['tcount'].toString() : '0',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 32,
-                                          color: FitnessAppTheme.nearlyDarkBlue,
+                                          fontSize: 18,
+                                          color: FitnessAppTheme.nearlyBlue,
                                         ),
                                       ),
                                     ),
@@ -132,7 +144,7 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 4, right: 4, top: 8, bottom: 16),
+                                  left: 4, right: 4, top: 0, bottom: 10),
                               child: Container(
                                 height: 2,
                                 decoration: BoxDecoration(
@@ -143,28 +155,29 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 16),
+                              padding: const EdgeInsets.only(top: 0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
+                                  
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 4),
-                                        child: Icon(
-                                          Icons.access_time,
-                                          color: FitnessAppTheme.grey
-                                              .withOpacity(0.5),
-                                          size: 16,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(left: 4),
+                                      //   child: Icon(
+                                      //     Icons.access_time,
+                                      //     color: FitnessAppTheme.grey
+                                      //         .withOpacity(0.5),
+                                      //     size: 16,
+                                      //   ),
+                                      // ),
+                                      Expanded(
+                                        // padding:
+                                        //     const EdgeInsets.only(left: 4.0),
                                         child: Text(
                                           user !=null ? S.of(context).last_trasanction + user['lst_transaction'].toString() : '0',
                                           textAlign: TextAlign.center,

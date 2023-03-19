@@ -139,7 +139,7 @@ class _AccountCardView extends State<AccountCardView> {
                                         padding:
                                             const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          'Today 8:26 AM',
+                                          user != null ? user['name'] : '',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
@@ -158,7 +158,7 @@ class _AccountCardView extends State<AccountCardView> {
                                     padding: const EdgeInsets.only(
                                         top: 4, bottom: 14),
                                     child: Text(
-                                      user != null ? user['name'] : '',
+                                      user != null ? user['email'] : '',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,

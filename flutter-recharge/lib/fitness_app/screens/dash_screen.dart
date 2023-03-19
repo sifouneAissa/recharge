@@ -14,7 +14,8 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class DashScreen extends StatefulWidget {
-  const DashScreen({Key? key, this.animationController,this.onChangeBody}) : super(key: key);
+  const DashScreen({Key? key, this.animationController, this.onChangeBody})
+      : super(key: key);
   final onChangeBody;
 
   final AnimationController? animationController;
@@ -22,12 +23,13 @@ class DashScreen extends StatefulWidget {
   _DashScreenState createState() => _DashScreenState();
 }
 
-class _DashScreenState extends State<DashScreen>
-    with TickerProviderStateMixin {
+class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
   Animation<double>? topBarAnimation;
 
   List<Widget> listViews = <Widget>[];
+  List<Widget> gridViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
+  final ScrollController scrollControllerG = ScrollController();
   double topBarOpacity = 0.0;
 
   @override
@@ -37,6 +39,7 @@ class _DashScreenState extends State<DashScreen>
             parent: widget.animationController!,
             curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
     addAllListData();
+    addAllGridData();
 
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
@@ -70,7 +73,7 @@ class _DashScreenState extends State<DashScreen>
       TitleView(
         titleTxt: S().jawaker_accelerator_shipping,
         subTxt: S().shop,
-        onChangeBody: (){
+        onChangeBody: () {
           widget.onChangeBody('jawaker_acceleration');
         },
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -92,24 +95,170 @@ class _DashScreenState extends State<DashScreen>
       ),
     );
 
-    
-    listViews.add(
+listViews.add(
       TitleView(
-        titleTxt: S().token_shipping,
-        subTxt: S().shop,
-        onChangeBody: (){
+        titleTxt: "اشحن واطلع على معلوماتك بشكل يومي : ",
+        // subTxt: S().shop,
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve:
+                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+      ),
+    );
+    listViews.add(getGridViewUI());
+
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().token_shipping,
+    //     subTxt: S().shop,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('token');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   JawakerListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 7, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().notifications,
+    //     subTxt: S().details,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('notification');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   NotificationListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 7, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().transactions,
+    //     subTxt: S().details,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('transaction');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   TransactionListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 7, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().history,
+    //     subTxt: S().details,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('history');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   HistoryListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 7, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   GlassView(
+    //       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //           CurvedAnimation(
+    //               parent: widget.animationController!,
+    //               curve: Interval((1 / count) * 8, 1.0,
+    //                   curve: Curves.fastOutSlowIn))),
+    //       animationController: widget.animationController!),
+    // );
+  }
+
+  void addAllGridData() {
+    const int count = 10;
+
+    // gridViews.add(
+    //   TitleView(
+    //     titleTxt: S().token_shipping,
+    //     subTxt: S().shop,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('token');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    // gridViews.add(
+    //   TitleView(
+    //     titleTxt: S().notifications,
+    //     subTxt: S().details,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('notification');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    gridViews.add(
+      JawakerListView(
+         onChangeBody: (){
           widget.onChangeBody('token');
         },
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-
-    listViews.add(
-      JawakerListView(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
@@ -118,25 +267,12 @@ class _DashScreenState extends State<DashScreen>
         mainScreenAnimationController: widget.animationController!,
       ),
     );
-    
 
-    listViews.add(
-      TitleView(
-        titleTxt: S().notifications,
-        subTxt: S().details,
-        onChangeBody: (){
+    gridViews.add(
+      NotificationListView(
+         onChangeBody: (){
           widget.onChangeBody('notification');
         },
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-
-    listViews.add(
-      NotificationListView(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
@@ -145,24 +281,12 @@ class _DashScreenState extends State<DashScreen>
         mainScreenAnimationController: widget.animationController!,
       ),
     );
-    
 
-    listViews.add(
-      TitleView(
-        titleTxt: S().transactions,
-        subTxt: S().details,
-        onChangeBody: (){
+    gridViews.add(
+      TransactionListView(
+         onChangeBody: (){
           widget.onChangeBody('transaction');
         },
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-      TransactionListView(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
@@ -171,25 +295,12 @@ class _DashScreenState extends State<DashScreen>
         mainScreenAnimationController: widget.animationController!,
       ),
     );
-  
 
-    listViews.add(
-      TitleView(
-        titleTxt: S().history,
-        subTxt: S().details,
-        onChangeBody: (){
+    gridViews.add(
+      HistoryListView(
+         onChangeBody: (){
           widget.onChangeBody('history');
         },
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-
-    listViews.add(
-      HistoryListView(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
@@ -198,6 +309,57 @@ class _DashScreenState extends State<DashScreen>
         mainScreenAnimationController: widget.animationController!,
       ),
     );
+
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().transactions,
+    //     subTxt: S().details,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('transaction');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   TransactionListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 7, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().history,
+    //     subTxt: S().details,
+    //     onChangeBody: (){
+    //       widget.onChangeBody('history');
+    //     },
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   HistoryListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 7, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
     // listViews.add(
     //   GlassView(
     //       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -223,6 +385,7 @@ class _DashScreenState extends State<DashScreen>
         body: Stack(
           children: <Widget>[
             getMainListViewUI(),
+            // getGridViewUI(),
             getAppBarUI(),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
@@ -240,20 +403,57 @@ class _DashScreenState extends State<DashScreen>
         if (!snapshot.hasData) {
           return const SizedBox();
         } else {
-          return ListView.builder(
-            controller: scrollController,
-            padding: EdgeInsets.only(
-              top: AppBar().preferredSize.height +
-                  MediaQuery.of(context).padding.top +
-                  24,
-              bottom: 62 + MediaQuery.of(context).padding.bottom,
+          return Container(
+            child: ListView.builder(
+              // controller: scrollController,
+              padding: EdgeInsets.only(
+                top: AppBar().preferredSize.height +
+                    MediaQuery.of(context).padding.top +
+                    24,
+                bottom: 62 + MediaQuery.of(context).padding.bottom,
+              ),
+              itemCount: listViews.length,
+              scrollDirection: Axis.vertical,
+
+              itemBuilder: (BuildContext context, int index) {
+                widget.animationController?.forward();
+                return listViews[index];
+              },
             ),
-            itemCount: listViews.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (BuildContext context, int index) {
-              widget.animationController?.forward();
-              return listViews[index];
-            },
+          );
+        }
+      },
+    );
+  }
+
+  Widget getGridViewUI() {
+    return FutureBuilder<bool>(
+      future: getData(),
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox();
+        } else {
+          return Container(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              // controller: scrollControllerG,
+              // padding: EdgeInsets.only(
+              //   top: (AppBar().preferredSize.height +
+              //       MediaQuery.of(context).padding.top +
+              //       24) * 3.7,
+              //   bottom: 10 + MediaQuery.of(context).padding.bottom,
+              // ),
+              itemCount: gridViews.length,
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (BuildContext context, int index) {
+                widget.animationController?.forward();
+                return gridViews[index];
+              },
+            ),
           );
         }
       },

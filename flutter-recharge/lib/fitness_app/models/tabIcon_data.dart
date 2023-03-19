@@ -7,7 +7,8 @@ class TabIconData {
     this.selectedImagePath = '',
     this.isSelected = false,
     this.animationController,
-    this.name = ''
+    this.name = '',
+    this.iconData
   });
 
   String imagePath;
@@ -15,6 +16,7 @@ class TabIconData {
   bool isSelected;
   int index;
   String name;
+  IconData? iconData;
 
   AnimationController? animationController;
 
@@ -25,7 +27,8 @@ class TabIconData {
       index: 0,
       isSelected: true,
       animationController: null,
-      name: 'dash'
+      name: 'dash',
+      iconData: Icons.dashboard_outlined
     ),
     TabIconData(
       imagePath: 'assets/fitness_app/tab_2.png',
@@ -33,7 +36,8 @@ class TabIconData {
       index: 1,
       isSelected: false,
       animationController: null,
-      name: 'jawaker_acceleration'
+      name: 'jawaker_acceleration',
+      iconData: IconData(0xf0654, fontFamily: 'MaterialIcons')
     ),
     TabIconData(
       imagePath: 'assets/fitness_app/tab_3.png',
@@ -41,7 +45,8 @@ class TabIconData {
       index: 2,
       isSelected: false,
       animationController: null,
-      name: 'token'
+      name: 'token',
+      iconData: Icons.wallet_outlined
     ),
     TabIconData(
       imagePath: 'assets/fitness_app/tab_4.png',
@@ -49,7 +54,8 @@ class TabIconData {
       index: 3, 
       isSelected: false,
       animationController: null,
-      name: 'notification'
+      name: 'notification',
+      iconData: Icons.notifications_outlined
     ),
     TabIconData(
       imagePath: 'assets/fitness_app/tab_5.png',

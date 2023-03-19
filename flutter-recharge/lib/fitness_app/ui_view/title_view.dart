@@ -56,7 +56,6 @@ class TitleView extends StatelessWidget {
                         child: subTxt != ""
                             ? GestureDetector(
                                 onTap: () {
-                                  print("hello");
                                   onChangeBody();
                                 },
                                 child: Row(
@@ -68,7 +67,8 @@ class TitleView extends StatelessWidget {
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.normal,
                                         fontSize: 16,
-                                        letterSpacing: 0.5,
+                                        letterSpacing
+                                        : 0.5,
                                         color: FitnessAppTheme.nearlyDarkBlue,
                                       ),
                                     ),

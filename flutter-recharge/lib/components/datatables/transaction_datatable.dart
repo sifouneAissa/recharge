@@ -111,7 +111,7 @@ class _TransactionDatatable extends State<TransactionDatatable> with TickerProvi
                     DataCell(Text(transactions[counter]['cost'].toString())),
                     DataCell(Text(transactions[counter]['type'].toString() == 'token' ? S.of(context).token : S.of(context).point)),
                     DataCell(Text(transactions[counter]['tdate'].toString()))
-                  ],color: transactions[counter]['type'].toString() == 'token' ? MaterialStateProperty.all(Colors.amberAccent) : MaterialStateProperty.all(Colors.pinkAccent)),
+                  ],color: transactions[counter]['type'].toString() == 'token' ? MaterialStateProperty.all(Colors.lightGreen) : MaterialStateProperty.all(Colors.pinkAccent)),
               ))));
 
       });

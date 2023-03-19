@@ -21,6 +21,8 @@ class _HistoryChartState extends State<HistoryChart> {
   late ZoomPanBehavior _zoomPanBehavior;
   var data;
   bool _loading = false;
+  double t_tokens = 0;
+  double t_points = 0;
 
   List<String> months = [
     'جانفي',
@@ -54,31 +56,30 @@ class _HistoryChartState extends State<HistoryChart> {
   _getData() async {
     __getOldMonths();
     var res = await AuthApi().filterDates({});
-    
+
     var body = res.data;
     if (body['status']) {
       var dataa = AuthApi().getData(body);
 
       setState(() {
+        t_tokens = 0;
+        t_points = 0;
         data = dataa['months'];
       });
 
-      
       await GetData().updateMonths(data);
     }
   }
 
-  
-  __getOldMonths() async{
+  __getOldMonths() async {
     var t = await GetData().getMonths();
-    
-    if(t!=null){
+
+    if (t != null) {
       setState(() {
-          data = jsonDecode(t);
+        data = jsonDecode(t);
       });
     }
   }
-
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) async {
     var startDate = args.value.startDate;
@@ -93,12 +94,15 @@ class _HistoryChartState extends State<HistoryChart> {
       var res = await AuthApi().filterDates(
           {'end': endDate.toString(), 'start': startDate.toString()});
 
+
       var body = res.data;
 
       if (body['status']) {
         var dataa = AuthApi().getData(body);
 
         setState(() {
+          t_tokens = 0;
+          t_points = 0;
           data = dataa['months'];
         });
       }
@@ -113,10 +117,17 @@ class _HistoryChartState extends State<HistoryChart> {
     else
       return List<SalesData>.generate(
           months.length,
-          (index) => SalesData(
+          (index) {
+            
+            setState(() {
+              t_tokens = t_tokens + data[(index + 1).toString()]['token_cash'];
+            });
+
+            return SalesData(
               months[index],
               double.parse(
-                  data[(index + 1).toString()]['token_cash'].toString())));
+                  data[(index + 1).toString()]['token_cash'].toString()));
+          });
   }
 
   getSalesDataPOint() {
@@ -126,10 +137,16 @@ class _HistoryChartState extends State<HistoryChart> {
     else
       return List<SalesData>.generate(
           months.length,
-          (index) => SalesData(
+          (index) {
+            setState(() {
+              t_points = t_points + data[(index + 1).toString()]['point_cash'];
+            });
+
+            return SalesData(
               months[index],
               double.parse(
-                  data[(index + 1).toString()]['point_cash'].toString())));
+                  data[(index + 1).toString()]['point_cash'].toString()));
+          });
   }
 
   @override
@@ -148,6 +165,8 @@ class _HistoryChartState extends State<HistoryChart> {
               onPressed: () {
                 setState(() {
                   _showD = !_showD;
+                  t_tokens = 0;
+                  t_points = 0;
                 });
               },
             ),
@@ -200,6 +219,65 @@ class _HistoryChartState extends State<HistoryChart> {
                             )
                       ]),
                 ))),
+                Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                      Text.rich(
+                TextSpan(
+                    text: 'كلفة التاوكنز : ',
+                    children: <InlineSpan>[
+                      TextSpan(
+                        text: '',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold,color: Colors.lightGreen),
+                      ),
+                      TextSpan(
+                        text: '',
+                        // style: TextStyle(
+                        //     fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: t_tokens.toString(),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold,color: Colors.lightGreen),
+                      ),
+                      TextSpan(
+                        text: '',
+                        // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                      ),
+                    ]),
+                textAlign: TextAlign.start,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+               Text.rich(
+                TextSpan(
+                    text: 'كلفة المسرعات : ',
+                    children: <InlineSpan>[
+                      TextSpan(
+                        text: '',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold,color: Colors.lightGreen),
+                      ),
+                      TextSpan(
+                        text: '',
+                        // style: TextStyle(
+                        //     fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: t_points.toString(),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold,color: Colors.pinkAccent),
+                      ),
+                      TextSpan(
+                        text: '',
+                        // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                      ),
+                    ]),
+                textAlign: TextAlign.start,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              )
+                  ],
+                )
       ],
     );
   }

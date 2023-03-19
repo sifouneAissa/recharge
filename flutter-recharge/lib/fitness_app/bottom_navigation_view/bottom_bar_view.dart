@@ -52,7 +52,7 @@ class _BottomBarViewState extends State<BottomBarView>
                                 parent: animationController!,
                                 curve: Curves.fastOutSlowIn))
                             .value *
-                        0.0),
+                        38.0),
                 child: Column(
                   children: <Widget>[
                     SizedBox(
@@ -63,7 +63,7 @@ class _BottomBarViewState extends State<BottomBarView>
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              child: TabIcons(
+                              child: TabUIcons(
                                   tabIconData: widget.tabIconsList?[0],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
@@ -72,7 +72,7 @@ class _BottomBarViewState extends State<BottomBarView>
                                   }),
                             ),
                             Expanded(
-                              child: TabIcons(
+                              child: TabUIcons(
                                   tabIconData: widget.tabIconsList?[1],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
@@ -80,16 +80,16 @@ class _BottomBarViewState extends State<BottomBarView>
                                     widget.changeIndex!(1);
                                   }),
                             ),
-                            // SizedBox(
-                            //   width: Tween<double>(begin: 0.0, end: 1.0)
-                            //           .animate(CurvedAnimation(
-                            //               parent: animationController!,
-                            //               curve: Curves.fastOutSlowIn))
-                            //           .value *
-                            //       64.0,
-                            // ),
+                            SizedBox(
+                              width: Tween<double>(begin: 0.0, end: 1.0)
+                                      .animate(CurvedAnimation(
+                                          parent: animationController!,
+                                          curve: Curves.fastOutSlowIn))
+                                      .value *
+                                  64.0,
+                            ),
                             Expanded(
-                              child: TabIcons(
+                              child: TabUIcons(
                                   tabIconData: widget.tabIconsList?[2],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
@@ -98,7 +98,7 @@ class _BottomBarViewState extends State<BottomBarView>
                                   }),
                             ),
                             Expanded(
-                              child: TabIcons(
+                              child: TabUIcons(
                                   tabIconData: widget.tabIconsList?[3],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
@@ -106,24 +106,24 @@ class _BottomBarViewState extends State<BottomBarView>
                                     widget.changeIndex!(3);
                                   }),
                             ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[4],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[4]);
-                                    widget.changeIndex!(4);
-                                  }),
-                            ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[5],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[5]);
-                                    widget.changeIndex!(5);
-                                  }),
-                            ),
+                            // Expanded(
+                            //   child: TabIcons(
+                            //       tabIconData: widget.tabIconsList?[4],
+                            //       removeAllSelect: () {
+                            //         setRemoveAllSelection(
+                            //             widget.tabIconsList?[4]);
+                            //         widget.changeIndex!(4);
+                            //       }),
+                            // ),
+                            // Expanded(
+                            //   child: TabIcons(
+                            //       tabIconData: widget.tabIconsList?[5],
+                            //       removeAllSelect: () {
+                            //         setRemoveAllSelection(
+                            //             widget.tabIconsList?[5]);
+                            //         widget.changeIndex!(5);
+                            //       }),
+                            // ),
                           ],
                         ),
                       ),
@@ -137,67 +137,74 @@ class _BottomBarViewState extends State<BottomBarView>
             );
           },
         ),
-        // Padding(
-        //   padding:
-        //       EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-        //   child: SizedBox(
-        //     width: 38 * 2.0,
-        //     height: 38 + 62.0,
-        //     child: Container(
-        //       alignment: Alignment.topCenter,
-        //       color: Colors.transparent,
-        //       child: SizedBox(
-        //         width: 38 * 2.0,
-        //         height: 38 * 2.0,
-        //         child: Padding(
-        //           padding: const EdgeInsets.all(8.0),
-        //           child: ScaleTransition(
-        //             alignment: Alignment.center,
-        //             scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-        //                 CurvedAnimation(
-        //                     parent: animationController!,
-        //                     curve: Curves.fastOutSlowIn)),
-        //             child: Container(
-        //               // alignment: Alignment.center,s
-        //               decoration: BoxDecoration(
-        //                 color: FitnessAppTheme.nearlyDarkBlue,
-        //                 gradient: LinearGradient(
-        //                     colors: [
-        //                       FitnessAppTheme.nearlyDarkBlue,
-        //                       HexColor('#6A88E5'),
-        //                     ],
-        //                     begin: Alignment.topLeft,
-        //                     end: Alignment.bottomRight),
-        //                 shape: BoxShape.circle,
-        //                 boxShadow: <BoxShadow>[
-        //                   BoxShadow(
-        //                       color: FitnessAppTheme.nearlyDarkBlue
-        //                           .withOpacity(0.4),
-        //                       offset: const Offset(8.0, 16.0),
-        //                       blurRadius: 16.0),
-        //                 ],
-        //               ),
-        //               child: Material(
-        //                 color: Colors.transparent,
-        //                 child: InkWell(
-        //                   splashColor: Colors.white.withOpacity(0.1),
-        //                   highlightColor: Colors.transparent,
-        //                   focusColor: Colors.transparent,
-        //                   onTap: widget.addClick,
-        //                   child: Icon(
-        //                     Icons.add,
-        //                     color: FitnessAppTheme.white,
-        //                     size: 32,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+          child: SizedBox(
+            width: 38 * 2.0,
+            height: 38 + 62.0,
+            child: Container(
+              alignment: Alignment.topCenter,
+              color: Colors.transparent,
+              child: SizedBox(
+                width: 38 * 2.0,
+                height: 38 * 2.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ScaleTransition(
+                    alignment: Alignment.center,
+                    scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+                        CurvedAnimation(
+                            parent: animationController!,
+                            curve: Curves.fastOutSlowIn)),
+                    child: Container(
+                      // alignment: Alignment.center,s
+                      decoration: BoxDecoration(
+                        color: FitnessAppTheme.nearlyDarkBlue,
+                        gradient: LinearGradient(
+                            colors: [
+                              FitnessAppTheme.nearlyDarkBlue,
+                              HexColor('#6A88E5'),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
+                        shape: BoxShape.circle,
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: FitnessAppTheme.nearlyDarkBlue
+                                  .withOpacity(0.4),
+                              offset: const Offset(8.0, 16.0),
+                              blurRadius: 16.0),
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          splashColor: Colors.white.withOpacity(0.1),
+                          highlightColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          onTap: () {
+                                    setRemoveAllSelection(
+                                        widget.tabIconsList?[5]);
+                                    widget.changeIndex!(5);
+                          },
+                          
+                          child: TabIcons(
+                                  tabIconData: widget.tabIconsList?[5],
+                                  removeAllSelect: () {
+                                    setRemoveAllSelection(
+                                        widget.tabIconsList?[5]);
+                                    widget.changeIndex!(5);
+                                  }),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -224,6 +231,7 @@ class TabIcons extends StatefulWidget {
   @override
   _TabIconsState createState() => _TabIconsState();
 }
+
 
 class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
   @override
@@ -274,6 +282,144 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                   child: Image.asset(widget.tabIconData!.isSelected
                       ? widget.tabIconData!.selectedImagePath
                       : widget.tabIconData!.imagePath),
+                ),
+                Positioned(
+                  top: 4,
+                  left: 6,
+                  right: 0,
+                  child: ScaleTransition(
+                    alignment: Alignment.center,
+                    scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+                        CurvedAnimation(
+                            parent: widget.tabIconData!.animationController!,
+                            curve: Interval(0.2, 1.0,
+                                curve: Curves.fastOutSlowIn))),
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: FitnessAppTheme.nearlyDarkBlue,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 6,
+                  bottom: 8,
+                  child: ScaleTransition(
+                    alignment: Alignment.center,
+                    scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+                        CurvedAnimation(
+                            parent: widget.tabIconData!.animationController!,
+                            curve: Interval(0.5, 0.8,
+                                curve: Curves.fastOutSlowIn))),
+                    child: Container(
+                      width: 4,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: FitnessAppTheme.nearlyDarkBlue,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 6,
+                  right: 8,
+                  bottom: 0,
+                  child: ScaleTransition(
+                    alignment: Alignment.center,
+                    scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+                        CurvedAnimation(
+                            parent: widget.tabIconData!.animationController!,
+                            curve: Interval(0.5, 0.6,
+                                curve: Curves.fastOutSlowIn))),
+                    child: Container(
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: FitnessAppTheme.nearlyDarkBlue,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class TabUIcons extends StatefulWidget {
+  const TabUIcons({Key? key, this.tabIconData, this.removeAllSelect})
+      : super(key: key);
+
+  final TabIconData? tabIconData;
+  final Function()? removeAllSelect;
+  @override
+  _TabUIconsState createState() => _TabUIconsState();
+}
+
+
+class _TabUIconsState extends State<TabUIcons> with TickerProviderStateMixin {
+  @override
+  void initState() {
+    widget.tabIconData?.animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    )..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          if (!mounted) return;
+          widget.removeAllSelect!();
+          widget.tabIconData?.animationController?.reverse();
+        }
+      });
+    super.initState();
+  }
+
+  void setAnimation() {
+    widget.tabIconData?.animationController?.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Center(
+        child: InkWell(
+          splashColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          onTap: () {
+            if (!widget.tabIconData!.isSelected) {
+              setAnimation();
+            }
+          },
+          child: IgnorePointer(
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: <Widget>[
+                ScaleTransition(
+                  alignment: Alignment.center,
+                  scale: Tween<double>(begin: 0.88, end: 1.0).animate(
+                      CurvedAnimation(
+                          parent: widget.tabIconData!.animationController!,
+                          curve:
+                              Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
+                  child: Icon(
+                      widget.tabIconData!.iconData,
+                      color: widget.tabIconData!.isSelected ? FitnessAppTheme.nearlyDarkBlue : null,
+                      size: 45.0,
+                      semanticLabel: 'Text to announce in accessibility modes',
+                  ),
                 ),
                 Positioned(
                   top: 4,
