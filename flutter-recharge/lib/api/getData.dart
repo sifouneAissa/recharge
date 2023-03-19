@@ -34,6 +34,18 @@ class GetData {
         return storage.setString('transactions',jsonEncode(transactions));
     }
 
+    getDiffs() async{
+      
+        var storage = await getInstance();
+        return storage.getString('diffs');
+    }
+
+     
+    updateDiffs(diffs) async {
+        var storage = await getInstance();
+        return storage.setString('diffs',jsonEncode(diffs));
+    }
+
     
     updateNotifications(notifications) async {
         var storage = await getInstance();
