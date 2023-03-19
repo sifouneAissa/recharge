@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
@@ -171,6 +172,9 @@ void initState() {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
+              ),
                   onPressed: !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
                 S().confirm.toUpperCase(),

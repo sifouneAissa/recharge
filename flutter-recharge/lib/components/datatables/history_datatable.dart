@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -101,13 +102,13 @@ class _HistoryDatatable extends State<HistoryDatatable> with TickerProviderState
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
-                    color: Colors.red),
+                    color: FitnessAppTheme.nearlyDarkBlue),
               ))), rows: List<DataRow>.generate(transactions.length,(counter) => 
                   DataRow(cells: [
-                    DataCell(Text('#' + transactions[counter]['id'].toString())),
-                    DataCell(Text(transactions[counter]['count'].toString())),
-                    DataCell(Text(transactions[counter]['cost'].toString())),
-                    DataCell(Text(transactions[counter]['tdate'].toString()))
+                    DataCell(Text('#' + transactions[counter]['id'].toString(),style: TextStyle(color: FitnessAppTheme.nearlyDarkBlue,fontWeight: FontWeight.bold),)),
+                    DataCell(Text(transactions[counter]['count'].toString(),style: TextStyle(fontWeight: FontWeight.bold),)),
+                    DataCell(Text(transactions[counter]['cost'].toString(),style: TextStyle(fontWeight: FontWeight.bold))),
+                    DataCell(Text(transactions[counter]['tdate'].toString(),style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.nearlyDarkBlue)))
                   ]),
               ))));
 

@@ -215,7 +215,7 @@ class _AccountCardView extends State<AccountCardView> {
                                       padding: const EdgeInsets.only(top: 6),
                                       child:  Icon(
                                         Icons.info_rounded,
-                                        color: Colors.pink,
+                                        color: FitnessAppTheme.nearlyDarkBlue,
                                         size: 20.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
@@ -248,7 +248,7 @@ class _AccountCardView extends State<AccountCardView> {
                                       padding: const EdgeInsets.only(top: 6),
                                       child:  Icon(
                                         Icons.notifications_active,
-                                        color: Colors.pink,
+                                        color: FitnessAppTheme.nearlyDarkBlue,
                                         size: 20.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
@@ -281,7 +281,7 @@ class _AccountCardView extends State<AccountCardView> {
                                       padding: const EdgeInsets.only(top: 6),
                                       child:  Icon(
                                           Icons.money_sharp,
-                                          color: Colors.pink,
+                                          color: FitnessAppTheme.nearlyDarkBlue,
                                           size: 20.0,
                                           semanticLabel: 'Text to announce in accessibility modes',
                                         ),
