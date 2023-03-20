@@ -62,13 +62,15 @@ class _AccountCardView extends State<AccountCardView> {
                 ),
                 child: Column(
                   children: <Widget>[
+                    
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 16, left: 16, right: 24),
+                          const EdgeInsets.only(top: 0, left: 16, right: 24),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 4, bottom: 8, top: 16),
@@ -84,12 +86,12 @@ class _AccountCardView extends State<AccountCardView> {
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -122,55 +124,55 @@ class _AccountCardView extends State<AccountCardView> {
                                   // ),
                                 ],
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.access_time,
-                                        color: FitnessAppTheme.grey
-                                            .withOpacity(0.5),
-                                        size: 16,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
-                                        child: Text(
-                                          user != null ? user['name'] : '',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FitnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            letterSpacing: 0.0,
-                                            color: FitnessAppTheme.grey
-                                                .withOpacity(0.5),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 4, bottom: 14),
-                                    child: Text(
-                                      user != null ? user['email'] : '',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                        letterSpacing: 0.0,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
+                              // Column(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.end,
+                              //   children: <Widget>[
+                              //     Row(
+                              //       mainAxisAlignment: MainAxisAlignment.center,
+                              //       children: <Widget>[
+                              //         Icon(
+                              //           Icons.access_time,
+                              //           color: FitnessAppTheme.grey
+                              //               .withOpacity(0.5),
+                              //           size: 16,
+                              //         ),
+                              //         Padding(
+                              //           padding:
+                              //               const EdgeInsets.only(left: 4.0),
+                              //           child: Text(
+                              //             user != null ? user['name'] : '',
+                              //             textAlign: TextAlign.center,
+                              //             style: TextStyle(
+                              //               fontFamily:
+                              //                   FitnessAppTheme.fontName,
+                              //               fontWeight: FontWeight.w500,
+                              //               fontSize: 14,
+                              //               letterSpacing: 0.0,
+                              //               color: FitnessAppTheme.grey
+                              //                   .withOpacity(0.5),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //     Padding(
+                              //       padding: const EdgeInsets.only(
+                              //           top: 4, bottom: 14),
+                              //       child: Text(
+                              //         user != null ? user['email'] : '',
+                              //         textAlign: TextAlign.center,
+                              //         style: TextStyle(
+                              //           fontFamily: FitnessAppTheme.fontName,
+                              //           fontWeight: FontWeight.w500,
+                              //           fontSize: 12,
+                              //           letterSpacing: 0.0,
+                              //           color: FitnessAppTheme.nearlyDarkBlue,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // )
                             ],
                           )
                         ],
@@ -178,7 +180,7 @@ class _AccountCardView extends State<AccountCardView> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 24, right: 24, top: 8, bottom: 8),
+                          left: 24, right: 24, top: 4, bottom: 4),
                       child: Container(
                         height: 2,
                         decoration: BoxDecoration(
@@ -209,9 +211,6 @@ class _AccountCardView extends State<AccountCardView> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: 
-                                    Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child:  Icon(
                                         Icons.info_rounded,
@@ -220,7 +219,6 @@ class _AccountCardView extends State<AccountCardView> {
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
                                     ),
-                                ),
                               ],
                             ),
                           ),

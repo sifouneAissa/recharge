@@ -35,10 +35,20 @@ class HomeList {
         navigateScreen: null,
         cardName : 'profile_data'
     ),
+    // HomeList(
+    //   imagePath: 'assets/fitness_app/fitness_app.png',
+    //   navigateScreen: FitnessAppHomeScreen(),
+    //   cardName: null
+    // ),
     HomeList(
       imagePath: 'assets/fitness_app/fitness_app.png',
-      navigateScreen: FitnessAppHomeScreen(),
-      cardName: null
+      navigateScreen: null,
+      cardName: 'info_data',
+    ),
+    HomeList(
+      imagePath: 'assets/fitness_app/fitness_app.png',
+      navigateScreen: null,
+      cardName: 'info2_data',
     ),
 
 //    HomeList(

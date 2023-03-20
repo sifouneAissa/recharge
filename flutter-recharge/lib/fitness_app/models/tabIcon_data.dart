@@ -71,7 +71,8 @@ class TabIconData {
       index: 5, 
       isSelected: false,
       animationController: null,
-      name: 'history'
+      name: 'history',
+      iconData: Icons.query_stats_outlined
     ),
   ];
 }

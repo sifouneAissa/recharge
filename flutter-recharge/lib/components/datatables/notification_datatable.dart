@@ -76,29 +76,33 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               margin: const EdgeInsets.all(15.0),
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
+                
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)),
+                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                  ),
               child: Row(
                 children: [
                   Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ClipOval(
-                        child: Material(
-                          color: FitnessAppTheme.nearlyDarkBlue, // Button color
+                      padding: EdgeInsets.only(bottom: 10,left: 10,top: 10),
+
+                      child: Container(
+                          decoration: BoxDecoration(
+
+                          borderRadius: BorderRadius.all(Radius.circular(60)),
+                          border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                          ),
+                          // color: FitnessAppTheme.nearlyDarkBlue, // Button color
+                          // shadowColor: FitnessAppTheme.nearlyDarkBlue,
+                          
                           child: InkWell(
-                            splashColor: Colors.red, // Splash color
+                            splashColor: null, // Splash color
                             onTap: () {},
                             child: SizedBox(
                                 width: 56,
                                 height: 56,
-                                child: notifications[index]['info']['type'] ==
-                                        'token'
-                                    ? Icon(Icons.wallet_outlined,size:40)
-                                    : Icon(IconData(0xf0654,
-                                        fontFamily: 'MaterialIcons'),size: 40,)),
+                                child:Icon(Icons.notifications_outlined,size:40,color: FitnessAppTheme.nearlyDarkBlue,))
                           ),
-                        ),
-                      )),
+                        )),
                   Flexible(child: _getTexts(notifications[index])),
                 ],
               ),
@@ -108,7 +112,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   _getTexts(notification) {
     return Text.rich(
       TextSpan(
-          text: '#' + S.of(context).transaction_request,
+          text: S.of(context).transaction_request,
           children: <InlineSpan>[
             TextSpan(
               text: notification['info']['type'] == 'token'
@@ -116,8 +120,9 @@ class _NotificationDatatable extends State<NotificationDatatable> {
                   : S.of(context).point + ' ',
               style: TextStyle(
                   fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightGreen),
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.lightGreen
+                  ),
             ),
             TextSpan(
               text: S.of(context).transaction_value,
@@ -127,9 +132,10 @@ class _NotificationDatatable extends State<NotificationDatatable> {
             TextSpan(
               text: notification['info']['cost'].toString() + ' ',
               style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.pinkAccent),
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
             ),
             TextSpan(
               text: S.of(context).day + notification['date'],

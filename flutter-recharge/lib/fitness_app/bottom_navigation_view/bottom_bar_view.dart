@@ -2,7 +2,9 @@ import 'dart:math' as math;
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/models/tabIcon_data.dart';
 import 'package:best_flutter_ui_templates/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cupertino_icons/cupertino_icons.dart' as cupertino_icons;
 
 import '../../main.dart';
 import '../models/tabIcon_data.dart';
@@ -184,18 +186,15 @@ class _BottomBarViewState extends State<BottomBarView>
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
                           onTap: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[5]);
-                                    widget.changeIndex!(5);
+                            setRemoveAllSelection(widget.tabIconsList?[5]);
+                            widget.changeIndex!(5);
                           },
-                          
-                          child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[5],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[5]);
-                                    widget.changeIndex!(5);
-                                  }),
+                          child: TabUIcons(
+                              tabIconData: widget.tabIconsList?[5],
+                              removeAllSelect: () {
+                                setRemoveAllSelection(widget.tabIconsList?[5]);
+                                widget.changeIndex!(5);
+                              }),
                         ),
                       ),
                     ),
@@ -231,7 +230,6 @@ class TabIcons extends StatefulWidget {
   @override
   _TabIconsState createState() => _TabIconsState();
 }
-
 
 class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
   @override
@@ -355,8 +353,6 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
   }
 }
 
-
-
 class TabUIcons extends StatefulWidget {
   const TabUIcons({Key? key, this.tabIconData, this.removeAllSelect})
       : super(key: key);
@@ -366,7 +362,6 @@ class TabUIcons extends StatefulWidget {
   @override
   _TabUIconsState createState() => _TabUIconsState();
 }
-
 
 class _TabUIconsState extends State<TabUIcons> with TickerProviderStateMixin {
   @override
@@ -408,19 +403,25 @@ class _TabUIconsState extends State<TabUIcons> with TickerProviderStateMixin {
               alignment: AlignmentDirectional.center,
               children: <Widget>[
                 ScaleTransition(
-                  alignment: Alignment.center,
-                  scale: Tween<double>(begin: 0.88, end: 1.0).animate(
-                      CurvedAnimation(
-                          parent: widget.tabIconData!.animationController!,
-                          curve:
-                              Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
-                  child: Icon(
-                      widget.tabIconData!.iconData,
-                      color: widget.tabIconData!.isSelected ? FitnessAppTheme.nearlyDarkBlue : null,
-                      size: 45.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                ),
+                    alignment: Alignment.center,
+                    scale: Tween<double>(begin: 0.88, end: 1.0).animate(
+                        CurvedAnimation(
+                            parent: widget.tabIconData!.animationController!,
+                            curve: Interval(0.1, 1.0,
+                                curve: Curves.fastOutSlowIn))),
+                    child: Text(
+                        String.fromCharCode(
+                            widget.tabIconData!.iconData!.codePoint),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w100,
+                          inherit: false,
+                          color: widget.tabIconData!.isSelected
+                              ? FitnessAppTheme.nearlyDarkBlue
+                              : Colors.black,
+                          fontSize: 45,
+                          fontFamily: widget.tabIconData!.iconData!.fontFamily,
+                          package: widget.tabIconData!.iconData!.fontPackage,
+                        ))),
                 Positioned(
                   top: 4,
                   left: 6,

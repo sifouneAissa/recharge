@@ -3,6 +3,8 @@ import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/body_measurement.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/home/account_card_view.dart';
+import 'package:best_flutter_ui_templates/home/info2_card_view.dart';
+import 'package:best_flutter_ui_templates/home/info_card_view.dart';
 import 'package:flutter/material.dart';
 import 'model/homelist.dart';
 
@@ -126,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               crossAxisCount: multiple ? 1 : 1,
                               mainAxisSpacing: 12.0,
                               crossAxisSpacing: 12.0,
-                              childAspectRatio: 1.5,
+                              childAspectRatio: 1.7,
                             ),
                           );
                         }
@@ -218,11 +220,18 @@ class HomeListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget mchild = AccountCardView(
-        animationController: animationController, animation: animation);
-    // if(listData!.cardName=='profile_data')
-    //   mchild = BodyMeasurementView(animationController: animationController,animation: animation);
-
+    Widget mchild;
+    
+    if(listData!.cardName=='profile_data')
+      mchild = AccountCardView(animationController: animationController,animation: animation);
+    else if(listData!.cardName == 'info_data')
+      mchild = InfoCardView(animationController: animationController,animation: animation);
+    else if(listData!.cardName == 'info2_data')
+      mchild = Info2CardView(animationController: animationController,animation: animation);
+    
+    else 
+     mchild = BodyMeasurementView(animationController: animationController,animation: animation);
+    
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {

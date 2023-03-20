@@ -83,9 +83,10 @@ void _checkCash() async {
             onSaved: (quantity) {},
             decoration: InputDecoration(
               hintText: S.of(context).your_quantity,
+              hintStyle: TextStyle(color : Colors.black),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.numbers),
+                child: Icon(Icons.numbers,color: FitnessAppTheme.nearlyDarkBlue,),
               ),
             ),
           ),
@@ -101,9 +102,10 @@ void _checkCash() async {
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: S.of(context).your_id,
+              hintStyle: TextStyle(color : Colors.black),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.person_2),
+                  child: Icon(Icons.person_2,color: FitnessAppTheme.nearlyDarkBlue,),
                 ),
               ),
             ),

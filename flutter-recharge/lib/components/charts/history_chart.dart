@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -94,7 +95,6 @@ class _HistoryChartState extends State<HistoryChart> {
       var res = await AuthApi().filterDates(
           {'end': endDate.toString(), 'start': startDate.toString()});
 
-
       var body = res.data;
 
       if (body['status']) {
@@ -115,19 +115,16 @@ class _HistoryChartState extends State<HistoryChart> {
       return List<SalesData>.generate(
           months.length, (index) => SalesData(months[index], 0));
     else
-      return List<SalesData>.generate(
-          months.length,
-          (index) {
-            
-            setState(() {
-              t_tokens = t_tokens + data[(index + 1).toString()]['token_cash'];
-            });
+      return List<SalesData>.generate(months.length, (index) {
+        setState(() {
+          t_tokens = t_tokens + data[(index + 1).toString()]['token_cash'];
+        });
 
-            return SalesData(
-              months[index],
-              double.parse(
-                  data[(index + 1).toString()]['token_cash'].toString()));
-          });
+        return SalesData(
+            months[index],
+            double.parse(
+                data[(index + 1).toString()]['token_cash'].toString()));
+      });
   }
 
   getSalesDataPOint() {
@@ -135,24 +132,81 @@ class _HistoryChartState extends State<HistoryChart> {
       return List<SalesData>.generate(
           months.length, (index) => SalesData(months[index], 0));
     else
-      return List<SalesData>.generate(
-          months.length,
-          (index) {
-            setState(() {
-              t_points = t_points + data[(index + 1).toString()]['point_cash'];
-            });
+      return List<SalesData>.generate(months.length, (index) {
+        setState(() {
+          t_points = t_points + data[(index + 1).toString()]['point_cash'];
+        });
 
-            return SalesData(
-              months[index],
-              double.parse(
-                  data[(index + 1).toString()]['point_cash'].toString()));
-          });
+        return SalesData(
+            months[index],
+            double.parse(
+                data[(index + 1).toString()]['point_cash'].toString()));
+      });
+  }
+
+  getChartSampleDataToken() {
+    if (data == null)
+      return List<ChartSampleData>.generate(
+          months.length, (index) => ChartSampleData(x: months[index], y: 0));
+    else
+      return List<ChartSampleData>.generate(months.length, (index) {
+        setState(() {
+          t_points = t_points + data[(index + 1).toString()]['token_cash'];
+        });
+
+        return ChartSampleData(
+            x: months[index],
+            y: double.parse(
+                data[(index + 1).toString()]['token_cash'].toString()));
+      });
+  }
+
+  getChartSampleDataPoint() {
+    if (data == null)
+      return List<ChartSampleData>.generate(
+          months.length, (index) => ChartSampleData(x: months[index], y: 0));
+    else
+      return List<ChartSampleData>.generate(months.length, (index) {
+        setState(() {
+          t_points = t_points + data[(index + 1).toString()]['point_cash'];
+        });
+
+        return ChartSampleData(
+            x: months[index],
+            y: double.parse(
+                data[(index + 1).toString()]['point_cash'].toString()));
+      });
+  }
+
+  /// Get default column series
+  List<ColumnSeries<ChartSampleData, String>> _getDefaultColumnSeriesPoint() {
+    return <ColumnSeries<ChartSampleData, String>>[
+      ColumnSeries<ChartSampleData, String>(
+        dataSource: getChartSampleDataPoint(),
+        xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+        yValueMapper: (ChartSampleData sales, _) => sales.y,
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true, textStyle: TextStyle(fontSize: 10)),
+      )
+    ];
+  }
+
+  /// Get default column series
+  List<ColumnSeries<ChartSampleData, String>> _getDefaultColumnSeriesToken() {
+    return <ColumnSeries<ChartSampleData, String>>[
+      ColumnSeries<ChartSampleData, String>(
+        dataSource: getChartSampleDataToken(),
+        xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+        yValueMapper: (ChartSampleData sales, _) => sales.y,
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true, textStyle: TextStyle(fontSize: 10)),
+      )
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -181,104 +235,148 @@ class _HistoryChartState extends State<HistoryChart> {
                 ),
               )
             : Container(),
-        Center(
-            child: Container(
-                // height of the Container widget
-                height: MediaQuery.of(context).size.height / 2,
-                // width of the Container widget
-                width: double.infinity,
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: SfCartesianChart(
-                      // title: ChartTitle(text: 'Half yearly sales analysis'), //Chart title.
-                      legend: Legend(isVisible: true), // Enables the legend.
-                      // tooltipBehavior: ChartTooltipBehavior(enable: true), // Enables the tooltip.
-                      primaryXAxis: CategoryAxis(
-                        interval: 1,
-                      ),
-                      zoomPanBehavior: _zoomPanBehavior,
-                      series: <LineSeries<SalesData, String>>[
-                        LineSeries<SalesData, String>(
-                            name: 'تاوكنز',
-                            dataSource: getSalesDataToken(),
-                            color: Colors.green,
-                            xValueMapper: (SalesData sales, _) => sales.year,
-                            yValueMapper: (SalesData sales, _) => sales.sales,
-                            dataLabelSettings: DataLabelSettings(
-                              isVisible: true,
-                            ) // Enables the data label.
-                            ),
-                        LineSeries<SalesData, String>(
-                            name: 'مسرعات',
-                            dataSource: getSalesDataPOint(),
-                            color: Colors.pinkAccent,
-                            xValueMapper: (SalesData sales, _) => sales.year,
-                            yValueMapper: (SalesData sales, _) => sales.sales,
-                            dataLabelSettings: DataLabelSettings(
-                                isVisible: true) // Enables the data label.
-                            )
-                      ]),
-                ))),
-                Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                      Text.rich(
-                TextSpan(
-                    text: 'كلفة التاوكنز : ',
-                    children: <InlineSpan>[
-                      TextSpan(
-                        text: '',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold,color: Colors.lightGreen),
-                      ),
-                      TextSpan(
-                        text: '',
-                        // style: TextStyle(
-                        //     fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: t_tokens.toString(),
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold,color: Colors.lightGreen),
-                      ),
-                      TextSpan(
-                        text: '',
-                        // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                      ),
-                    ]),
-                textAlign: TextAlign.start,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-               Text.rich(
-                TextSpan(
-                    text: 'كلفة المسرعات : ',
-                    children: <InlineSpan>[
-                      TextSpan(
-                        text: '',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold,color: Colors.lightGreen),
-                      ),
-                      TextSpan(
-                        text: '',
-                        // style: TextStyle(
-                        //     fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: t_points.toString(),
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold,color: Colors.pinkAccent),
-                      ),
-                      TextSpan(
-                        text: '',
-                        // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                      ),
-                    ]),
-                textAlign: TextAlign.start,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              )
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
                   ],
-                )
+                ),
+                width: MediaQuery.of(context).size.width * 0.4,
+                // height: MediaQuery.of(context).size.height * 0.33,
+                // color:Colors.amber,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Text.rich(TextSpan(text: 'تاوكنز : ', children: [
+                        TextSpan(
+                            text: t_tokens.toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold))
+                      ])),
+                      Container(
+                        height: 8,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              10), // <= No more error here :)
+                          color: FitnessAppTheme.nearlyBlue,
+                        ),
+                        margin: EdgeInsets.only(bottom: 5, top: 5),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Column(
+                          children: [
+                            Text('مجموع ما شحنت '),
+                            Text('من تاوكنز'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.1,
+            ),
+            Container(
+                width: MediaQuery.of(context).size.width * 0.45,
+                // height: MediaQuery.of(context).size.height * 0.33,
+                // color:Colors.amber,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Text.rich(TextSpan(text: 'مسرعات : ', children: [
+                        TextSpan(
+                            text: t_points.toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold))
+                      ])),
+                      Container(
+                        height: 8,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              10), // <= No more error here :)
+                          color: Colors.red,
+                        ),
+                        margin: EdgeInsets.only(bottom: 5, top: 5),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child:  Column(
+                          children: [
+                             Text('مجموع ما شحنت '),
+                            Text('من مسرعات'),
+                          ],
+                        )
+                      )
+                    ],
+                  ),
+                ))
+          ],
+        ),
+        _buildDefaultColumnChartToken(),
+        _buildDefaultColumnChartPoint(),
       ],
+    );
+  }
+
+  /// Get default column chart
+  SfCartesianChart _buildDefaultColumnChartPoint() {
+    return SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      title: ChartTitle(text: 'مسرعات نقاط معاملات ومصاريف'),
+      primaryXAxis: CategoryAxis(
+        majorGridLines: const MajorGridLines(width: 0),
+      ),
+      primaryYAxis: NumericAxis(
+          axisLine: const AxisLine(width: 0),
+          labelFormat: '{value}',
+          majorTickLines: const MajorTickLines(size: 0)),
+      series: _getDefaultColumnSeriesPoint(),
+    );
+  }
+
+  SfCartesianChart _buildDefaultColumnChartToken() {
+    return SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      title: ChartTitle(text: 'تاوكنز معاملات ومصاريف'),
+      primaryXAxis: CategoryAxis(
+        majorGridLines: const MajorGridLines(width: 0),
+      ),
+      primaryYAxis: NumericAxis(
+          axisLine: const AxisLine(width: 0),
+          labelFormat: '{value}',
+          majorTickLines: const MajorTickLines(size: 0)),
+      series: _getDefaultColumnSeriesToken(),
     );
   }
 }
@@ -293,4 +391,66 @@ class ChartData {
   ChartData(this.x, this.y);
   final DateTime x;
   final double? y;
+}
+
+///Chart sample data
+class ChartSampleData {
+  /// Holds the datapoint values like x, y, etc.,
+  ChartSampleData(
+      {this.x,
+      this.y,
+      this.xValue,
+      this.yValue,
+      this.secondSeriesYValue,
+      this.thirdSeriesYValue,
+      this.pointColor,
+      this.size,
+      this.text,
+      this.open,
+      this.close,
+      this.low,
+      this.high,
+      this.volume});
+
+  /// Holds x value of the datapoint
+  final dynamic x;
+
+  /// Holds y value of the datapoint
+  final num? y;
+
+  /// Holds x value of the datapoint
+  final dynamic xValue;
+
+  /// Holds y value of the datapoint
+  final num? yValue;
+
+  /// Holds y value of the datapoint(for 2nd series)
+  final num? secondSeriesYValue;
+
+  /// Holds y value of the datapoint(for 3nd series)
+  final num? thirdSeriesYValue;
+
+  /// Holds point color of the datapoint
+  final Color? pointColor;
+
+  /// Holds size of the datapoint
+  final num? size;
+
+  /// Holds datalabel/text value mapper of the datapoint
+  final String? text;
+
+  /// Holds open value of the datapoint
+  final num? open;
+
+  /// Holds close value of the datapoint
+  final num? close;
+
+  /// Holds low value of the datapoint
+  final num? low;
+
+  /// Holds high value of the datapoint
+  final num? high;
+
+  /// Holds open value of the datapoint
+  final num? volume;
 }

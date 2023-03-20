@@ -158,9 +158,10 @@ void initState() {
             onSaved: (quantity) {},
             decoration: InputDecoration(
               hintText: S.of(context).your_quantity,
+              hintStyle: TextStyle(color : Colors.black),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.numbers),
+                child: Icon(Icons.numbers,color : FitnessAppTheme.nearlyDarkBlue),
               ),
             ),
           ),
