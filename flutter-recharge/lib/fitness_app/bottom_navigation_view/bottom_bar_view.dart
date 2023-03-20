@@ -65,7 +65,7 @@ class _BottomBarViewState extends State<BottomBarView>
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              child: TabUIcons(
+                              child: TabIcons(
                                   tabIconData: widget.tabIconsList?[0],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
@@ -74,7 +74,7 @@ class _BottomBarViewState extends State<BottomBarView>
                                   }),
                             ),
                             Expanded(
-                              child: TabUIcons(
+                              child: TabIcons(
                                   tabIconData: widget.tabIconsList?[1],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
@@ -91,7 +91,7 @@ class _BottomBarViewState extends State<BottomBarView>
                                   64.0,
                             ),
                             Expanded(
-                              child: TabUIcons(
+                              child: TabIcons(
                                   tabIconData: widget.tabIconsList?[2],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
@@ -100,7 +100,7 @@ class _BottomBarViewState extends State<BottomBarView>
                                   }),
                             ),
                             Expanded(
-                              child: TabUIcons(
+                              child: TabIcons(
                                   tabIconData: widget.tabIconsList?[3],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
