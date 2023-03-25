@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
@@ -23,6 +25,8 @@ class _LoginForm extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _hasError = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +53,15 @@ class _LoginForm extends State<LoginForm> {
                 ? S.of(context).invalid_email
                 : null,
             onSaved: (email) {},
+            
             decoration: InputDecoration(
               hintText: S.of(context).your_email,
+              hintStyle : TextStyle(
+                  color: Colors.black
+                ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
+                child: Icon(Icons.person,color:FitnessAppTheme.nearlyDarkBlue),
               ),
             ),
           ),
@@ -70,9 +78,12 @@ class _LoginForm extends State<LoginForm> {
                   value!.isEmpty ? S.of(context).invalid_password : null,
               decoration: InputDecoration(
                 hintText: S.of(context).your_password,
+                hintStyle : TextStyle(
+                  color: Colors.black
+                ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(Icons.lock,color: FitnessAppTheme.nearlyDarkBlue,),
                 ),
               ),
             ),
@@ -81,6 +92,7 @@ class _LoginForm extends State<LoginForm> {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: FitnessAppTheme.nearlyDarkBlue),
               onPressed: _isLoading ? null : handleLogin,
               child: Text(
                 S.of(context).login.toUpperCase(),
@@ -107,11 +119,16 @@ class _LoginForm extends State<LoginForm> {
 
 
   handleLogin() async {
+
     if (_formKey.currentState!.validate()) {
       print('Form is valid');
       setState(() {
         _isLoading = true;
+        
+        EasyLoading.show(status: 'جاري التحقق ...',maskType: EasyLoadingMaskType.custom);
+
       });
+      
 
       var data = {'email': email.text, 'password': password.text};
 
@@ -154,6 +171,8 @@ class _LoginForm extends State<LoginForm> {
       setState(() {
         _isLoading = false;
       });
+      
+      EasyLoading.dismiss();
     } else {
       print('Form is invalid');
 

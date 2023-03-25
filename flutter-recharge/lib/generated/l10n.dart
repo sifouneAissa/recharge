@@ -400,6 +400,16 @@ class S {
     );
   }
 
+  /// `افضل العروض`
+  String get best_offer {
+    return Intl.message(
+      'افضل العروض',
+      name: 'best_offer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `الرئيسية`
   String get my_dashboard {
     return Intl.message(
@@ -765,6 +775,56 @@ class S {
     return Intl.message(
       'نوع المعاملة',
       name: 'transaction_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `جاري معاجلة الطلب ...`
+  String get sending_add_jawker {
+    return Intl.message(
+      'جاري معاجلة الطلب ...',
+      name: 'sending_add_jawker',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `جاري معالجة الطلب ...`
+  String get sending_add_tokens {
+    return Intl.message(
+      'جاري معالجة الطلب ...',
+      name: 'sending_add_tokens',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `المعرف خاطئ`
+  String get failed_add_tokens {
+    return Intl.message(
+      'المعرف خاطئ',
+      name: 'failed_add_tokens',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `حدث خطأ في العملية`
+  String get failed_add_jawaker {
+    return Intl.message(
+      'حدث خطأ في العملية',
+      name: 'failed_add_jawaker',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `سيتم مراجعة طلبك وستتلقى اشعارا لاحقا`
+  String get request_success {
+    return Intl.message(
+      'سيتم مراجعة طلبك وستتلقى اشعارا لاحقا',
+      name: 'request_success',
       desc: '',
       args: [],
     );

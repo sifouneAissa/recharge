@@ -79,25 +79,20 @@ class _TokenScreenState extends State<TokenScreen>
     //   ),
     // );
 
-    listViews.add(
-      AccountCardView(
-         animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval(0.6, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-    )
-  );
+    listViews.add(AccountCardView(
+      animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+          parent: widget.animationController!,
+          curve: Interval(0.6, 1.0, curve: Curves.fastOutSlowIn))),
+      animationController: widget.animationController,
+    ));
 
-listViews.add(
+    listViews.add(
       TitleView(
         titleTxt: S().token_shipping,
         // subTxt: 'Shop',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval(0.7, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: Interval(0.7, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
@@ -107,14 +102,11 @@ listViews.add(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
-                curve: Interval(0.8, 1.0,
-                    curve: Curves.fastOutSlowIn))),
+                curve: Interval(0.8, 1.0, curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.animationController,
       ),
     );
-    
 
-    
     // listViews.add(
     //   TitleView(
     //     titleTxt: 'Jawaker Shipping',
@@ -137,7 +129,6 @@ listViews.add(
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-    
 
     // listViews.add(
     //   TitleView(
@@ -161,7 +152,6 @@ listViews.add(
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-    
 
     // listViews.add(
     //   TitleView(
@@ -184,7 +174,6 @@ listViews.add(
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-  
 
     // listViews.add(
     //   TitleView(

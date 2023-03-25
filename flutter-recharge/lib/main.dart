@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/introduction_animation_screen.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -15,12 +18,32 @@ import 'generated/l10n.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   var token = await GetData().getToken();
 
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
   ]).then((_) => runApp(MyApp(hasToken: token !=null,)));
+  configLoading();
+}
+
+
+
+  void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = FitnessAppTheme.nearlyDarkBlue
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = false
+    ..dismissOnTap = false;
 }
 
 class MyApp extends StatelessWidget {
@@ -62,6 +85,7 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
       ),
       home: hasToken ? NavigationHomeScreen() : IntroductionAnimationScreen(),
+      builder: EasyLoading.init(),
     );
   }
 }

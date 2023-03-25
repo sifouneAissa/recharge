@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/care_view.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/center_next_button.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/mood_diary_vew.dart';
@@ -7,6 +8,7 @@ import 'package:best_flutter_ui_templates/introduction_animation/components/top_
 import 'package:best_flutter_ui_templates/introduction_animation/components/welcome_view.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'package:best_flutter_ui_templates/screens/Signup/signup_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class IntroductionAnimationScreen extends StatefulWidget {
@@ -27,6 +29,12 @@ class _IntroductionAnimationScreenState
         AnimationController(vsync: this, duration: Duration(seconds: 8));
     _animationController?.animateTo(0.0);
     super.initState();
+
+
+    FirebaseMessaging.instance.getToken().then((value) async {
+        var storage = await GetData().getInstance();
+        storage.setString('firebase_token',value);
+    },);
   }
 
   @override

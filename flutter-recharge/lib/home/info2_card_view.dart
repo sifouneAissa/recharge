@@ -67,7 +67,7 @@ class _Info2CardView extends State<Info2CardView> {
                     Padding(
                     padding: EdgeInsets.all(5),
                     child: Text(
-                                  'كما يمكنك مراجعة كل معاملاتك ',
+                                  'يمكنك مراجعة كل معاملاتك ',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,

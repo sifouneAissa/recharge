@@ -14,6 +14,11 @@ class GetData {
         return storage.getString('token');
     }
 
+    getFirebaseToken() async {
+        var storage = await getInstance();
+        return storage.getString('firebase_token');
+    }
+
   getMonths() async {
         var storage = await getInstance();
         return storage.getString('months');
@@ -39,6 +44,20 @@ class GetData {
         var storage = await getInstance();
         return storage.getString('diffs');
     }
+
+    getTokenPackages() async{
+      
+        var storage = await getInstance();
+        return storage.getString('packages');
+    }
+
+    
+    updateTokenPackages(data) async {
+        var storage = await getInstance();
+        return storage.setString('packages',jsonEncode(data));
+    }
+
+
 
      
     updateDiffs(diffs) async {

@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),
         "app_name": MessageLookupByLibrary.simpleMessage("Recharge App"),
         "balance": MessageLookupByLibrary.simpleMessage("الرصيد"),
+        "best_offer": MessageLookupByLibrary.simpleMessage("افضل العروض"),
         "camera": MessageLookupByLibrary.simpleMessage("كاميرا"),
         "care": MessageLookupByLibrary.simpleMessage("اهتم"),
         "choose_image":
@@ -42,6 +43,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب !"),
         "email_taken":
             MessageLookupByLibrary.simpleMessage("البريد الالكتروني مأخود"),
+        "failed_add_jawaker":
+            MessageLookupByLibrary.simpleMessage("حدث خطأ في العملية"),
+        "failed_add_tokens":
+            MessageLookupByLibrary.simpleMessage("المعرف خاطئ"),
         "feedback": MessageLookupByLibrary.simpleMessage("تعليق"),
         "gallery": MessageLookupByLibrary.simpleMessage("معرض الصور"),
         "have_account": MessageLookupByLibrary.simpleMessage("هل لديك حساب؟"),
@@ -92,6 +97,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "ready": MessageLookupByLibrary.simpleMessage("مستعد !"),
         "recommended": MessageLookupByLibrary.simpleMessage("موصى به لك"),
         "relax": MessageLookupByLibrary.simpleMessage("ارتاح"),
+        "request_success": MessageLookupByLibrary.simpleMessage(
+            "سيتم مراجعة طلبك وستتلقى اشعارا لاحقا"),
+        "sending_add_jawker":
+            MessageLookupByLibrary.simpleMessage("جاري معاجلة الطلب ..."),
+        "sending_add_tokens":
+            MessageLookupByLibrary.simpleMessage("جاري معالجة الطلب ..."),
         "shop": MessageLookupByLibrary.simpleMessage("تسوق"),
         "sign_out": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "sign_up": MessageLookupByLibrary.simpleMessage("تسجيل"),

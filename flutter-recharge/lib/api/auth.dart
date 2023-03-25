@@ -10,20 +10,25 @@ import 'package:dio/dio.dart';
 
 class AuthApi{
 
-  final String _url = 'http://192.168.1.3:8000/api/';
+  final String _url = 'http://192.168.1.6/api/';
 
 
   login(data) async {
 
       var fullUrl = _url + 'login';
+
       print(Uri.parse(fullUrl));
       return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders());
   }
 
   register(data) async {
 
+      var token_firebase =  await GetData().getFirebaseToken();
+
       var fullUrl = _url + 'register';
-      print(Uri.parse(fullUrl));
+      
+      data['token_firebase'] = token_firebase;
+
       return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders());
   }
 
@@ -32,7 +37,6 @@ class AuthApi{
       var auth = await GetData().getAuth();
       var token = await GetData().getToken();
 
-      print('Bearer $token');
 
       var fullUrl = _url + 'transactions/'+auth['id'].toString();
 
@@ -40,10 +44,52 @@ class AuthApi{
  
   }
 
+  getTokenPackages() async {
+
+    
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken(); 
+
+      
+      var fullUrl = _url + 'package/token/'+auth['id'].toString();     
+
+      return await http.get(Uri.parse(fullUrl),headers: _setHeadersAuthorization(token));
+ 
+
+  }
+
+  addPointWithoutP(data) async{
+      
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+
+      
+      FormData formData =  FormData.fromMap({
+        'count': data['count'],
+        'cost': data['cost'],
+        'type': data['type'],
+        'name_of_player' : data['name']
+      });
+
+      
+      var fullUrl = _url + 'transactions/'+auth['id'].toString();
+      
+      
+      
+       Dio dio = Dio();
+
+       return await dio.post(fullUrl,
+       data: formData,
+       options: Options(headers: _setHeadersAuthorization(token))
+       );
+       
+  }
+
   addPoint(data,PickedFile? file) async{
       
       var auth = await GetData().getAuth();
       var token = await GetData().getToken();
+
       FormData formData =  FormData.fromMap({
         'count': data['count'],
         'cost': data['cost'],
@@ -52,6 +98,7 @@ class AuthApi{
       });
       
       var fullUrl = _url + 'transactions/'+auth['id'].toString();
+      
       
       
        Dio dio = Dio();
@@ -80,6 +127,9 @@ class AuthApi{
       var token = await GetData().getToken();
 
       var fullUrl = _url + 'notifications/'+auth['id'].toString();
+
+      print('_url');
+      print(_url);
 
      return await http.get(Uri.parse(fullUrl),headers: _setHeadersAuthorization(token));
  
@@ -122,19 +172,11 @@ class AuthApi{
   };
 
   _setHeadersAuthorization(var token) => {
-      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json; charset=UTF-8',
       'Accept': "*/*",
       'connection': 'keep-alive',
       'Accept-Encoding' : 'gzip, deflate, br',
       'Authorization': 'Bearer $token',
-  };
-
-   _setHeadersAuthorizationFile(var token) => {
-      'Content-Type': 'multipart/form-data; charset=UTF-8',
-      'Accept': "*/*",
-      'connection': 'keep-alive',
-      'Accept-Encoding' : 'gzip, deflate, br',
-      'Authorization': 'Bearer $token'
   };
 
 }

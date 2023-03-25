@@ -25,6 +25,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
     __getOldNotifications();
     var t = await AuthApi().getNotifications();
     var body = jsonDecode(t.body);
+    print('body');
     if (body['status']) {
       setState(() {
         var data = AuthApi().getData(body);
@@ -39,9 +40,13 @@ class _NotificationDatatable extends State<NotificationDatatable> {
 
   __getOldNotifications() async {
     var t = await GetData().getNotification();
+    var d = await GetData().getDiffs();
+    
     if (t != null) {
+    
       setState(() {
         notifications = jsonDecode(t);
+        diffs = jsonDecode(d);
       });
     }
   }
@@ -100,7 +105,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
                             child: SizedBox(
                                 width: 56,
                                 height: 56,
-                                child:Icon(Icons.notifications_outlined,size:40,color: FitnessAppTheme.nearlyDarkBlue,))
+                                child:Icon(Icons.notifications_outlined,size:40,color: FitnessAppTheme.nearlyDarkBlue))
                           ),
                         )),
                   Flexible(child: _getTexts(notifications[index])),
@@ -110,8 +115,9 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   }
 
   _getTexts(notification) {
+
     return Text.rich(
-      TextSpan(
+      notification['data']['action'] == null ? TextSpan(
           text: S.of(context).transaction_request,
           children: <InlineSpan>[
             TextSpan(
@@ -141,7 +147,71 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               text: S.of(context).day + notification['date'],
               // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
             ),
-          ]),
+          ]) : (
+              notification['data']['action'] =='accepted' ? 
+              TextSpan(
+          text: 'لقد تم قبول طلبك المتعلق ب',
+          children: <InlineSpan>[
+            TextSpan(
+              text: notification['info']['type'] == 'token'
+                  ? S.of(context).token + ' '
+                  : S.of(context).point + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.lightGreen
+                  ),
+            ),
+            TextSpan(
+              text: S.of(context).transaction_value,
+              // style: TextStyle(
+              //     fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            TextSpan(
+              text: notification['info']['cost'].toString() + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
+            ),
+            TextSpan(
+              text: S.of(context).day + notification['date'],
+              // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            ),
+          ])
+          : TextSpan(
+          text: 'لقد تم رفض طلبك المتعلق ب',
+          children: <InlineSpan>[
+            TextSpan(
+              text: notification['info']['type'] == 'token'
+                  ? S.of(context).token + ' '
+                  : S.of(context).point + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.lightGreen
+                  ),
+            ),
+            TextSpan(
+              text: S.of(context).transaction_value,
+              // style: TextStyle(
+              //     fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            TextSpan(
+              text: notification['info']['cost'].toString() + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
+            ),
+            TextSpan(
+              text: S.of(context).day + notification['date'],
+              // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            ),
+          ])
+          ),
       textAlign: TextAlign.start,
       style: const TextStyle(fontWeight: FontWeight.bold),
     );

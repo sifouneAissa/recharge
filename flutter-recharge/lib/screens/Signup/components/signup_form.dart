@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
@@ -58,9 +60,12 @@ class _SignUpForm extends State<SignUpForm> {
             onSaved: (email) {},
             decoration: InputDecoration(
               hintText: S.of(context).your_name,
+                hintStyle : TextStyle(
+                  color: Colors.black
+                ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
+                child: Icon(Icons.person,color: FitnessAppTheme.nearlyDarkBlue),
               ),
             ),
           ),
@@ -78,9 +83,12 @@ class _SignUpForm extends State<SignUpForm> {
               onSaved: (email) {},
               decoration: InputDecoration(
                 hintText: S.of(context).your_phone,
+                hintStyle : TextStyle(
+                  color: Colors.black
+                ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.phone),
+                  child: Icon(Icons.phone,color: FitnessAppTheme.nearlyDarkBlue),
                 ),
               ),
             ),
@@ -99,9 +107,12 @@ class _SignUpForm extends State<SignUpForm> {
               onSaved: (email) {},
               decoration: InputDecoration(
                 hintText: S.of(context).your_email,
+                hintStyle : TextStyle(
+                  color: Colors.black
+                ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.email),
+                  child: Icon(Icons.email,color: FitnessAppTheme.nearlyDarkBlue),
                 ),
               ),
             ),
@@ -119,9 +130,11 @@ class _SignUpForm extends State<SignUpForm> {
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: S.of(context).your_password,
-                prefixIcon: Padding(
+                hintStyle : TextStyle(
+                  color: Colors.black
+                ),prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(Icons.lock,color: FitnessAppTheme.nearlyDarkBlue),
                 ),
               ),
             ),
@@ -129,6 +142,7 @@ class _SignUpForm extends State<SignUpForm> {
 
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: FitnessAppTheme.nearlyDarkBlue),
             onPressed: _isLoading ? null : handleRegister,
             child: Text(S.of(context).sign_up.toUpperCase()),
           ),
@@ -158,6 +172,7 @@ class _SignUpForm extends State<SignUpForm> {
       print('Form is valid');
       setState(() {
         _isLoading = true;
+        EasyLoading.show(status: 'جاري انشاء الحساب ...',maskType: EasyLoadingMaskType.custom);
       });
 
       var data = {'email': email.text, 'password': password.text,'phone' : phone.text,'name' : name.text};
@@ -201,12 +216,16 @@ class _SignUpForm extends State<SignUpForm> {
       setState(() {
         _isLoading = false;
       });
+      
+      EasyLoading.dismiss();
+      
     } else {
       print('Form is invalid');
 
       setState(() {
         _hasError = true;
       });
+      
     }
   }
 

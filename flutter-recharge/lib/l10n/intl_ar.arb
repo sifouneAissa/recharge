@@ -34,6 +34,7 @@
     "history" : "معاملات سابقة",
     "point_accelerator" : "مسرع النقاط",
     "recommended" : "موصى به لك",
+    "best_offer" : "افضل العروض",
     "my_dashboard" : "الرئيسية",
     "my_notifications" : "اشعاراتي",
     "my_transactions" : "معاملاتي",
@@ -71,7 +72,12 @@
     "day" : "يوم ",
     "last_notifications" : "آخر الاشعارات ",
     
-    "transaction_type" : "نوع المعاملة"
+    "transaction_type" : "نوع المعاملة",
+    "sending_add_jawker" : "جاري معاجلة الطلب ...",
+    "sending_add_tokens" : "جاري معالجة الطلب ...",
+    "failed_add_tokens" : "المعرف خاطئ",
+    "failed_add_jawaker" : "حدث خطأ في العملية",
+    "request_success" : "سيتم مراجعة طلبك وستتلقى اشعارا لاحقا"
 
 
 }

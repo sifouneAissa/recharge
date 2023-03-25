@@ -52,8 +52,11 @@ class _AcceleratorListViewState extends State<AcceleratorListView> with TickerPr
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 16, left: 16, right: 16, bottom: 16),
-                  child: AddJawakerAcceleratorForm(),
+                      top: 0, left: 16, right: 16, bottom: 16),
+                  child: AddJawakerAcceleratorForm(
+                    mainScreenAnimation: widget.mainScreenAnimation,
+                    mainScreenAnimationController: widget.mainScreenAnimationController,
+                  ),
                 ),
               ),
             ),

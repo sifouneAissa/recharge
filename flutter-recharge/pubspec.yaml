@@ -41,6 +41,10 @@ dependencies:
     dio: ^5.0.2
     syncfusion_flutter_charts: ^20.4.54
     syncfusion_flutter_datepicker: ^20.4.54
+    firebase_core: ^2.8.0
+    firebase_messaging: ^14.3.0
+    flutter_easyloading: ^3.0.5
+    adaptive_scrollbar: ^2.1.2
 dev_dependencies:
     flutter_test:
         sdk: flutter

@@ -10,26 +10,24 @@ class AccountCardView extends StatefulWidget {
   const AccountCardView({Key? key, this.animationController, this.animation})
       : super(key: key);
 
-
   @override
   _AccountCardView createState() => _AccountCardView();
-
-  }
+}
 
 class _AccountCardView extends State<AccountCardView> {
   var user;
 
-   @override
+  @override
   void initState() {
     _getUser();
     super.initState();
   }
 
   _getUser() async {
-      var auth = await GetData().getAuth();
-      setState(() {
-        user = auth;
-      });
+    var auth = await GetData().getAuth();
+    setState(() {
+      user = auth;
+    });
   }
 
   @override
@@ -62,7 +60,6 @@ class _AccountCardView extends State<AccountCardView> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 0, left: 16, right: 24),
@@ -70,7 +67,6 @@ class _AccountCardView extends State<AccountCardView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 4, bottom: 8, top: 16),
@@ -90,21 +86,31 @@ class _AccountCardView extends State<AccountCardView> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 4, bottom: 3),
-                                    child: Text(
-                                      user!=null ? user['cash'].toString() : '0',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 32,
-                                        color: Color.fromARGB(255, 4, 4, 5),
+                                        left: 0, bottom: 3),
+                                    child: Container(
+                                      child: Text(
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
+                                        user != null
+                                            ? user['cash'].toString()
+                                            : '0',
+                                        textAlign: TextAlign.center,
+                                        // overflow: TextOverflow.fade,
+                                        style: TextStyle(
+                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 32,
+                                          color: Color.fromARGB(255, 4, 4, 5),
+                                        ),
                                       ),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
                                     ),
                                   ),
                                   // Padding(
@@ -200,7 +206,9 @@ class _AccountCardView extends State<AccountCardView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  user!=null ? user['tcount'].toString() : '0',
+                                  user != null
+                                      ? user['tcount'].toString()
+                                      : '0',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -211,14 +219,15 @@ class _AccountCardView extends State<AccountCardView> {
                                   ),
                                 ),
                                 Padding(
-                                      padding: const EdgeInsets.only(top: 6),
-                                      child:  Icon(
-                                        Icons.info_rounded,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
-                                        size: 20.0,
-                                        semanticLabel: 'Text to announce in accessibility modes',
-                                      ),
-                                    ),
+                                  padding: const EdgeInsets.only(top: 6),
+                                  child: Icon(
+                                    Icons.info_rounded,
+                                    color: FitnessAppTheme.nearlyDarkBlue,
+                                    size: 20.0,
+                                    semanticLabel:
+                                        'Text to announce in accessibility modes',
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -232,7 +241,9 @@ class _AccountCardView extends State<AccountCardView> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      user!=null ? user['ncount'].toString() : '0',
+                                      user != null
+                                          ? user['ncount'].toString()
+                                          : '0',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
@@ -244,11 +255,12 @@ class _AccountCardView extends State<AccountCardView> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
-                                      child:  Icon(
+                                      child: Icon(
                                         Icons.notifications_active,
                                         color: FitnessAppTheme.nearlyDarkBlue,
                                         size: 20.0,
-                                        semanticLabel: 'Text to announce in accessibility modes',
+                                        semanticLabel:
+                                            'Text to announce in accessibility modes',
                                       ),
                                     ),
                                   ],
@@ -277,12 +289,13 @@ class _AccountCardView extends State<AccountCardView> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
-                                      child:  Icon(
-                                          Icons.money_sharp,
-                                          color: FitnessAppTheme.nearlyDarkBlue,
-                                          size: 20.0,
-                                          semanticLabel: 'Text to announce in accessibility modes',
-                                        ),
+                                      child: Icon(
+                                        Icons.money_sharp,
+                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        size: 20.0,
+                                        semanticLabel:
+                                            'Text to announce in accessibility modes',
+                                      ),
                                     ),
                                   ],
                                 ),

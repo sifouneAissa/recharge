@@ -2,66 +2,76 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recent_points_list_view.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recent_tokens_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class AddJawakerAcceleratorForm extends StatefulWidget {
-  const AddJawakerAcceleratorForm({Key? key}) : super(key: key);
+  const AddJawakerAcceleratorForm(
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      : super(key: key);
+
+  final AnimationController? mainScreenAnimationController;
+  final Animation<double>? mainScreenAnimation;
 
   @override
   _AddJawakerAcceleratorForm createState() => _AddJawakerAcceleratorForm();
 }
 
-
 class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
-  
   final ImagePicker _picker = ImagePicker();
 
   PickedFile? _imageFile;
-  TextEditingController quantity =  TextEditingController();final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController quantity = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController name = TextEditingController();
   bool _isLoading = false;
   bool _hasError = false;
   double _cost = 0;
   bool _hasCash = true;
+  bool _showRecent = false;
 
-void _checkCash() async {
-        var user = await GetData().getAuth();
-        setState(() {
-          _hasCash = user['cash'] + .0 >= _cost;
-        });
-}
-  
+  void _checkCash() async {
+    var user = await GetData().getAuth();
+    setState(() {
+      _hasCash = user['cash'] + .0 >= _cost;
+    });
+  }
+
   @override
-void initState() {
-  super.initState();
-  quantity.addListener(() {
-    final isV = quantity.value.text.isEmpty;
-    if(!isV) {
-      setState(() {
-        _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
-        // validate the cash of the user 
-        _checkCash();
-      });
-    }
-    else 
-      setState(() {
-        _cost = 0;
-      });
-  });
-}
+  void initState() {
+    super.initState();
+    quantity.addListener(() {
+      final isV = quantity.value.text.isEmpty;
+      if (!isV) {
+        setState(() {
+          _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
+          // validate the cash of the user
+          _checkCash();
+        });
+      } else
+        setState(() {
+          _cost = 0;
+        });
+    });
+  }
 
- Widget imageProfile() {
+  Widget imageProfile() {
     return Center(
       child: Stack(children: <Widget>[
         AspectRatio(
-           aspectRatio: 1.5, 
-          child: Image(image: _imageFile ==null ? 
-              AssetImage("assets/fitness_app/account_id.png")
-              : FileImage(File(_imageFile!.path)) as ImageProvider,fit: BoxFit.cover),
+          aspectRatio: 1.5,
+          child: Image(
+              image: _imageFile == null
+                  ? AssetImage("assets/fitness_app/account_id.png")
+                  : FileImage(File(_imageFile!.path)) as ImageProvider,
+              fit: BoxFit.cover),
         ),
         Positioned(
           bottom: 20.0,
@@ -75,7 +85,7 @@ void initState() {
             },
             child: Icon(
               Icons.camera_alt,
-              color: _imageFile!=null ? Colors.teal : Colors.red,
+              color: _imageFile != null ? Colors.teal : Colors.red,
               size: 28.0,
             ),
           ),
@@ -132,6 +142,24 @@ void initState() {
       _imageFile = pickedFile;
     });
   }
+
+  
+  handleSnackBar() {
+    final snackBar = SnackBar(
+      content: Text(S.of(context).request_success),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -146,9 +174,40 @@ void initState() {
                       style: TextStyle(color: Colors.red),
                     )
                   : null),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _showRecent = !_showRecent;
+              });
+            },
+            child: RichText(
+              text: TextSpan(children: [
+                TextSpan(
+                    text: ' اخر العمليات ',
+                    style: TextStyle(color: Colors.black)),
+                WidgetSpan(
+                    child: Icon(
+                  _showRecent ? Icons.arrow_upward : Icons.arrow_downward,
+                  size: 14,
+                ))
+              ]),
+            ),
+          ),
+          _showRecent
+              ? RecentPointsListView(
+                  mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0)
+                      .animate(CurvedAnimation(
+                          parent: widget.mainScreenAnimation!,
+                          curve:
+                              Interval(0.8, 1.0, curve: Curves.fastOutSlowIn))),
+                  mainScreenAnimationController:
+                      widget.mainScreenAnimationController,
+                )
+              : Container(),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => value!.isEmpty || (value.isNotEmpty && int.parse(value)==0)
+            validator: (value) => value!.isEmpty ||
+                    (value.isNotEmpty && (double.parse(value) + .0) == 0)
                 ? S.of(context).invalid_quantity
                 : null,
             controller: quantity,
@@ -158,95 +217,123 @@ void initState() {
             onSaved: (quantity) {},
             decoration: InputDecoration(
               hintText: S.of(context).your_quantity,
-              hintStyle: TextStyle(color : Colors.black),
+              hintStyle: TextStyle(color: Colors.black),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.numbers,color : FitnessAppTheme.nearlyDarkBlue),
+                child:
+                    Icon(Icons.numbers, color: FitnessAppTheme.nearlyDarkBlue),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: imageProfile(),
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) =>
+                value!.isEmpty || (value.isEmpty) ? 'اسم خاطئ' : null,
+            controller: name,
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.next,
+            cursorColor: kPrimaryColor,
+            onSaved: (quantity) {},
+            decoration: InputDecoration(
+              hintText: 'اسم اللاعب ',
+              hintStyle: TextStyle(color: Colors.black),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(defaultPadding),
+                child:
+                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkBlue),
+              ),
+            ),
           ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+          //   child: imageProfile(),
+          // ),
           const SizedBox(height: defaultPadding),
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
+                backgroundColor:
+                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
               ),
-                  onPressed: !_hasCash || _isLoading ? null : handleAddToken,
+              onPressed: !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
                 S().confirm.toUpperCase(),
+                style: TextStyle(fontSize: 20),
               ),
             ),
           ),
           const SizedBox(height: defaultPadding),
           Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          S().cost + _cost.toString(),
-          style: const TextStyle(color: Colors.pink),
-        ),
-        // GestureDetector(
-        //   onTap: () => {
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                S().cost + _cost.toString(),
+                style: const TextStyle(color: Colors.pink),
+              ),
+              // GestureDetector(
+              //   onTap: () => {
 
-        //   },
-        //   child: Text(
-        //     login ? "Sign Up" : "Sign In",
-        //     style: const TextStyle(
-        //       color: kPrimaryColor,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // )
-      ],
-    ),
+              //   },
+              //   child: Text(
+              //     login ? "Sign Up" : "Sign In",
+              //     style: const TextStyle(
+              //       color: kPrimaryColor,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              // )
+            ],
+          ),
         ],
       ),
     );
   }
-  
-   handleAddToken() async {
-    if(!_hasCash && _imageFile!=null){
-      
-    if (_formKey.currentState!.validate()) {
-      print('Form is valid');
 
-      // here test the cost if is it bigger then the cash of the user
-      setState(() {
-        _isLoading = true;
-      });
+  handleAddToken() async {
+    if (_hasCash) {
+      if (_formKey.currentState!.validate()) {
+        print('Form is valid');
 
-      var data = {'count': quantity.text , 'cost' : _cost,'type' : 'point'};
+        // here test the cost if is it bigger then the cash of the user
+        setState(() {
+          _isLoading = true;
+          EasyLoading.show(
+              status: S().sending_add_jawker,
+              maskType: EasyLoadingMaskType.custom);
+        });
 
-      var res = await AuthApi().addPoint(data,_imageFile);
-      var body = res.data;
+        var data = {
+          'name': name.text,
+          'count': quantity.text,
+          'cost': _cost,
+          'type': 'point'
+        };
 
-      if (body['status']) {
+        var res = await AuthApi().addPointWithoutP(data);
+        var body = res.data;
 
-        var data = AuthApi().getData(body);
-        await AuthApi().updateUser(data);
+        if (body['status']) {
+          var data = AuthApi().getData(body);
+          await AuthApi().updateUser(data);
+          handleSnackBar();
+        } else {
+          setState(() {
+            _hasError = true;
+          });
+        }
 
+        setState(() {
+          _isLoading = false;
+        });
+        EasyLoading.dismiss();
       } else {
+        print('Form is invalid');
+
         setState(() {
           _hasError = true;
         });
       }
-
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      print('Form is invalid');
-
-      setState(() {
-        _hasError = true;
-      });
-    }
     }
   }
-
 }
