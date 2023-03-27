@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -113,8 +114,8 @@ class _AccountCardView extends State<AccountCardView> {
                                       child: Text(
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
-                                        user != null
-                                            ? (user['cash'] != null ? user['cash'].toString() : '0')
+                                        user != null && user['cash'] != null
+                                            ? Common.formatNumber(user['cash'])
                                             : '0',
                                         textAlign: TextAlign.center,
                                         // overflow: TextOverflow.fade,

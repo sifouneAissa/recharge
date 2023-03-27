@@ -5,11 +5,12 @@ import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/models/jawaker_list_data.dart';
-import 'package:best_flutter_ui_templates/fitness_app/models/meals_list_data.dart';
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/models/token_package_data.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
+
 
 import '../../main.dart';
 
@@ -114,7 +115,7 @@ class _TokenPackageListViewState extends State<TokenPackageListView>
             transform: Matrix4.translationValues(
                 0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
             child: Container(
-              height: 250,
+              height: 220,
               width: double.infinity,
               child: ListView.builder(
                 controller: _scrollController,
@@ -140,7 +141,7 @@ class _TokenPackageListViewState extends State<TokenPackageListView>
                     mealsListData: TokenPackageData(
                     
                       imagePath: 'assets/fitness_app/tokens.png',
-                      titleTxt: packages[index]['count'].toString(),
+                      titleTxt: Common.formatNumber(packages[index]['count']),
                       kacl: packages[index]['cost'] + .0,
                       meals: _getMeals(packages[index]),
                       startColor: '#260202',
@@ -179,6 +180,7 @@ class JawakerView extends StatefulWidget {
 class _JawakerViewState extends State<JawakerView>
 {
   TextEditingController quantity = TextEditingController();
+  var focusNode = FocusNode();
 
   
   @override
@@ -203,7 +205,11 @@ void initState() {
                 100 * (1.0 - widget.animation!.value), 0.0, 0.0),
             child: SizedBox(
               width: 140,
-              child: Stack(
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(focusNode);
+                },
+                child: Stack(
                 children: <Widget>[
                   
                   Padding(
@@ -240,14 +246,13 @@ void initState() {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            
                             Text(
                               widget.mealsListData!.titleTxt,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: FitnessAppTheme.fontName,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 20,
                                 letterSpacing: 0.2,
                                 color: FitnessAppTheme.white,
                               ),
@@ -265,7 +270,7 @@ void initState() {
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 10,
+                                        fontSize: 13,
                                         letterSpacing: 0.2,
                                         color: FitnessAppTheme.white,
                                       ),
@@ -274,60 +279,60 @@ void initState() {
                                 ),
                               ),
                             ),
-                            widget.mealsListData?.kacl != 0
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: <Widget>[
-                                      Text(
-                                        widget.mealsListData!.kacl.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 24,
-                                          letterSpacing: 0.2,
-                                          color: FitnessAppTheme.white,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 4, bottom: 3),
-                                        child: Text(
-                                          '\$',
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FitnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 20,
-                                            letterSpacing: 0.2,
-                                            color: FitnessAppTheme.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                      color: FitnessAppTheme.nearlyWhite,
-                                      shape: BoxShape.circle,
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                            color: FitnessAppTheme.nearlyBlack
-                                                .withOpacity(0.4),
-                                            offset: Offset(8.0, 8.0),
-                                            blurRadius: 8.0),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: HexColor(widget.mealsListData!.endColor),
-                                        size: 24,
-                                      ),
-                                    ),
-                                  ),
+                            // widget.mealsListData?.kacl != 0
+                            //     ? Row(
+                            //         mainAxisAlignment: MainAxisAlignment.start,
+                            //         crossAxisAlignment: CrossAxisAlignment.end,
+                            //         children: <Widget>[
+                            //           Text(
+                            //             widget.mealsListData!.kacl.toString(),
+                            //             textAlign: TextAlign.center,
+                            //             style: TextStyle(
+                            //               fontFamily: FitnessAppTheme.fontName,
+                            //               fontWeight: FontWeight.w500,
+                            //               fontSize: 24,
+                            //               letterSpacing: 0.2,
+                            //               color: FitnessAppTheme.white,
+                            //             ),
+                            //           ),
+                            //           Padding(
+                            //             padding: const EdgeInsets.only(
+                            //                 left: 4, bottom: 3),
+                            //             child: Text(
+                            //               '\$',
+                            //               style: TextStyle(
+                            //                 fontFamily:
+                            //                     FitnessAppTheme.fontName,
+                            //                 fontWeight: FontWeight.w500,
+                            //                 fontSize: 20,
+                            //                 letterSpacing: 0.2,
+                            //                 color: FitnessAppTheme.white,
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       )
+                            //     : Container(
+                            //         decoration: BoxDecoration(
+                            //           color: FitnessAppTheme.nearlyWhite,
+                            //           shape: BoxShape.circle,
+                            //           boxShadow: <BoxShadow>[
+                            //             BoxShadow(
+                            //                 color: FitnessAppTheme.nearlyBlack
+                            //                     .withOpacity(0.4),
+                            //                 offset: Offset(8.0, 8.0),
+                            //                 blurRadius: 8.0),
+                            //           ],
+                            //         ),
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.all(6.0),
+                            //           child: Icon(
+                            //             Icons.add,
+                            //             color: HexColor(widget.mealsListData!.endColor),
+                            //             size: 24,
+                            //           ),
+                            //         ),
+                            //       ),
                             
                             Container(
                               child: TextFormField(
@@ -336,6 +341,7 @@ void initState() {
                               textInputAction: TextInputAction.next,
                               textDirection: TextDirection.rtl,
                               controller: quantity,
+                              focusNode: focusNode,
                               onSaved: (email) {},
                               decoration: InputDecoration(
                                 hintText: ' ادخل الكمية',
@@ -387,6 +393,7 @@ void initState() {
                   ),
                   
                 ],
+              ),
               ),
             ),
           ),

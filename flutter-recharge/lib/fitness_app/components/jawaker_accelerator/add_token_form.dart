@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
+
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 
@@ -288,10 +290,11 @@ class _AddTokenForm extends State<AddTokenForm> {
                         ])),
                         Text.rich(TextSpan(children: [
                           TextSpan(
-                            text: NumberFormat.compactCurrency(
+                            text: NumberFormat.simpleCurrency(
                                     // decimalDigits: 2,
                                     // locale: 'en_IN',
-                                    symbol: '')
+                                    // symbol: '.'
+                                    )
                                 .format(_cost),
                             style: const TextStyle(
                                 color: Colors.pink, fontSize: 18),
@@ -340,11 +343,7 @@ class _AddTokenForm extends State<AddTokenForm> {
                         ])),
                         Text.rich(TextSpan(children: [
                           TextSpan(
-                            text: NumberFormat.compactCurrency(
-                                    // decimalDigits: 3,
-                                    // locale: 'en_IN',
-                                    symbol: '')
-                                .format(_tokens),
+                            text: Common.formatNumber(_tokens),
                             style: const TextStyle(
                                 color: Colors.pink, fontSize: 18),
                           )
