@@ -80,11 +80,7 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                   GestureDetector(
-                                    child: Icon(
-                                    IconData(0xe481, fontFamily: 'MaterialIcons')
-                                    ,size: 45,
-                                    color: FitnessAppTheme.nearlyDarkBlue,
-                                    ),
+                                    child: Image.asset('assets/fitness_app/tab_5s.png',width: 45,),
                                     onTap: () {
                                       widget.onChangeBody();
                                     },

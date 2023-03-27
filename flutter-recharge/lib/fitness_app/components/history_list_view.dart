@@ -80,11 +80,7 @@ class _HistoryListViewState extends State<HistoryListView> with TickerProviderSt
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 GestureDetector(
-                                  child: Icon(
-                                    Icons.query_stats_outlined
-                                    ,size: 45,
-                                    color: FitnessAppTheme.nearlyDarkBlue,
-                                    ),
+                                  child: Image.asset('assets/fitness_app/tab_6s.png',width: 45,),
                                     onTap: () {
                                       widget.onChangeBody();
                                     },

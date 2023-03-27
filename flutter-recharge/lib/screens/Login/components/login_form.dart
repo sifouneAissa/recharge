@@ -26,8 +26,7 @@ class _LoginForm extends State<LoginForm> {
   bool _isLoading = false;
   bool _hasError = false;
 
-
-   handleSnackBarError() {
+  handleSnackBarError() {
     final snackBar = SnackBar(
       content: Text('فشل الاتصال'),
       // action: SnackBarAction(
@@ -42,7 +41,6 @@ class _LoginForm extends State<LoginForm> {
     // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,15 +67,13 @@ class _LoginForm extends State<LoginForm> {
                 ? S.of(context).invalid_email
                 : null,
             onSaved: (email) {},
-            
             decoration: InputDecoration(
               hintText: S.of(context).your_email,
-              hintStyle : TextStyle(
-                  color: Colors.black
-                ),
+              hintStyle: TextStyle(color: Colors.black),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person,color:FitnessAppTheme.nearlyDarkBlue),
+                child:
+                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkBlue),
               ),
             ),
           ),
@@ -94,12 +90,13 @@ class _LoginForm extends State<LoginForm> {
                   value!.isEmpty ? S.of(context).invalid_password : null,
               decoration: InputDecoration(
                 hintText: S.of(context).your_password,
-                hintStyle : TextStyle(
-                  color: Colors.black
-                ),
+                hintStyle: TextStyle(color: Colors.black),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock,color: FitnessAppTheme.nearlyDarkBlue,),
+                  child: Icon(
+                    Icons.lock,
+                    color: FitnessAppTheme.nearlyDarkBlue,
+                  ),
                 ),
               ),
             ),
@@ -108,7 +105,8 @@ class _LoginForm extends State<LoginForm> {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: FitnessAppTheme.nearlyDarkBlue),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: FitnessAppTheme.nearlyDarkBlue),
               onPressed: _isLoading ? null : handleLogin,
               child: Text(
                 S.of(context).login.toUpperCase(),
@@ -133,65 +131,64 @@ class _LoginForm extends State<LoginForm> {
     );
   }
 
-
   handleLogin() async {
-
     if (_formKey.currentState!.validate()) {
       print('Form is valid');
       setState(() {
         _isLoading = true;
-        
-        EasyLoading.show(status: 'جاري التحقق ...',maskType: EasyLoadingMaskType.custom);
 
+        EasyLoading.show(
+            status: 'جاري التحقق ...', maskType: EasyLoadingMaskType.custom);
       });
-      
 
       var data = {'email': email.text, 'password': password.text};
 
       try {
-var res = await AuthApi().login(data);
+        var res = await AuthApi().login(data);
 
-      var body = jsonDecode(res.body);
+        var body = jsonDecode(res.body);
 
-      if (body['status']) {
-        var data = AuthApi().getData(body);
+        if (body['status']) {
+          var data = AuthApi().getData(body);
 
-        SharedPreferences localeStorage = await SharedPreferences.getInstance();
-        // save the token
+          SharedPreferences localeStorage =
+              await SharedPreferences.getInstance();
+          // save the token
 
-        localeStorage.setString('token', data['token']);
-        localeStorage.setString('user', jsonEncode(data['user']));
-        
-        localeStorage.setString('transactions', jsonEncode(data['transactions']));
-        localeStorage.setString('notifications', jsonEncode(data['notifications']));
-        localeStorage.setString('months', jsonEncode(data['months']));
-        localeStorage.setString('diffs', jsonEncode(data['diffs']));
+          localeStorage.setString('token', data['token']);
+          localeStorage.setString('user', jsonEncode(data['user']));
 
+          localeStorage.setString(
+              'transactions', jsonEncode(data['transactions']));
+          localeStorage.setString(
+              'notifications', jsonEncode(data['notifications']));
+          localeStorage.setString('months', jsonEncode(data['months']));
+          localeStorage.setString('diffs', jsonEncode(data['diffs']));
 
-        var user = localeStorage.getString('user');
-        var token = localeStorage.getString('token');
+          var user = localeStorage.getString('user');
+          var token = localeStorage.getString('token');
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return NavigationHomeScreen();
-            },
-          ),
-        );
-      } else {
-        setState(() {
-          _hasError = true;
-        });
-      }
-      }catch(error){
-          handleSnackBarError();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NavigationHomeScreen();
+              },
+            ),
+          );
+        } else {
+          setState(() {
+            _hasError = true;
+          });
+        }
+      } catch (error) {
+        handleSnackBarError();
       }
 
       setState(() {
         _isLoading = false;
       });
-      
+
       EasyLoading.dismiss();
     } else {
       print('Form is invalid');

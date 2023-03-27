@@ -84,11 +84,7 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                               children: <Widget>[
                                 
                                 GestureDetector(
-                                  child: Icon(
-                              Icons.wallet_outlined
-                              ,size: 45,
-                              color: FitnessAppTheme.nearlyDarkBlue,
-                              ),
+                                  child: Image.asset('assets/fitness_app/tab_2s.png',width: 45,),
                               onTap: () {
                                 widget.onChangeBody();
                               },

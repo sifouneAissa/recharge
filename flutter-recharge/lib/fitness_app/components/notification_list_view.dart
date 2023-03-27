@@ -83,11 +83,7 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 GestureDetector(
-                                  child: Icon(
-                                  Icons.notifications_outlined
-                                  ,size: 45,
-                                  color: FitnessAppTheme.nearlyDarkBlue,
-                                  ),
+                                  child: Image.asset('assets/fitness_app/tab_4s.png',width: 45,),
                                   onTap: () {
                                     widget.onChangeBody();
                                   },

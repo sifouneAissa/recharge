@@ -13,18 +13,13 @@ import '../../../constants.dart';
 import '../../Login/login_screen.dart';
 
 class SignUpForm extends StatefulWidget {
-  
   const SignUpForm({Key? key}) : super(key: key);
 
-  
   @override
   _SignUpForm createState() => _SignUpForm();
-
 }
 
 class _SignUpForm extends State<SignUpForm> {
-
-  
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -39,7 +34,6 @@ class _SignUpForm extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
-          
           Padding(
               padding: const EdgeInsets.symmetric(vertical: defaultPadding),
               child: _hasError
@@ -51,21 +45,19 @@ class _SignUpForm extends State<SignUpForm> {
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: name,
-            validator: (value) => value!.isEmpty
-                ? S.of(context).invalid_name
-                : null,
+            validator: (value) =>
+                value!.isEmpty ? S.of(context).invalid_name : null,
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
             decoration: InputDecoration(
               hintText: S.of(context).your_name,
-                hintStyle : TextStyle(
-                  color: Colors.black
-                ),
+              hintStyle: TextStyle(color: Colors.black),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person,color: FitnessAppTheme.nearlyDarkBlue),
+                child:
+                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkBlue),
               ),
             ),
           ),
@@ -73,22 +65,21 @@ class _SignUpForm extends State<SignUpForm> {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: phone,
-            validator: (value) => value!.isEmpty || !vPhone(value)
-                ? S.of(context).invalid_phone
-                : null,
+              controller: phone,
+              validator: (value) => value!.isEmpty || !vPhone(value)
+                  ? S.of(context).invalid_phone
+                  : null,
               keyboardType: TextInputType.phone,
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               onSaved: (email) {},
               decoration: InputDecoration(
                 hintText: S.of(context).your_phone,
-                hintStyle : TextStyle(
-                  color: Colors.black
-                ),
+                hintStyle: TextStyle(color: Colors.black),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.phone,color: FitnessAppTheme.nearlyDarkBlue),
+                  child:
+                      Icon(Icons.phone, color: FitnessAppTheme.nearlyDarkBlue),
                 ),
               ),
             ),
@@ -97,22 +88,21 @@ class _SignUpForm extends State<SignUpForm> {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: email,
-            validator: (value) => value!.isEmpty || !vEmail(value)
-                ? S.of(context).invalid_email
-                : null,
+              controller: email,
+              validator: (value) => value!.isEmpty || !vEmail(value)
+                  ? S.of(context).invalid_email
+                  : null,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               onSaved: (email) {},
               decoration: InputDecoration(
                 hintText: S.of(context).your_email,
-                hintStyle : TextStyle(
-                  color: Colors.black
-                ),
+                hintStyle: TextStyle(color: Colors.black),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.email,color: FitnessAppTheme.nearlyDarkBlue),
+                  child:
+                      Icon(Icons.email, color: FitnessAppTheme.nearlyDarkBlue),
                 ),
               ),
             ),
@@ -121,28 +111,27 @@ class _SignUpForm extends State<SignUpForm> {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: password,
-            validator: (value) => value!.isEmpty
-                ? S.of(context).invalid_password
-                : null,
+              controller: password,
+              validator: (value) =>
+                  value!.isEmpty ? S.of(context).invalid_password : null,
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: S.of(context).your_password,
-                hintStyle : TextStyle(
-                  color: Colors.black
-                ),prefixIcon: Padding(
+                hintStyle: TextStyle(color: Colors.black),
+                prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock,color: FitnessAppTheme.nearlyDarkBlue),
+                  child:
+                      Icon(Icons.lock, color: FitnessAppTheme.nearlyDarkBlue),
                 ),
               ),
             ),
           ),
-
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: FitnessAppTheme.nearlyDarkBlue),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: FitnessAppTheme.nearlyDarkBlue),
             onPressed: _isLoading ? null : handleRegister,
             child: Text(S.of(context).sign_up.toUpperCase()),
           ),
@@ -165,7 +154,7 @@ class _SignUpForm extends State<SignUpForm> {
     );
   }
 
- handleSnackBarError() {
+  handleSnackBarError() {
     final snackBar = SnackBar(
       content: Text('فشل الاتصال'),
       // action: SnackBarAction(
@@ -181,82 +170,85 @@ class _SignUpForm extends State<SignUpForm> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-
   handleRegister() async {
-
     if (_formKey.currentState!.validate()) {
       print('Form is valid');
       setState(() {
         _isLoading = true;
-        EasyLoading.show(status: 'جاري انشاء الحساب ...',maskType: EasyLoadingMaskType.custom);
+        EasyLoading.show(
+            status: 'جاري انشاء الحساب ...',
+            maskType: EasyLoadingMaskType.custom);
       });
 
-      var data = {'email': email.text, 'password': password.text,'phone' : phone.text,'name' : name.text};
+      var data = {
+        'email': email.text,
+        'password': password.text,
+        'phone': phone.text,
+        'name': name.text
+      };
 
+      try {
+        var res = await AuthApi().register(data);
 
-      try{
-var res = await AuthApi().register(data);
+        var body = jsonDecode(res.body);
 
-      var body = jsonDecode(res.body);
+        if (body['status']) {
+          var data = AuthApi().getData(body);
 
-      if (body['status']) {
-        var data = AuthApi().getData(body);
+          SharedPreferences localeStorage =
+              await SharedPreferences.getInstance();
+          // save the token
 
-        SharedPreferences localeStorage = await SharedPreferences.getInstance();
-        // save the token
+          localeStorage.setString('token', data['token']);
+          localeStorage.setString('user', jsonEncode(data['user']));
+          localeStorage.setString(
+              'transactions', jsonEncode(data['transactions']));
+          localeStorage.setString(
+              'notifications', jsonEncode(data['notifications']));
+          localeStorage.setString('months', jsonEncode(data['months']));
+          localeStorage.setString('diffs', jsonEncode(data['diffs']));
 
-        localeStorage.setString('token', data['token']);
-        localeStorage.setString('user', jsonEncode(data['user']));
-        localeStorage.setString('transactions', jsonEncode(data['transactions']));
-        localeStorage.setString('notifications', jsonEncode(data['notifications']));
-        localeStorage.setString('months', jsonEncode(data['months']));
-        localeStorage.setString('diffs', jsonEncode(data['diffs']));
+          var user = localeStorage.getString('user');
+          var token = localeStorage.getString('token');
 
-
-        var user = localeStorage.getString('user');
-        var token = localeStorage.getString('token');
-
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return NavigationHomeScreen();
-            },
-          ),
-        );
-      } else {
-        setState(() {
-          _hasError = true;
-        });
-      }
-      }catch(error){
-          handleSnackBarError();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NavigationHomeScreen();
+              },
+            ),
+          );
+        } else {
+          setState(() {
+            _hasError = true;
+          });
+        }
+      } catch (error) {
+        handleSnackBarError();
       }
 
       setState(() {
         _isLoading = false;
       });
-      
+
       EasyLoading.dismiss();
-      
     } else {
       print('Form is invalid');
 
       setState(() {
         _hasError = true;
       });
-      
     }
   }
-
 
   vEmail(value) {
     return RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(value);
   }
-  vPhone(value){
+
+  vPhone(value) {
     return value!.length == 10;
   }
 }
