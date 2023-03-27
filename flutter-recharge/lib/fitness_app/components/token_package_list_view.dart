@@ -189,12 +189,12 @@ void initState() {
   quantity.addListener(() {
     widget.callback(quantity.value.text,widget.data['id'],widget.data);
   });
+
+  
 }
 
   @override
   Widget build(BuildContext context) {
-    
-  
     return AnimatedBuilder(
       animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -246,7 +246,9 @@ void initState() {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
+                            FittedBox(
+                              fit : BoxFit.scaleDown,
+                              child: Text(
                               widget.mealsListData!.titleTxt,
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -256,6 +258,7 @@ void initState() {
                                 letterSpacing: 0.2,
                                 color: FitnessAppTheme.white,
                               ),
+                            ),
                             ),
                             Expanded(
                               child: Padding(

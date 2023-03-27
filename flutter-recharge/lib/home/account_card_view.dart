@@ -111,8 +111,9 @@ class _AccountCardView extends State<AccountCardView> {
                                     padding: const EdgeInsets.only(
                                         left: 0, bottom: 3),
                                     child: Container(
-                                      child: Text(
-                                        overflow: TextOverflow.ellipsis,
+                                      child: FittedBox(
+                                        fit : BoxFit.scaleDown,
+                                        child : Text(
                                         softWrap: false,
                                         user != null && user['cash'] != null
                                             ? Common.formatNumber(user['cash'])
@@ -125,6 +126,7 @@ class _AccountCardView extends State<AccountCardView> {
                                           fontSize: 32,
                                           color: Color.fromARGB(255, 4, 4, 5),
                                         ),
+                                      )
                                       ),
                                       width: MediaQuery.of(context).size.width *
                                           0.7,

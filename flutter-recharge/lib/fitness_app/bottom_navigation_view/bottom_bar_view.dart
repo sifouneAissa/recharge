@@ -66,11 +66,11 @@ class _BottomBarViewState extends State<BottomBarView>
                           children: <Widget>[
                             Expanded(
                               child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[0],
+                                  tabIconData: widget.tabIconsList?[4],
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
-                                        widget.tabIconsList?[0]);
-                                    widget.changeIndex!(0);
+                                        widget.tabIconsList?[4]);
+                                    widget.changeIndex!(4);
                                   }),
                             ),
                             Expanded(
@@ -186,14 +186,14 @@ class _BottomBarViewState extends State<BottomBarView>
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
                           onTap: () {
-                            setRemoveAllSelection(widget.tabIconsList?[5]);
-                            widget.changeIndex!(5);
+                            setRemoveAllSelection(widget.tabIconsList?[0]);
+                            widget.changeIndex!(0);
                           },
                           child: TabIcons(
-                              tabIconData: widget.tabIconsList?[5],
+                              tabIconData: widget.tabIconsList?[0],
                               removeAllSelect: () {
-                                setRemoveAllSelection(widget.tabIconsList?[5]);
-                                widget.changeIndex!(5);
+                                setRemoveAllSelection(widget.tabIconsList?[0]);
+                                widget.changeIndex!(0);
                               }),
                         ),
                       ),
@@ -222,11 +222,12 @@ class _BottomBarViewState extends State<BottomBarView>
 }
 
 class TabIcons extends StatefulWidget {
-  const TabIcons({Key? key, this.tabIconData, this.removeAllSelect})
+  TabIcons({Key? key, this.tabIconData, this.removeAllSelect,this.size})
       : super(key: key);
 
   final TabIconData? tabIconData;
   final Function()? removeAllSelect;
+  var size ;
   @override
   _TabIconsState createState() => _TabIconsState();
 }
@@ -279,7 +280,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                               Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
                   child: Image.asset(widget.tabIconData!.isSelected
                       ? widget.tabIconData!.selectedImagePath
-                      : widget.tabIconData!.imagePath,width: MediaQuery.of(context).size.width * 0.11),
+                      : widget.tabIconData!.imagePath,width: widget.size != null ? widget.size : MediaQuery.of(context).size.width * 0.09),
                 ),
                 Positioned(
                   top: 4,
