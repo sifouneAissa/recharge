@@ -181,7 +181,7 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
                                         // padding:
                                         //     const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          user !=null ? S.of(context).last_notification + user['lst_notification'].toString() : '0',
+                                          user !=null ? S.of(context).last_notification + (user['lst_notification']!=null ? user['lst_notification'].toString() : 'لايوجد') : '0',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:

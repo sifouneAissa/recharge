@@ -11,7 +11,7 @@
 
     <application
     
-        android:label="Best Flutter UI Templates"
+        android:label="Recharge Jawaker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

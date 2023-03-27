@@ -183,7 +183,7 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                                         //     const EdgeInsets.only(left: 4.0),
                                         child: Container (
                                           child: Text(
-                                          user !=null ? S.of(context).last_shop + user['lst_shop_token'].toString() : '',
+                                          user !=null ? S.of(context).last_shop + (user['lst_shop_token'] != null ? user['lst_shop_token'].toString() : 'لايوجد') : '',
                                           textAlign: TextAlign.center,
                                           
                                           style: TextStyle(

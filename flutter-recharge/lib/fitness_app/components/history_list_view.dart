@@ -178,7 +178,7 @@ class _HistoryListViewState extends State<HistoryListView> with TickerProviderSt
                                         // padding:
                                         //     const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          user !=null ? S.of(context).last_trasanction + user['lst_o_transaction'].toString() : '0',
+                                          user !=null ? S.of(context).last_trasanction + (user['lst_o_transaction'] != null ? user['lst_o_transaction'].toString() : 'لايوجد') : '0',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:

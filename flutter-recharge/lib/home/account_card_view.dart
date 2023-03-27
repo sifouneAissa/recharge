@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
@@ -25,9 +28,22 @@ class _AccountCardView extends State<AccountCardView> {
 
   _getUser() async {
     var auth = await GetData().getAuth();
+    
     setState(() {
       user = auth;
     });
+    
+    // update user 
+    var res = await AuthApi().getUser();
+    
+    var data = await AuthApi().getData(jsonDecode(res.body));
+
+    setState(() {
+        user = data['user'];
+
+    });
+
+    await AuthApi().updateUser(data);
   }
 
   @override
@@ -98,7 +114,7 @@ class _AccountCardView extends State<AccountCardView> {
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
                                         user != null
-                                            ? user['cash'].toString()
+                                            ? (user['cash'] != null ? user['cash'].toString() : '0')
                                             : '0',
                                         textAlign: TextAlign.center,
                                         // overflow: TextOverflow.fade,

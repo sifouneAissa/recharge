@@ -179,7 +179,7 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
                                         // padding:
                                         //     const EdgeInsets.only(left: 4.0),
                                         child: Text(
-                                          user !=null ? S.of(context).last_trasanction + user['lst_transaction'].toString() : '0',
+                                          user !=null ? S.of(context).last_trasanction + (user['lst_transaction']!=null ? user['lst_transaction'].toString() : 'لايوجد') : '0',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:

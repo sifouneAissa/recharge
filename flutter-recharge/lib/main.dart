@@ -12,6 +12,8 @@ import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'generated/l10n.dart';
 
 
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
-      title: "Recharge App",
+      title: "Recharge Jawaker",
       localizationsDelegates: [
         S.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -84,7 +86,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: hasToken ? NavigationHomeScreen() : IntroductionAnimationScreen(),
+      home: hasToken ? NavigationHomeScreen() : LoginScreen(),
       builder: EasyLoading.init(),
     );
   }

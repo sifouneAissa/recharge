@@ -30,7 +30,7 @@ class _RecentPointTransactionDatatable
   final _horizontalScrollController = ScrollController();
 
   var transactions = [];
-  List<String> columns = ['#', S().count, S().cost_d, 'الحالة', S().date];
+  List<String> columns = ['#', S().count, S().cost_d,'اسم اللاعب', 'الحالة', S().date];
 
   var testT = [
     {'id': '1', 'count': 'count', 'cost': 'cost', 'date': 'date'}
@@ -156,6 +156,12 @@ class _RecentPointTransactionDatatable
                                     DataCell(Text(
                                         transactions[counter]['cost']
                                             .toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold))),
+                                            DataCell(Text(
+                                              transactions[counter]['name_of_player']!=null ? 
+                                        transactions[counter]['name_of_player'] 
+                                            .toString() : '',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))),
                                     // DataCell(transactions[counter]['type'].toString() == 'token' ? Icon(Icons.wallet_outlined,color: FitnessAppTheme.nearlyBlue,size: 40,) : Icon(IconData(0xf0654, fontFamily: 'MaterialIcons'),color: Colors.amber, size: 40,)),

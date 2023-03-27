@@ -282,16 +282,16 @@ class _HistoryScreenState extends State<HistoryScreen>
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                           color: FitnessAppTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
+                              .withOpacity(0.1 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
                   ),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top,
-                      ),
+                      // SizedBox(
+                      //   height: MediaQuery.of(context).padding.top,
+                      // ),
                       Padding(
                         padding: EdgeInsets.only(
                             left: 16,

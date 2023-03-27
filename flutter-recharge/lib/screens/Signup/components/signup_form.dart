@@ -199,6 +199,7 @@ class _SignUpForm extends State<SignUpForm> {
         var user = localeStorage.getString('user');
         var token = localeStorage.getString('token');
 
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
