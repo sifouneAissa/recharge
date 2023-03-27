@@ -499,7 +499,24 @@ class _AddTokenForm extends State<AddTokenForm> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+   handleSnackBarError() {
+    final snackBar = SnackBar(
+      content: Text('فشل الاتصال'),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   handleAddToken() async {
+    
     if (_hasCash) {
       if (_formKey.currentState!.validate()) {
         print('Form is valid');
@@ -528,21 +545,30 @@ class _AddTokenForm extends State<AddTokenForm> {
           'packages': packages
         };
 
-        var res = await AuthApi().addToken(ddata);
+        var res = null;
+        try {
 
-        var body = jsonDecode(res.body);
-        if (body['status']) {
-          var data = AuthApi().getData(body);
-          await AuthApi().updateUser(data);
-          handleSnackBar();
-          setState(() {
-            _hasError = false;
-          });
-        } else {
-          setState(() {
-            _hasError = true;
-          });
+          var res = await AuthApi().addToken(ddata);
+          var body = jsonDecode(res.body);
+        
+          if (body['status']) {
+            var data = AuthApi().getData(body);
+            await AuthApi().updateUser(data);
+            handleSnackBar();
+            setState(() {
+              _hasError = false;
+            });
+          } else {
+            setState(() {
+              _hasError = true;
+            });
+          }
+
+          } catch (error) {
+              handleSnackBarError();
         }
+
+        
 
         setState(() {
           _isLoading = false;

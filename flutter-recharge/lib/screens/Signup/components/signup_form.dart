@@ -165,6 +165,22 @@ class _SignUpForm extends State<SignUpForm> {
     );
   }
 
+ handleSnackBarError() {
+    final snackBar = SnackBar(
+      content: Text('فشل الاتصال'),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
 
   handleRegister() async {
 
@@ -178,7 +194,8 @@ class _SignUpForm extends State<SignUpForm> {
       var data = {'email': email.text, 'password': password.text,'phone' : phone.text,'name' : name.text};
 
 
-      var res = await AuthApi().register(data);
+      try{
+var res = await AuthApi().register(data);
 
       var body = jsonDecode(res.body);
 
@@ -212,6 +229,9 @@ class _SignUpForm extends State<SignUpForm> {
         setState(() {
           _hasError = true;
         });
+      }
+      }catch(error){
+          handleSnackBarError();
       }
 
       setState(() {

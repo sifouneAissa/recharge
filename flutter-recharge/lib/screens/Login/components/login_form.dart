@@ -27,6 +27,22 @@ class _LoginForm extends State<LoginForm> {
   bool _hasError = false;
 
 
+   handleSnackBarError() {
+    final snackBar = SnackBar(
+      content: Text('فشل الاتصال'),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +148,8 @@ class _LoginForm extends State<LoginForm> {
 
       var data = {'email': email.text, 'password': password.text};
 
-      var res = await AuthApi().login(data);
+      try {
+var res = await AuthApi().login(data);
 
       var body = jsonDecode(res.body);
 
@@ -166,6 +183,9 @@ class _LoginForm extends State<LoginForm> {
         setState(() {
           _hasError = true;
         });
+      }
+      }catch(error){
+          handleSnackBarError();
       }
 
       setState(() {

@@ -143,10 +143,25 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     });
   }
 
-  
   handleSnackBar() {
     final snackBar = SnackBar(
       content: Text(S.of(context).request_success),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  handleSnackBarError() {
+    final snackBar = SnackBar(
+      content: Text('فشل الاتصال'),
       // action: SnackBarAction(
       //   label: 'Undo',
       //   onPressed: () {
@@ -174,36 +189,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                       style: TextStyle(color: Colors.red),
                     )
                   : null),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _showRecent = !_showRecent;
-              });
-            },
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: ' اخر العمليات ',
-                    style: TextStyle(color: Colors.black)),
-                WidgetSpan(
-                    child: Icon(
-                  _showRecent ? Icons.arrow_upward : Icons.arrow_downward,
-                  size: 14,
-                ))
-              ]),
-            ),
-          ),
-          _showRecent
-              ? RecentPointsListView(
-                  mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0)
-                      .animate(CurvedAnimation(
-                          parent: widget.mainScreenAnimation!,
-                          curve:
-                              Interval(0.8, 1.0, curve: Curves.fastOutSlowIn))),
-                  mainScreenAnimationController:
-                      widget.mainScreenAnimationController,
-                )
-              : Container(),
+
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) => value!.isEmpty ||
@@ -249,21 +235,6 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
           //   child: imageProfile(),
           // ),
           const SizedBox(height: defaultPadding),
-          Hero(
-            tag: "login_btn",
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
-              ),
-              onPressed: !_hasCash || _isLoading ? null : handleAddToken,
-              child: Text(
-                S().confirm.toUpperCase(),
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ),
-          const SizedBox(height: defaultPadding),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -284,6 +255,41 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               //   ),
               // )
             ],
+          ),
+          const SizedBox(height: defaultPadding),
+          Hero(
+            tag: "login_btn",
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
+              ),
+              onPressed: !_hasCash || _isLoading ? null : handleAddToken,
+              child: Text(
+                S().confirm.toUpperCase(),
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ),
+          const SizedBox(height: defaultPadding),
+          RichText(
+            text: TextSpan(children: [
+              TextSpan(
+                  text: ' اخر العمليات ',
+                  style: TextStyle(color: Colors.black)),
+              WidgetSpan(
+                  child: Icon(
+                Icons.history,
+                size: 14,
+              ))
+            ]),
+          ),
+          RecentPointsListView(
+            mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(
+                    parent: widget.mainScreenAnimation!,
+                    curve: Interval(0.8, 1.0, curve: Curves.fastOutSlowIn))),
+            mainScreenAnimationController: widget.mainScreenAnimationController,
           ),
         ],
       ),
@@ -310,17 +316,21 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
           'type': 'point'
         };
 
-        var res = await AuthApi().addPointWithoutP(data);
-        var body = res.data;
+        try {
+          var res = await AuthApi().addPointWithoutP(data);
+          var body = res.data;
 
-        if (body['status']) {
-          var data = AuthApi().getData(body);
-          await AuthApi().updateUser(data);
-          handleSnackBar();
-        } else {
-          setState(() {
-            _hasError = true;
-          });
+          if (body['status']) {
+            var data = AuthApi().getData(body);
+            await AuthApi().updateUser(data);
+            handleSnackBar();
+          } else {
+            setState(() {
+              _hasError = false;
+            });
+          }
+        } catch (error) {
+          handleSnackBarError();
         }
 
         setState(() {
@@ -331,7 +341,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
         print('Form is invalid');
 
         setState(() {
-          _hasError = true;
+          _hasError = false;
         });
       }
     }
