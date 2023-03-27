@@ -102,10 +102,14 @@ class _NotificationDatatable extends State<NotificationDatatable> {
                           child: InkWell(
                             splashColor: null, // Splash color
                             onTap: () {},
-                            child: SizedBox(
-                                width: 56,
-                                height: 56,
-                                child:Icon(Icons.notifications_outlined,size:40,color: FitnessAppTheme.nearlyDarkBlue))
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Image.asset('assets/fitness_app/tab_4s.png',width: 40,)
+                                ),
+                            )
                           ),
                         )),
                   Flexible(child: _getTexts(notifications[index])),

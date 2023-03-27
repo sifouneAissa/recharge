@@ -172,7 +172,7 @@ class _TransactionDatatable extends State<TransactionDatatable> with TickerProvi
                     DataCell(Text(stransactions[counter]['cost'].toString(),style: TextStyle(fontWeight: FontWeight.bold))),
                     DataCell(Text(stransactions[counter]['name_of_player']!=null ? stransactions[counter]['name_of_player'].toString() : '',style: TextStyle(fontWeight: FontWeight.bold))),
                     DataCell(Text(stransactions[counter]['account_id']!=null ? stransactions[counter]['account_id'].toString() : '',style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataCell(stransactions[counter]['type'].toString() == 'token' ? Icon(Icons.wallet_outlined,color: FitnessAppTheme.nearlyBlue,size: 40,) : Icon(IconData(0xf0654, fontFamily: 'MaterialIcons'),color: Colors.amber, size: 40,)),
+                    DataCell(stransactions[counter]['type'].toString() == 'token' ? Image.asset('assets/fitness_app/tab_3s.png',width: 40,) : Image.asset('assets/fitness_app/tab_2s.png',width: 40,)),
                     DataCell(transactionStatus(stransactions[counter])),
                     DataCell(Text(stransactions[counter]['tdate'].toString(),style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.nearlyDarkBlue)))
                   ],
