@@ -8,6 +8,7 @@ import 'package:best_flutter_ui_templates/fitness_app/components/token_package_l
 import 'package:best_flutter_ui_templates/fitness_app/components/list_view/accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -115,28 +116,28 @@ class _AddTokenForm extends State<AddTokenForm> {
           padding: EdgeInsets.all(7),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 1),
+                margin: EdgeInsets.only(right: 0),
                 child: Text(
-                  element.packageData['count'].toString(),
+                  Common.formatNumber(element.packageData['count']),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 30),
-                child: Text(element.value.toString(),
+                margin: EdgeInsets.only(right: 80),
+                child: Text(Common.formatNumber(int.parse(element.value)),
                     overflow: TextOverflow.ellipsis),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 30),
-                child:
-                    Text(cost.substring(0, cost.length > 5 ? 5 : cost.length)),
-              )
+              // Container(
+              //   width: MediaQuery.of(context).size.width * 0.2,
+              //   margin: EdgeInsets.only(right: 30),
+              //   child:
+              //       Text(cost.substring(0, cost.length > 5 ? 5 : cost.length)),
+              // )
             ],
           ),
         ),
@@ -217,17 +218,17 @@ class _AddTokenForm extends State<AddTokenForm> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(right: 1),
+                  margin: EdgeInsets.only(left: 40),
                   child: Text('الحزمة'),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 60),
+                  margin: EdgeInsets.only(right: 80),
                   child: Text(' الكمية'),
                 ),
-                Container(
-                  margin: EdgeInsets.only(right: 80),
-                  child: Text(' الكلفة'),
-                )
+                // Container(
+                //   margin: EdgeInsets.only(right: 80),
+                //   child: Text(' الكلفة'),
+                // )
               ],
             ),
           ),
@@ -240,121 +241,55 @@ class _AddTokenForm extends State<AddTokenForm> {
         Container(
           height: 15,
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Container(
-            //   decoration: BoxDecoration(
-            //       border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
-            //       borderRadius: BorderRadius.circular(10)),
-            //   child: Padding(
-            //     padding: EdgeInsets.all(5),
-            //     child: Text(
-            //       S.of(context).cost + _cost.toString(),
-            //       style: const TextStyle(color: Colors.pink, fontSize: 20),
-            //     ),
-            //   ),
-            // ),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(top: 10, bottom: 10, left: 3, right: 0),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 5),
-                      decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: Padding(
-                        padding: EdgeInsets.all(2),
-                        child: Icon(
-                          Icons.money,
-                          size: 35,
-                          color: FitnessAppTheme.nearlyDarkBlue,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text.rich(TextSpan(children: [
-                          TextSpan(
-                            text: 'الكلفة',
-                            style: const TextStyle(
-                                color: Colors.pink, fontSize: 15),
-                          )
-                        ])),
-                        Text.rich(TextSpan(children: [
-                          TextSpan(
-                            text: NumberFormat.simpleCurrency(
-                                    // decimalDigits: 2,
-                                    // locale: 'en_IN',
-                                    // symbol: '.'
-                                    )
-                                .format(_cost),
-                            style: const TextStyle(
-                                color: Colors.pink, fontSize: 18),
-                          )
-                        ]))
+        Container(
+          // width: MediaQuery.of(context).size.width * 0.5,
+          // height: MediaQuery.of(context).size.height * 0.15,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: FitnessAppTheme.grey.withOpacity(0.4),
+                    offset: const Offset(1.1, 1.1),
+                    blurRadius: 10.0),
+              ]),
+          child: Column(
+            children: [
+              Container(
+                // height: MediaQuery.of(context).size.height * 0.1,
+                // width: MediaQuery.of(context).size.width * 0.5,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <HexColor>[
+                        HexColor('#260202'),
+                        HexColor('#F0AB2B'),
                       ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                  ],
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
+
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(top: 20, bottom: 20, right: 50, left: 50),
+                  child: Text(Common.formatNumber(_tokens),
+                      style:
+                          TextStyle(fontSize: 20, color: Colors.amberAccent)),
                 ),
               ),
-            ),
-            Container(
-              width: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(top: 10, bottom: 10, left: 3, right: 0),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 5),
-                      decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: Padding(
-                        padding: EdgeInsets.all(2),
-                        child: Icon(
-                          Icons.wallet_outlined,
-                          size: 35,
-                          color: FitnessAppTheme.nearlyDarkBlue,
-                        ),
-                      ),
+              Container(
+                decoration: BoxDecoration(
+                    // color: Colors.white
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text.rich(TextSpan(children: [
-                          TextSpan(
-                            text: 'تاوكنز',
-                            style: const TextStyle(
-                                color: Colors.pink, fontSize: 15),
-                          )
-                        ])),
-                        Text.rich(TextSpan(children: [
-                          TextSpan(
-                            text: Common.formatNumber(_tokens),
-                            style: const TextStyle(
-                                color: Colors.pink, fontSize: 18),
-                          )
-                        ]))
-                      ],
-                    ),
-                  ],
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("تاوكنز : " + Common.formatNumber(_tokens)),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         )
       ],
     );
@@ -385,37 +320,6 @@ class _AddTokenForm extends State<AddTokenForm> {
       key: _formKey,
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _showRecent = !_showRecent;
-              });
-            },
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: ' اخر العمليات ',
-                    style: TextStyle(color: Colors.black)),
-                WidgetSpan(
-                    child: Icon(
-                  _showRecent ? Icons.arrow_upward : Icons.arrow_downward,
-                  size: 14,
-                ))
-              ]),
-            ),
-          ),
-          _showRecent
-              ? RecentTokensListView(
-                  mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0)
-                      .animate(CurvedAnimation(
-                          parent: widget.mainScreenAnimation!,
-                          curve:
-                              Interval(0.8, 1.0, curve: Curves.fastOutSlowIn))),
-                  mainScreenAnimationController:
-                      widget.mainScreenAnimationController,
-                )
-              : Container(),
-
           TokenPackageListView(
             callbackPosition: (p) {
               setState(() {
@@ -529,7 +433,7 @@ class _AddTokenForm extends State<AddTokenForm> {
                 backgroundColor:
                     MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
               ),
-              onPressed: !_hasCash || _isLoading ? null : handleAddToken,
+              onPressed: data.isEmpty || !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
                 S.of(context).confirm.toUpperCase(),
                 style: TextStyle(fontSize: 20),
@@ -537,6 +441,26 @@ class _AddTokenForm extends State<AddTokenForm> {
             ),
           ),
           const SizedBox(height: defaultPadding),
+          RichText(
+            text: TextSpan(children: [
+              WidgetSpan(
+                  child: Icon(
+                Icons.history,
+                size: 14,
+              )),
+              TextSpan(
+                  text: ' اخر العمليات ',
+                  style: TextStyle(color: Colors.black)),
+              
+            ]),
+          ),
+          RecentTokensListView(
+            mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(
+                    parent: widget.mainScreenAnimation!,
+                    curve: Interval(0.8, 1.0, curve: Curves.fastOutSlowIn))),
+            mainScreenAnimationController: widget.mainScreenAnimationController,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -593,7 +517,8 @@ class _AddTokenForm extends State<AddTokenForm> {
         var packages = [];
 
         data.forEach((element) {
-          packages.add({'package_id': element.packageId, 'count': element.value});
+          packages
+              .add({'package_id': element.packageId, 'count': element.value});
         });
 
         var ddata = {
