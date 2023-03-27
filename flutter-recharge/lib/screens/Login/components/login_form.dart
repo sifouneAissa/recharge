@@ -7,6 +7,8 @@ import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:best_flutter_ui_templates/api/getData.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
@@ -25,6 +27,17 @@ class _LoginForm extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _hasError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    FirebaseMessaging.instance.getToken().then((value) async {
+        var storage = await GetData().getInstance();
+        storage.setString('firebase_token',value);
+    },);
+  }
+
 
   handleSnackBarError() {
     final snackBar = SnackBar(
