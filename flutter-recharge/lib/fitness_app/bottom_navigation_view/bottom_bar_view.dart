@@ -190,6 +190,7 @@ class _BottomBarViewState extends State<BottomBarView>
                             widget.changeIndex!(0);
                           },
                           child: TabIcons(
+                              size: MediaQuery.of(context).size.width * 0.09,
                               tabIconData: widget.tabIconsList?[0],
                               removeAllSelect: () {
                                 setRemoveAllSelection(widget.tabIconsList?[0]);
@@ -280,7 +281,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                               Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
                   child: Image.asset(widget.tabIconData!.isSelected
                       ? widget.tabIconData!.selectedImagePath
-                      : widget.tabIconData!.imagePath,width: widget.size != null ? widget.size : MediaQuery.of(context).size.width * 0.09),
+                      : widget.tabIconData!.imagePath,width: widget.size != null ? widget.size : MediaQuery.of(context).size.width * 0.08),
                 ),
                 Positioned(
                   top: 4,
