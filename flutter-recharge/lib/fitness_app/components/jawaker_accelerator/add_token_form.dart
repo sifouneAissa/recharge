@@ -274,9 +274,12 @@ class _AddTokenForm extends State<AddTokenForm> {
                 child: Padding(
                   padding:
                       EdgeInsets.only(top: 20, bottom: 20, right: 50, left: 50),
-                  child: Text(Common.formatNumber(_tokens),
+                  child: FittedBox(
+                    fit : BoxFit.scaleDown,
+                    child : Text(Common.formatNumber(_tokens),
                       style:
-                          TextStyle(fontSize: 20, color: Colors.amberAccent)),
+                          TextStyle(fontSize: 20, color: Colors.amberAccent))
+                  ),
                 ),
               ),
               Container(
@@ -285,7 +288,10 @@ class _AddTokenForm extends State<AddTokenForm> {
                     ),
                 child: Padding(
                   padding: EdgeInsets.all(10),
-                  child: Text("تاوكنز : " + Common.formatNumber(_tokens)),
+                  child: FittedBox(
+                    fit : BoxFit.scaleDown,
+                    child : Text("تاوكنز : " + Common.formatNumber(_tokens))
+                  ),
                 ),
               ),
             ],
