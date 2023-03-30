@@ -27,12 +27,12 @@ class _TransactionDatatable extends State<TransactionDatatable> with TickerProvi
 
     List<String> columns = [
       '#',
+      'الحالة',
       S().count,
       S().cost_d,
       'اسم اللاعب',
       'معرف اللاعب',
       S().transaction_type,
-      'الحالة',
       S().date
     ];
     TextEditingController search =  TextEditingController();
@@ -126,6 +126,27 @@ class _TransactionDatatable extends State<TransactionDatatable> with TickerProvi
         
   }
 
+   transactionColors(transaction) {
+    Color? color;
+    if(transaction['waiting'])
+        color = Colors.grey.withOpacity(0.1);
+    else if(transaction['accepted'])
+        color = Colors.greenAccent.withOpacity(0.1);
+    else if(transaction['rejected'])
+        color = Colors.redAccent.withOpacity(0.1);
+    
+    return color;
+        
+  }
+
+  transactionIcon(transaction) {
+    Widget? image = SizedBox();
+    if(transaction['waiting'])
+        image = Image.asset('assets/icons/loading.gif',width: 20,);
+    return image;
+        
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -166,14 +187,23 @@ class _TransactionDatatable extends State<TransactionDatatable> with TickerProvi
                     fontWeight: FontWeight.w800,
                     color: FitnessAppTheme.nearlyDarkBlue),
               ))), rows: List<DataRow>.generate(stransactions.length,(counter) => 
-                  DataRow(cells: [
+                  DataRow(
+                    color: MaterialStatePropertyAll(transactionColors(transactions[counter])),
+                    cells: [
                     DataCell(Text('#' + transactions[counter]['id'].toString(),style: TextStyle(color: FitnessAppTheme.nearlyDarkBlue,fontWeight: FontWeight.bold),)),
+                    DataCell(Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        transactionStatus(stransactions[counter]),
+                        SizedBox(width: 10,),
+                        transactionIcon(stransactions[counter])
+                      ],
+                    )),
                     DataCell(Text(stransactions[counter]['count'].toString(),style: TextStyle(fontWeight: FontWeight.bold),)),
                     DataCell(Text(stransactions[counter]['cost'].toString(),style: TextStyle(fontWeight: FontWeight.bold))),
                     DataCell(Text(stransactions[counter]['name_of_player']!=null ? stransactions[counter]['name_of_player'].toString() : '',style: TextStyle(fontWeight: FontWeight.bold))),
                     DataCell(Text(stransactions[counter]['account_id']!=null ? stransactions[counter]['account_id'].toString() : '',style: TextStyle(fontWeight: FontWeight.bold))),
                     DataCell(stransactions[counter]['type'].toString() == 'token' ? Image.asset('assets/fitness_app/tab_3s.png',width: 40,) : Image.asset('assets/fitness_app/tab_2s.png',width: 40,)),
-                    DataCell(transactionStatus(stransactions[counter])),
                     DataCell(Text(stransactions[counter]['tdate'].toString(),style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.nearlyDarkBlue)))
                   ],
                   // color: transactions[counter]['type'].toString() == 'token' ? MaterialStateProperty.all(Colors.lightGreen) : MaterialStateProperty.all(Colors.pinkAccent)

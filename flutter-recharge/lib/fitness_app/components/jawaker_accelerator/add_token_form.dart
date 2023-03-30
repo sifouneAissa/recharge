@@ -344,7 +344,7 @@ class _AddTokenForm extends State<AddTokenForm> {
               // update the data
               nData.add(elementt);
               // validate all data
-              nData = nData.where((element) => element.value != '').toList();
+              nData = nData.where((element) => element.value != '' && element.value !='0').toList();
               // set the data
               setState(() {
                 data = nData;

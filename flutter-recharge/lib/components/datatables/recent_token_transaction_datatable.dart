@@ -30,7 +30,7 @@ class _RecentTokenTransactionDatatable
   final _horizontalScrollController = ScrollController();
 
   var transactions = [];
-  List<String> columns = ['#', S().count, S().cost_d,'معرف الحساب', 'الحالة', S().date];
+  List<String> columns = ['#', 'الحالة', S().count, S().cost_d,'معرف الحساب', S().date];
 
   var testT = [
     {'id': '1', 'count': 'count', 'cost': 'cost', 'date': 'date'}
@@ -98,6 +98,27 @@ class _RecentTokenTransactionDatatable
 
   }
 
+     transactionColors(transaction) {
+    Color? color;
+    if(transaction['waiting'])
+        color = Colors.grey.withOpacity(0.1);
+    else if(transaction['accepted'])
+        color = Colors.greenAccent.withOpacity(0.1);
+    else if(transaction['rejected'])
+        color = Colors.redAccent.withOpacity(0.1);
+    
+    return color;
+        
+  }
+
+  transactionIcon(transaction) {
+    Widget? image = SizedBox();
+    if(transaction['waiting'])
+        image = Image.asset('assets/icons/loading.gif',width: 20,);
+    return image;
+        
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -139,6 +160,8 @@ class _RecentTokenTransactionDatatable
                               rows: List<DataRow>.generate(
                                 transactions.length,
                                 (counter) => DataRow(
+                                  color: MaterialStatePropertyAll(transactionColors(transactions[counter])),
+                    
                                   cells: [
                                     DataCell(Text(
                                       '#' +
@@ -148,6 +171,14 @@ class _RecentTokenTransactionDatatable
                                           color: FitnessAppTheme.nearlyDarkBlue,
                                           fontWeight: FontWeight.bold),
                                     )),
+                                    DataCell(Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        transactionStatus(transactions[counter]),
+                        SizedBox(width: 10,),
+                        transactionIcon(transactions[counter])
+                      ],
+                    )),
                                     DataCell(Text(
                                       transactions[counter]['count'].toString(),
                                       style: TextStyle(
@@ -158,9 +189,7 @@ class _RecentTokenTransactionDatatable
                                             .toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))),
-                                    DataCell(Text(transactions[counter]['account_id'].toString())),
-                                    DataCell(transactionStatus(transactions[counter])),
-                                    DataCell(Text(
+                                    DataCell(Text(transactions[counter]['account_id'].toString())),DataCell(Text(
                                         transactions[counter]['tdate']
                                             .toString(),
                                         style: TextStyle(

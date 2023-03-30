@@ -13,11 +13,6 @@ class LoginScreenTopImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          S.of(context).login,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: defaultPadding * 2),
         Row(
           children: [
             const Spacer(),
@@ -27,6 +22,11 @@ class LoginScreenTopImage extends StatelessWidget {
             ),
             const Spacer(),
           ],
+        ),
+        SizedBox(height: defaultPadding * 2),
+        Text(
+          S.of(context).login,
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: defaultPadding * 2),
       ],

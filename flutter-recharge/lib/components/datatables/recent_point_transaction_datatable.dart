@@ -30,7 +30,7 @@ class _RecentPointTransactionDatatable
   final _horizontalScrollController = ScrollController();
 
   var transactions = [];
-  List<String> columns = ['#', S().count, S().cost_d,'اسم اللاعب', 'الحالة', S().date];
+  List<String> columns = ['#', 'الحالة', S().count, S().cost_d,'اسم اللاعب', S().date];
 
   var testT = [
     {'id': '1', 'count': 'count', 'cost': 'cost', 'date': 'date'}
@@ -98,6 +98,27 @@ class _RecentPointTransactionDatatable
         
   }
 
+     transactionColors(transaction) {
+    Color? color;
+    if(transaction['waiting'])
+        color = Colors.grey.withOpacity(0.1);
+    else if(transaction['accepted'])
+        color = Colors.greenAccent.withOpacity(0.1);
+    else if(transaction['rejected'])
+        color = Colors.redAccent.withOpacity(0.1);
+    
+    return color;
+        
+  }
+
+  transactionIcon(transaction) {
+    Widget? image = SizedBox();
+    if(transaction['waiting'])
+        image = Image.asset('assets/icons/loading.gif',width: 20,);
+    return image;
+        
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -139,6 +160,7 @@ class _RecentPointTransactionDatatable
                               rows: List<DataRow>.generate(
                                 transactions.length,
                                 (counter) => DataRow(
+                                  color: MaterialStatePropertyAll(transactionColors(transactions[counter])),
                                   cells: [
                                     DataCell(Text(
                                       '#' +
@@ -147,6 +169,14 @@ class _RecentPointTransactionDatatable
                                       style: TextStyle(
                                           color: FitnessAppTheme.nearlyDarkBlue,
                                           fontWeight: FontWeight.bold),
+                                    )),
+                                    DataCell(Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        transactionStatus(transactions[counter]),
+                                        SizedBox(width: 10,),
+                                        transactionIcon(transactions[counter])
+                                      ],
                                     )),
                                     DataCell(Text(
                                       transactions[counter]['count'].toString(),
@@ -165,7 +195,6 @@ class _RecentPointTransactionDatatable
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))),
                                     // DataCell(transactions[counter]['type'].toString() == 'token' ? Icon(Icons.wallet_outlined,color: FitnessAppTheme.nearlyBlue,size: 40,) : Icon(IconData(0xf0654, fontFamily: 'MaterialIcons'),color: Colors.amber, size: 40,)),
-                                    DataCell(transactionStatus(transactions[counter])),
                                     DataCell(Text(
                                         transactions[counter]['tdate']
                                             .toString(),
