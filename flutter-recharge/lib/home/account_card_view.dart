@@ -20,6 +20,7 @@ class AccountCardView extends StatefulWidget {
 
 class _AccountCardView extends State<AccountCardView> {
   var user;
+  bool  _loading = false;
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _AccountCardView extends State<AccountCardView> {
   }
 
   _getUser() async {
+    _loading = !_loading;
     var auth = await GetData().getAuth();
     
     setState(() {
@@ -41,10 +43,11 @@ class _AccountCardView extends State<AccountCardView> {
 
     setState(() {
         user = data['user'];
-
     });
 
     await AuthApi().updateUser(data);
+  
+    _loading = !_loading;
   }
 
   @override
@@ -87,7 +90,11 @@ class _AccountCardView extends State<AccountCardView> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 4, bottom: 8, top: 16),
-                            child: Text(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
                               S.of(context).balance,
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -96,6 +103,12 @@ class _AccountCardView extends State<AccountCardView> {
                                   fontSize: 16,
                                   letterSpacing: -0.1,
                                   color: FitnessAppTheme.darkText),
+                            ),
+                              _loading ? Container(
+                                margin: EdgeInsets.only(right: 3),
+                                child : Image.asset('assets/icons/loading.gif',width: 20,)
+                              ) : Container()
+                              ],
                             ),
                           ),
                           Row(

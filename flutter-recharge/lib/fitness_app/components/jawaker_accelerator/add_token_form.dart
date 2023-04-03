@@ -21,11 +21,12 @@ import '../../../constants.dart';
 
 class AddTokenForm extends StatefulWidget {
   const AddTokenForm(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final onChangeBody;
 
   @override
   _AddTokenForm createState() => _AddTokenForm();
@@ -503,6 +504,8 @@ class _AddTokenForm extends State<AddTokenForm> {
     // Find the ScaffoldMessenger in the widget tree
     // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    
+    widget.onChangeBody();
   }
 
    handleSnackBarError() {
@@ -522,7 +525,6 @@ class _AddTokenForm extends State<AddTokenForm> {
   }
 
   handleAddToken() async {
-    
     if (_hasCash) {
       if (_formKey.currentState!.validate()) {
         print('Form is valid');
@@ -552,6 +554,7 @@ class _AddTokenForm extends State<AddTokenForm> {
         };
 
         var res = null;
+        
         try {
 
           var res = await AuthApi().addToken(ddata);

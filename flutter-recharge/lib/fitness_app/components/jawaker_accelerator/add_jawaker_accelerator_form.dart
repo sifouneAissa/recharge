@@ -14,11 +14,12 @@ import 'dart:io';
 
 class AddJawakerAcceleratorForm extends StatefulWidget {
   const AddJawakerAcceleratorForm(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final onChangeBody;
 
   @override
   _AddJawakerAcceleratorForm createState() => _AddJawakerAcceleratorForm();
@@ -157,6 +158,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     // Find the ScaffoldMessenger in the widget tree
     // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    widget.onChangeBody();
   }
 
   handleSnackBarError() {

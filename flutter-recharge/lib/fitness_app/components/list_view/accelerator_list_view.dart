@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 
 class AcceleratorListView extends StatefulWidget {
   const AcceleratorListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final onChangeBody;
 
   @override
   _AcceleratorListViewState createState() => _AcceleratorListViewState();
@@ -54,6 +55,7 @@ class _AcceleratorListViewState extends State<AcceleratorListView> with TickerPr
                   padding: const EdgeInsets.only(
                       top: 0, left: 16, right: 16, bottom: 16),
                   child: AddJawakerAcceleratorForm(
+                    onChangeBody : widget.onChangeBody,
                     mainScreenAnimation: widget.mainScreenAnimation,
                     mainScreenAnimationController: widget.mainScreenAnimationController,
                   ),

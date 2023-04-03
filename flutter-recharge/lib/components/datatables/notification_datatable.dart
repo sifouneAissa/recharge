@@ -119,7 +119,9 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   }
 
   _getTexts(notification) {
-
+    print(notification['info']['type']);
+    bool isTorP = notification['info']['type'] == 'token' || notification['info']['type'] == 'point';
+    if(isTorP)
     return Text.rich(
       notification['data']['action'] == null ? TextSpan(
           text: S.of(context).transaction_request,
@@ -216,6 +218,40 @@ class _NotificationDatatable extends State<NotificationDatatable> {
             ),
           ])
           ),
+      textAlign: TextAlign.start,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    );
+    else
+    return Text.rich(
+      TextSpan(
+          text: 'لقد تم اضافة رصيد  ',
+          children: <InlineSpan>[
+            TextSpan(
+              text: S.of(context).transaction_value,
+              // style: TextStyle(
+              //     fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            TextSpan(
+              text: notification['info']['cost'].toString() + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
+            ),
+            TextSpan(
+              text: ' الى رصيدك ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.lightGreen
+                  ),
+            ),
+            TextSpan(
+              text: S.of(context).day + notification['date'],
+              // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            ),
+      ]),
       textAlign: TextAlign.start,
       style: const TextStyle(fontWeight: FontWeight.bold),
     );

@@ -16,9 +16,11 @@ import 'package:best_flutter_ui_templates/home/account_card_view.dart';
 import 'package:flutter/material.dart';
 
 class TokenScreen extends StatefulWidget {
-  const TokenScreen({Key? key, this.animationController}) : super(key: key);
+  const TokenScreen({Key? key, this.animationController, this.onChangeBody}) : super(key: key);
 
   final AnimationController? animationController;
+  final onChangeBody;
+
   @override
   _TokenScreenState createState() => _TokenScreenState();
 }
@@ -99,6 +101,9 @@ class _TokenScreenState extends State<TokenScreen>
 
     listViews.add(
       TokenListView(
+        onChangeBody: () {
+          widget.onChangeBody('transaction');
+        },
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,

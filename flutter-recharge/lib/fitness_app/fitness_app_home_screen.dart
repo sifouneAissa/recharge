@@ -34,11 +34,13 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
-    tabBody = DashScreen(animationController: animationController,onChangeBody: (param) {
-                      setState(() {
-                        setBody(param);
-                      });
-                    });
+    tabBody = DashScreen(
+        animationController: animationController,
+        onChangeBody: (param) {
+          setState(() {
+            setBody(param);
+          });
+        });
     super.initState();
   }
 
@@ -74,8 +76,6 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   }
 
   void setBody(name) {
-    print('name');
-    print(name);
     if (name == 'dash')
       tabBody = DashScreen(
           animationController: animationController,
@@ -85,9 +85,21 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
             });
           });
     else if (name == 'jawaker_acceleration')
-      tabBody = JawakerAccelerationScreen(animationController: animationController);
+      tabBody = JawakerAccelerationScreen(
+          animationController: animationController,
+          onChangeBody: (param) {
+            setState(() {
+              setBody(param);
+            });
+          });
     else if (name == 'token')
-      tabBody = TokenScreen(animationController: animationController);
+      tabBody = TokenScreen(
+          animationController: animationController,
+          onChangeBody: (param) {
+            setState(() {
+              setBody(param);
+            });
+          });
     else if (name == 'notification')
       tabBody = NotificationScreen(animationController: animationController);
     else if (name == 'transaction')
@@ -140,7 +152,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody = JawakerAccelerationScreen(
-                      animationController: animationController);
+                      animationController: animationController,
+                      onChangeBody: (param) {
+                        setState(() {
+                          setBody(param);
+                        });
+                      });
                 });
               });
             } else if (name == 'token') {
@@ -149,8 +166,14 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      TokenScreen(animationController: animationController);
+                  tabBody = TokenScreen(
+                    animationController: animationController,
+                    onChangeBody: (param) {
+                      setState(() {
+                        setBody(param);
+                      });
+                    },
+                  );
                 });
               });
             } else if (name == 'notification') {

@@ -17,9 +17,10 @@ import 'package:best_flutter_ui_templates/screens/Login/components/login_form.da
 import 'package:flutter/material.dart';
 
 class JawakerAccelerationScreen extends StatefulWidget {
-  const JawakerAccelerationScreen({Key? key, this.animationController}) : super(key: key);
+  const JawakerAccelerationScreen({Key? key, this.animationController,this.onChangeBody}) : super(key: key);
 
   final AnimationController? animationController;
+  final onChangeBody;
   @override
   _JawakerAccelerationScreenState createState() => _JawakerAccelerationScreenState();
 }
@@ -107,6 +108,9 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
 
     listViews.add(
       AcceleratorListView(
+        onChangeBody: () {
+          widget.onChangeBody('transaction');
+        },
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,

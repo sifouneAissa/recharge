@@ -13,13 +13,15 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'generated/l10n.dart';
 
 
 void main() async {
 
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
   var token = await GetData().getToken();
 

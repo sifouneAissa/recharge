@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class GetData {
     
@@ -98,6 +99,11 @@ class GetData {
         storage.remove('transactions');
         storage.remove('notifications');
         storage.remove('token');
+
+        FirebaseMessaging.instance.getToken().then((value) async {
+        var storage = await GetData().getInstance();
+        storage.setString('firebase_token',value);
+    },);
   }
 }
 

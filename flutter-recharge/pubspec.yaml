@@ -50,13 +50,14 @@ dependencies:
     flutter_facebook_auth: '^3.5.0'
     google_sign_in: ^6.0.2
     flutter_spinbox: ^0.13.0
+    flutter_native_splash: ^2.2.19
 dev_dependencies:
     flutter_test:
         sdk: flutter
 
         
 flutter_icons:
-  image_path: "assets/icons/payment.png"
+  image_path: "assets/icons/logo.png"
   # image_path_android: "assets/icons/payment.png"
   # image_path_ios: "assets/icons/payment.png"
   android: true
@@ -135,3 +136,9 @@ flutter_intl:
     download_include_tags: # Optional list of tags to be downloaded (e.g. ['include', 'Include key']). If not set, all string keys will be considered for download. Default: []
     download_exclude_tags: # Optional list of tags to be excluded from download (e.g. ['exclude', 'Exclude key']). If not set, all string keys will be considered for download. Default: []
     ota_enabled: # Set to true if you want to use Localizely Over-the-air functionality. Default: false
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/icons/logo.png
+  android: true
+  ios: true

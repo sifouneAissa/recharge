@@ -48,32 +48,40 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   }
 
   void changeIndex(DrawerIndex drawerIndexdata) {
-    if (drawerIndex != drawerIndexdata) {
-      drawerIndex = drawerIndexdata;
-      switch (drawerIndex) {
-        case DrawerIndex.HOME:
-          setState(() {
-            screenView = const MyHomePage();
-          });
-          break;
-        case DrawerIndex.Help:
-          setState(() {
-            screenView = HelpScreen();
-          });
-          break;
-        case DrawerIndex.FeedBack:
-          setState(() {
-            screenView = FeedbackScreen();
-          });
-          break;
-        case DrawerIndex.Invite:
-          setState(() {
-            screenView = InviteFriend();
-          });
-          break;
-        default:
-          break;
-      }
+    // if (drawerIndex != drawerIndexdata) {
+    drawerIndex = drawerIndexdata;
+    switch (drawerIndex) {
+      case DrawerIndex.HOME:
+        setState(() {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NavigationHomeScreen();
+              },
+            ),
+          );
+          // screenView = MyHomePage();
+        });
+        break;
+      case DrawerIndex.Help:
+        setState(() {
+          screenView = HelpScreen();
+        });
+        break;
+      case DrawerIndex.FeedBack:
+        setState(() {
+          screenView = FeedbackScreen();
+        });
+        break;
+      case DrawerIndex.Invite:
+        setState(() {
+          screenView = InviteFriend();
+        });
+        break;
+      default:
+        break;
     }
   }
+  // }
 }

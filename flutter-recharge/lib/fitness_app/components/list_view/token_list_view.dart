@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 
 class TokenListView extends StatefulWidget {
   const TokenListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation, this.onChangeBody})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final onChangeBody;
 
   @override
   _TokenListViewState createState() => _TokenListViewState();
@@ -54,6 +55,7 @@ class _TokenListViewState extends State<TokenListView> with TickerProviderStateM
                   padding: const EdgeInsets.only(
                       top: 16, left: 16, right: 16, bottom: 16),
                   child: AddTokenForm(
+                    onChangeBody: widget.onChangeBody,
                     mainScreenAnimation: widget.mainScreenAnimation,
                     mainScreenAnimationController: widget.mainScreenAnimationController,
                   ),

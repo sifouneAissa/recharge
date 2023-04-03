@@ -24,8 +24,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-//    print('home list');
-//    print('home listsfdsdfsd');
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
@@ -63,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: <Widget>[
                   appBar(),
                   Expanded(
-                    child: FitnessAppHomeScreen() 
+                    child: FitnessAppHomeScreen()
                     ),
                 ],
               ),
