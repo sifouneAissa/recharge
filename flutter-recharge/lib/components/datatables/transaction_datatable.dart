@@ -288,7 +288,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
     );
   }
 
-
   bottomSheetBuilderToken(transaction) {
     var tokensPackages = transaction['token_packages'];
 
@@ -304,7 +303,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
             height: 400,
             child: Container(
               decoration: BoxDecoration(
-              color: transactionColors(transaction),
+                color: transactionColors(transaction),
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
@@ -382,6 +381,18 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Text(S.of(context).transaction_player_id),
+                              Text(transaction['account_id'].toString(),
+                                  style: TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
                               Text(S.of(context).transaction_date),
                               Text(transaction['tdate'].toString(),
                                   style: TextStyle(
@@ -408,7 +419,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
         });
   }
 
-  
   bottomSheetBuilderPoint(transaction) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -533,7 +543,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
         });
   }
 
-
   transactionStatus(transaction) {
     String text = '';
     if (transaction['waiting'])
@@ -616,69 +625,150 @@ class _TransactionDatatable extends State<TransactionDatatable>
                               color: MaterialStatePropertyAll(
                                   transactionColors(transactions[counter])),
                               cells: [
-                                DataCell(Text(
-                                  '#' + transactions[counter]['id'].toString(),
-                                  style: TextStyle(
-                                      color: FitnessAppTheme.nearlyDarkBlue,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                                DataCell(Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    transactionStatus(stransactions[counter]),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    transactionIcon(stransactions[counter])
-                                  ],
-                                ),onTap: () {
-                                  stransactions[counter]['type'].toString() ==
-                                            'token' ? bottomSheetBuilderToken(stransactions[counter])
-                                            : bottomSheetBuilderPoint(stransactions[counter]);
-                                },),
-                                DataCell(Text(
-                                  Common.formatNumber(
-                                      stransactions[counter]['count']),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
-                                DataCell(Text(
-                                    Common.formatNumber(
-                                        stransactions[counter]['cost']),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold))),
-                                DataCell(Text(
-                                    stransactions[counter]['name_of_player'] !=
-                                            null
-                                        ? stransactions[counter]
-                                                ['name_of_player']
-                                            .toString()
-                                        : '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold))),
-                                DataCell(Text(
-                                    stransactions[counter]['account_id'] != null
-                                        ? stransactions[counter]['account_id']
-                                            .toString()
-                                        : '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold))),
                                 DataCell(
+                                  Text(
+                                    '#' +
+                                        transactions[counter]['id'].toString(),
+                                    style: TextStyle(
+                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'
-                                        ? Image.asset(
-                                            'assets/fitness_app/tab_3s.png',
-                                            width: 40,
-                                          )
-                                        : Image.asset(
-                                            'assets/fitness_app/tab_2s.png',
-                                            width: 40,
-                                          )),
-                                DataCell(Text(
-                                    stransactions[counter]['tdate'].toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: FitnessAppTheme.nearlyDarkBlue)))
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
+                                DataCell(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      transactionStatus(stransactions[counter]),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      transactionIcon(stransactions[counter])
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
+                                DataCell(
+                                  Text(
+                                    Common.formatNumber(
+                                        stransactions[counter]['count']),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
+                                DataCell(
+                                  Text(
+                                      Common.formatNumber(
+                                          stransactions[counter]['cost']),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
+                                DataCell(
+                                  Text(
+                                      stransactions[counter]
+                                                  ['name_of_player'] !=
+                                              null
+                                          ? stransactions[counter]
+                                                  ['name_of_player']
+                                              .toString()
+                                          : '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
+                                DataCell(
+                                  Text(
+                                      stransactions[counter]['account_id'] !=
+                                              null
+                                          ? stransactions[counter]['account_id']
+                                              .toString()
+                                          : '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
+                                DataCell(
+                                  stransactions[counter]['type'].toString() ==
+                                          'token'
+                                      ? Image.asset(
+                                          'assets/fitness_app/tab_3s.png',
+                                          width: 40,
+                                        )
+                                      : Image.asset(
+                                          'assets/fitness_app/tab_2s.png',
+                                          width: 40,
+                                        ),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
+                                DataCell(
+                                  Text(
+                                      stransactions[counter]['tdate']
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              FitnessAppTheme.nearlyDarkBlue)),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                )
                               ],
                               // color: transactions[counter]['type'].toString() == 'token' ? MaterialStateProperty.all(Colors.lightGreen) : MaterialStateProperty.all(Colors.pinkAccent)
                             ),

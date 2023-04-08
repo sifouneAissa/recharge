@@ -405,6 +405,18 @@ class _RecentTokenTransactionDatatable
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Text(S.of(context).transaction_player_id),
+                              Text(transaction['account_id'].toString(),
+                                  style: TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
                               Text(S.of(context).transaction_date),
                               Text(transaction['tdate'].toString(),
                                   style: TextStyle(
@@ -534,7 +546,10 @@ class _RecentTokenTransactionDatatable
                                     ),
                                     DataCell(Text(transactions[counter]
                                             ['account_id']
-                                        .toString())),
+                                        .toString()),onTap: () {
+                                        bottomSheetBuilder(
+                                            transactions[counter]);
+                                      }),
                                     DataCell(
                                       Text(
                                           transactions[counter]['tdate']

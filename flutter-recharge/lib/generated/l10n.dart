@@ -870,6 +870,16 @@ class S {
     );
   }
 
+  /// `معرف الحساب : `
+  String get transaction_player_id {
+    return Intl.message(
+      'معرف الحساب : ',
+      name: 'transaction_player_id',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `الحزم التي تم اختيارها : `
   String get transaction_package_selected {
     return Intl.message(

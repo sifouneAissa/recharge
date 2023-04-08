@@ -122,6 +122,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكمية "),
         "transaction_package_selected":
             MessageLookupByLibrary.simpleMessage("الحزم التي تم اختيارها : "),
+        "transaction_player_id":
+            MessageLookupByLibrary.simpleMessage("معرف الحساب : "),
         "transaction_price": MessageLookupByLibrary.simpleMessage("السعر : "),
         "transaction_request":
             MessageLookupByLibrary.simpleMessage("لقد قمت بطلب "),

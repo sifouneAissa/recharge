@@ -82,6 +82,7 @@
     "transaction_count" : "الكمية : ",
     "transaction_price" : "السعر : ",
     "transaction_date" : "يوم : ",
+    "transaction_player_id" : "معرف الحساب : ",
     "transaction_package_selected" : "الحزم التي تم اختيارها : ",
     "transaction_package" : "الحزمة ",
     "transaction_package_count" : "الكمية ",
