@@ -84,12 +84,12 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                               children: <Widget>[
                                 
                                 GestureDetector(
-                                  child: Image.asset('assets/fitness_app/tab_2s.png',width: 45,),
+                                  child: Image.asset('assets/fitness_app/tab_3s.png',width: 45,),
                               onTap: () {
                                 widget.onChangeBody();
                               },
                                 ),
-                                Text('شحن جواكر'),
+                                Text('شحن توكنز جواكر'),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,

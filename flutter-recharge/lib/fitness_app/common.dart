@@ -6,6 +6,7 @@ class Common {
       value = double.parse(value);
     }
 
+
     return NumberFormat.simpleCurrency(decimalDigits: 0, name: ''
             // locale: 'en_IN',
             // symbol: ''

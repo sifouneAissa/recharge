@@ -24,7 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about_us": MessageLookupByLibrary.simpleMessage("معلومات عنا"),
         "add_jawaker_accelaration":
-            MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),
+            MessageLookupByLibrary.simpleMessage("شحن مسرعات جواكر"),
         "app_name": MessageLookupByLibrary.simpleMessage("Recharge App"),
         "balance": MessageLookupByLibrary.simpleMessage("الرصيد"),
         "best_offer": MessageLookupByLibrary.simpleMessage("افضل العروض"),
@@ -70,7 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكمية خاطئة"),
         "invite_friend": MessageLookupByLibrary.simpleMessage("دعوة صديق"),
         "jawaker_accelerator_shipping":
-            MessageLookupByLibrary.simpleMessage("شحن مسرعات الجواكر"),
+            MessageLookupByLibrary.simpleMessage("شحن مسرعات جواكر"),
         "last_notification":
             MessageLookupByLibrary.simpleMessage("اخر اشعار : "),
         "last_notifications":
@@ -91,7 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("معاملاتك الجديدة"),
         "notifications": MessageLookupByLibrary.simpleMessage("اشعارات"),
         "old_transactions":
-            MessageLookupByLibrary.simpleMessage("معاملاتك القدية"),
+            MessageLookupByLibrary.simpleMessage("معاملاتك القديمة"),
         "player_name": MessageLookupByLibrary.simpleMessage("اسم اللاعب : "),
         "point": MessageLookupByLibrary.simpleMessage("نقاط تسريع"),
         "point_accelerator":
@@ -111,7 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sign_up": MessageLookupByLibrary.simpleMessage("تسجيل"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطى"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم 8:26"),
-        "token": MessageLookupByLibrary.simpleMessage("تاوكنز"),
+        "token": MessageLookupByLibrary.simpleMessage("توكنز"),
         "token_shipping":
             MessageLookupByLibrary.simpleMessage("شحن توكنز جواكر"),
         "tokens": MessageLookupByLibrary.simpleMessage("توكنز"),

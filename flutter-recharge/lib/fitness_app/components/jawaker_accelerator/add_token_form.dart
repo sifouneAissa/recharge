@@ -69,7 +69,7 @@ class _AddTokenForm extends State<AddTokenForm> {
   void _checkCash() async {
     var user = await GetData().getAuth();
     setState(() {
-      _hasCash = (user['cash'] + .0) >= _cost;
+      _hasCash = (user['cash'] + .0) >= _tokens;
     });
   }
 

@@ -320,10 +320,10 @@ class S {
     );
   }
 
-  /// `شحن مسرعات الجواكر`
+  /// `شحن مسرعات جواكر`
   String get jawaker_accelerator_shipping {
     return Intl.message(
-      'شحن مسرعات الجواكر',
+      'شحن مسرعات جواكر',
       name: 'jawaker_accelerator_shipping',
       desc: '',
       args: [],
@@ -450,10 +450,10 @@ class S {
     );
   }
 
-  /// `شحن مسرعات الجواكر`
+  /// `شحن مسرعات جواكر`
   String get add_jawaker_accelaration {
     return Intl.message(
-      'شحن مسرعات الجواكر',
+      'شحن مسرعات جواكر',
       name: 'add_jawaker_accelaration',
       desc: '',
       args: [],
@@ -660,20 +660,20 @@ class S {
     );
   }
 
-  /// `معاملاتك القدية`
+  /// `معاملاتك القديمة`
   String get old_transactions {
     return Intl.message(
-      'معاملاتك القدية',
+      'معاملاتك القديمة',
       name: 'old_transactions',
       desc: '',
       args: [],
     );
   }
 
-  /// `تاوكنز`
+  /// `توكنز`
   String get token {
     return Intl.message(
-      'تاوكنز',
+      'توكنز',
       name: 'token',
       desc: '',
       args: [],

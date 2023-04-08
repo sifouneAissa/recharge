@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recent_points_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recent_tokens_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
@@ -52,7 +53,9 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
       final isV = quantity.value.text.isEmpty;
       if (!isV) {
         setState(() {
+          
           _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
+          // quantity.value.text = Common.formatNumber(quantity.value.text);
           // validate the cash of the user
           _checkCash();
         });
@@ -241,7 +244,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                S().cost + _cost.toString(),
+                S().cost + Common.formatNumber(_cost),
                 style: const TextStyle(color: Colors.pink),
               ),
               // GestureDetector(

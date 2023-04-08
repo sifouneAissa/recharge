@@ -53,8 +53,6 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   }
 
   _getColumns() {
-      print('diffs');
-      print(diffs);
     return List<Column>.generate(
         diffs.length,
         (index) => Column(
@@ -123,14 +121,6 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   }
 
   _getTexts(notification) {
-    print('notification');
-    try{
-
-    print(notification['info']['type']);
-    }catch(error){
-        
-    print(notification['info']);
-    }
     bool isTorP = notification['info']['type'] == 'token' || notification['info']['type'] == 'point';
     if(isTorP)
     return Text.rich(
@@ -153,7 +143,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: Common.formatNumber(notification['info']['cost'])  + ' ',
+              text: Common.formatNumber(notification['info']['count'])  + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
@@ -185,7 +175,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: Common.formatNumber(notification['info']['cost']) + ' ',
+              text: Common.formatNumber(notification['info']['count']) + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
@@ -216,7 +206,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: Common.formatNumber(notification['info']['cost']) + ' ',
+              text: Common.formatNumber(notification['info']['count']) + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
