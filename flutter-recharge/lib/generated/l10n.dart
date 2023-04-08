@@ -919,6 +919,16 @@ class S {
       args: [],
     );
   }
+
+  /// `اسم اللاعب : `
+  String get player_name {
+    return Intl.message(
+      'اسم اللاعب : ',
+      name: 'player_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

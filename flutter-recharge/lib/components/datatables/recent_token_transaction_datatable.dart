@@ -54,8 +54,6 @@ class _RecentTokenTransactionDatatable
       setState(() {
         var data = AuthApi().getData(body);
         transactions = data['transactions'];
-        print('transactions');
-        print(transactions);
         transactions = transactions
             .where((element) => element['type'] == 'token')
             .toList()
@@ -103,6 +101,7 @@ class _RecentTokenTransactionDatatable
     else if (transaction['accepted'])
       text = 'تم قبول الطلب';
     else if (transaction['rejected']) text = 'تم رفض طلبك';
+    else if (transaction['more']) text = transaction['status']['message'];
 
     return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
   }
@@ -114,6 +113,7 @@ class _RecentTokenTransactionDatatable
     else if (transaction['accepted'])
       color = Colors.greenAccent.withOpacity(0.1);
     else if (transaction['rejected']) color = Colors.redAccent.withOpacity(0.1);
+    else if (transaction['more']) color = Colors.redAccent.withOpacity(0.1);
 
     return color;
   }

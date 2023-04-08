@@ -101,7 +101,7 @@ class _AccountCardView extends State<AccountCardView> {
                                   fontFamily: FitnessAppTheme.fontName,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
-                                  letterSpacing: -0.1,
+                                  letterSpacing: 0,
                                   color: FitnessAppTheme.darkText),
                             ),
                               _loading ? Container(

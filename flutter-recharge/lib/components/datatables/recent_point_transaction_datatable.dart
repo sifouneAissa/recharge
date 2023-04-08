@@ -77,6 +77,130 @@ class _RecentPointTransactionDatatable
     }
   }
 
+  bottomSheetBuilder(transaction) {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 200,
+            child: Container(
+              decoration: BoxDecoration(
+                color: transactionColors(transaction),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+              ),
+              margin: EdgeInsets.only(top: 0),
+              child: ListView(
+                children: [
+                  Container(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                              S.of(context).bottom_sheet_transaction_token),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(S.of(context).transaction_status),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  transactionStatus(transaction),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  transactionIcon(transaction)
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(S.of(context).transaction_count),
+                              Text(
+                                Common.formatNumber(transaction['count']),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(S.of(context).transaction_price),
+                              Text(Common.formatNumber(transaction['cost']),
+                                  style: TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(S.of(context).player_name),
+                              Text(
+                                  transaction['name_of_player'] != null
+                                      ? transaction['name_of_player'].toString()
+                                      : '',
+                                  style: TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(S.of(context).transaction_date),
+                              Text(transaction['tdate'].toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: FitnessAppTheme.nearlyDarkBlue))
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -99,6 +223,7 @@ class _RecentPointTransactionDatatable
     else if (transaction['accepted'])
       text = 'تم قبول الطلب';
     else if (transaction['rejected']) text = 'تم رفض طلبك';
+    else if (transaction['more']) text = transaction['status']['message'];
 
     return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
   }
@@ -110,6 +235,7 @@ class _RecentPointTransactionDatatable
     else if (transaction['accepted'])
       color = Colors.greenAccent.withOpacity(0.1);
     else if (transaction['rejected']) color = Colors.redAccent.withOpacity(0.1);
+    else if (transaction['more']) color = Colors.redAccent.withOpacity(0.1);
 
     return color;
   }
@@ -123,7 +249,6 @@ class _RecentPointTransactionDatatable
       );
     return image;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -191,36 +316,63 @@ class _RecentPointTransactionDatatable
                                         ],
                                       ),
                                       onTap: () {
-                                        // bottomSheetBuilder();
+                                        bottomSheetBuilder(
+                                            transactions[counter]);
                                       },
                                     ),
-                                    DataCell(Text(
-                                      Common.formatNumber(transactions[counter]['count']),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                    DataCell(Text(
-                                        Common.formatNumber(transactions[counter]['cost']),
+                                    DataCell(
+                                      Text(
+                                        Common.formatNumber(
+                                            transactions[counter]['count']),
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold))),
-                                    DataCell(Text(
-                                        transactions[counter]
-                                                    ['name_of_player'] !=
-                                                null
-                                            ? transactions[counter]
-                                                    ['name_of_player']
-                                                .toString()
-                                            : '',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold))),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      onTap: () {
+                                        bottomSheetBuilder(
+                                            transactions[counter]);
+                                      },
+                                    ),
+                                    DataCell(
+                                      Text(
+                                          Common.formatNumber(
+                                              transactions[counter]['cost']),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      onTap: () {
+                                        bottomSheetBuilder(
+                                            transactions[counter]);
+                                      },
+                                    ),
+                                    DataCell(
+                                      Text(
+                                          transactions[counter]
+                                                      ['name_of_player'] !=
+                                                  null
+                                              ? transactions[counter]
+                                                      ['name_of_player']
+                                                  .toString()
+                                              : '',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      onTap: () {
+                                        bottomSheetBuilder(
+                                            transactions[counter]);
+                                      },
+                                    ),
                                     // DataCell(transactions[counter]['type'].toString() == 'token' ? Icon(Icons.wallet_outlined,color: FitnessAppTheme.nearlyBlue,size: 40,) : Icon(IconData(0xf0654, fontFamily: 'MaterialIcons'),color: Colors.amber, size: 40,)),
-                                    DataCell(Text(
-                                        transactions[counter]['tdate']
-                                            .toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: FitnessAppTheme
-                                                .nearlyDarkBlue)))
+                                    DataCell(
+                                      Text(
+                                          transactions[counter]['tdate']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: FitnessAppTheme
+                                                  .nearlyDarkBlue)),
+                                      onTap: () {
+                                        bottomSheetBuilder(
+                                            transactions[counter]);
+                                      },
+                                    )
                                   ],
                                   // color: transactions[counter]['type'].toString() == 'token' ? MaterialStateProperty.all(Colors.lightGreen) : MaterialStateProperty.all(Colors.pinkAccent)
                                 ),

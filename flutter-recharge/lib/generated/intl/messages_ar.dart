@@ -92,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("اشعارات"),
         "old_transactions":
             MessageLookupByLibrary.simpleMessage("معاملاتك القدية"),
+        "player_name": MessageLookupByLibrary.simpleMessage("اسم اللاعب : "),
         "point": MessageLookupByLibrary.simpleMessage("نقاط تسريع"),
         "point_accelerator":
             MessageLookupByLibrary.simpleMessage("مسرع النقاط"),

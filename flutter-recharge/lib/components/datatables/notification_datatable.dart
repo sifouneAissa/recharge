@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
     __getOldNotifications();
     var t = await AuthApi().getNotifications();
     var body = jsonDecode(t.body);
-    print('body');
+
     if (body['status']) {
       setState(() {
         var data = AuthApi().getData(body);
@@ -52,6 +53,8 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   }
 
   _getColumns() {
+      print('diffs');
+      print(diffs);
     return List<Column>.generate(
         diffs.length,
         (index) => Column(
@@ -75,6 +78,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   }
 
   _getSubContainer(notifications) {
+
     return List<Container>.generate(
         notifications.length,
         (index) => Container(
@@ -119,7 +123,14 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   }
 
   _getTexts(notification) {
+    print('notification');
+    try{
+
     print(notification['info']['type']);
+    }catch(error){
+        
+    print(notification['info']);
+    }
     bool isTorP = notification['info']['type'] == 'token' || notification['info']['type'] == 'point';
     if(isTorP)
     return Text.rich(
@@ -142,7 +153,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: notification['info']['cost'].toString() + ' ',
+              text: Common.formatNumber(notification['info']['cost'])  + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
@@ -174,7 +185,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: notification['info']['cost'].toString() + ' ',
+              text: Common.formatNumber(notification['info']['cost']) + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
@@ -205,7 +216,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: notification['info']['cost'].toString() + ' ',
+              text: Common.formatNumber(notification['info']['cost']) + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
@@ -232,7 +243,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: notification['info']['cost'].toString() + ' ',
+              text: Common.formatNumber(notification['info']['cost']) + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,

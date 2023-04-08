@@ -311,7 +311,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                                     fontFamily: FitnessAppTheme.fontName,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22 + 6 - 6 * topBarOpacity,
-                                    letterSpacing: 1.2,
+                                    letterSpacing: 0,
                                     color: FitnessAppTheme.nearlyDarkBlue,
                                   ),
                                 ),

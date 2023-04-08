@@ -42,7 +42,7 @@ class TitleView extends StatelessWidget {
                           fontFamily: FitnessAppTheme.fontName,
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
-                          letterSpacing: 0.5,
+                          letterSpacing: 0,
                           color: FitnessAppTheme.lightText,
                         ),
                       ),
@@ -68,7 +68,7 @@ class TitleView extends StatelessWidget {
                                         fontWeight: FontWeight.normal,
                                         fontSize: 16,
                                         letterSpacing
-                                        : 0.5,
+                                        : 0,
                                         color: FitnessAppTheme.nearlyDarkBlue,
                                       ),
                                     ),
