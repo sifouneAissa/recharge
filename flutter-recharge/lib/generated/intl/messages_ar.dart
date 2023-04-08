@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_name": MessageLookupByLibrary.simpleMessage("Recharge App"),
         "balance": MessageLookupByLibrary.simpleMessage("الرصيد"),
         "best_offer": MessageLookupByLibrary.simpleMessage("افضل العروض"),
+        "bottom_sheet_transaction_token":
+            MessageLookupByLibrary.simpleMessage("معلومات عامة"),
         "camera": MessageLookupByLibrary.simpleMessage("كاميرا"),
         "care": MessageLookupByLibrary.simpleMessage("اهتم"),
         "choose_image":
@@ -111,8 +113,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "token": MessageLookupByLibrary.simpleMessage("تاوكنز"),
         "token_shipping":
             MessageLookupByLibrary.simpleMessage("شحن توكنز جواكر"),
+        "tokens": MessageLookupByLibrary.simpleMessage("توكنز"),
+        "transaction_count": MessageLookupByLibrary.simpleMessage("الكمية : "),
+        "transaction_date": MessageLookupByLibrary.simpleMessage("يوم : "),
+        "transaction_package": MessageLookupByLibrary.simpleMessage("الحزمة "),
+        "transaction_package_count":
+            MessageLookupByLibrary.simpleMessage("الكمية "),
+        "transaction_package_selected":
+            MessageLookupByLibrary.simpleMessage("الحزم التي تم اختيارها : "),
+        "transaction_price": MessageLookupByLibrary.simpleMessage("السعر : "),
         "transaction_request":
             MessageLookupByLibrary.simpleMessage("لقد قمت بطلب "),
+        "transaction_status": MessageLookupByLibrary.simpleMessage("الحالة : "),
         "transaction_type":
             MessageLookupByLibrary.simpleMessage("نوع المعاملة"),
         "transaction_value": MessageLookupByLibrary.simpleMessage("بقيمة : "),

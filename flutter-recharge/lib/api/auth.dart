@@ -10,8 +10,8 @@ import 'package:dio/dio.dart';
 
 class AuthApi{
 
-  final String _url = 'https://recharge-web.afandena-cards.com/api/';
-  // final String _url = 'http://192.168.1.2/api/';
+  // final String _url = 'https://recharge-web.afandena-cards.com/api/';
+  final String _url = 'http://192.168.1.2/api/';
 
 
   login(data) async {

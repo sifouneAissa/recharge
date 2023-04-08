@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,14 @@ class _RecentPointTransactionDatatable
   final _horizontalScrollController = ScrollController();
 
   var transactions = [];
-  List<String> columns = ['#', 'الحالة', S().count, S().cost_d,'اسم اللاعب', S().date];
+  List<String> columns = [
+    '#',
+    'الحالة',
+    S().count,
+    S().cost_d,
+    'اسم اللاعب',
+    S().date
+  ];
 
   var testT = [
     {'id': '1', 'count': 'count', 'cost': 'cost', 'date': 'date'}
@@ -86,38 +94,36 @@ class _RecentPointTransactionDatatable
 
   transactionStatus(transaction) {
     String text = '';
-    if(transaction['waiting'])
-        text = 'يتم مراجعة الطلب';
-    else if(transaction['accepted'])
-        text = 'تم قبول الطلب';
-    else if(transaction['rejected'])
-        text = 'تم رفض طلبك';
-        
-    return Text(text,
-        style: TextStyle(fontWeight: FontWeight.bold));
-        
+    if (transaction['waiting'])
+      text = 'يتم مراجعة الطلب';
+    else if (transaction['accepted'])
+      text = 'تم قبول الطلب';
+    else if (transaction['rejected']) text = 'تم رفض طلبك';
+
+    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
   }
 
-     transactionColors(transaction) {
+  transactionColors(transaction) {
     Color? color;
-    if(transaction['waiting'])
-        color = Colors.grey.withOpacity(0.1);
-    else if(transaction['accepted'])
-        color = Colors.greenAccent.withOpacity(0.1);
-    else if(transaction['rejected'])
-        color = Colors.redAccent.withOpacity(0.1);
-    
+    if (transaction['waiting'])
+      color = Colors.grey.withOpacity(0.1);
+    else if (transaction['accepted'])
+      color = Colors.greenAccent.withOpacity(0.1);
+    else if (transaction['rejected']) color = Colors.redAccent.withOpacity(0.1);
+
     return color;
-        
   }
 
   transactionIcon(transaction) {
     Widget? image = SizedBox();
-    if(transaction['waiting'])
-        image = Image.asset('assets/icons/loading.gif',width: 20,);
+    if (transaction['waiting'])
+      image = Image.asset(
+        'assets/icons/loading.gif',
+        width: 20,
+      );
     return image;
-        
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +166,8 @@ class _RecentPointTransactionDatatable
                               rows: List<DataRow>.generate(
                                 transactions.length,
                                 (counter) => DataRow(
-                                  color: MaterialStatePropertyAll(transactionColors(transactions[counter])),
+                                  color: MaterialStatePropertyAll(
+                                      transactionColors(transactions[counter])),
                                   cells: [
                                     DataCell(Text(
                                       '#' +
@@ -170,28 +177,40 @@ class _RecentPointTransactionDatatable
                                           color: FitnessAppTheme.nearlyDarkBlue,
                                           fontWeight: FontWeight.bold),
                                     )),
-                                    DataCell(Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        transactionStatus(transactions[counter]),
-                                        SizedBox(width: 10,),
-                                        transactionIcon(transactions[counter])
-                                      ],
-                                    )),
+                                    DataCell(
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          transactionStatus(
+                                              transactions[counter]),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          transactionIcon(transactions[counter])
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        // bottomSheetBuilder();
+                                      },
+                                    ),
                                     DataCell(Text(
-                                      transactions[counter]['count'].toString(),
+                                      Common.formatNumber(transactions[counter]['count']),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     )),
                                     DataCell(Text(
-                                        transactions[counter]['cost']
-                                            .toString(),
+                                        Common.formatNumber(transactions[counter]['cost']),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))),
-                                            DataCell(Text(
-                                              transactions[counter]['name_of_player']!=null ? 
-                                        transactions[counter]['name_of_player'] 
-                                            .toString() : '',
+                                    DataCell(Text(
+                                        transactions[counter]
+                                                    ['name_of_player'] !=
+                                                null
+                                            ? transactions[counter]
+                                                    ['name_of_player']
+                                                .toString()
+                                            : '',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))),
                                     // DataCell(transactions[counter]['type'].toString() == 'token' ? Icon(Icons.wallet_outlined,color: FitnessAppTheme.nearlyBlue,size: 40,) : Icon(IconData(0xf0654, fontFamily: 'MaterialIcons'),color: Colors.amber, size: 40,)),

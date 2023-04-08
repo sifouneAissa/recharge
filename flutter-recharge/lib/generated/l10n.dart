@@ -829,6 +829,96 @@ class S {
       args: [],
     );
   }
+
+  /// `الحالة : `
+  String get transaction_status {
+    return Intl.message(
+      'الحالة : ',
+      name: 'transaction_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `الكمية : `
+  String get transaction_count {
+    return Intl.message(
+      'الكمية : ',
+      name: 'transaction_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `السعر : `
+  String get transaction_price {
+    return Intl.message(
+      'السعر : ',
+      name: 'transaction_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `يوم : `
+  String get transaction_date {
+    return Intl.message(
+      'يوم : ',
+      name: 'transaction_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `الحزم التي تم اختيارها : `
+  String get transaction_package_selected {
+    return Intl.message(
+      'الحزم التي تم اختيارها : ',
+      name: 'transaction_package_selected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `الحزمة `
+  String get transaction_package {
+    return Intl.message(
+      'الحزمة ',
+      name: 'transaction_package',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `الكمية `
+  String get transaction_package_count {
+    return Intl.message(
+      'الكمية ',
+      name: 'transaction_package_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `توكنز`
+  String get tokens {
+    return Intl.message(
+      'توكنز',
+      name: 'tokens',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `معلومات عامة`
+  String get bottom_sheet_transaction_token {
+    return Intl.message(
+      'معلومات عامة',
+      name: 'bottom_sheet_transaction_token',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
