@@ -78,6 +78,7 @@ class _RecentPointTransactionDatatable
   }
 
   bottomSheetBuilder(transaction) {
+
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -96,7 +97,7 @@ class _RecentPointTransactionDatatable
                     topRight: Radius.circular(20)),
               ),
               margin: EdgeInsets.only(top: 0),
-              child: ListView(
+              child: Column(
                 children: [
                   Container(
                     child: Row(

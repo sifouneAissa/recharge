@@ -109,7 +109,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     var _tokens = 0;
     tokensPackages.forEach((element) {
       PackageTokenData elementT = PackageTokenData(
-          value: element['count'],
+          value: element['count'] is String ? element['count'] : element['count'].toString(),
           packageData: element['token_package'],
           packageId: element['user_transaction_id']);
 
@@ -129,7 +129,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
   _getItemsList(tokensPackages) {
     return List.generate(tokensPackages.length, (index) {
       PackageTokenData element = PackageTokenData(
-          value: tokensPackages[index]['count'],
+          value: tokensPackages[index]['count'] is String ? tokensPackages[index]['count'] : tokensPackages[index]['count'].toString(),
           packageData: tokensPackages[index]['token_package'],
           packageId: tokensPackages[index]['user_transaction_id']);
 
@@ -291,7 +291,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
   bottomSheetBuilderToken(transaction) {
     var tokensPackages = transaction['token_packages'];
 
-    showModalBottomSheet(
+  showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -302,122 +302,126 @@ class _TransactionDatatable extends State<TransactionDatatable>
           return Container(
             height: 400,
             child: Container(
-              decoration: BoxDecoration(
-                color: transactionColors(transaction),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-              ),
-              margin: EdgeInsets.only(top: 0),
-              child: ListView(
-                children: [
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                              S.of(context).bottom_sheet_transaction_token),
-                        )
-                      ],
+                decoration: BoxDecoration(
+                  color: transactionColors(transaction),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                ),
+                margin: EdgeInsets.only(top: 0),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                                S.of(context).bottom_sheet_transaction_token),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(S.of(context).transaction_status),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(S.of(context).transaction_status),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  transactionStatus(transaction),
-                                  SizedBox(
-                                    width: 10,
+                              transactionStatus(transaction),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              transactionIcon(transaction)
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(S.of(context).transaction_count),
+                          Text(
+                            Common.formatNumber(transaction['count']),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(S.of(context).transaction_price),
+                          Text(Common.formatNumber(transaction['cost']),
+                              style: TextStyle(fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(S.of(context).transaction_player_id),
+                          Text(transaction['account_id'].toString(),
+                              style: TextStyle(fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(S.of(context).transaction_date),
+                          Text(transaction['tdate'].toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: FitnessAppTheme.nearlyDarkBlue))
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 10, top: 20),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [_getPackages(tokensPackages)],
                                   ),
-                                  transactionIcon(transaction)
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(S.of(context).transaction_count),
-                              Text(
-                                Common.formatNumber(transaction['count']),
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(S.of(context).transaction_price),
-                              Text(Common.formatNumber(transaction['cost']),
-                                  style: TextStyle(fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(S.of(context).transaction_player_id),
-                              Text(transaction['account_id'].toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(S.of(context).transaction_date),
-                              Text(transaction['tdate'].toString(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: FitnessAppTheme.nearlyDarkBlue))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10, top: 20),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [_getPackages(tokensPackages)],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                )),
           );
-        });
-  }
+        }); }
 
   bottomSheetBuilderPoint(transaction) {
     showModalBottomSheet(
@@ -438,7 +442,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                     topRight: Radius.circular(20)),
               ),
               margin: EdgeInsets.only(top: 0),
-              child: ListView(
+              child: Column(
                 children: [
                   Container(
                     child: Row(
