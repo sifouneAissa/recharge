@@ -153,6 +153,7 @@ class _RecentTokenTransactionDatatable
   }
 
   _getItemsList(tokensPackages) {
+
     return List.generate(tokensPackages.length, (index) {
       PackageTokenData element = PackageTokenData(
           value: tokensPackages[index]['count'] is String
@@ -328,7 +329,8 @@ class _RecentTokenTransactionDatatable
 
   bottomSheetBuilder(transaction) {
     var tokensPackages = transaction['token_packages'];
-
+    bool isW = transaction['waiting'];
+    
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -432,6 +434,48 @@ class _RecentTokenTransactionDatatable
                                   fontWeight: FontWeight.bold,
                                   color: FitnessAppTheme.nearlyDarkBlue))
                         ],
+                      ),
+                    ),
+                    isW ? Container() : Container(
+                      margin: EdgeInsets.only(top: 10,right: 5,left: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                        children: [
+                          Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('الكمية التي تم رفضها : '),
+                          Text(Common.formatNumber(transaction['left_accepted']),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.redAccent))
+                        ],
+                      ),
+                    ),
+                     Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('الكمية التي تم قبولها : '),
+                          Text(Common.formatNumber(transaction['token_accepted']),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: FitnessAppTheme.nearlyDarkBlue))
+                        ],
+                      ),
+                    ),
+                        ],
+                      ),
                       ),
                     ),
                     Expanded(

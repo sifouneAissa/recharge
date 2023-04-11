@@ -24,7 +24,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   void initState() {
     __getNotifications();
     super.initState();
-    
+
     widget.parentScrollController?.addListener(() async {
       if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
           await __getNotifications();
@@ -132,6 +132,12 @@ class _NotificationDatatable extends State<NotificationDatatable> {
 
   _getTexts(notification) {
     bool isTorP = notification['info']['type'] == 'token' || notification['info']['type'] == 'point';
+
+    var leftC = notification['info']['left_accepted'];
+    
+    bool left = leftC != 0  && leftC != null;
+    
+    print(left);
     if(isTorP)
     return Text.rich(
       notification['data']['action'] == null ? TextSpan(
@@ -167,7 +173,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
           ]) : (
               notification['data']['action'] =='accepted' ? 
               TextSpan(
-          text: 'لقد تم قبول طلبك المتعلق ب',
+          text: !left ? 'لقد تم قبول طلبك المتعلق ب' : 'لقد تم قبول : '+Common.formatNumber(notification['info']['left_accepted']) + ' من ',
           children: <InlineSpan>[
             TextSpan(
               text: notification['info']['type'] == 'token'
