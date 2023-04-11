@@ -12,7 +12,10 @@ import 'package:flutter/material.dart';
 
 class TransactionDatatable extends StatefulWidget {
   const TransactionDatatable(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.parentScrollController})
+      {Key? key,
+      this.mainScreenAnimationController,
+      this.mainScreenAnimation,
+      this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
@@ -80,10 +83,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
     super.initState();
 
     widget.parentScrollController?.addListener(() async {
-      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
-          await __getTransactions();
-       }
-      });
+      if (widget.parentScrollController?.position.pixels ==
+          widget.parentScrollController?.position.minScrollExtent) {
+        await __getTransactions();
+      }
+    });
 
     search.addListener(() {
       if (search.value.text.isNotEmpty) {
@@ -116,7 +120,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
     var _tokens = 0;
     tokensPackages.forEach((element) {
       PackageTokenData elementT = PackageTokenData(
-          value: element['count'] is String ? element['count'] : element['count'].toString(),
+          value: element['count'] is String
+              ? element['count']
+              : element['count'].toString(),
           packageData: element['token_package'],
           packageId: element['user_transaction_id']);
 
@@ -136,7 +142,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
   _getItemsList(tokensPackages) {
     return List.generate(tokensPackages.length, (index) {
       PackageTokenData element = PackageTokenData(
-          value: tokensPackages[index]['count'] is String ? tokensPackages[index]['count'] : tokensPackages[index]['count'].toString(),
+          value: tokensPackages[index]['count'] is String
+              ? tokensPackages[index]['count']
+              : tokensPackages[index]['count'].toString(),
           packageData: tokensPackages[index]['token_package'],
           packageId: tokensPackages[index]['user_transaction_id']);
 
@@ -297,8 +305,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
   bottomSheetBuilderToken(transaction) {
     var tokensPackages = transaction['token_packages'];
+    bool isW = transaction['waiting'];
 
-  showModalBottomSheet(
+    showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -403,6 +412,60 @@ class _TransactionDatatable extends State<TransactionDatatable>
                         ],
                       ),
                     ),
+                    isW
+                        ? Container()
+                        : Container(
+                            margin: EdgeInsets.only(top: 10, right: 5, left: 5),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: FitnessAppTheme.nearlyDarkBlue),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text('الكمية التي تم رفضها : '),
+                                        Text(
+                                            Common.formatNumber(
+                                                transaction['left_accepted']),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.redAccent))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text('الكمية التي تم قبولها : '),
+                                        Text(
+                                            Common.formatNumber(
+                                                transaction['token_accepted']),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: FitnessAppTheme
+                                                    .nearlyDarkBlue))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                     Expanded(
                       child: ListView(
                         children: [
@@ -428,7 +491,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   ],
                 )),
           );
-        }); }
+        });
+  }
 
   bottomSheetBuilderPoint(transaction) {
     showModalBottomSheet(
