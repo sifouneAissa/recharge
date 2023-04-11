@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 
 class TransactionListView extends StatefulWidget {
   const TransactionListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
   final onChangeBody;
 
   @override
@@ -30,6 +31,12 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
   void initState(){
     _getUser();
     super.initState();
+    
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await _getUser();
+       }
+      });
   }
 
   _getUser() async{

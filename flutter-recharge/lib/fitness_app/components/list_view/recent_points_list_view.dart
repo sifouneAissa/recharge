@@ -7,11 +7,12 @@ import 'package:best_flutter_ui_templates/components/datatables/recent_point_tra
 
 class RecentPointsListView extends StatefulWidget {
   const RecentPointsListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
 
   @override
   _RecentPointsListViewState createState() => _RecentPointsListViewState();
@@ -55,6 +56,7 @@ class _RecentPointsListViewState extends State<RecentPointsListView> with Ticker
                   padding: const EdgeInsets.only(
                       top: 16, left: 16, right: 16, bottom: 16),
                   child: RecentPointTransactionDatatable(
+                    parentScrollController : widget.parentScrollController,
                      mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.mainScreenAnimation!,

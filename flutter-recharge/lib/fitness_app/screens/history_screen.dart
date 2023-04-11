@@ -92,6 +92,7 @@ class _HistoryScreenState extends State<HistoryScreen>
 
 
     listViews.add(HistoryDatatable(
+      parentScrollController : scrollController,
       mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
               parent: widget.animationController!,
@@ -212,7 +213,7 @@ class _HistoryScreenState extends State<HistoryScreen>
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 100));
     return true;
   }
 
@@ -222,7 +223,10 @@ class _HistoryScreenState extends State<HistoryScreen>
       color: FitnessAppTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: RefreshIndicator(
+          color: FitnessAppTheme.nearlyDarkBlue,
+          onRefresh: getData,
+          child: Stack(
           children: <Widget>[
             getMainListViewUI(),
             getAppBarUI(),
@@ -230,6 +234,7 @@ class _HistoryScreenState extends State<HistoryScreen>
               height: MediaQuery.of(context).padding.bottom,
             )
           ],
+        ),
         ),
       ),
     );

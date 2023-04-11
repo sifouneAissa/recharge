@@ -32,6 +32,7 @@ class _TokenScreenState extends State<TokenScreen>
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
+  bool refresh = false;
 
   @override
   void initState() {
@@ -42,6 +43,9 @@ class _TokenScreenState extends State<TokenScreen>
     addAllListData();
 
     scrollController.addListener(() {
+      if (scrollController.position.pixels == scrollController.position.minScrollExtent) {
+
+      }
       if (scrollController.offset >= 24) {
         if (topBarOpacity != 1.0) {
           setState(() {
@@ -86,6 +90,7 @@ class _TokenScreenState extends State<TokenScreen>
           parent: widget.animationController!,
           curve: Interval(0.6, 1.0, curve: Curves.fastOutSlowIn))),
       animationController: widget.animationController,
+      parentScrollController: scrollController,
     ));
 
     listViews.add(
@@ -101,6 +106,8 @@ class _TokenScreenState extends State<TokenScreen>
 
     listViews.add(
       TokenListView(
+        
+      parentScrollController: scrollController,
         onChangeBody: () {
           widget.onChangeBody('transaction');
         },
@@ -214,7 +221,7 @@ class _TokenScreenState extends State<TokenScreen>
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 100));
     return true;
   }
 
@@ -224,7 +231,10 @@ class _TokenScreenState extends State<TokenScreen>
       color: FitnessAppTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: RefreshIndicator(
+          color: FitnessAppTheme.nearlyDarkBlue,
+          onRefresh: getData,
+          child: Stack(
           children: <Widget>[
             getMainListViewUI(),
             getAppBarUI(),
@@ -232,6 +242,7 @@ class _TokenScreenState extends State<TokenScreen>
               height: MediaQuery.of(context).padding.bottom,
             )
           ],
+        ),
         ),
       ),
     );

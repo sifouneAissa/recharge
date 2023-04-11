@@ -199,7 +199,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 100));
     return true;
   }
 
@@ -209,7 +209,10 @@ class _NotificationScreenState extends State<NotificationScreen>
       color: FitnessAppTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: RefreshIndicator(
+          color: FitnessAppTheme.nearlyDarkBlue,
+          onRefresh: getData,
+          child: Stack(
           children: <Widget>[
             getMainListViewUI(),
             getAppBarUI(),
@@ -217,6 +220,7 @@ class _NotificationScreenState extends State<NotificationScreen>
               height: MediaQuery.of(context).padding.bottom,
             )
           ],
+        ),
         ),
       ),
     );

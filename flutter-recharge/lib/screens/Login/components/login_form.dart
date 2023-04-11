@@ -208,7 +208,7 @@ Future<UserCredential> signInWithFacebook() async {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              textDirection: TextDirection.rtl,
+              textDirection: TextDirection.ltr,
               controller: password,
               textInputAction: TextInputAction.done,
               obscureText: true,

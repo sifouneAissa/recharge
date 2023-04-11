@@ -108,6 +108,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
 
     listViews.add(
       AcceleratorListView(
+        parentScrollController :scrollController,
         onChangeBody: () {
           widget.onChangeBody('transaction');
         },
@@ -202,7 +203,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 100));
     return true;
   }
 
@@ -212,7 +213,10 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
       color: FitnessAppTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: RefreshIndicator(
+          color: FitnessAppTheme.nearlyDarkBlue,
+          onRefresh: getData,
+          child: Stack(
           children: <Widget>[
             getMainListViewUI(),
             getAppBarUI(),
@@ -220,6 +224,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
               height: MediaQuery.of(context).padding.bottom,
             )
           ],
+        ),
         ),
       ),
     );

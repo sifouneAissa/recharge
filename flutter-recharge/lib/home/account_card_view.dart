@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 class AccountCardView extends StatefulWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
-
-  const AccountCardView({Key? key, this.animationController, this.animation})
+  final ScrollController? parentScrollController;
+  const AccountCardView({Key? key, this.animationController, this.animation,this.parentScrollController})
       : super(key: key);
-
+  
   @override
   _AccountCardView createState() => _AccountCardView();
 }
@@ -26,6 +26,12 @@ class _AccountCardView extends State<AccountCardView> {
   void initState() {
     _getUser();
     super.initState();
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await _getUser();
+       }
+      }
+    );
   }
 
   _getUser() async {

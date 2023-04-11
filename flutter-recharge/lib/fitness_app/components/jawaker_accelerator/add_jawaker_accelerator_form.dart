@@ -15,11 +15,12 @@ import 'dart:io';
 
 class AddJawakerAcceleratorForm extends StatefulWidget {
   const AddJawakerAcceleratorForm(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
   final onChangeBody;
 
   @override
@@ -290,6 +291,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             ]),
           ),
           RecentPointsListView(
+            parentScrollController : widget.parentScrollController,
             mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
                     parent: widget.mainScreenAnimation!,

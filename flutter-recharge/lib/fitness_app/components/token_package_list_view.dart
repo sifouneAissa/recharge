@@ -20,13 +20,16 @@ class TokenPackageListView extends StatefulWidget {
       this.mainScreenAnimationController,
       this.mainScreenAnimation,
       this.callback,
-      this.callbackPosition})
+      this.callbackPosition,
+      this.parentScrollController
+      })
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
   final callback;
   final callbackPosition;
+  final ScrollController? parentScrollController;
 
   @override
   _TokenPackageListViewState createState() => _TokenPackageListViewState();
@@ -53,6 +56,12 @@ class _TokenPackageListViewState extends State<TokenPackageListView>
       if (x < 0) x = 0;
       widget.callbackPosition(x.floor());
     });
+
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await _getPackages();
+       }
+      });
   }
 
   _getPackages() async {

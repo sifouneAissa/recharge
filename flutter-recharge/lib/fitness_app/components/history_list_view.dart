@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 
 class HistoryListView extends StatefulWidget {
   const HistoryListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
   final onChangeBody;
 
   @override
@@ -30,6 +31,11 @@ class _HistoryListViewState extends State<HistoryListView> with TickerProviderSt
   void initState(){
     _getUser();
     super.initState();
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await _getUser();
+       }
+      });
   }
 
   _getUser() async{

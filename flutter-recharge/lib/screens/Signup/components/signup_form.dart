@@ -247,6 +247,7 @@ class _SignUpForm extends State<SignUpForm> {
                   value!.isEmpty ? S.of(context).invalid_password : null,
               textInputAction: TextInputAction.done,
               obscureText: true,
+              textDirection: TextDirection.ltr,
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: S.of(context).your_password,

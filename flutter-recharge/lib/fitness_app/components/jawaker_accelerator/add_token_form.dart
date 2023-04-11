@@ -21,11 +21,12 @@ import '../../../constants.dart';
 
 class AddTokenForm extends StatefulWidget {
   const AddTokenForm(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
   final onChangeBody;
 
   @override
@@ -49,21 +50,6 @@ class _AddTokenForm extends State<AddTokenForm> {
   @override
   void initState() {
     super.initState();
-    // quantity.addListener(() {
-    //   final isV = quantity.value.text.isEmpty;
-    //   print(isV);
-    //   if(!isV) {
-    //     setState(() {
-    //       _cost = double.parse(quantity.value.text);
-    //       // validate the cash of the user
-    //     });
-    //     _checkCash();
-    //   }
-    //   else
-    //     setState(() {
-    //       _cost = 0;
-    //     });
-    // });
   }
 
   void _checkCash() async {
@@ -328,6 +314,7 @@ class _AddTokenForm extends State<AddTokenForm> {
       child: Column(
         children: [
           TokenPackageListView(
+            parentScrollController: widget.parentScrollController,
             callbackPosition: (p) {
               setState(() {
                 position = p;
@@ -467,6 +454,7 @@ class _AddTokenForm extends State<AddTokenForm> {
                     parent: widget.mainScreenAnimation!,
                     curve: Interval(0.8, 1.0, curve: Curves.fastOutSlowIn))),
             mainScreenAnimationController: widget.mainScreenAnimationController,
+            parentScrollController: widget.parentScrollController,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

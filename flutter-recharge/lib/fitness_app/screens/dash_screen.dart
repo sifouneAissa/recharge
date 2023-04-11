@@ -86,6 +86,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
 
     listViews.add(
       JawakerAcceleratorListView(
+        
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
@@ -256,6 +257,7 @@ listViews.add(
 
     gridViews.add(
       JawakerListView(
+        parentScrollController: scrollController,
          onChangeBody: (){
           widget.onChangeBody('token');
         },
@@ -270,6 +272,8 @@ listViews.add(
 
     gridViews.add(
       NotificationListView(
+        
+        parentScrollController: scrollController,
          onChangeBody: (){
           widget.onChangeBody('notification');
         },
@@ -284,6 +288,8 @@ listViews.add(
 
     gridViews.add(
       TransactionListView(
+        
+        parentScrollController: scrollController,
          onChangeBody: (){
           widget.onChangeBody('transaction');
         },
@@ -298,6 +304,7 @@ listViews.add(
 
     gridViews.add(
       HistoryListView(
+        parentScrollController: scrollController,
          onChangeBody: (){
           widget.onChangeBody('history');
         },
@@ -372,7 +379,7 @@ listViews.add(
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 100));
     return true;
   }
 
@@ -382,15 +389,18 @@ listViews.add(
       color: FitnessAppTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: RefreshIndicator(
+          color: FitnessAppTheme.nearlyDarkBlue,
+          onRefresh: getData,
+          child: Stack(
           children: <Widget>[
             getMainListViewUI(),
-            // getGridViewUI(),
             getAppBarUI(),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
           ],
+        ),
         ),
       ),
     );

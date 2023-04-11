@@ -13,11 +13,12 @@ import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
 
 class RecentTokenTransactionDatatable extends StatefulWidget {
   const RecentTokenTransactionDatatable(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
 
   @override
   _RecentTokenTransactionDatatable createState() =>
@@ -86,6 +87,13 @@ class _RecentTokenTransactionDatatable
 
     __getTransactions();
     super.initState();
+
+    
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await __getTransactions();
+       }
+      });
   }
 
   @override

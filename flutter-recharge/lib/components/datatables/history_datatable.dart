@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 
 class HistoryDatatable extends StatefulWidget {
   const HistoryDatatable(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
 
   @override
   _HistoryDatatable createState() => _HistoryDatatable();
@@ -74,7 +75,14 @@ class _HistoryDatatable extends State<HistoryDatatable> with TickerProviderState
         duration: const Duration(milliseconds: 2000), vsync: this);
     
     __getTransactions();
+
     super.initState();
+
+    widget.parentScrollController?.addListener(()  {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+           __getTransactions();
+       }
+      });
   }
 
 

@@ -7,17 +7,22 @@ import 'package:best_flutter_ui_templates/components/datatables/recent_token_tra
 
 class RecentTokensListView extends StatefulWidget {
   const RecentTokensListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key,
+      this.mainScreenAnimationController,
+      this.mainScreenAnimation,
+      this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
 
   @override
   _RecentTokensListViewState createState() => _RecentTokensListViewState();
 }
 
-class _RecentTokensListViewState extends State<RecentTokensListView> with TickerProviderStateMixin {
+class _RecentTokensListViewState extends State<RecentTokensListView>
+    with TickerProviderStateMixin {
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
@@ -52,18 +57,18 @@ class _RecentTokensListViewState extends State<RecentTokensListView> with Ticker
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, left: 16, right: 16, bottom: 16),
-                  child: RecentTokenTransactionDatatable(
-                     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.mainScreenAnimation!,
-                curve: Interval(0.7, 1.0,
-                    curve: Curves.slowMiddle))),
-        mainScreenAnimationController: widget.mainScreenAnimationController,
-    
-                  )
-                ),
+                    padding: const EdgeInsets.only(
+                        top: 16, left: 16, right: 16, bottom: 16),
+                    child: RecentTokenTransactionDatatable(
+                      mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0)
+                          .animate(CurvedAnimation(
+                              parent: widget.mainScreenAnimation!,
+                              curve: Interval(0.7, 1.0,
+                                  curve: Curves.slowMiddle))),
+                      mainScreenAnimationController:
+                          widget.mainScreenAnimationController,
+                      parentScrollController: widget.parentScrollController,
+                    )),
               ),
             ),
           ),

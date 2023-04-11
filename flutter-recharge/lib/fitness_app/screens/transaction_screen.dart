@@ -86,6 +86,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                 curve: Interval(0.7, 1.0,
                     curve: Curves.slowMiddle))),
         mainScreenAnimationController: widget.animationController,
+        parentScrollController : scrollController
     ));
 
     // listViews.add(
@@ -205,7 +206,7 @@ class _TransactionScreenState extends State<TransactionScreen>
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 100));
     return true;
   }
 
@@ -215,7 +216,10 @@ class _TransactionScreenState extends State<TransactionScreen>
       color: FitnessAppTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: RefreshIndicator(
+          color: FitnessAppTheme.nearlyDarkBlue,
+          onRefresh: getData,
+          child: Stack(
           children: <Widget>[
             getMainListViewUI(),
             getAppBarUI(),
@@ -223,6 +227,7 @@ class _TransactionScreenState extends State<TransactionScreen>
               height: MediaQuery.of(context).padding.bottom,
             )
           ],
+        ),
         ),
       ),
     );

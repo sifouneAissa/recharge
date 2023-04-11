@@ -12,11 +12,12 @@ import 'package:flutter/material.dart';
 
 class TransactionDatatable extends StatefulWidget {
   const TransactionDatatable(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
 
   @override
   _TransactionDatatable createState() => _TransactionDatatable();
@@ -77,6 +78,12 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
     __getTransactions();
     super.initState();
+
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await __getTransactions();
+       }
+      });
 
     search.addListener(() {
       if (search.value.text.isNotEmpty) {

@@ -8,6 +8,10 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class NotificationDatatable extends StatefulWidget {
+  final ScrollController? parentScrollController;
+
+  const NotificationDatatable({Key? key, this.parentScrollController}) : super(key: key);
+
   @override
   _NotificationDatatable createState() => _NotificationDatatable();
 }
@@ -20,6 +24,12 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   void initState() {
     __getNotifications();
     super.initState();
+    
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await __getNotifications();
+       }
+      });
   }
 
   __getNotifications() async {

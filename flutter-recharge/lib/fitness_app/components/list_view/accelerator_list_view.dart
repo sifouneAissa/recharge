@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 
 class AcceleratorListView extends StatefulWidget {
   const AcceleratorListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
   final onChangeBody;
 
   @override
@@ -58,6 +59,7 @@ class _AcceleratorListViewState extends State<AcceleratorListView> with TickerPr
                     onChangeBody : widget.onChangeBody,
                     mainScreenAnimation: widget.mainScreenAnimation,
                     mainScreenAnimationController: widget.mainScreenAnimationController,
+                    parentScrollController : widget.parentScrollController
                   ),
                 ),
               ),

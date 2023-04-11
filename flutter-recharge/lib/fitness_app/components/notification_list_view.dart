@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 
 class NotificationListView extends StatefulWidget {
   const NotificationListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final ScrollController? parentScrollController;
+
   final onChangeBody;
 
   @override
@@ -31,13 +33,19 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
   void initState(){
     _getUser();
     super.initState();
+
+    
+    widget.parentScrollController?.addListener(() async {
+      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
+          await _getUser();
+       }
+      });
   }
 
   _getUser() async{
       var auth = await GetData().getAuth();
       setState(() {
         user = auth;
-        print(user);
       });
   }
 
