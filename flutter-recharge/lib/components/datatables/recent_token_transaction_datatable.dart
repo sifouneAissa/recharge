@@ -67,6 +67,7 @@ class _RecentTokenTransactionDatatable
 
       await GetData().updateTransactions(transactions);
     }
+    
   }
 
   __getOldTransactions() async {

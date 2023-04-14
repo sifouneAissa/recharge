@@ -129,7 +129,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               ),
             ));
   }
-  
+
 
   _getTexts(notification) {
     
@@ -161,7 +161,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               // style: TextStyle(
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            notification['info']['type']=='tokne' ? TextSpan(
+            notification['info']['type']=='token' ? TextSpan(
               text: notification['info']['count']!=null  ? Common.formatNumber(notification['info']['count'])+ ' ' : '0'  + ' ',
               style: TextStyle(
                   fontSize: 15,
@@ -200,8 +200,15 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               // style: TextStyle(
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            TextSpan(
+            notification['info']['type']=='token' ? TextSpan(
               text: Common.formatNumber(notification['info']['count']) + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
+            ) : TextSpan(
+              text: Common.formatNumber(notification['info']['cost']) + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
@@ -231,8 +238,15 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               // style: TextStyle(
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            TextSpan(
+            notification['info']['type']=='token' ? TextSpan(
               text: Common.formatNumber(notification['info']['count']) + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
+            ) : TextSpan(
+              text: Common.formatNumber(notification['info']['cost']) + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,

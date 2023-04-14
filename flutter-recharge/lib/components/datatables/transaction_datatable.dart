@@ -768,7 +768,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
         context: context,
         builder: (context) {
           return Container(
-            height: 400,
+            height: 410,
             child: Container(
               decoration: BoxDecoration(
                 color: transactionColors(transaction),
@@ -796,6 +796,19 @@ class _TransactionDatatable extends State<TransactionDatatable>
                     margin: EdgeInsets.only(top: 10),
                     child: Column(
                       children: [
+                        transaction['message'] != null ? Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(transaction['message'].toString(),style: TextStyle(
+                                color: FitnessAppTheme.nearlyDarkBlue,
+                                fontWeight: FontWeight.bold
+                              ),),
+                            ],
+                          ),
+                        ) : Container(),
                         Container(
                           margin: EdgeInsets.only(right: 10),
                           child: Row(
