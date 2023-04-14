@@ -11,7 +11,8 @@ class AccountCardView extends StatefulWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
   final ScrollController? parentScrollController;
-  const AccountCardView({Key? key, this.animationController, this.animation,this.parentScrollController})
+  final bool? isPoint;
+  const AccountCardView({Key? key, this.animationController, this.animation,this.parentScrollController,this.isPoint})
       : super(key: key);
   
   @override
@@ -54,6 +55,15 @@ class _AccountCardView extends State<AccountCardView> {
     await AuthApi().updateUser(data);
   
     _loading = !_loading;
+  }
+
+  getCash(){
+    String textToShow = '';
+    bool forPoint = widget.isPoint != null;
+    if(!forPoint) textToShow =  user != null && user['cash'] != null ? Common.formatNumber(user['cash']) : '0';
+    else textToShow = user != null && user['cash_point'] != null ? Common.formatNumber(user['cash_point']) : '0'; 
+
+    return textToShow;
   }
 
   @override
@@ -133,10 +143,8 @@ class _AccountCardView extends State<AccountCardView> {
                                       child: FittedBox(
                                         fit : BoxFit.scaleDown,
                                         child : Text(
+                                        getCash(),
                                         softWrap: false,
-                                        user != null && user['cash'] != null
-                                            ? Common.formatNumber(user['cash'])
-                                            : '0',
                                         textAlign: TextAlign.center,
                                         // overflow: TextOverflow.fade,
                                         style: TextStyle(

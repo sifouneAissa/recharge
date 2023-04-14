@@ -129,15 +129,52 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               ),
             ));
   }
+  _getMTransactionText(notification){
+      Text.rich(
+      TextSpan(
+          text: 'لقد تم اضافة رصيد  ',
+          children: <InlineSpan>[
+            TextSpan(
+              text: S.of(context).transaction_value,
+              // style: TextStyle(
+              //     fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            TextSpan(
+              text: Common.formatNumber(notification['info']['cost']) + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
+            ),
+            TextSpan(
+              text: ' الى رصيدك ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.lightGreen
+                  ),
+            ),
+            TextSpan(
+              text: S.of(context).day + notification['date'],
+              // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+            ),
+      ]),
+      textAlign: TextAlign.start,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    );
+  }
 
   _getTexts(notification) {
-    bool isTorP = notification['info']['type'] == 'token' || notification['info']['type'] == 'point';
+    
+    bool isMtransaction = notification['type']=='Mtransaction';
+    bool isTransaction = notification['type']=='transaction';
 
+    bool isTorP = (notification['info']['type'] == 'token' || notification['info']['type'] == 'point') && !isMtransaction;
     var leftC = notification['info']['left_accepted'];
     
     bool left = leftC != 0  && leftC != null;
     
-    print(left);
     if(isTorP)
     return Text.rich(
       notification['data']['action'] == null ? TextSpan(
@@ -159,7 +196,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: Common.formatNumber(notification['info']['count'])  + ' ',
+              text: notification['info']['count']!=null  ? Common.formatNumber(notification['info']['count']) : '0'  + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,
@@ -173,7 +210,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
           ]) : (
               notification['data']['action'] =='accepted' ? 
               TextSpan(
-          text: !left ? 'لقد تم قبول طلبك المتعلق ب' : 'لقد تم قبول : '+Common.formatNumber(notification['info']['left_accepted']) + ' من ',
+          text: !left ? 'لقد تم قبول طلبك المتعلق ب' : 'لقد تم قبول : '+Common.formatNumber(notification['info']['token_accepted']) + ' من ',
           children: <InlineSpan>[
             TextSpan(
               text: notification['info']['type'] == 'token'
@@ -204,7 +241,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
             ),
           ])
           : TextSpan(
-          text: 'لقد تم رفض طلبك المتعلق ب',
+          text: !left ? 'لقد تم رفض طلبك المتعلق ب' : 'لقد تم رفض : '+Common.formatNumber(notification['info']['left_accepted']) + ' من ',
           children: <InlineSpan>[
             TextSpan(
               text: notification['info']['type'] == 'token'
@@ -243,6 +280,11 @@ class _NotificationDatatable extends State<NotificationDatatable> {
       TextSpan(
           text: 'لقد تم اضافة رصيد  ',
           children: <InlineSpan>[
+            TextSpan(
+              text: notification['info']['type']=='point' ? 'من النقاط  ' : 'من توكنز ',
+              // style: TextStyle(
+              //     fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             TextSpan(
               text: S.of(context).transaction_value,
               // style: TextStyle(

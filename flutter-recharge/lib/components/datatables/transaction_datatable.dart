@@ -139,7 +139,144 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return _tokens;
   }
 
-  _getItemsList(tokensPackages) {
+  showSubSheetBuilder(transaction){
+    
+     showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 250,
+            child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                ),
+                margin: EdgeInsets.only(top: 0),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text('معلومات حول الحزمة'),
+                          )
+                        ],
+                      ),
+                    ),
+                    transaction['message'] != null ? Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(transaction['message'].toString(),
+                              style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.nearlyDarkBlue))
+                        ],
+                      ),
+                    ) : Container(),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(S.of(context).transaction_status),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              transactionSubStatus(transaction),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              subTransactionIcon(transaction)
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('الحزمة : '),
+                          Text(
+                            Common.formatNumber(transaction['total_tokens']),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('الكمية : '),
+                          Text(Common.formatNumber(transaction['total_quantity']),
+                              style: TextStyle(fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ),
+                    transaction['accepted_token'] != null ? Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('الكمية التي تم قبولها : '),
+                          Text(Common.formatNumber(transaction['accepted_token'] ==null ? 0 : transaction['accepted_token']),
+                              style: TextStyle(fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ) : Container(),
+                    transaction['rest_token'] != null ? Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('الكمية التي تم رفضها : '),
+                          Text(Common.formatNumber(transaction['rest_token']),
+                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red))
+                        ],
+                      ),
+                    ) : Container(),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(S.of(context).transaction_date),
+                          Text(transaction['tupdated_at'].toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: FitnessAppTheme.nearlyDarkBlue))
+                        ],
+                      ),
+                    ),
+                  ]
+                )),
+          );
+        });
+  
+  }  
+
+  _getItemsList(transaction) {
+    var tokensPackages = transaction['token_packages'];
+
     return List.generate(tokensPackages.length, (index) {
       PackageTokenData element = PackageTokenData(
           value: tokensPackages[index]['count'] is String
@@ -148,48 +285,64 @@ class _TransactionDatatable extends State<TransactionDatatable>
           packageData: tokensPackages[index]['token_package'],
           packageId: tokensPackages[index]['user_transaction_id']);
 
-      return Container(
-        margin: EdgeInsets.only(top: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Colors.grey.withOpacity(0.3),
-          // border: Border.all(color: Colors.black)
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(7),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 0),
-                child: Text(
-                  Common.formatNumber(element.packageData['count']),
-                  overflow: TextOverflow.ellipsis,
+      Widget status =
+          subTransactionIcon(tokensPackages[index]['token_operation']);
+
+      return GestureDetector(
+        onTap: () {
+          if (tokensPackages[index]['token_operation'] != null)
+            showSubSheetBuilder(tokensPackages[index]['token_operation']);
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.grey.withOpacity(0.3),
+            // border: Border.all(color: Colors.black)
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(7),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  margin: EdgeInsets.only(right: 0),
+                  child: Text(
+                    Common.formatNumber(element.packageData['count']),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 80),
-                child: Text(Common.formatNumber(int.parse(element.value)),
-                    overflow: TextOverflow.ellipsis),
-              ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.2,
-              //   margin: EdgeInsets.only(right: 30),
-              //   child:
-              //       Text(cost.substring(0, cost.length > 5 ? 5 : cost.length)),
-              // )
-            ],
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  margin: EdgeInsets.only(right: 20),
+                  child: Text(Common.formatNumber(int.parse(element.value)),
+                      overflow: TextOverflow.ellipsis),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  margin: EdgeInsets.only(right: 10),
+                  child: status,
+                ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 0.2,
+                //   margin: EdgeInsets.only(right: 30),
+                //   child:
+                //       Text(cost.substring(0, cost.length > 5 ? 5 : cost.length)),
+                // )
+              ],
+            ),
           ),
         ),
       );
     });
   }
 
-  _getPackages(tokensPackages) {
-    int _tokens = getTokens(tokensPackages);
+  _getPackages(transaction) {
+    var tokensPackages = transaction['token_packages'];
+    int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
+
     return Column(
       children: [
         Row(
@@ -217,28 +370,34 @@ class _TransactionDatatable extends State<TransactionDatatable>
           child: Padding(
             padding: EdgeInsets.all(5),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 60),
+                  // margin: EdgeInsets.only(left: 60),
                   child: Text(S.of(context).transaction_package),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 60),
+                  width: 60,
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 0),
                   child: Text(S.of(context).transaction_package_count),
                 ),
-                // Container(
-                //   margin: EdgeInsets.only(right: 80),
-                //   child: Text(' الكلفة'),
-                // )
+                Container(
+                  width: 60,
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 0),
+                  child: Text(' الحالة'),
+                )
               ],
             ),
           ),
         ),
         Container(
           child: Column(
-            children: _getItemsList(tokensPackages),
+            children: _getItemsList(transaction),
           ),
         ),
         Container(
@@ -303,11 +462,48 @@ class _TransactionDatatable extends State<TransactionDatatable>
     );
   }
 
+  transactionSubStatus(transaction) {
+    String text = '';
+    if (transaction['status'] == 'waiting')
+      text = 'يتم مراجعة الحزمة';
+    else if (transaction['status'] == 'accepted')
+      text = 'تم قبول الحزمة';
+    else if (transaction['status'] == 'rejected')
+      text = 'تم رفض الحزمة';
+    else if (transaction['more']) text = transaction['status']['message'];
+
+    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
+  }
+
+  subTransactionIcon(transaction) {
+    Widget? image = SizedBox();
+    if (transaction != null) if (transaction['status'] == 'waiting')
+      image = Image.asset(
+        'assets/icons/loading.gif',
+        width: 20,
+        height: 20,
+      );
+    else if (transaction['status'] == 'accepted') {
+      image = Icon(
+        Icons.check,
+        color: Colors.green,
+        size: 20,
+      );
+    } else if (transaction['status'] == 'rejected') {
+      image = Icon(
+        Icons.close,
+        color: Colors.redAccent,
+        size: 20,
+      );
+    }
+
+    return image;
+  }
+
   bottomSheetBuilderToken(transaction) {
-    var tokensPackages = transaction['token_packages'];
     bool isW = transaction['waiting'];
 
-    showModalBottomSheet(
+     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -316,7 +512,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
         context: context,
         builder: (context) {
           return Container(
-            height: 400,
+            height: 450,
             child: Container(
                 decoration: BoxDecoration(
                   color: transactionColors(transaction),
@@ -414,8 +610,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
                     ),
                     isW
                         ? Container()
-                        : Container(
-                            margin: EdgeInsets.only(top: 10, right: 5, left: 5),
+                        : 
+                          transaction['message'] != null || transaction['player_name'] != null ?
+                          Container(
+                            margin: EdgeInsets.only(top: 20, right: 30, left: 30),
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: FitnessAppTheme.nearlyDarkBlue),
@@ -425,47 +623,83 @@ class _TransactionDatatable extends State<TransactionDatatable>
                               padding: EdgeInsets.all(10),
                               child: Column(
                                 children: [
-                                  Container(
-                                    margin: EdgeInsets.only(right: 10),
+                                  transaction['message'] != null ? Container(
+                                    // margin: EdgeInsets.only(right : 50,left: 50),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text('الكمية التي تم رفضها : '),
-                                        Text(
-                                            Common.formatNumber(
-                                                transaction['left_accepted']),
+                                        Flexible(
+                                          child: Text(
+                                            transaction['message'],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.redAccent))
+                                                color:FitnessAppTheme.nearlyDarkBlue)),
+                                        )
                                       ],
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(right: 10),
+                                  ) : Container(),
+                                  transaction['player_name']!= null ? Container(
+                                    margin: EdgeInsets.only(right: 0),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text('الكمية التي تم قبولها : '),
+                                        Text('اسم اللاعب : '),
                                         Text(
-                                            Common.formatNumber(
-                                                transaction['token_accepted']),
+                                            transaction['player_name'],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: FitnessAppTheme
-                                                    .nearlyDarkBlue))
+                                                color:FitnessAppTheme.nearlyDarkBlue))
                                       ],
                                     ),
-                                  ),
+                                  ) : Container(),
+                                  // Container(
+                                  //   margin: EdgeInsets.only(right: 10),
+                                  //   child: Row(
+                                  //     crossAxisAlignment:
+                                  //         CrossAxisAlignment.center,
+                                  //     mainAxisAlignment:
+                                  //         MainAxisAlignment.center,
+                                  //     children: [
+                                  //       Text('الكمية التي تم رفضها : '),
+                                  //       Text(
+                                  //           Common.formatNumber(
+                                  //               transaction['left_accepted']),
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               color: Colors.redAccent))
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  // Container(
+                                  //   margin: EdgeInsets.only(right: 10),
+                                  //   child: Row(
+                                  //     crossAxisAlignment:
+                                  //         CrossAxisAlignment.center,
+                                  //     mainAxisAlignment:
+                                  //         MainAxisAlignment.center,
+                                  //     children: [
+                                  //       Text('الكمية التي تم قبولها : '),
+                                  //       Text(
+                                  //           Common.formatNumber(
+                                  //               transaction['token_accepted']),
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               color: FitnessAppTheme
+                                  //                   .nearlyDarkBlue))
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
-                          ),
+                          ) : Container(),
+                        
                     Expanded(
                       child: ListView(
                         children: [
@@ -479,7 +713,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [_getPackages(tokensPackages)],
+                                    children: [_getPackages(transaction)],
                                   ),
                                 )
                               ],
@@ -492,6 +726,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                 )),
           );
         });
+  
   }
 
   bottomSheetBuilderPoint(transaction) {

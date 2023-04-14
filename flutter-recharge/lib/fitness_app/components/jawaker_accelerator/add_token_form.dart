@@ -558,6 +558,7 @@ class _AddTokenForm extends State<AddTokenForm> {
           } else {
             setState(() {
               _hasError = true;
+              print(body);
             });
           }
 
