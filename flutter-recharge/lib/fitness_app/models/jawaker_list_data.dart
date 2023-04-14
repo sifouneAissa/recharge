@@ -8,6 +8,7 @@ class JawakerListData {
     this.endColor = '',
     this.meals,
     this.kacl = 0,
+    this.value
   });
 
   String imagePath;
@@ -16,31 +17,36 @@ class JawakerListData {
   String endColor;
   List<String>? meals;
   int kacl;
+  String? value;
 
   static List<JawakerListData> tabIconsList = <JawakerListData>[
     JawakerListData(
-      imagePath: 'assets/fitness_app/jawaker100.png',
-      titleTxt: S().point_accelerator,
+      imagePath: 'assets/fitness_app/jawaker300.png',
+      titleTxt: 'مسرع أحمر',
       kacl: 100,
       meals: <String>['100 %'],
-      startColor: '#FA7D82',
-      endColor: '#FFB295',
+      startColor: '#e65019',
+      endColor: '#e65019',
+      value:'100%',
     ),
     JawakerListData(
       imagePath: 'assets/fitness_app/jawaker150.png',
-      titleTxt: S().point_accelerator,
-      kacl: 150,
-      meals: <String>[S().recommended,'150 %'],
+      titleTxt: 'مسرع أزرق',
+      kacl: 200,
+      meals: <String>[S().recommended,'200 %'],
       startColor: '#738AE6',
       endColor: '#5C5EDD',
+      value:'200%',
     ),
+    
     JawakerListData(
-      imagePath: 'assets/fitness_app/jawaker300.png',
-      titleTxt: S().point_accelerator,
+      imagePath: 'assets/fitness_app/jawaker100.png',
+      titleTxt: 'مسرع أسود',
       kacl: 300,
       meals: <String>['300 %'],
-      startColor: '#FE95B6',
-      endColor: '#FF5287',
+      startColor: '#57372d',
+      endColor: '#30201b',
+      value:'300%',
     ),
     // JawakerListData(
     //   imagePath: 'assets/fitness_app/dinner.png',

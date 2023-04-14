@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recent_points_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recent_tokens_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
@@ -15,7 +16,11 @@ import 'dart:io';
 
 class AddJawakerAcceleratorForm extends StatefulWidget {
   const AddJawakerAcceleratorForm(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
+      {Key? key,
+      this.mainScreenAnimationController,
+      this.mainScreenAnimation,
+      this.onChangeBody,
+      this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
@@ -39,32 +44,41 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   double _cost = 0;
   bool _hasCash = true;
   bool _showRecent = false;
+  String? selectedPoint;
+  var costs = {
+      '100%' : defaultAcceleratorToken,
+      '200%' : defaultAcceleratorToken * 2,
+      '300%' : defaultAcceleratorToken * 3
+  };
 
   void _checkCash() async {
     var user = await GetData().getAuth();
+
     setState(() {
-      _hasCash = user['cash'] + .0 >= _cost;
+      _hasCash = user['cash_point'] + .0 >= _cost;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    quantity.addListener(() {
-      final isV = quantity.value.text.isEmpty;
-      if (!isV) {
-        setState(() {
-          
-          _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
-          // quantity.value.text = Common.formatNumber(quantity.value.text);
-          // validate the cash of the user
-          _checkCash();
-        });
-      } else
-        setState(() {
-          _cost = 0;
-        });
-    });
+    // quantity.addListener(() {
+    //   final isV = quantity.value.text.isEmpty;
+    //   if (!isV) {
+    //     setState(() {
+    //       if(selectedPoint!=null)
+    //           _cost = costs[selectedPoint] as double;
+    //       // _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
+    //       else _cost = 0;
+    //       // quantity.value.text = Common.formatNumber(quantity.value.text);
+    //       // validate the cash of the user
+    //       _checkCash();
+    //     });
+    //   } else
+    //     setState(() {
+    //       _cost = 0;
+    //     });
+    // });
   }
 
   Widget imageProfile() {
@@ -165,6 +179,28 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     widget.onChangeBody();
   }
 
+  
+  handleSelectPackage(data) {
+      setState(() {
+        selectedPoint = data;
+      });
+
+        setState(() {
+          
+            if(selectedPoint!=null)
+                _cost = costs[selectedPoint] as double;
+            // _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
+            else _cost = 0;
+            // quantity.value.text = Common.formatNumber(quantity.value.text);
+            // validate the cash of the user
+            _checkCash();
+        });
+
+        // setState(() {
+        //   _cost = 0;
+        // });
+  }
+
   handleSnackBarError() {
     final snackBar = SnackBar(
       content: Text('فشل الاتصال'),
@@ -180,13 +216,20 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
         children: [
+          JawakerAcceleratorListView(
+            mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(
+                    parent: widget.mainScreenAnimation!,
+                    curve: Interval(0.6, 1.0, curve: Curves.fastOutSlowIn))),
+            mainScreenAnimationController: widget.mainScreenAnimationController,
+            onSelectCallback: handleSelectPackage,
+          ),
           Padding(
               padding: const EdgeInsets.symmetric(vertical: defaultPadding),
               child: _hasError || !_hasCash
@@ -196,27 +239,27 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                     )
                   : null),
 
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => value!.isEmpty ||
-                    (value.isNotEmpty && (double.parse(value) + .0) == 0)
-                ? S.of(context).invalid_quantity
-                : null,
-            controller: quantity,
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
-            onSaved: (quantity) {},
-            decoration: InputDecoration(
-              hintText: S.of(context).your_quantity,
-              hintStyle: TextStyle(color: Colors.black),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
-                child:
-                    Icon(Icons.numbers, color: FitnessAppTheme.nearlyDarkBlue),
-              ),
-            ),
-          ),
+          // TextFormField(
+          //   autovalidateMode: AutovalidateMode.onUserInteraction,
+          //   validator: (value) => value!.isEmpty ||
+          //           (value.isNotEmpty && (double.parse(value) + .0) == 0)
+          //       ? S.of(context).invalid_quantity
+          //       : null,
+          //   controller: quantity,
+          //   keyboardType: TextInputType.number,
+          //   textInputAction: TextInputAction.next,
+          //   cursorColor: kPrimaryColor,
+          //   onSaved: (quantity) {},
+          //   decoration: InputDecoration(
+          //     hintText: S.of(context).your_quantity,
+          //     hintStyle: TextStyle(color: Colors.black),
+          //     prefixIcon: Padding(
+          //       padding: const EdgeInsets.all(defaultPadding),
+          //       child:
+          //           Icon(Icons.numbers, color: FitnessAppTheme.nearlyDarkBlue),
+          //     ),
+          //   ),
+          // ),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) =>
@@ -291,7 +334,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             ]),
           ),
           RecentPointsListView(
-            parentScrollController : widget.parentScrollController,
+            parentScrollController: widget.parentScrollController,
             mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
                     parent: widget.mainScreenAnimation!,
@@ -318,9 +361,10 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
 
         var data = {
           'name': name.text,
-          'count': quantity.text,
+          'count': selectedPoint.toString(),
           'cost': _cost,
-          'type': 'point'
+          'type': 'point',
+          
         };
 
         try {
@@ -332,6 +376,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             await AuthApi().updateUser(data);
             handleSnackBar();
           } else {
+            print(body);
             setState(() {
               _hasError = false;
             });

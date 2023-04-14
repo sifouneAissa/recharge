@@ -86,7 +86,6 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
 
     listViews.add(
       JawakerAcceleratorListView(
-        
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,

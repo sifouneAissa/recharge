@@ -5,7 +5,9 @@ import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator/add_token_form.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
+import 'package:best_flutter_ui_templates/fitness_app/models/jawaker_list_data.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
@@ -137,6 +139,32 @@ class _TransactionDatatable extends State<TransactionDatatable>
     });
 
     return _tokens;
+  }
+
+    getPackage(name) {
+    Widget myWidget = Container();
+    try {
+      JawakerListData element = JawakerListData.tabIconsList
+          .firstWhere((element) => element.kacl == int.parse(name.toString()));
+
+      myWidget = FadeTransition(
+          opacity: widget.mainScreenAnimation!,
+          child: Transform(
+            child: Container(
+              height: 216,
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: JawakerView(
+                  animation: widget.mainScreenAnimation,
+                  animationController: widget.mainScreenAnimationController,
+                  isSelected: false,
+                  mealsListData: element),
+            ),
+            transform: Matrix4.translationValues(
+                0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
+          ));
+    } catch (e) {}
+
+    return myWidget;
   }
 
   showSubSheetBuilder(transaction){
@@ -730,6 +758,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
   }
 
   bottomSheetBuilderPoint(transaction) {
+
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -739,7 +768,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
         context: context,
         builder: (context) {
           return Container(
-            height: 200,
+            height: 400,
             child: Container(
               decoration: BoxDecoration(
                 color: transactionColors(transaction),
@@ -788,20 +817,21 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(S.of(context).transaction_count),
-                              Text(
-                                Common.formatNumber(transaction['count']),
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
+                        getPackage(transaction['count']),
+                        // Container(
+                        //   margin: EdgeInsets.only(right: 10),
+                        //   child: Row(
+                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       Text(S.of(context).transaction_count),
+                        //       Text(
+                        //         Common.formatNumber(transaction['count']),
+                        //         style: TextStyle(fontWeight: FontWeight.bold),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           margin: EdgeInsets.only(right: 10),
                           child: Row(

@@ -8,11 +8,13 @@ import '../../main.dart';
 
 class JawakerAcceleratorListView extends StatefulWidget {
   const JawakerAcceleratorListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
+      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onSelectCallback})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
+  final onSelectCallback;
+  
 
   @override
   _JawakerAcceleratorListViewState createState() => _JawakerAcceleratorListViewState();
@@ -22,6 +24,7 @@ class _JawakerAcceleratorListViewState extends State<JawakerAcceleratorListView>
     with TickerProviderStateMixin {
   AnimationController? animationController;
   List<JawakerListData> mealsListData = JawakerListData.tabIconsList;
+  int? selectedIndex;
 
   @override
   void initState() {
@@ -70,10 +73,22 @@ class _JawakerAcceleratorListViewState extends State<JawakerAcceleratorListView>
                                   curve: Curves.fastOutSlowIn)));
                   animationController?.forward();
 
-                  return JawakerView(
+                  return GestureDetector(
+                    onTap: () {
+                      if(widget.onSelectCallback!=null){
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                        return widget.onSelectCallback(mealsListData[index].value);
+                      }
+
+                    },
+                    child: JawakerView(
+                    isSelected: index == selectedIndex,
                     mealsListData: mealsListData[index],
                     animation: animation,
                     animationController: animationController!,
+                  )
                   );
                 },
               ),
@@ -87,12 +102,13 @@ class _JawakerAcceleratorListViewState extends State<JawakerAcceleratorListView>
 
 class JawakerView extends StatelessWidget {
   const JawakerView(
-      {Key? key, this.mealsListData, this.animationController, this.animation})
+      {Key? key, this.mealsListData, this.animationController, this.animation,this.isSelected})
       : super(key: key);
 
   final JawakerListData? mealsListData;
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +121,12 @@ class JawakerView extends StatelessWidget {
             transform: Matrix4.translationValues(
                 100 * (1.0 - animation!.value), 0.0, 0.0),
             child: SizedBox(
-              width: 130,
+              width: isSelected ? 150 : 130,
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 32, left: 8, right: 8, bottom: 16),
+                    padding:  EdgeInsets.only(
+                        top: !isSelected ? 32 : 8, left: 8, right: 8, bottom: 16),
                     child: Container(
                       decoration: BoxDecoration(
                         boxShadow: <BoxShadow>[
@@ -118,7 +134,7 @@ class JawakerView extends StatelessWidget {
                               color: HexColor(mealsListData!.endColor)
                                   .withOpacity(0.6),
                               offset: const Offset(1.1, 4.0),
-                              blurRadius: 8.0),
+                              blurRadius: isSelected ? 50 :  8.0),
                         ],
                         gradient: LinearGradient(
                           colors: <HexColor>[
@@ -128,11 +144,11 @@ class JawakerView extends StatelessWidget {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
-                        borderRadius: const BorderRadius.only(
+                        borderRadius:  BorderRadius.only(
                           bottomRight: Radius.circular(8.0),
                           bottomLeft: Radius.circular(8.0),
                           topLeft: Radius.circular(8.0),
-                          topRight: Radius.circular(54.0),
+                          topRight: Radius.circular(isSelected ? 8.0 : 54.0),
                         ),
                       ),
                       child: Padding(

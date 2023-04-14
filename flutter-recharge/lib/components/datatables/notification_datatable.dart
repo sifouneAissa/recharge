@@ -129,41 +129,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               ),
             ));
   }
-  _getMTransactionText(notification){
-      Text.rich(
-      TextSpan(
-          text: 'لقد تم اضافة رصيد  ',
-          children: <InlineSpan>[
-            TextSpan(
-              text: S.of(context).transaction_value,
-              // style: TextStyle(
-              //     fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            TextSpan(
-              text: Common.formatNumber(notification['info']['cost']) + ' ',
-              style: TextStyle(
-                  fontSize: 15,
-                  // fontWeight: FontWeight.bold,
-                  // color: Colors.pinkAccent
-                  ),
-            ),
-            TextSpan(
-              text: ' الى رصيدك ',
-              style: TextStyle(
-                  fontSize: 15,
-                  // fontWeight: FontWeight.bold,
-                  // color: Colors.lightGreen
-                  ),
-            ),
-            TextSpan(
-              text: S.of(context).day + notification['date'],
-              // style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-            ),
-      ]),
-      textAlign: TextAlign.start,
-      style: const TextStyle(fontWeight: FontWeight.bold),
-    );
-  }
+  
 
   _getTexts(notification) {
     
@@ -195,8 +161,15 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               // style: TextStyle(
               //     fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            TextSpan(
-              text: notification['info']['count']!=null  ? Common.formatNumber(notification['info']['count']) : '0'  + ' ',
+            notification['info']['type']=='tokne' ? TextSpan(
+              text: notification['info']['count']!=null  ? Common.formatNumber(notification['info']['count'])+ ' ' : '0'  + ' ',
+              style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                  // color: Colors.pinkAccent
+                  ),
+            ) : TextSpan(
+              text: notification['info']['cost']!=null  ? Common.formatNumber(notification['info']['cost'])+ ' ' : '0 '  + ' ',
               style: TextStyle(
                   fontSize: 15,
                   // fontWeight: FontWeight.bold,

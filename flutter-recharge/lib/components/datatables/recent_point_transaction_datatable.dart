@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
+import 'package:best_flutter_ui_templates/fitness_app/models/jawaker_list_data.dart';
+import 'package:best_flutter_ui_templates/fitness_app/models/tabIcon_data.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +14,10 @@ import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
 
 class RecentPointTransactionDatatable extends StatefulWidget {
   const RecentPointTransactionDatatable(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.parentScrollController})
+      {Key? key,
+      this.mainScreenAnimationController,
+      this.mainScreenAnimation,
+      this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
@@ -78,8 +84,33 @@ class _RecentPointTransactionDatatable
     }
   }
 
-  bottomSheetBuilder(transaction) {
+  getPackage(name) {
+    Widget myWidget = Container();
+    try {
+      JawakerListData element = JawakerListData.tabIconsList
+          .firstWhere((element) => element.kacl == int.parse(name.toString()));
 
+      myWidget = FadeTransition(
+          opacity: widget.mainScreenAnimation!,
+          child: Transform(
+            child: Container(
+              height: 216,
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: JawakerView(
+                  animation: widget.mainScreenAnimation,
+                  animationController: widget.mainScreenAnimationController,
+                  isSelected: false,
+                  mealsListData: element),
+            ),
+            transform: Matrix4.translationValues(
+                0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
+          ));
+    } catch (e) {}
+
+    return myWidget;
+  }
+
+  bottomSheetBuilder(transaction) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -89,7 +120,7 @@ class _RecentPointTransactionDatatable
         context: context,
         builder: (context) {
           return Container(
-            height: 200,
+            height: 400,
             child: Container(
               decoration: BoxDecoration(
                 color: transactionColors(transaction),
@@ -138,20 +169,21 @@ class _RecentPointTransactionDatatable
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(S.of(context).transaction_count),
-                              Text(
-                                Common.formatNumber(transaction['count']),
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
+                        getPackage(transaction['count']),
+                        // Container(
+                        //   margin: EdgeInsets.only(right: 10),
+                        //   child: Row(
+                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       Text(S.of(context).transaction_count),
+                        //       Text(
+                        //         Common.formatNumber(transaction['count']),
+                        //         style: TextStyle(fontWeight: FontWeight.bold),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           margin: EdgeInsets.only(right: 10),
                           child: Row(
@@ -212,10 +244,11 @@ class _RecentPointTransactionDatatable
     super.initState();
 
     widget.parentScrollController?.addListener(() async {
-      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
-          await __getTransactions();
-       }
-      });
+      if (widget.parentScrollController?.position.pixels ==
+          widget.parentScrollController?.position.minScrollExtent) {
+        await __getTransactions();
+      }
+    });
   }
 
   @override
@@ -230,7 +263,8 @@ class _RecentPointTransactionDatatable
       text = 'يتم مراجعة الطلب';
     else if (transaction['accepted'])
       text = 'تم قبول الطلب';
-    else if (transaction['rejected']) text = 'تم رفض طلبك';
+    else if (transaction['rejected'])
+      text = 'تم رفض طلبك';
     else if (transaction['more']) text = transaction['status']['message'];
 
     return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
@@ -242,7 +276,8 @@ class _RecentPointTransactionDatatable
       color = Colors.grey.withOpacity(0.1);
     else if (transaction['accepted'])
       color = Colors.greenAccent.withOpacity(0.1);
-    else if (transaction['rejected']) color = Colors.redAccent.withOpacity(0.1);
+    else if (transaction['rejected'])
+      color = Colors.redAccent.withOpacity(0.1);
     else if (transaction['more']) color = Colors.redAccent.withOpacity(0.1);
 
     return color;
