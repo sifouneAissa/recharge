@@ -8,10 +8,12 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:dio/dio.dart';
 
+
+
 class AuthApi{
 
-  final String _url = 'https://recharge-web.afandena-cards.com/api/';
-  // final String _url = 'http://192.168.1.3/api/';
+  // final String _url = 'https://recharge-web.afandena-cards.com/api/';
+  final String _url = 'http://192.168.1.6/api/';
 
 
   login(data) async {
@@ -45,6 +47,18 @@ class AuthApi{
  
   }
 
+  
+  update(data) async {
+      print(data);
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+
+      var fullUrl = _url + 'user/'+auth['id'].toString();
+
+     return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeadersAuthorization(token));
+ 
+  }
+
 
 
   addToken(data) async {
@@ -73,30 +87,58 @@ class AuthApi{
 
   }
 
+  
+  getPointPackages() async {
+
+    
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken(); 
+
+      
+      var fullUrl = _url + 'package/point/'+auth['id'].toString();     
+
+      return await http.get(Uri.parse(fullUrl),headers: _setHeadersAuthorization(token));
+ 
+
+  }
+
+  
+
   addPointWithoutP(data) async{
       
       var auth = await GetData().getAuth();
       var token = await GetData().getToken();
 
-      
-      FormData formData =  FormData.fromMap({
-        'count': data['count'],
-        'cost': data['cost'],
-        'type': data['type'],
-        'name_of_player' : data['name']
-      });
 
-      
       var fullUrl = _url + 'transactions/'+auth['id'].toString();
-      
-      
-      
-       Dio dio = Dio();
 
-       return await dio.post(fullUrl,
-       data: formData,
-       options: Options(headers: _setHeadersAuthorization(token))
-       );
+     return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeadersAuthorization(token));
+ 
+      // var auth = await GetData().getAuth();
+      // var token = await GetData().getToken();
+      
+      
+      // FormData formData =  FormData.fromMap({
+      //   'count': data['count'],
+      //   'cost': data['cost'],
+      //   'type': data['type'],
+      //   'name_of_player' : data['name_of_player'],
+      //   'point_packages' : jsonEncode(data['point_packages'])
+      // });
+
+      
+      // var fullUrl = _url + 'transactions/'+auth['id'].toString();
+      
+      
+      
+      //  Dio dio = Dio();
+
+      //  return await dio.post(fullUrl,
+      //  data: formData,
+      //  options: Options(headers: _setHeadersAuthorization(token))
+      //  );
+
+       
        
   }
 
@@ -125,6 +167,28 @@ class AuthApi{
 
   }
 
+  updatePhoto(PickedFile? file) async{
+      
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+
+      FormData formData =  FormData.fromMap({
+        'file': await MultipartFile.fromFile(file!.path)
+      });
+      
+      var fullUrl = _url + 'user/'+auth['id'].toString();
+      
+      
+      
+       Dio dio = Dio();
+
+       return await dio.post(fullUrl,
+       data: formData,
+       options: Options(headers: _setHeadersAuthorization(token))
+       );
+
+  }
+
   getTransactions() async{
 
       var auth = await GetData().getAuth();
@@ -134,6 +198,21 @@ class AuthApi{
 
      return await http.get(Uri.parse(fullUrl),headers: _setHeadersAuthorization(token));
  
+  }
+
+  getRecentTransactions(data) async{
+
+      var auth = await GetData().getAuth();
+      var token = await GetData().getToken();
+
+      var fullUrl = _url + 'transactions/'+auth['id'].toString();
+
+      Dio dio = Dio();
+
+      return await dio.get(fullUrl,
+          data: data,
+          options: Options(headers: _setHeadersAuthorization(token))
+       );
   }
 
    getNotifications() async{

@@ -51,6 +51,7 @@ dependencies:
     google_sign_in: ^6.0.2
     flutter_spinbox: ^0.13.0
     flutter_native_splash: ^2.2.19
+
 dev_dependencies:
     flutter_test:
         sdk: flutter

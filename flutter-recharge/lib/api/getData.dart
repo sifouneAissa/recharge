@@ -53,10 +53,23 @@ class GetData {
     }
 
     
+    getPointPackages() async{
+      
+        var storage = await getInstance();
+        return storage.getString('point_packages');
+    }
+
     updateTokenPackages(data) async {
         var storage = await getInstance();
         return storage.setString('packages',jsonEncode(data));
     }
+
+    updatePointPackages(data) async {
+        var storage = await getInstance();
+        return storage.setString('point_packages',jsonEncode(data));
+    }
+
+
 
 
 

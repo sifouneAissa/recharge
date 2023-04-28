@@ -8,6 +8,7 @@ import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recen
 import 'package:best_flutter_ui_templates/fitness_app/components/list_view/recent_tokens_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../constants.dart';
@@ -44,10 +45,13 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   double _cost = 0;
   bool _hasCash = true;
   bool _showRecent = false;
+  int _tokens = 0;
+  List<PackagePointData> data = [];
+
   String? selectedPoint;
   var costs = {
       '100%' : defaultAcceleratorToken,
-      '200%' : defaultAcceleratorToken * 2,
+      '150%' : defaultAcceleratorToken * 2,
       '300%' : defaultAcceleratorToken * 3
   };
 
@@ -80,6 +84,206 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     //     });
     // });
   }
+
+  _getItemsList() {
+    return List.generate(data.length, (index) {
+
+      PackagePointData element = data[index];
+      
+      String cost = (element.packageData['cost'] * double.parse(element.value))
+          .toString();
+      String text = 'لقد اخترت ';
+      var ncost = 0.0;
+      var ttokens = 0;
+      data.forEach((element) {
+        String cost =
+            (element.packageData['cost'] * double.parse(element.value))
+                .toString();
+
+        String subtext = 'المسرع : ' +
+            element.packageData['count'].toString() +
+            ' الكمية : ' +
+            element.value.toString() +
+            ' الكلفة : ' +
+            cost.substring(0, cost.length > 5 ? 5 : cost.length);
+        text = text + '\n' + subtext;
+        ncost =
+            element.packageData['cost'] * double.parse(element.value) + ncost;
+        ttokens =
+            element.packageData['cost'] * int.parse(element.value) + ttokens;
+      });
+
+      setState(() {
+        _cost = ncost + .0;
+        _tokens = ttokens;
+        // print(_cost);
+        // print(_tokens);
+      });
+
+      _checkCash();
+
+      return Container(
+        margin: EdgeInsets.only(top: 2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.grey.withOpacity(0.3),
+          // border: Border.all(color: Colors.black)
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(7),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                margin: EdgeInsets.only(right: 0),
+                child: Text(
+                  element.packageData['name'],
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                margin: EdgeInsets.only(right: 80),
+                child: Text(Common.formatNumber(int.parse(element.value)),
+                    overflow: TextOverflow.ellipsis),
+              ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width * 0.2,
+              //   margin: EdgeInsets.only(right: 30),
+              //   child:
+              //       Text(cost.substring(0, cost.length > 5 ? 5 : cost.length)),
+              // )
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  _getPackages() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 5),
+              child: Text.rich(TextSpan(children: [
+                // WidgetSpan(
+                //     child: Icon(
+                //   Icons.shop,
+                //   size: 18,
+                // )),
+
+                TextSpan(
+                    text: data.length.toString() + '-',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(
+                    text: 'المسرعات التي تم اختيارها',
+                    style: TextStyle(fontWeight: FontWeight.bold))
+              ])),
+            ),
+          ],
+        ),
+        Container(
+          height: 2,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            // border: Border.all(color: Colors.black)
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 40),
+                  child: Text('المسرع'),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 80),
+                  child: Text(' الكمية'),
+                ),
+                // Container(
+                //   margin: EdgeInsets.only(right: 80),
+                //   child: Text(' الكلفة'),
+                // )
+              ],
+            ),
+          ),
+        ),
+        Container(
+          child: Column(
+            children: _getItemsList(),
+          ),
+        ),
+        Container(
+          height: 15,
+        ),
+        Container(
+          // width: MediaQuery.of(context).size.width * 0.5,
+          // height: MediaQuery.of(context).size.height * 0.15,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: FitnessAppTheme.grey.withOpacity(0.4),
+                    offset: const Offset(1.1, 1.1),
+                    blurRadius: 10.0),
+              ]),
+          child: Column(
+            children: [
+              Container(
+                // height: MediaQuery.of(context).size.height * 0.1,
+                // width: MediaQuery.of(context).size.width * 0.5,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <HexColor>[
+                        HexColor('#2633C5'),
+                        HexColor('#2633C5'),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
+
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(top: 20, bottom: 20, right: 50, left: 50),
+                  child: FittedBox(
+                    fit : BoxFit.scaleDown,
+                    child : Text(Common.formatNumber(_tokens),
+                      style:
+                          TextStyle(fontSize: 20, color: Colors.amberAccent))
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    // color: Colors.white
+                    ),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: FittedBox(
+                    fit : BoxFit.scaleDown,
+                    child : Text("الكلفة : " + Common.formatNumber(_tokens))
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
 
   Widget imageProfile() {
     return Center(
@@ -180,21 +384,24 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   }
 
   
-  handleSelectPackage(data) {
-      setState(() {
-        selectedPoint = data;
-      });
-
-        setState(() {
-          
-            if(selectedPoint!=null)
-                _cost = costs[selectedPoint] as double;
-            // _cost = double.parse(quantity.value.text) * defaultAcceleratorToken;
-            else _cost = 0;
-            // quantity.value.text = Common.formatNumber(quantity.value.text);
-            // validate the cash of the user
-            _checkCash();
-        });
+  handleSelectPackage(PackagePointData extra) {
+            PackagePointData elementt = extra;
+              // get the list without the selected element
+              List<PackagePointData> nData = data
+                  .where((element) => element.packageId != elementt.packageId)
+                  .toList();
+              // update the data
+              nData.add(elementt);
+              // validate all data
+              nData = nData.where((element) => element.value != '' && element.value !='0').toList();
+              // set the data
+              setState(() {
+                data = nData;
+              });
+        print(data.length);
+        // setState(() {
+        //     // _checkCash();
+        // });
 
         // setState(() {
         //   _cost = 0;
@@ -260,6 +467,15 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
           //     ),
           //   ),
           // ),
+          Column(
+            children: [
+              Container(
+                child: data.isNotEmpty
+                    ? _getPackages()
+                    : Text('ادخل الكمية من كل حزمة'),
+              )
+            ],
+          ),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) =>
@@ -284,27 +500,27 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
           //   child: imageProfile(),
           // ),
           const SizedBox(height: defaultPadding),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                S().cost + Common.formatNumber(_cost),
-                style: const TextStyle(color: Colors.pink),
-              ),
-              // GestureDetector(
-              //   onTap: () => {
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     Text(
+          //       S().cost + Common.formatNumber(_cost),
+          //       style: const TextStyle(color: Colors.pink),
+          //     ),
+          //     // GestureDetector(
+          //     //   onTap: () => {
 
-              //   },
-              //   child: Text(
-              //     login ? "Sign Up" : "Sign In",
-              //     style: const TextStyle(
-              //       color: kPrimaryColor,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // )
-            ],
-          ),
+          //     //   },
+          //     //   child: Text(
+          //     //     login ? "Sign Up" : "Sign In",
+          //     //     style: const TextStyle(
+          //     //       color: kPrimaryColor,
+          //     //       fontWeight: FontWeight.bold,
+          //     //     ),
+          //     //   ),
+          //     // )
+          //   ],
+          // ),
           const SizedBox(height: defaultPadding),
           Hero(
             tag: "login_btn",
@@ -313,7 +529,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                 backgroundColor:
                     MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
               ),
-              onPressed: !_hasCash || _isLoading ? null : handleAddToken,
+              onPressed: data.isEmpty || !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
                 S().confirm.toUpperCase(),
                 style: TextStyle(fontSize: 20),
@@ -347,7 +563,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   }
 
   handleAddToken() async {
-    if (_hasCash) {
+    if (_hasCash ) {
       if (_formKey.currentState!.validate()) {
         print('Form is valid');
 
@@ -358,18 +574,29 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               status: S().sending_add_jawker,
               maskType: EasyLoadingMaskType.custom);
         });
+        
+        var packages = [];
 
-        var data = {
-          'name': name.text,
-          'count': selectedPoint.toString(),
+        data.forEach((element) {
+          packages
+              .add({'package_id': element.packageId, 'count': element.value});
+        });
+
+
+        var ndata = {
+          'name_of_player': name.text,
+          'count': _cost.toString(),
           'cost': _cost,
+          'point_packages' : packages,
           'type': 'point',
           
         };
 
+        // print(ndata);
+
         try {
-          var res = await AuthApi().addPointWithoutP(data);
-          var body = res.data;
+          var res = await AuthApi().addPointWithoutP(ndata);
+          var body = jsonDecode(res.body);
 
           if (body['status']) {
             var data = AuthApi().getData(body);
@@ -398,4 +625,14 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
       }
     }
   }
+}
+
+
+
+class PackagePointData {
+  PackagePointData({this.value = '', this.packageId = '', this.packageData});
+
+  String value;
+  String packageId;
+  var packageData;
 }

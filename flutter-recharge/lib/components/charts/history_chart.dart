@@ -262,7 +262,7 @@ class _HistoryChartState extends State<HistoryChart> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text.rich(TextSpan(text: 'تاوكنز : ', children: [
+                      Text.rich(TextSpan(text: 'توكنز : ', children: [
                         TextSpan(
                             text: t_tokens.toString(),
                             style: TextStyle(fontWeight: FontWeight.bold))
@@ -281,7 +281,7 @@ class _HistoryChartState extends State<HistoryChart> {
                         child: Column(
                           children: [
                             Text('مجموع ما شحنت '),
-                            Text('من تاوكنز'),
+                            Text('من توكنز'),
                           ],
                         ),
                       )
@@ -368,7 +368,7 @@ class _HistoryChartState extends State<HistoryChart> {
   SfCartesianChart _buildDefaultColumnChartToken() {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'تاوكنز معاملات ومصاريف'),
+      title: ChartTitle(text: 'توكنز معاملات ومصاريف'),
       primaryXAxis: CategoryAxis(
         majorGridLines: const MajorGridLines(width: 0),
       ),

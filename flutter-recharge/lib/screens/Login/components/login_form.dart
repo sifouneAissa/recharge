@@ -152,9 +152,9 @@ Future<UserCredential> signInWithFacebook() async {
                       String? userName = value!.displayName;
                       String? profilePicture = value.photoUrl;
                       // this is the id of the google user ;
-                      print(value.id);
-                      print(userName);
-                      print(profilePicture);
+                      // print(value.id);
+                      // print(userName);
+                      // print(profilePicture);
                       await handleSLogin('gmail', value.id);
                     });
             },

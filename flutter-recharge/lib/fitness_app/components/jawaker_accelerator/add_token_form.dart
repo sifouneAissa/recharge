@@ -277,7 +277,7 @@ class _AddTokenForm extends State<AddTokenForm> {
                   padding: EdgeInsets.all(10),
                   child: FittedBox(
                     fit : BoxFit.scaleDown,
-                    child : Text("تاوكنز : " + Common.formatNumber(_tokens))
+                    child : Text("توكنز : " + Common.formatNumber(_tokens))
                   ),
                 ),
               ),
@@ -538,7 +538,8 @@ class _AddTokenForm extends State<AddTokenForm> {
           'account_id': id.text,
           'count': _tokens.toString(),
           'cost': _cost.toString(),
-          'packages': packages
+          'packages': packages,
+          'type': 'token'
         };
 
         var res = null;
@@ -557,7 +558,7 @@ class _AddTokenForm extends State<AddTokenForm> {
             });
           } else {
             setState(() {
-              _hasError = true;
+              _hasError = false;
               print(body);
             });
           }

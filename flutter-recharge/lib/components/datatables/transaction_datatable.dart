@@ -4,6 +4,7 @@ import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
+import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator/add_jawaker_accelerator_form.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator/add_token_form.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
@@ -11,6 +12,7 @@ import 'package:best_flutter_ui_templates/fitness_app/models/jawaker_list_data.d
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TransactionDatatable extends StatefulWidget {
   const TransactionDatatable(
@@ -34,6 +36,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
   var transactions = [];
   var stransactions = [];
+  bool _copied = false;
+  int todayt = 0;
 
   List<String> columns = [
     '#',
@@ -63,6 +67,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
       });
 
       await GetData().updateTransactions(transactions);
+      _getToday();
     }
   }
 
@@ -91,6 +96,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
       }
     });
 
+
+
     search.addListener(() {
       if (search.value.text.isNotEmpty) {
         var t = transactions
@@ -117,6 +124,39 @@ class _TransactionDatatable extends State<TransactionDatatable>
     super.dispose();
   }
 
+  transactionText(transaction) {
+    String text = '';
+    if (transaction['waiting'])
+      text = 'يتم مراجعة الطلب';
+    else if (transaction['accepted'])
+      text = 'تم قبول الطلب';
+    else if (transaction['rejected'])
+      text = 'تم رفض طلبك';
+    else if (transaction['more']) text = transaction['status']['message'];
+
+    return text;
+  }
+
+  getTextToCopy(transaction) {
+    String status = 'الحالة : ' + transactionText(transaction);
+    String quantity = 'الحزم : ' + Common.formatNumber(transaction['count']);
+    String account_id =
+        S.of(context).transaction_player_id + transaction['account_id'];
+    String day = S.of(context).transaction_date + transaction['tdate'];
+
+    return '$status $quantity $account_id $day';
+  }
+
+  
+  getTextToCopyPoint(transaction) {
+    String status = 'الحالة : ' + transactionText(transaction);
+    String quantity = 'القيمة : ' + Common.formatNumber(transaction['count']);
+    String account_id = S.of(context).transaction_player_id + transaction['account_id'];
+    String day = S.of(context).transaction_date + transaction['tdate'];
+
+    return '$status $quantity $account_id $day';
+  }
+
   getTokens(tokensPackages) {
     // double _cost = 0;
     var _tokens = 0;
@@ -141,7 +181,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return _tokens;
   }
 
-    getPackage(name) {
+  getPackage(name) {
     Widget myWidget = Container();
     try {
       JawakerListData element = JawakerListData.tabIconsList
@@ -167,9 +207,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return myWidget;
   }
 
-  showSubSheetBuilder(transaction){
-    
-     showModalBottomSheet(
+  showSubSheetBuilder(transaction) {
+    showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -186,123 +225,283 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       topRight: Radius.circular(20)),
                 ),
                 margin: EdgeInsets.only(top: 0),
-                child: Column(
-                  children: [
-                    Container(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text('معلومات حول الحزمة'),
-                          )
-                        ],
-                      ),
+                child: Column(children: [
+                  Container(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text('معلومات حول الحزمة'),
+                        )
+                      ],
                     ),
-                    transaction['message'] != null ? Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(transaction['message'].toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.nearlyDarkBlue))
-                        ],
-                      ),
-                    ) : Container(),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(S.of(context).transaction_status),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                  transaction['message'] != null
+                      ? Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              transactionSubStatus(transaction),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              subTransactionIcon(transaction)
+                              Text(transaction['message'].toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: FitnessAppTheme.nearlyDarkBlue))
                             ],
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      : Container(),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(S.of(context).transaction_status),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            transactionSubStatus(transaction),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            subTransactionIcon(transaction)
+                          ],
+                        )
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('الحزمة : '),
-                          Text(
-                            Common.formatNumber(transaction['total_tokens']),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('الحزمة : '),
+                        Text(
+                          Common.formatNumber(transaction['total_tokens']),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('الكمية : '),
-                          Text(Common.formatNumber(transaction['total_quantity']),
-                              style: TextStyle(fontWeight: FontWeight.bold))
-                        ],
-                      ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('الكمية : '),
+                        Text(Common.formatNumber(transaction['total_quantity']),
+                            style: TextStyle(fontWeight: FontWeight.bold))
+                      ],
                     ),
-                    transaction['accepted_token'] != null ? Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('الكمية التي تم قبولها : '),
-                          Text(Common.formatNumber(transaction['accepted_token'] ==null ? 0 : transaction['accepted_token']),
-                              style: TextStyle(fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                    ) : Container(),
-                    transaction['rest_token'] != null ? Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('الكمية التي تم رفضها : '),
-                          Text(Common.formatNumber(transaction['rest_token']),
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red))
-                        ],
-                      ),
-                    ) : Container(),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(S.of(context).transaction_date),
-                          Text(transaction['tupdated_at'].toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: FitnessAppTheme.nearlyDarkBlue))
-                        ],
-                      ),
+                  ),
+                  transaction['accepted_token'] != null
+                      ? Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('الكمية التي تم قبولها : '),
+                              Text(
+                                  Common.formatNumber(
+                                      transaction['accepted_token'] == null
+                                          ? 0
+                                          : transaction['accepted_token']),
+                                  style: TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  transaction['rest_token'] != null
+                      ? Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('الكمية التي تم رفضها : '),
+                              Text(
+                                  Common.formatNumber(
+                                      transaction['rest_token']),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red))
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(S.of(context).transaction_date),
+                        Text(transaction['tupdated_at'].toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: FitnessAppTheme.nearlyDarkBlue))
+                      ],
                     ),
-                  ]
-                )),
+                  ),
+                ])),
           );
         });
-  
-  }  
+  }
 
-  _getItemsList(transaction) {
+showSubSheetBuilderPoint(transaction,ptransaction) {
+   showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 250,
+            child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                ),
+                margin: EdgeInsets.only(top: 0),
+                child: Column(children: [
+                  Container(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text('معلومات حول المسرع'),
+                        )
+                      ],
+                    ),
+                  ),
+                  transaction['message'] != null
+                      ? Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(transaction['message'].toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: FitnessAppTheme.nearlyDarkBlue))
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(S.of(context).transaction_status),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            transactionSubStatus(transaction),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            subTransactionIcon(transaction)
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('المسرع : '),
+                        Text(
+                          ptransaction['package_name']!=null ? ptransaction['package_name'] : '',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('الكمية : '),
+                        Text(Common.formatNumber(transaction['total_quantity']),
+                            style: TextStyle(fontWeight: FontWeight.bold))
+                      ],
+                    ),
+                  ),
+                  transaction['accepted_point'] != null
+                      ? Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('الكمية التي تم قبولها : '),
+                              Text(
+                                  Common.formatNumber(
+                                      transaction['accepted_point'] == null
+                                          ? 0
+                                          : transaction['accepted_point']),
+                                  style: TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  transaction['rest_token'] != null
+                      ? Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('الكمية التي تم رفضها : '),
+                              Text(
+                                  Common.formatNumber(
+                                      transaction['rest_token']),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red))
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(S.of(context).transaction_date),
+                        Text(transaction['tupdated_at'].toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: FitnessAppTheme.nearlyDarkBlue))
+                      ],
+                    ),
+                  ),
+                ])),
+          );
+        });
+  }
+
+ _getItemsList(transaction) {
     var tokensPackages = transaction['token_packages'];
 
     return List.generate(tokensPackages.length, (index) {
@@ -366,10 +565,77 @@ class _TransactionDatatable extends State<TransactionDatatable>
       );
     });
   }
+ _getItemsListPoint(transaction) {
+    var tokensPackages = transaction['point_packages'];
+
+    return List.generate(tokensPackages.length, (index) {
+      PackagePointData element = PackagePointData(
+          value: tokensPackages[index]['count'] is String
+              ? tokensPackages[index]['count']
+              : tokensPackages[index]['count'].toString(),
+          packageData: tokensPackages[index]['point_package'],
+          packageId: tokensPackages[index]['user_transaction_id']);
+
+      Widget status =
+          subTransactionIcon(tokensPackages[index]['point_operation']);
+
+      return GestureDetector(
+        onTap: () {
+          if (tokensPackages[index]['point_operation'] != null)
+            showSubSheetBuilderPoint(tokensPackages[index]['point_operation'],tokensPackages[index]);
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.grey.withOpacity(0.3),
+            // border: Border.all(color: Colors.black)
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(7),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  margin: EdgeInsets.only(right: 0),
+                  child: Text(
+                    element.packageData !=null ? element.packageData['name'] : '',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  margin: EdgeInsets.only(right: 20),
+                  child: Text(Common.formatNumber(int.parse(element.value)),
+                      overflow: TextOverflow.ellipsis),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  margin: EdgeInsets.only(right: 10),
+                  child: status,
+                ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 0.2,
+                //   margin: EdgeInsets.only(right: 30),
+                //   child:
+                //       Text(cost.substring(0, cost.length > 5 ? 5 : cost.length)),
+                // )
+              ],
+            ),
+          ),
+        ),
+      );
+    });
+ }
 
   _getPackages(transaction) {
-    var tokensPackages = transaction['token_packages'];
-    int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
+    // var tokensPackages = transaction['token_packages'];
+    // int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
+    int _tokens = transaction['token_accepted'] != null
+        ? transaction['token_accepted']
+        : 0;
 
     return Column(
       children: [
@@ -489,6 +755,131 @@ class _TransactionDatatable extends State<TransactionDatatable>
       ],
     );
   }
+  _getPackagesPoint(transaction) {
+    // var tokensPackages = transaction['token_packages'];
+    // int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
+    int _tokens = transaction['accepted_point'] != null
+        ? transaction['accepted_point']
+        : 0;
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 5),
+              child: Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: '-', style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(
+                    text: S.of(context).transaction_package_selected,
+                    style: TextStyle(fontWeight: FontWeight.bold))
+              ])),
+            ),
+          ],
+        ),
+        Container(
+          height: 2,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            // border: Border.all(color: Colors.black)
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  // margin: EdgeInsets.only(left: 60),
+                  child: Text(S.of(context).transaction_package),
+                ),
+                Container(
+                  width: 60,
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 0),
+                  child: Text(S.of(context).transaction_package_count),
+                ),
+                Container(
+                  width: 60,
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 0),
+                  child: Text(' الحالة'),
+                )
+              ],
+            ),
+          ),
+        ),
+        Container(
+          child: Column(
+            children: _getItemsListPoint(transaction),
+          ),
+        ),
+        Container(
+          height: 15,
+        ),
+        Container(
+          // width: MediaQuery.of(context).size.width * 0.5,
+          // height: MediaQuery.of(context).size.height * 0.15,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: FitnessAppTheme.grey.withOpacity(0.4),
+                    offset: const Offset(1.1, 1.1),
+                    blurRadius: 10.0),
+              ]),
+          child: Column(
+            children: [
+              Container(
+                // height: MediaQuery.of(context).size.height * 0.1,
+                // width: MediaQuery.of(context).size.width * 0.5,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <HexColor>[
+                        HexColor('#2633C5'),
+                        HexColor('#2633C5'),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
+
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(top: 20, bottom: 20, right: 50, left: 50),
+                  child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(Common.formatNumber(_tokens),
+                          style: TextStyle(
+                              fontSize: 20, color: Colors.amberAccent))),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    // color: Colors.white
+                    ),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                          'القيمة : ' + Common.formatNumber(_tokens))),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
 
   transactionSubStatus(transaction) {
     String text = '';
@@ -528,237 +919,24 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return image;
   }
 
+
+  transactionSubStatusPoint(transaction) {
+    String text = '';
+    if (transaction['status'] == 'waiting')
+      text = 'يتم مراجعة المسرع';
+    else if (transaction['status'] == 'accepted')
+      text = 'تم قبول المسرع';
+    else if (transaction['status'] == 'rejected')
+      text = 'تم رفض المسرع';
+    else if (transaction['more']) text = transaction['status']['message'];
+
+    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
+  }
   bottomSheetBuilderToken(transaction) {
     bool isW = transaction['waiting'];
-
-     showModalBottomSheet(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        ),
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return Container(
-            height: 450,
-            child: Container(
-                decoration: BoxDecoration(
-                  color: transactionColors(transaction),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
-                ),
-                margin: EdgeInsets.only(top: 0),
-                child: Column(
-                  children: [
-                    Container(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                                S.of(context).bottom_sheet_transaction_token),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(S.of(context).transaction_status),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              transactionStatus(transaction),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              transactionIcon(transaction)
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(S.of(context).transaction_count),
-                          Text(
-                            Common.formatNumber(transaction['count']),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(S.of(context).transaction_price),
-                          Text(Common.formatNumber(transaction['cost']),
-                              style: TextStyle(fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(S.of(context).transaction_player_id),
-                          Text(transaction['account_id'].toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(S.of(context).transaction_date),
-                          Text(transaction['tdate'].toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: FitnessAppTheme.nearlyDarkBlue))
-                        ],
-                      ),
-                    ),
-                    isW
-                        ? Container()
-                        : 
-                          transaction['message'] != null || transaction['player_name'] != null ?
-                          Container(
-                            margin: EdgeInsets.only(top: 20, right: 30, left: 30),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: FitnessAppTheme.nearlyDarkBlue),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                children: [
-                                  transaction['message'] != null ? Container(
-                                    // margin: EdgeInsets.only(right : 50,left: 50),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            transaction['message'],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color:FitnessAppTheme.nearlyDarkBlue)),
-                                        )
-                                      ],
-                                    ),
-                                  ) : Container(),
-                                  transaction['player_name']!= null ? Container(
-                                    margin: EdgeInsets.only(right: 0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('اسم اللاعب : '),
-                                        Text(
-                                            transaction['player_name'],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color:FitnessAppTheme.nearlyDarkBlue))
-                                      ],
-                                    ),
-                                  ) : Container(),
-                                  // Container(
-                                  //   margin: EdgeInsets.only(right: 10),
-                                  //   child: Row(
-                                  //     crossAxisAlignment:
-                                  //         CrossAxisAlignment.center,
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.center,
-                                  //     children: [
-                                  //       Text('الكمية التي تم رفضها : '),
-                                  //       Text(
-                                  //           Common.formatNumber(
-                                  //               transaction['left_accepted']),
-                                  //           style: TextStyle(
-                                  //               fontWeight: FontWeight.bold,
-                                  //               color: Colors.redAccent))
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  // Container(
-                                  //   margin: EdgeInsets.only(right: 10),
-                                  //   child: Row(
-                                  //     crossAxisAlignment:
-                                  //         CrossAxisAlignment.center,
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.center,
-                                  //     children: [
-                                  //       Text('الكمية التي تم قبولها : '),
-                                  //       Text(
-                                  //           Common.formatNumber(
-                                  //               transaction['token_accepted']),
-                                  //           style: TextStyle(
-                                  //               fontWeight: FontWeight.bold,
-                                  //               color: FitnessAppTheme
-                                  //                   .nearlyDarkBlue))
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                            ),
-                          ) : Container(),
-                        
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(right: 10, top: 20),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [_getPackages(transaction)],
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                )),
-          );
-        });
-  
-  }
-
-  bottomSheetBuilderPoint(transaction) {
-
+    setState(() {
+      _copied = false;
+    });
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -767,132 +945,540 @@ class _TransactionDatatable extends State<TransactionDatatable>
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return Container(
-            height: 410,
-            child: Container(
-              decoration: BoxDecoration(
-                color: transactionColors(transaction),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-              ),
-              margin: EdgeInsets.only(top: 0),
-              child: Column(
-                children: [
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                              S.of(context).bottom_sheet_transaction_token),
-                        )
-                      ],
-                    ),
+          return StatefulBuilder(builder: (BuildContext context,
+              StateSetter setState /*You can rename this!*/) {
+            return Container(
+              height: 450,
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: transactionColors(transaction),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Column(
-                      children: [
-                        transaction['message'] != null ? Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(transaction['message'].toString(),style: TextStyle(
-                                color: FitnessAppTheme.nearlyDarkBlue,
-                                fontWeight: FontWeight.bold
-                              ),),
-                            ],
-                          ),
-                        ) : Container(),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(S.of(context).transaction_status),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  transactionStatus(transaction),
-                                  SizedBox(
-                                    width: 10,
+                  margin: EdgeInsets.only(top: 0),
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Clipboard.setData(ClipboardData(
+                                      text: getTextToCopy(transaction)));
+                                  setState(() {
+                                    _copied = true;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.copy,
+                                  size: 30,
+                                  color: _copied
+                                      ? Colors.greenAccent
+                                      : FitnessAppTheme.nearlyDarkBlue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                  S.of(context).bottom_sheet_transaction_token),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(S.of(context).transaction_status),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                transactionStatus(transaction),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                transactionIcon(transaction)
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('الحزم : '),
+                            Text(
+                              Common.formatNumber(transaction['count']),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      //   margin: EdgeInsets.only(right: 10),
+                      //   child: Row(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       Text(S.of(context).transaction_price),
+                      //       Text(Common.formatNumber(transaction['cost']),
+                      //           style: TextStyle(fontWeight: FontWeight.bold))
+                      //     ],
+                      //   ),
+                      // ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(S.of(context).transaction_player_id),
+                            Text(transaction['account_id'].toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(S.of(context).transaction_date),
+                            Text(transaction['tdate'].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.nearlyDarkBlue))
+                          ],
+                        ),
+                      ),
+                      isW
+                          ? Container()
+                          : transaction['message'] != null ||
+                                  transaction['player_name'] != null
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      top: 20, right: 30, left: 30),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: FitnessAppTheme.nearlyDarkBlue),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  transactionIcon(transaction)
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        transaction['message'] != null
+                                            ? Container(
+                                                // margin: EdgeInsets.only(right : 50,left: 50),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                          transaction[
+                                                              'message'],
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: FitnessAppTheme
+                                                                  .nearlyDarkBlue)),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            : Container(),
+                                        transaction['player_name'] != null
+                                            ? Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 0),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text('اسم اللاعب : '),
+                                                    Text(
+                                                        transaction[
+                                                            'player_name'],
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: FitnessAppTheme
+                                                                .nearlyDarkBlue))
+                                                  ],
+                                                ),
+                                              )
+                                            : Container(),
+                                        // Container(
+                                        //   margin: EdgeInsets.only(right: 10),
+                                        //   child: Row(
+                                        //     crossAxisAlignment:
+                                        //         CrossAxisAlignment.center,
+                                        //     mainAxisAlignment:
+                                        //         MainAxisAlignment.center,
+                                        //     children: [
+                                        //       Text('الكمية التي تم رفضها : '),
+                                        //       Text(
+                                        //           Common.formatNumber(
+                                        //               transaction['left_accepted']),
+                                        //           style: TextStyle(
+                                        //               fontWeight: FontWeight.bold,
+                                        //               color: Colors.redAccent))
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        // Container(
+                                        //   margin: EdgeInsets.only(right: 10),
+                                        //   child: Row(
+                                        //     crossAxisAlignment:
+                                        //         CrossAxisAlignment.center,
+                                        //     mainAxisAlignment:
+                                        //         MainAxisAlignment.center,
+                                        //     children: [
+                                        //       Text('الكمية التي تم قبولها : '),
+                                        //       Text(
+                                        //           Common.formatNumber(
+                                        //               transaction['token_accepted']),
+                                        //           style: TextStyle(
+                                        //               fontWeight: FontWeight.bold,
+                                        //               color: FitnessAppTheme
+                                        //                   .nearlyDarkBlue))
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10, top: 20),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [_getPackages(transaction)],
+                                    ),
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
-                        getPackage(transaction['count']),
-                        // Container(
-                        //   margin: EdgeInsets.only(right: 10),
-                        //   child: Row(
-                        //     crossAxisAlignment: CrossAxisAlignment.center,
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     children: [
-                        //       Text(S.of(context).transaction_count),
-                        //       Text(
-                        //         Common.formatNumber(transaction['count']),
-                        //         style: TextStyle(fontWeight: FontWeight.bold),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(S.of(context).transaction_price),
-                              Text(Common.formatNumber(transaction['cost']),
-                                  style: TextStyle(fontWeight: FontWeight.bold))
-                            ],
-                          ),
+                      )
+                    ],
+                  )),
+            );
+          });
+        });
+  }
+
+  bottomSheetBuilderPoint(transaction) {
+    bool isW = transaction['waiting'];
+    setState(() {
+      _copied = false;
+    });
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (BuildContext context,
+              StateSetter setState /*You can rename this!*/) {
+            return Container(
+              height: 450,
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: transactionColors(transaction),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
+                  ),
+                  margin: EdgeInsets.only(top: 0),
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Clipboard.setData(ClipboardData(
+                                      text: getTextToCopyPoint(transaction)));
+                                  setState(() {
+                                    _copied = true;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.copy,
+                                  size:30,
+                                  color: _copied
+                                      ? Colors.greenAccent
+                                      : FitnessAppTheme.nearlyDarkBlue,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(S.of(context).player_name),
-                              Text(
-                                  transaction['name_of_player'] != null
-                                      ? transaction['name_of_player'].toString()
-                                      : '',
-                                  style: TextStyle(fontWeight: FontWeight.bold))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                  S.of(context).bottom_sheet_transaction_token),
+                            )
+                          ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(S.of(context).transaction_date),
-                              Text(transaction['tdate'].toString(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: FitnessAppTheme.nearlyDarkBlue))
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(S.of(context).transaction_status),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                transactionStatus(transaction),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                transactionIcon(transaction)
+                              ],
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('القيمة : '),
+                            Text(
+                              Common.formatNumber(transaction['count']),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      //   margin: EdgeInsets.only(right: 10),
+                      //   child: Row(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       Text(S.of(context).transaction_price),
+                      //       Text(Common.formatNumber(transaction['cost']),
+                      //           style: TextStyle(fontWeight: FontWeight.bold))
+                      //     ],
+                      //   ),
+                      // ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(S.of(context).player_name),
+                            Text(transaction['player_name'].toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(S.of(context).transaction_date),
+                            Text(transaction['tdate'].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.nearlyDarkBlue))
+                          ],
+                        ),
+                      ),
+                      isW
+                          ? Container()
+                          : transaction['message'] != null ||
+                                  transaction['player_name'] != null
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      top: 20, right: 30, left: 30),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: FitnessAppTheme.nearlyDarkBlue),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        transaction['message'] != null
+                                            ? Container(
+                                                // margin: EdgeInsets.only(right : 50,left: 50),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                          transaction[
+                                                              'message'],
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: FitnessAppTheme
+                                                                  .nearlyDarkBlue)),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            : Container(),
+                                        transaction['player_name'] != null
+                                            ? Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 0),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text('اسم اللاعب : '),
+                                                    Text(
+                                                        transaction[
+                                                            'player_name'],
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: FitnessAppTheme
+                                                                .nearlyDarkBlue))
+                                                  ],
+                                                ),
+                                              )
+                                            : Container(),
+                                        // Container(
+                                        //   margin: EdgeInsets.only(right: 10),
+                                        //   child: Row(
+                                        //     crossAxisAlignment:
+                                        //         CrossAxisAlignment.center,
+                                        //     mainAxisAlignment:
+                                        //         MainAxisAlignment.center,
+                                        //     children: [
+                                        //       Text('الكمية التي تم رفضها : '),
+                                        //       Text(
+                                        //           Common.formatNumber(
+                                        //               transaction['left_accepted']),
+                                        //           style: TextStyle(
+                                        //               fontWeight: FontWeight.bold,
+                                        //               color: Colors.redAccent))
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        // Container(
+                                        //   margin: EdgeInsets.only(right: 10),
+                                        //   child: Row(
+                                        //     crossAxisAlignment:
+                                        //         CrossAxisAlignment.center,
+                                        //     mainAxisAlignment:
+                                        //         MainAxisAlignment.center,
+                                        //     children: [
+                                        //       Text('الكمية التي تم قبولها : '),
+                                        //       Text(
+                                        //           Common.formatNumber(
+                                        //               transaction['token_accepted']),
+                                        //           style: TextStyle(
+                                        //               fontWeight: FontWeight.bold,
+                                        //               color: FitnessAppTheme
+                                        //                   .nearlyDarkBlue))
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10, top: 20),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [_getPackagesPoint(transaction)],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
+            );
+          });
         });
   }
 
@@ -932,6 +1518,19 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return image;
   }
 
+  _getToday(){
+    int t = 0;
+    transactions.forEach((element) {
+      print(element['is_today']);
+      if(element['is_today'] == true)
+      t ++;
+    });
+
+    setState(() {
+      todayt = t;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -939,6 +1538,19 @@ class _TransactionDatatable extends State<TransactionDatatable>
         builder: (BuildContext context, Widget? child) {
           return Column(
             children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.33,
+                margin: EdgeInsets.only(right: 250),
+                // height: MediaQuery.of(context).size.height * 0.33,
+                decoration: BoxDecoration(
+                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text('اليوم : ' + todayt.toString()),
+                ),
+              ),
               TextFormField(
                 controller: search,
                 autovalidateMode: AutovalidateMode.onUserInteraction,

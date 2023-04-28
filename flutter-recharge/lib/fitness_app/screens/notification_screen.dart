@@ -1,5 +1,4 @@
 import 'package:best_flutter_ui_templates/components/datatables/notification_datatable.dart';
-import 'package:best_flutter_ui_templates/components/sortable_page.dart';
 import 'package:best_flutter_ui_templates/components/table.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
@@ -302,7 +301,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                     fontFamily: FitnessAppTheme.fontName,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22 + 6 - 6 * topBarOpacity,
-                                    letterSpacing: 0,
+                                    letterSpacing: -0.5,
                                     color: FitnessAppTheme.nearlyDarkBlue,
                                   ),
                                 ),

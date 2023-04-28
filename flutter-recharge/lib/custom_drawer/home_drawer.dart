@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/profile/display_image_widget.dart';
+import 'package:best_flutter_ui_templates/profile/profile_page.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,18 +33,43 @@ class _HomeDrawerState extends State<HomeDrawer> {
   @override
   void initState() {
     setDrawerListArray();
+    
+    print('check echo');
+
     _getUser();
     super.initState();
+
   }
 
+  
   _getUser() async {
-      var auth = await GetData().getAuth();
-      print('auth');
-      print(auth);
-      setState(() {
-        user = auth;
-      });
+    var auth = await GetData().getAuth();
+    
+    setState(() {
+      user = auth;
+    });
+    
+    // update user 
+    var res = await AuthApi().getUser();
+    
+    var data = await AuthApi().getData(jsonDecode(res.body));
+
+    setState(() {
+        user = data['user'];
+    });
+
+    await AuthApi().updateUser(data);
   }
+
+  // _getUser() async {
+
+  //     var auth = await GetData().getAuth();
+
+  //     setState(() {
+  //       user = auth;
+  //     });
+  // }
+  
 
   void setDrawerListArray() {
     drawerList = <DrawerList>[
@@ -122,10 +152,23 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                     blurRadius: 8),
                               ],
                             ),
-                            child: ClipRRect(
+                            child: GestureDetector(
+                              child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(60.0)),
-                              child: user != null ? Image.network(user['dimage']+'&rounded=true&size=128') : null,
+                              child: user != null ? DisplayImage(imagePath: user['dimage'],onPressed: () {
+                              },) : null,
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProfilePage();
+                                  },
+                                ),
+                              );
+                            },
                             ),
                           ),
                         ),

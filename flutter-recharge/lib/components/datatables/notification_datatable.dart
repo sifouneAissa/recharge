@@ -139,7 +139,8 @@ class _NotificationDatatable extends State<NotificationDatatable> {
     bool isTorP = (notification['info']['type'] == 'token' || notification['info']['type'] == 'point') && !isMtransaction;
     var leftC = notification['info']['left_accepted'];
     
-    bool left = leftC != 0  && leftC != null;
+    print(notification['info']['type']);
+    bool left = (leftC != 0  && leftC != null) || (notification['info']['type'] == 'point');
     
     if(isTorP)
     return Text.rich(
@@ -183,7 +184,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
           ]) : (
               notification['data']['action'] =='accepted' ? 
               TextSpan(
-          text: !left ? 'لقد تم قبول طلبك المتعلق ب' : 'لقد تم قبول : '+Common.formatNumber(notification['info']['token_accepted']) + ' من ',
+          text: !left ? 'لقد تم قبول طلبك المتعلق ب' : 'لقد تم قبول : '+ Common.formatNumber(notification['info'][ notification['info']['type'] == 'token' ? 'token_accepted' : 'accepted_point']) + ' من ',
           children: <InlineSpan>[
             TextSpan(
               text: notification['info']['type'] == 'token'
@@ -221,7 +222,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
             ),
           ])
           : TextSpan(
-          text: !left ? 'لقد تم رفض طلبك المتعلق ب' : 'لقد تم رفض : '+Common.formatNumber(notification['info']['left_accepted']) + ' من ',
+          text: !left ? 'لقد تم رفض طلبك المتعلق ب' : 'لقد تم رفض : '+ (Common.formatNumber(notification['info'][notification['info']['type'] == 'token' ? 'rejected_token' : 'rejected_point']) ) + ' من ',
           children: <InlineSpan>[
             TextSpan(
               text: notification['info']['type'] == 'token'

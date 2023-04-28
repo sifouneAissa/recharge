@@ -324,7 +324,7 @@ class _TokenScreenState extends State<TokenScreen>
                                     fontFamily: FitnessAppTheme.fontName,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22 + 6 - 6 * topBarOpacity,
-                                    letterSpacing: 0.0,
+                                    letterSpacing: -0.5,
                                     color: FitnessAppTheme.nearlyDarkBlue,
                                   ),
                                 ),

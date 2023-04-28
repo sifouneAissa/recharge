@@ -32,11 +32,11 @@ class JawakerListData {
     JawakerListData(
       imagePath: 'assets/fitness_app/jawaker150.png',
       titleTxt: 'مسرع أزرق',
-      kacl: 200,
-      meals: <String>[S().recommended,'200 %'],
+      kacl: 150,
+      meals: <String>['150 %'],
       startColor: '#738AE6',
       endColor: '#5C5EDD',
-      value:'200%',
+      value:'150%',
     ),
     
     JawakerListData(

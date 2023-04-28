@@ -73,8 +73,6 @@ class _TokenPackageListViewState extends State<TokenPackageListView>
       setState(() {
         var data = AuthApi().getData(body);
         packages = data['packages'];
-        print('packages');
-        print(packages);
       });
 
       await GetData().updateTokenPackages(packages);
