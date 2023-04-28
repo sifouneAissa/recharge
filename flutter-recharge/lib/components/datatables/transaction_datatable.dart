@@ -64,10 +64,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
         var data = AuthApi().getData(body);
         transactions = data['transactions'];
         stransactions = data['transactions'];
+      _getToday();
       });
 
       await GetData().updateTransactions(transactions);
-      _getToday();
+      
     }
   }
 
@@ -78,7 +79,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
         transactions = jsonDecode(t);
         stransactions = transactions;
       });
+      
+      _getToday();
     }
+    
   }
 
   @override
@@ -1521,7 +1525,6 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
   _getToday(){
     int t = 0;
     transactions.forEach((element) {
-      print(element['is_today']);
       if(element['is_today'] == true)
       t ++;
     });
