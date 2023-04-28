@@ -1573,7 +1573,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
       DropdownMenuItem(
         child: Text("اختر نوع"),
         value: "none",
-        enabled: false,
+        onTap: () {
+          setState(() {
+            stransactions = transactions;
+          });
+        },
       ),
       DropdownMenuItem(
         child: Text("توكنز"),
@@ -1671,23 +1675,33 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       ),
                     )
                   : Container(),
-              TextFormField(
-                controller: search,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                cursorColor: kPrimaryColor,
-                // textDirection: TextDirection.rtl,
-                onSaved: (email) {},
-                decoration: InputDecoration(
-                  hintText: 'بحث عن طريق الاسم او معرف الحساب',
-                  hintStyle: TextStyle(color: Colors.black),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
-                    child: Icon(Icons.search,
-                        color: FitnessAppTheme.nearlyDarkBlue),
-                  ),
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                      child: TextFormField(
+                    controller: search,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    cursorColor: kPrimaryColor,
+                    // textDirection: TextDirection.rtl,
+                    onSaved: (email) {},
+                    decoration: InputDecoration(
+                      hintText: 'بحث عن طريق الاسم او معرف الحساب',
+                      hintStyle: TextStyle(color: Colors.black),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.search,
+                            color: FitnessAppTheme.nearlyDarkBlue),
+                      ),
+                    ),
+                  )),
+                  IconButton(onPressed: () {
+                    
+                  }, icon: Icon(Icons.download,color: FitnessAppTheme.nearlyDarkBlue,))
+                ],
               ),
               SingleChildScrollView(
                   scrollDirection: Axis.vertical,
