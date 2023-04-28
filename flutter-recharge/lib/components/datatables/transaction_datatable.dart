@@ -13,6 +13,8 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class TransactionDatatable extends StatefulWidget {
   const TransactionDatatable(
@@ -38,6 +40,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
   var stransactions = [];
   bool _copied = false;
   int todayt = 0;
+  bool _showD = false;
+  bool _loading = false;
+  String selectedValue = "none";
 
   List<String> columns = [
     '#',
@@ -64,11 +69,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
         var data = AuthApi().getData(body);
         transactions = data['transactions'];
         stransactions = data['transactions'];
-      _getToday();
+        _getToday();
       });
 
       await GetData().updateTransactions(transactions);
-      
     }
   }
 
@@ -79,10 +83,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
         transactions = jsonDecode(t);
         stransactions = transactions;
       });
-      
+
       _getToday();
     }
-    
   }
 
   @override
@@ -99,8 +102,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
         await __getTransactions();
       }
     });
-
-
 
     search.addListener(() {
       if (search.value.text.isNotEmpty) {
@@ -151,11 +152,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return '$status $quantity $account_id $day';
   }
 
-  
   getTextToCopyPoint(transaction) {
     String status = 'الحالة : ' + transactionText(transaction);
     String quantity = 'القيمة : ' + Common.formatNumber(transaction['count']);
-    String account_id = S.of(context).transaction_player_id + transaction['account_id'];
+    String account_id =
+        S.of(context).transaction_player_id + transaction['account_id'];
     String day = S.of(context).transaction_date + transaction['tdate'];
 
     return '$status $quantity $account_id $day';
@@ -358,8 +359,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
         });
   }
 
-showSubSheetBuilderPoint(transaction,ptransaction) {
-   showModalBottomSheet(
+  showSubSheetBuilderPoint(transaction, ptransaction) {
+    showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -432,7 +433,9 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
                       children: [
                         Text('المسرع : '),
                         Text(
-                          ptransaction['package_name']!=null ? ptransaction['package_name'] : '',
+                          ptransaction['package_name'] != null
+                              ? ptransaction['package_name']
+                              : '',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
@@ -505,7 +508,7 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
         });
   }
 
- _getItemsList(transaction) {
+  _getItemsList(transaction) {
     var tokensPackages = transaction['token_packages'];
 
     return List.generate(tokensPackages.length, (index) {
@@ -569,7 +572,8 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
       );
     });
   }
- _getItemsListPoint(transaction) {
+
+  _getItemsListPoint(transaction) {
     var tokensPackages = transaction['point_packages'];
 
     return List.generate(tokensPackages.length, (index) {
@@ -586,7 +590,8 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
       return GestureDetector(
         onTap: () {
           if (tokensPackages[index]['point_operation'] != null)
-            showSubSheetBuilderPoint(tokensPackages[index]['point_operation'],tokensPackages[index]);
+            showSubSheetBuilderPoint(tokensPackages[index]['point_operation'],
+                tokensPackages[index]);
         },
         child: Container(
           margin: EdgeInsets.only(top: 2),
@@ -605,7 +610,9 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 0),
                   child: Text(
-                    element.packageData !=null ? element.packageData['name'] : '',
+                    element.packageData != null
+                        ? element.packageData['name']
+                        : '',
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -632,7 +639,7 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
         ),
       );
     });
- }
+  }
 
   _getPackages(transaction) {
     // var tokensPackages = transaction['token_packages'];
@@ -759,6 +766,7 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
       ],
     );
   }
+
   _getPackagesPoint(transaction) {
     // var tokensPackages = transaction['token_packages'];
     // int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
@@ -874,8 +882,7 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
                   padding: EdgeInsets.all(10),
                   child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text(
-                          'القيمة : ' + Common.formatNumber(_tokens))),
+                      child: Text('القيمة : ' + Common.formatNumber(_tokens))),
                 ),
               ),
             ],
@@ -923,7 +930,6 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
     return image;
   }
 
-
   transactionSubStatusPoint(transaction) {
     String text = '';
     if (transaction['status'] == 'waiting')
@@ -936,6 +942,7 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
 
     return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
   }
+
   bottomSheetBuilderToken(transaction) {
     bool isW = transaction['waiting'];
     setState(() {
@@ -1255,7 +1262,7 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
                                 },
                                 child: Icon(
                                   Icons.copy,
-                                  size:30,
+                                  size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
                                       : FitnessAppTheme.nearlyDarkBlue,
@@ -1470,7 +1477,9 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [_getPackagesPoint(transaction)],
+                                      children: [
+                                        _getPackagesPoint(transaction)
+                                      ],
                                     ),
                                   )
                                 ],
@@ -1522,16 +1531,82 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
     return image;
   }
 
-  _getToday(){
+  _getToday() {
     int t = 0;
     transactions.forEach((element) {
-      if(element['is_today'] == true)
-      t ++;
+      if (element['is_today'] == true) t++;
     });
 
     setState(() {
       todayt = t;
     });
+  }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) async {
+    var startDate;
+    var endDate;
+
+    try {
+      startDate = args.value.startDate as DateTime;
+      endDate = args.value.endDate as DateTime;
+    } catch (error) {}
+
+    if (startDate != null && endDate != null) {
+      var t = transactions.where(
+        (element) {
+          var ldate = DateTime.parse(element['created_at']);
+          return ldate.isBefore(endDate) && ldate.isAfter(startDate);
+        },
+      ).toList();
+
+      setState(() {
+        stransactions = t;
+      });
+    } else
+      setState(() {
+        stransactions = transactions;
+      });
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(
+        child: Text("اختر نوع"),
+        value: "none",
+        enabled: false,
+      ),
+      DropdownMenuItem(
+        child: Text("توكنز"),
+        value: "token",
+        onTap: () {
+          var t = transactions.where(
+            (element) {
+              return element['type'] == 'token';
+            },
+          ).toList();
+
+          setState(() {
+            stransactions = t;
+          });
+        },
+      ),
+      DropdownMenuItem(
+        child: Text("مسرعات"),
+        value: "point",
+        onTap: () {
+          var t = transactions.where(
+            (element) {
+              return element['type'] == 'point';
+            },
+          ).toList();
+
+          setState(() {
+            stransactions = t;
+          });
+        },
+      ),
+    ];
+    return menuItems;
   }
 
   @override
@@ -1546,21 +1621,63 @@ showSubSheetBuilderPoint(transaction,ptransaction) {
                 margin: EdgeInsets.only(right: 250),
                 // height: MediaQuery.of(context).size.height * 0.33,
                 decoration: BoxDecoration(
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
-                  borderRadius: BorderRadius.circular(10)
-                ),
+                    border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
+                    borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: EdgeInsets.all(10),
                   child: Text('اليوم : ' + todayt.toString()),
                 ),
               ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text('بحث حسب التاريخ :'),
+                    onTap: () {
+                      setState(() {
+                        _showD = !_showD;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.date_range),
+                    tooltip: 'بحث حسب التاريخ',
+                    color: _showD ? Colors.green : null,
+                    onPressed: () {
+                      setState(() {
+                        _showD = !_showD;
+                      });
+                    },
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: DropdownButton(
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                          });
+                        },
+                        value: selectedValue,
+                        items: dropdownItems),
+                  )
+                ],
+              ),
+              _showD
+                  ? Center(
+                      child: SfDateRangePicker(
+                        selectionMode: DateRangePickerSelectionMode.range,
+                        navigationMode: DateRangePickerNavigationMode.snap,
+                        onSelectionChanged: _onSelectionChanged,
+                      ),
+                    )
+                  : Container(),
               TextFormField(
                 controller: search,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 cursorColor: kPrimaryColor,
-                textDirection: TextDirection.rtl,
+                // textDirection: TextDirection.rtl,
                 onSaved: (email) {},
                 decoration: InputDecoration(
                   hintText: 'بحث عن طريق الاسم او معرف الحساب',
