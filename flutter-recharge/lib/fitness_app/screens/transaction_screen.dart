@@ -65,7 +65,7 @@ class _TransactionScreenState extends State<TransactionScreen>
 
   void addAllListData() {
     // const int count = 1;
-
+  
     
     listViews.add(
       TitleView(

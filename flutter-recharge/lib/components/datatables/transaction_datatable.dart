@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TransactionDatatable extends StatefulWidget {
   const TransactionDatatable(
@@ -43,6 +44,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
   bool _showD = false;
   bool _loading = false;
   String selectedValue = "none";
+  String? sDate;
+  String? eDate;
+  String? ttransaction;
 
   List<String> columns = [
     '#',
@@ -1561,6 +1565,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
       setState(() {
         stransactions = t;
+        
+        final DateFormat formatter = DateFormat('yyyy-MM-dd','en');
+        sDate = formatter.format(args.value.startDate).toString();
+        eDate = formatter.format(args.value.endDate).toString();
       });
     } else
       setState(() {
@@ -1613,6 +1621,31 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return menuItems;
   }
 
+  
+
+_launchURL() async {
+  
+  var auth = await GetData().getAuth();
+
+  String b_url = AuthApi().getUrl('transactions/pdf/download/'+auth['id'].toString()) + '?';
+  
+  if(ttransaction!=null){
+    b_url = b_url + '&type=' + ttransaction.toString();
+  } 
+  if(sDate != null && eDate != null){
+    b_url = b_url + '&end=' + eDate.toString();
+    b_url = b_url + '&start=' + sDate.toString();
+  }
+
+  final uri = Uri.parse(b_url);
+
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri,mode: LaunchMode.externalApplication);
+  } else {
+    print('could not lunch url');
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -1659,6 +1692,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedValue = newValue!;
+                            ttransaction = selectedValue;
                           });
                         },
                         value: selectedValue,
@@ -1699,7 +1733,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                     ),
                   )),
                   IconButton(onPressed: () {
-                    
+                    _launchURL();
                   }, icon: Icon(Icons.download,color: FitnessAppTheme.nearlyDarkBlue,))
                 ],
               ),
