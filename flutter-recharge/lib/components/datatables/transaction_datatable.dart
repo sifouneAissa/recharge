@@ -1648,13 +1648,13 @@ _launchURL() async {
 
 getSDates(){
   if(sDate != null && eDate != null){
-    return [
+      
+    return PickerDateRange(
       DateTime.parse(sDate ?? ''),
-      DateTime.parse(eDate ?? ''),
-    ];
-  }
-
-    return [];
+      DateTime.parse(eDate ?? '')
+    );
+   }
+    return null;
 }
 
   @override
@@ -1717,6 +1717,7 @@ getSDates(){
                         selectionMode: DateRangePickerSelectionMode.range,
                         navigationMode: DateRangePickerNavigationMode.snap,
                         onSelectionChanged: _onSelectionChanged,
+                        initialSelectedRange: getSDates(),
                       ),
                     )
                   : Container(),
