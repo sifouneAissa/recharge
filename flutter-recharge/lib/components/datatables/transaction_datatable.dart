@@ -1646,6 +1646,17 @@ _launchURL() async {
   }
 }
 
+getSDates(){
+  if(sDate != null && eDate != null){
+    return [
+      DateTime.parse(sDate ?? ''),
+      DateTime.parse(eDate ?? ''),
+    ];
+  }
+
+    return [];
+}
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
