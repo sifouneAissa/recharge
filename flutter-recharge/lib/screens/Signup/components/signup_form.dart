@@ -184,7 +184,7 @@ class _SignUpForm extends State<SignUpForm> {
             onSaved: (email) {},
             decoration: InputDecoration(
               hintText: S.of(context).your_name,
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child:
@@ -206,7 +206,7 @@ class _SignUpForm extends State<SignUpForm> {
               onSaved: (email) {},
               decoration: InputDecoration(
                 hintText: S.of(context).your_phone,
-                hintStyle: TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child:
@@ -229,7 +229,7 @@ class _SignUpForm extends State<SignUpForm> {
               onSaved: (email) {},
               decoration: InputDecoration(
                 hintText: S.of(context).your_email,
-                hintStyle: TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child:
@@ -251,7 +251,7 @@ class _SignUpForm extends State<SignUpForm> {
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: S.of(context).your_password,
-                hintStyle: TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child:
@@ -281,6 +281,7 @@ class _SignUpForm extends State<SignUpForm> {
               );
             },
           ),
+          Container(height: defaultPadding * 2,)
         ],
       ),
     );

@@ -196,7 +196,7 @@ Future<UserCredential> signInWithFacebook() async {
             onSaved: (email) {},
             decoration: InputDecoration(
               hintText: S.of(context).your_email,
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child:
@@ -217,7 +217,7 @@ Future<UserCredential> signInWithFacebook() async {
                   value!.isEmpty ? S.of(context).invalid_password : null,
               decoration: InputDecoration(
                 hintText: S.of(context).your_password,
-                hintStyle: TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(
@@ -251,7 +251,7 @@ Future<UserCredential> signInWithFacebook() async {
                 ),
               );
             },
-          ),
+          )
         ],
       ),
     );
