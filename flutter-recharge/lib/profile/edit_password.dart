@@ -78,7 +78,7 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
                       child: const Text(
                         "ادخل كلمة السر القديمة !",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                       )),
                       
                 _hasError ? Container(
@@ -113,7 +113,7 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
                       child: const Text(
                         "ادخل كلمة السر الجديدة !",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                       )),
                   Padding(
                       padding: EdgeInsets.only(top: 10),
@@ -142,7 +142,7 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
                       child: const Text(
                         "اعد كلمة السر مرة اخرى !",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                       )),
                   Padding(
                       padding: EdgeInsets.only(top: 10),
@@ -157,7 +157,7 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
                             validator: (value) {
                                 return 
                                 value!.isEmpty || (value.isNotEmpty && value != password.value.text)
-                                    ? 'اسم خاطئ'
+                                    ? 'كلمة السر خاطئة'
                                     : null;
                             },
                             controller: confirmPassword,

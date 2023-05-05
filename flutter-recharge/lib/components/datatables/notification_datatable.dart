@@ -94,7 +94,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkREd)),
+                  border: Border.all(color: FitnessAppTheme.oligthText)),
               child: Row(
                 children: [
                   Padding(

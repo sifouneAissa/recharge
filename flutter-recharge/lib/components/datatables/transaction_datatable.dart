@@ -595,7 +595,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   child: Text(Common.formatNumber(element.packageData['count']),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: FitnessAppTheme.nearlyDarkREd,
+                        color: FitnessAppTheme.nearlyWhite,
                       )),
                 ),
                 Container(
@@ -604,7 +604,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   child: Text(Common.formatNumber(int.parse(element.value)),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: FitnessAppTheme.nearlyDarkREd,
+                        color: FitnessAppTheme.nearlyWhite,
                       )),
                 ),
                 Container(
@@ -667,14 +667,14 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           ? element.packageData['name']
                           : '',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: FitnessAppTheme.nearlyDarkREd)),
+                      style: TextStyle(color: FitnessAppTheme.nearlyWhite)),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 20),
                   child: Text(Common.formatNumber(int.parse(element.value)),
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: FitnessAppTheme.nearlyDarkREd)),
+                      style: TextStyle(color: FitnessAppTheme.nearlyWhite)),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,

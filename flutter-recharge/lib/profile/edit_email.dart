@@ -79,7 +79,7 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
                     child: const Text(
                       "ادخل البريد الالكتروني الجديد !",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                       textAlign: TextAlign.right,
                     )),
                     

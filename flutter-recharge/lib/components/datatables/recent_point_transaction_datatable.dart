@@ -660,7 +660,7 @@ class _RecentPointTransactionDatatable
                         ? element.packageData['name']
                         : '',
                     overflow: TextOverflow.ellipsis,style: TextStyle(
-                              color: FitnessAppTheme.nearlyDarkREd
+                              color: FitnessAppTheme.nearlyWhite
                             )
                   ),
                 ),
@@ -669,7 +669,7 @@ class _RecentPointTransactionDatatable
                   margin: EdgeInsets.only(right: 20),
                   child: Text(Common.formatNumber(int.parse(element.value)),
                       overflow: TextOverflow.ellipsis,style: TextStyle(
-                              color: FitnessAppTheme.nearlyDarkREd
+                              color: FitnessAppTheme.nearlyWhite
                             )),
                 ),
                 Container(

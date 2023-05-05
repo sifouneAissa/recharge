@@ -76,7 +76,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                     child: const Text(
                       "ادخل الاسم !",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                     )),
                 Padding(
                     padding: EdgeInsets.only(top: 40),

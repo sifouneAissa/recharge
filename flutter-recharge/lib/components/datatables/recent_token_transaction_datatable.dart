@@ -220,7 +220,7 @@ class _RecentTokenTransactionDatatable
                   child: Text(Common.formatNumber(element.packageData['count']),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: FitnessAppTheme.nearlyDarkREd,
+                        color: FitnessAppTheme.nearlyWhite,
                       )),
                 ),
                 Container(
@@ -229,7 +229,7 @@ class _RecentTokenTransactionDatatable
                   child: Text(Common.formatNumber(int.parse(element.value)),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: FitnessAppTheme.nearlyDarkREd,
+                        color: FitnessAppTheme.nearlyWhite,
                       )),
                 ),
                 Container(

@@ -79,7 +79,7 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
                     child: const Text(
                       "ادخل الهاتف الجديد !",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                     )),
                     _hasError ? Container(
                   margin: EdgeInsets.only(top: 10),

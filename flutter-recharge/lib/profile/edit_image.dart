@@ -93,8 +93,10 @@ class _EditImagePageState extends State<EditImagePage> {
         children: <Widget>[
           Text(
             S.of(context).choose_image,
+            
             style: TextStyle(
               fontSize: 15.0,
+              color: FitnessAppTheme.lightText
             ),
           ),
           SizedBox(
@@ -147,6 +149,7 @@ class _EditImagePageState extends State<EditImagePage> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: FitnessAppTheme.lightText
                 ),
               )),
           Padding(
