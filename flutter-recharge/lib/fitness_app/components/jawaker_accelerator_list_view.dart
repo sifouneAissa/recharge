@@ -191,7 +191,7 @@ class _JawakerView extends State<JawakerView> {
                         boxShadow: <BoxShadow>[
                           BoxShadow(
                               color: HexColor(widget.mealsListData!.endColor)
-                                  .withOpacity(0.6),
+                                  .withOpacity(0.2),
                               offset: const Offset(1.1, 4.0),
                               blurRadius:  50 ),
                         ],
@@ -365,24 +365,25 @@ class _JawakerView extends State<JawakerView> {
                       ),
                     ),
                   ),
+                  // Positioned(
+                  //   top: 0,
+                  //   left: 0,
+                  //   child: Container(
+                  //     width: 84,
+                  //     height: 84,
+                  //     decoration: BoxDecoration(
+                  //       color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.07),
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //   ),
+                  // ),
                   Positioned(
-                    top: 0,
-                    left: 0,
-                    child: Container(
-                      width: 84,
-                      height: 84,
-                      decoration: BoxDecoration(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.07),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    left: 8,
+                    top: 40,
+                    left: 15,
+                    // right: 2,
                     child: SizedBox(
-                      width: 80,
-                      height: 80,
+                      width: 40,
+                      height: 40,
                       child: Image.asset(widget.mealsListData!.imagePath),
                     ),
                   )

@@ -249,7 +249,7 @@ class _HistoryChartState extends State<HistoryChart> {
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.5),
+                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
@@ -312,7 +312,7 @@ class _HistoryChartState extends State<HistoryChart> {
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.5),
+                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow

@@ -21,7 +21,11 @@ import '../../../constants.dart';
 
 class AddTokenForm extends StatefulWidget {
   const AddTokenForm(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
+      {Key? key,
+      this.mainScreenAnimationController,
+      this.mainScreenAnimation,
+      this.onChangeBody,
+      this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
@@ -112,17 +116,20 @@ class _AddTokenForm extends State<AddTokenForm> {
                   Common.formatNumber(element.packageData['count']),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: FitnessAppTheme.nearlyDarkREd,
+                    color: FitnessAppTheme.lightText,
                   ),
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 margin: EdgeInsets.only(right: 80),
-                child: Text(Common.formatNumber(int.parse(element.value)),
-                    overflow: TextOverflow.ellipsis, style: TextStyle(
-                    color: FitnessAppTheme.nearlyDarkREd,
-                  ),),
+                child: Text(
+                  Common.formatNumber(int.parse(element.value)),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: FitnessAppTheme.lightText,
+                  ),
+                ),
               ),
               // Container(
               //   width: MediaQuery.of(context).size.width * 0.2,
@@ -187,10 +194,14 @@ class _AddTokenForm extends State<AddTokenForm> {
 
                 TextSpan(
                     text: data.length.toString() + '-',
-                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: 'الحزم التي تم اختيارها',
-                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -211,15 +222,21 @@ class _AddTokenForm extends State<AddTokenForm> {
               children: [
                 Container(
                   margin: EdgeInsets.only(left: 40),
-                  child: Text('الحزمة', style: TextStyle(
-                    color: FitnessAppTheme.lightText,
-                  ),),
+                  child: Text(
+                    'الحزمة',
+                    style: TextStyle(
+                      color: FitnessAppTheme.lightText,
+                    ),
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 80),
-                  child: Text(' الكمية', style: TextStyle(
-                    color: FitnessAppTheme.lightText,
-                  ),),
+                  child: Text(
+                    ' الكمية',
+                    style: TextStyle(
+                      color: FitnessAppTheme.lightText,
+                    ),
+                  ),
                 ),
                 // Container(
                 //   margin: EdgeInsets.only(right: 80),
@@ -271,11 +288,10 @@ class _AddTokenForm extends State<AddTokenForm> {
                   padding:
                       EdgeInsets.only(top: 20, bottom: 20, right: 50, left: 50),
                   child: FittedBox(
-                    fit : BoxFit.scaleDown,
-                    child : Text(Common.formatNumber(_tokens),
-                      style:
-                          TextStyle(fontSize: 20, color: Colors.amberAccent))
-                  ),
+                      fit: BoxFit.scaleDown,
+                      child: Text(Common.formatNumber(_tokens),
+                          style: TextStyle(
+                              fontSize: 20, color: Colors.amberAccent))),
                 ),
               ),
               Container(
@@ -285,9 +301,8 @@ class _AddTokenForm extends State<AddTokenForm> {
                 child: Padding(
                   padding: EdgeInsets.all(10),
                   child: FittedBox(
-                    fit : BoxFit.scaleDown,
-                    child : Text("توكنز : " + Common.formatNumber(_tokens))
-                  ),
+                      fit: BoxFit.scaleDown,
+                      child: Text("توكنز : " + Common.formatNumber(_tokens))),
                 ),
               ),
             ],
@@ -341,7 +356,10 @@ class _AddTokenForm extends State<AddTokenForm> {
               // update the data
               nData.add(elementt);
               // validate all data
-              nData = nData.where((element) => element.value != '' && element.value !='0').toList();
+              nData = nData
+                  .where(
+                      (element) => element.value != '' && element.value != '0')
+                  .toList();
               // set the data
               setState(() {
                 data = nData;
@@ -374,9 +392,10 @@ class _AddTokenForm extends State<AddTokenForm> {
               Container(
                 child: data.isNotEmpty
                     ? _getPackages()
-                    : Text('ادخل الكمية من كل حزمة',style: TextStyle(
-                      color: FitnessAppTheme.lightText
-                    ),),
+                    : Text(
+                        'ادخل الكمية من كل حزمة',
+                        style: TextStyle(color: FitnessAppTheme.lightText),
+                      ),
               )
             ],
           ),
@@ -435,13 +454,18 @@ class _AddTokenForm extends State<AddTokenForm> {
             tag: "login_btn",
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkREd),
-              ),
-              onPressed: data.isEmpty || !_hasCash || _isLoading ? null : handleAddToken,
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.disabled))
+                  return FitnessAppTheme.nearlyDarkREd.withOpacity(0.4);
+                return FitnessAppTheme.nearlyDarkREd.withOpacity(0.9);
+              })),
+              onPressed: data.isEmpty || !_hasCash || _isLoading
+                  ? null
+                  : handleAddToken,
               child: Text(
                 S.of(context).confirm.toUpperCase(),
-                style: TextStyle(fontSize: 20),
+                style:
+                    TextStyle(fontSize: 20, color: FitnessAppTheme.background),
               ),
             ),
           ),
@@ -503,11 +527,11 @@ class _AddTokenForm extends State<AddTokenForm> {
     // Find the ScaffoldMessenger in the widget tree
     // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    
+
     widget.onChangeBody();
   }
 
-   handleSnackBarError() {
+  handleSnackBarError() {
     final snackBar = SnackBar(
       content: Text('فشل الاتصال'),
       // action: SnackBarAction(
@@ -554,12 +578,11 @@ class _AddTokenForm extends State<AddTokenForm> {
         };
 
         var res = null;
-        
-        try {
 
+        try {
           var res = await AuthApi().addToken(ddata);
           var body = jsonDecode(res.body);
-        
+
           if (body['status']) {
             var data = AuthApi().getData(body);
             await AuthApi().updateUser(data);
@@ -573,12 +596,9 @@ class _AddTokenForm extends State<AddTokenForm> {
               print(body);
             });
           }
-
-          } catch (error) {
-              handleSnackBarError();
+        } catch (error) {
+          handleSnackBarError();
         }
-
-        
 
         setState(() {
           _isLoading = false;

@@ -21,7 +21,7 @@ class JawakerListData {
 
   static List<JawakerListData> tabIconsList = <JawakerListData>[
     JawakerListData(
-      imagePath: 'assets/fitness_app/jawaker300.png',
+      imagePath: 'assets/fitness_app/rocketw.png',
       titleTxt: 'مسرع أحمر',
       kacl: 100,
       meals: <String>['100 %'],
@@ -30,7 +30,7 @@ class JawakerListData {
       value:'100%',
     ),
     JawakerListData(
-      imagePath: 'assets/fitness_app/jawaker150.png',
+      imagePath: 'assets/fitness_app/rocketw.png',
       titleTxt: 'مسرع أزرق',
       kacl: 150,
       meals: <String>['150 %'],
@@ -40,7 +40,7 @@ class JawakerListData {
     ),
     
     JawakerListData(
-      imagePath: 'assets/fitness_app/jawaker100.png',
+      imagePath: 'assets/fitness_app/rocketw.png',
       titleTxt: 'مسرع أسود',
       kacl: 300,
       meals: <String>['300 %'],
@@ -49,7 +49,7 @@ class JawakerListData {
       value:'300%',
     ),
     // JawakerListData(
-    //   imagePath: 'assets/fitness_app/dinner.png',
+    //   imagePath: 'assets/fitness_app/rocketw.png',
     //   titleTxt: 'Dinner',
     //   kacl: 0,
     //   meals: <String>['Recommend:', '703 kcal'],

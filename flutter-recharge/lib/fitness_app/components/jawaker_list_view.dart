@@ -72,7 +72,7 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                       topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.9),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],

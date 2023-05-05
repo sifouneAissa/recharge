@@ -142,7 +142,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                   element.packageData['name'],
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: FitnessAppTheme.nearlyDarkREd
+                    color: FitnessAppTheme.lightText
                   )
           
                 ),
@@ -152,14 +152,14 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                 margin: EdgeInsets.only(right: 40,left: 20),
                 child: Text(Common.formatNumber(int.parse(element.value)),
                     overflow: TextOverflow.ellipsis,style: TextStyle(
-                    color: FitnessAppTheme.nearlyDarkREd
+                    color: FitnessAppTheme.lightText
                   )),
               ),Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 margin: EdgeInsets.only(right: 0),
                 child: Text(Common.formatNumber(element.packageData['cost'] * int.parse(element.value)),
                     overflow: TextOverflow.ellipsis,style: TextStyle(
-                    color: FitnessAppTheme.nearlyDarkREd
+                    color: FitnessAppTheme.lightText
                   )),
               ),
               // Container(
@@ -549,13 +549,18 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             tag: "login_btn",
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkREd),
-              ),
-              onPressed: data.isEmpty || !_hasCash || _isLoading ? null : handleAddToken,
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.disabled))
+                  return FitnessAppTheme.nearlyDarkREd.withOpacity(0.4);
+                return FitnessAppTheme.nearlyDarkREd.withOpacity(0.9);
+              })),
+              onPressed: data.isEmpty || !_hasCash || _isLoading
+                  ? null
+                  : handleAddToken,
               child: Text(
-                S().confirm.toUpperCase(),
-                style: TextStyle(fontSize: 20),
+                S.of(context).confirm.toUpperCase(),
+                style:
+                    TextStyle(fontSize: 20, color: FitnessAppTheme.background),
               ),
             ),
           ),

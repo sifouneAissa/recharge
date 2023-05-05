@@ -89,7 +89,7 @@ class _AccountCardView extends State<AccountCardView> {
                       topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.7),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
                         offset: Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -128,16 +128,16 @@ class _AccountCardView extends State<AccountCardView> {
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Row(
-                                mainAxisSize: MainAxisSize.min,
+                                // mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(
+                                    padding: const EdgeInsets.only(right: 0,
                                         left: 0, bottom: 3),
                                     child: Container(
                                       child: FittedBox(
@@ -151,7 +151,7 @@ class _AccountCardView extends State<AccountCardView> {
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 32,
-                                          color: FitnessAppTheme.nearlyDarkREd,
+                                          color: FitnessAppTheme.nearlyWhite,
                                         ),
                                       )
                                       ),
