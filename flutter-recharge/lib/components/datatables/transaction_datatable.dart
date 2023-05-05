@@ -162,7 +162,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     String status = 'الحالة : ' + transactionText(transaction);
     String quantity = 'القيمة : ' + Common.formatNumber(transaction['count']);
     String account_id =
-        S.of(context).transaction_player_id + transaction['account_id'];
+        S.of(context).transaction_player_id + transaction['player_name'];
     String day = S.of(context).transaction_date + transaction['tdate'];
 
     return '$status $quantity $account_id $day';
@@ -1049,33 +1049,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
                     children: [
                       Container(
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Clipboard.setData(ClipboardData(
-                                      text: getTextToCopy(transaction)));
-                                  setState(() {
-                                    _copied = true;
-                                  });
-                                },
-                                child: Icon(
-                                  Icons.copy,
-                                  size: 30,
-                                  color: _copied
-                                      ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkREd,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -1090,6 +1063,39 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           ],
                         ),
                       ),
+                          Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: GestureDetector(
+                                onTap: () async{
+                                  Clipboard.setData(ClipboardData(
+                                      text: getTextToCopy(transaction)));
+                                   setState(() {
+                                    _copied = true;
+                                  });
+                                  await Future.delayed(
+                                      const Duration(seconds: 1));
+                                  setState(() {
+                                    _copied = false;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.copy,
+                                  size: 30,
+                                  color: _copied
+                                      ? Colors.greenAccent
+                                      : FitnessAppTheme.nearlyDarkREd,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  
                       Container(
                         margin: EdgeInsets.only(right: 10),
                         child: Row(
@@ -1352,33 +1358,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   margin: EdgeInsets.only(top: 0),
                   child: Column(
                     children: [
-                      Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Clipboard.setData(ClipboardData(
-                                      text: getTextToCopyPoint(transaction)));
-                                  setState(() {
-                                    _copied = true;
-                                  });
-                                },
-                                child: Icon(
-                                  Icons.copy,
-                                  size: 30,
-                                  color: _copied
-                                      ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkREd,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      
                       Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1391,6 +1371,37 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                   style: TextStyle(
                                       color: FitnessAppTheme.lightText)),
                             )
+                          ],
+                        ),
+                      ),Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  Clipboard.setData(ClipboardData(
+                                      text: getTextToCopyPoint(transaction)));
+                                   setState(() {
+                                    _copied = true;
+                                  });
+                                  await Future.delayed(
+                                      const Duration(seconds: 1));
+                                  setState(() {
+                                    _copied = false;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.copy,
+                                  size: 30,
+                                  color: _copied
+                                      ? Colors.greenAccent
+                                      : FitnessAppTheme.nearlyDarkREd,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),

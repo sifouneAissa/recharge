@@ -141,7 +141,9 @@ class _RecentPointTransactionDatatable
 
     return '$status $quantity $account_id $day';
   }
-
+  setCopied() async {
+          await Future.delayed(const Duration(seconds: 1));
+  }
   bottomSheetBuilder(transaction) {
     bool isW = transaction['waiting'];
     setState(() {
@@ -169,33 +171,7 @@ class _RecentPointTransactionDatatable
                   margin: EdgeInsets.only(top: 0),
                   child: Column(
                     children: [
-                      Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Clipboard.setData(ClipboardData(
-                                      text: getTextToCopy(transaction)));
-                                  setState(() {
-                                    _copied = true;
-                                  });
-                                },
-                                child: Icon(
-                                  Icons.copy,
-                                  size: 30,
-                                  color: _copied
-                                      ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkREd,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      
                       Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,6 +184,37 @@ class _RecentPointTransactionDatatable
                                   style: TextStyle(
                                       color: FitnessAppTheme.lightText)),
                             )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: GestureDetector(
+                                onTap: () async{
+                                  Clipboard.setData(ClipboardData(
+                                      text: getTextToCopy(transaction)));
+                                  setState(() {
+                                      _copied = true;
+                                    });
+                                  await setCopied();
+                                  setState(() {
+                                            _copied = false;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.copy,
+                                  size: 30,
+                                  color: _copied
+                                      ? Colors.greenAccent
+                                      : FitnessAppTheme.nearlyDarkREd,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
