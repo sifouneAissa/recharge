@@ -211,8 +211,8 @@ class _JawakerView extends State<JawakerView> {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, left: 16, right: 16, bottom: 8),
+                        padding:  EdgeInsets.only(
+                            top: widget.callback != null ? 10 : 30, left: 16, right: 16, bottom: 8),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,7 +314,7 @@ class _JawakerView extends State<JawakerView> {
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w500,
-                                          fontSize:  20 ,
+                                          fontSize:  20,
                                           letterSpacing: 0,
                                           color: FitnessAppTheme.white,
                                         ),

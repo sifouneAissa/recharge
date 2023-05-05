@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_home_screen.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
@@ -21,12 +25,33 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   AnimationController? animationController;
   bool multiple = true;
+  var user;
 
   @override
   void initState() {
+    _getUser();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
+  }
+
+  _getUser() async {
+    var auth = await GetData().getAuth();
+
+    setState(() {
+      user = auth;
+    });
+
+    // update user
+    var res = await AuthApi().getUser();
+
+    var data = await AuthApi().getData(JsonDecoder(res.body));
+
+    setState(() {
+      user = data['user'];
+    });
+
+    await AuthApi().updateUser(data);
   }
 
   Future<bool> getData() async {
@@ -40,9 +65,63 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  handleSnackBarError() {
+    final snackBar = SnackBar(
+      content: Text('حسابك قيد التفعيل الرجاء الانتظار'),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  buildDisabledScreen() {
     var brightness = Theme.of(context).brightness;
+
+    bool isLightMode = brightness == Brightness.light;
+    return GestureDetector(
+      onTap: () {
+        handleSnackBarError();
+      },
+      child: AbsorbPointer(
+        child: Scaffold(
+          backgroundColor:
+              isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
+          body: FutureBuilder<bool>(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (!snapshot.hasData) {
+                return const SizedBox();
+              } else {
+                return Padding(
+                  padding:
+                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      appBar(),
+                      Expanded(child: FitnessAppHomeScreen()),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  buildActiveScreen() {
+    var brightness = Theme.of(context).brightness;
+
     bool isLightMode = brightness == Brightness.light;
     return Scaffold(
       backgroundColor:
@@ -60,9 +139,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   appBar(),
-                  Expanded(
-                    child: FitnessAppHomeScreen()
-                    ),
+                  Expanded(child: FitnessAppHomeScreen()),
                 ],
               ),
             );
@@ -70,6 +147,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         },
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return user['is_active'] ==1 ? buildActiveScreen() : buildDisabledScreen();
   }
 
   Widget appBar() {
@@ -141,17 +223,20 @@ class HomeListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget mchild;
-    
-    if(listData!.cardName=='profile_data')
-      mchild = AccountCardView(animationController: animationController,animation: animation);
-    else if(listData!.cardName == 'info_data')
-      mchild = InfoCardView(animationController: animationController,animation: animation);
-    else if(listData!.cardName == 'info2_data')
-      mchild = Info2CardView(animationController: animationController,animation: animation);
-    
-    else 
-     mchild = BodyMeasurementView(animationController: animationController,animation: animation);
-    
+
+    if (listData!.cardName == 'profile_data')
+      mchild = AccountCardView(
+          animationController: animationController, animation: animation);
+    else if (listData!.cardName == 'info_data')
+      mchild = InfoCardView(
+          animationController: animationController, animation: animation);
+    else if (listData!.cardName == 'info2_data')
+      mchild = Info2CardView(
+          animationController: animationController, animation: animation);
+    else
+      mchild = BodyMeasurementView(
+          animationController: animationController, animation: animation);
+
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -194,7 +279,6 @@ class HomeListView extends StatelessWidget {
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
         return Stack(
-
           children: [
             FadeTransition(
               opacity: animation!,
