@@ -200,7 +200,7 @@ Future<UserCredential> signInWithFacebook() async {
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child:
-                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkBlue),
+                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkREd),
               ),
             ),
           ),
@@ -222,7 +222,7 @@ Future<UserCredential> signInWithFacebook() async {
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(
                     Icons.lock,
-                    color: FitnessAppTheme.nearlyDarkBlue,
+                    color: FitnessAppTheme.nearlyDarkREd,
                   ),
                 ),
               ),
@@ -233,7 +233,7 @@ Future<UserCredential> signInWithFacebook() async {
             tag: "login_btn",
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: FitnessAppTheme.nearlyDarkBlue),
+                  backgroundColor: FitnessAppTheme.nearlyDarkREd),
               onPressed: _isLoading ? null : handleLogin,
               child: Text(
                 S.of(context).login.toUpperCase(),

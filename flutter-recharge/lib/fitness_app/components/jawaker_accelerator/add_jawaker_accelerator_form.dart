@@ -126,7 +126,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
         margin: EdgeInsets.only(top: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Colors.grey.withOpacity(0.3),
+          color: Colors.grey.withOpacity(0.08),
           // border: Border.all(color: Colors.black)
         ),
         child: Padding(
@@ -141,13 +141,19 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                 child: Text(
                   element.packageData['name'],
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: FitnessAppTheme.nearlyDarkREd
+                  )
+          
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 margin: EdgeInsets.only(right: 80),
                 child: Text(Common.formatNumber(int.parse(element.value)),
-                    overflow: TextOverflow.ellipsis),
+                    overflow: TextOverflow.ellipsis,style: TextStyle(
+                    color: FitnessAppTheme.nearlyDarkREd
+                  )),
               ),
               // Container(
               //   width: MediaQuery.of(context).size.width * 0.2,
@@ -178,10 +184,10 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
 
                 TextSpan(
                     text: data.length.toString() + '-',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: 'المسرعات التي تم اختيارها',
-                    style: TextStyle(fontWeight: FontWeight.bold))
+                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -202,11 +208,15 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               children: [
                 Container(
                   margin: EdgeInsets.only(left: 40),
-                  child: Text('المسرع'),
+                  child: Text('المسرع',style: TextStyle(
+                    color: FitnessAppTheme.lightText
+                  ),),
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 80),
-                  child: Text(' الكمية'),
+                  child: Text(' الكمية',style: TextStyle(
+                    color: FitnessAppTheme.lightText
+                  )),
                 ),
                 // Container(
                 //   margin: EdgeInsets.only(right: 80),
@@ -244,15 +254,13 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: <HexColor>[
-                        HexColor('#2633C5'),
-                        HexColor('#2633C5'),
+                        HexColor('#CF2928'),
+                        HexColor('#CF2928'),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15))),
+                    borderRadius: BorderRadius.circular(15)),
 
                 child: Padding(
                   padding:
@@ -261,22 +269,22 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                     fit : BoxFit.scaleDown,
                     child : Text(Common.formatNumber(_tokens),
                       style:
-                          TextStyle(fontSize: 20, color: Colors.amberAccent))
+                          TextStyle(fontSize: 20, color: FitnessAppTheme.nearlyWhite))
                   ),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    // color: Colors.white
-                    ),
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: FittedBox(
-                    fit : BoxFit.scaleDown,
-                    child : Text("الكلفة : " + Common.formatNumber(_tokens))
-                  ),
-                ),
-              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       // color: Colors.white
+              //       ),
+              //   child: Padding(
+              //     padding: EdgeInsets.all(10),
+              //     child: FittedBox(
+              //       fit : BoxFit.scaleDown,
+              //       child : Text("الكلفة : " + Common.formatNumber(_tokens))
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         )
@@ -463,7 +471,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
           //     prefixIcon: Padding(
           //       padding: const EdgeInsets.all(defaultPadding),
           //       child:
-          //           Icon(Icons.numbers, color: FitnessAppTheme.nearlyDarkBlue),
+          //           Icon(Icons.numbers, color: FitnessAppTheme.nearlyDarkREd),
           //     ),
           //   ),
           // ),
@@ -472,7 +480,9 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               Container(
                 child: data.isNotEmpty
                     ? _getPackages()
-                    : Text('ادخل الكمية من كل حزمة'),
+                    : Text('ادخل الكمية من كل حزمة',style: TextStyle(
+                      color: FitnessAppTheme.lightText
+                    ),),
               )
             ],
           ),
@@ -487,11 +497,11 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             onSaved: (quantity) {},
             decoration: InputDecoration(
               hintText: 'اسم اللاعب ',
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child:
-                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkBlue),
+                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkREd),
               ),
             ),
           ),
@@ -527,7 +537,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
+                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkREd),
               ),
               onPressed: data.isEmpty || !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
@@ -541,11 +551,12 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             text: TextSpan(children: [
               TextSpan(
                   text: ' اخر العمليات ',
-                  style: TextStyle(color: Colors.black)),
+                  style: TextStyle(color: FitnessAppTheme.lightText)),
               WidgetSpan(
                   child: Icon(
                 Icons.history,
                 size: 14,
+                color: FitnessAppTheme.lightText
               ))
             ]),
           ),

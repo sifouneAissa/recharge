@@ -109,7 +109,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
+    var brightness = Theme.of(context).brightness;
     bool isLightMode = brightness == Brightness.light;
     return Scaffold(
       backgroundColor: AppTheme.notWhite.withOpacity(0.5),

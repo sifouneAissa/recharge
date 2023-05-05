@@ -257,7 +257,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                               Text(transaction['message'].toString(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: FitnessAppTheme.nearlyDarkBlue))
+                                      color: FitnessAppTheme.nearlyDarkREd))
                             ],
                           ),
                         )
@@ -354,7 +354,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: FitnessAppTheme.nearlyDarkBlue))
+                                color: FitnessAppTheme.nearlyDarkREd))
                       ],
                     ),
                   ),
@@ -404,7 +404,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                               Text(transaction['message'].toString(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: FitnessAppTheme.nearlyDarkBlue))
+                                      color: FitnessAppTheme.nearlyDarkREd))
                             ],
                           ),
                         )
@@ -503,7 +503,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: FitnessAppTheme.nearlyDarkBlue))
+                                color: FitnessAppTheme.nearlyDarkREd))
                       ],
                     ),
                   ),
@@ -994,7 +994,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                   size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkBlue,
+                                      : FitnessAppTheme.nearlyDarkREd,
                                 ),
                               ),
                             ),
@@ -1082,7 +1082,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: FitnessAppTheme.nearlyDarkBlue))
+                                    color: FitnessAppTheme.nearlyDarkREd))
                           ],
                         ),
                       ),
@@ -1095,7 +1095,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                       top: 20, right: 30, left: 30),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: FitnessAppTheme.nearlyDarkBlue),
+                                        color: FitnessAppTheme.nearlyDarkREd),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -1120,7 +1120,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                                   FontWeight
                                                                       .bold,
                                                               color: FitnessAppTheme
-                                                                  .nearlyDarkBlue)),
+                                                                  .nearlyDarkREd)),
                                                     )
                                                   ],
                                                 ),
@@ -1144,7 +1144,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: FitnessAppTheme
-                                                                .nearlyDarkBlue))
+                                                                .nearlyDarkREd))
                                                   ],
                                                 ),
                                               )
@@ -1182,7 +1182,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                         //           style: TextStyle(
                                         //               fontWeight: FontWeight.bold,
                                         //               color: FitnessAppTheme
-                                        //                   .nearlyDarkBlue))
+                                        //                   .nearlyDarkREd))
                                         //     ],
                                         //   ),
                                         // ),
@@ -1269,7 +1269,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                   size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkBlue,
+                                      : FitnessAppTheme.nearlyDarkREd,
                                 ),
                               ),
                             ),
@@ -1357,7 +1357,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: FitnessAppTheme.nearlyDarkBlue))
+                                    color: FitnessAppTheme.nearlyDarkREd))
                           ],
                         ),
                       ),
@@ -1370,7 +1370,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                       top: 20, right: 30, left: 30),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: FitnessAppTheme.nearlyDarkBlue),
+                                        color: FitnessAppTheme.nearlyDarkREd),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -1395,7 +1395,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                                   FontWeight
                                                                       .bold,
                                                               color: FitnessAppTheme
-                                                                  .nearlyDarkBlue)),
+                                                                  .nearlyDarkREd)),
                                                     )
                                                   ],
                                                 ),
@@ -1419,7 +1419,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: FitnessAppTheme
-                                                                .nearlyDarkBlue))
+                                                                .nearlyDarkREd))
                                                   ],
                                                 ),
                                               )
@@ -1457,7 +1457,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                         //           style: TextStyle(
                                         //               fontWeight: FontWeight.bold,
                                         //               color: FitnessAppTheme
-                                        //                   .nearlyDarkBlue))
+                                        //                   .nearlyDarkREd))
                                         //     ],
                                         //   ),
                                         // ),
@@ -1669,7 +1669,7 @@ getSDates(){
                 margin: EdgeInsets.only(right: 250),
                 // height: MediaQuery.of(context).size.height * 0.33,
                 decoration: BoxDecoration(
-                    border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
+                    border: Border.all(color: FitnessAppTheme.nearlyDarkREd),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: EdgeInsets.all(10),
@@ -1740,13 +1740,13 @@ getSDates(){
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(defaultPadding),
                         child: Icon(Icons.search,
-                            color: FitnessAppTheme.nearlyDarkBlue),
+                            color: FitnessAppTheme.nearlyDarkREd),
                       ),
                     ),
                   )),
                   IconButton(onPressed: () {
                     _launchURL();
-                  }, icon: Icon(Icons.download,color: FitnessAppTheme.nearlyDarkBlue,))
+                  }, icon: Icon(Icons.download,color: FitnessAppTheme.nearlyDarkREd,))
                 ],
               ),
               SingleChildScrollView(
@@ -1762,7 +1762,7 @@ getSDates(){
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w800,
-                                        color: FitnessAppTheme.nearlyDarkBlue),
+                                        color: FitnessAppTheme.nearlyDarkREd),
                                   ))),
                           rows: List<DataRow>.generate(
                             stransactions.length,
@@ -1775,7 +1775,7 @@ getSDates(){
                                     '#' +
                                         transactions[counter]['id'].toString(),
                                     style: TextStyle(
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   onTap: () {
@@ -1904,7 +1904,7 @@ getSDates(){
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color:
-                                              FitnessAppTheme.nearlyDarkBlue)),
+                                              FitnessAppTheme.nearlyDarkREd)),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'

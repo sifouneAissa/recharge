@@ -224,7 +224,7 @@ class _HistoryScreenState extends State<HistoryScreen>
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(
-          color: FitnessAppTheme.nearlyDarkBlue,
+          color: FitnessAppTheme.nearlyDarkREd,
           onRefresh: getData,
           child: Stack(
           children: <Widget>[
@@ -317,7 +317,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22 + 6 - 6 * topBarOpacity,
                                     letterSpacing: -0.5,
-                                    color: FitnessAppTheme.nearlyDarkBlue,
+                                    color: FitnessAppTheme.nearlyDarkREd,
                                   ),
                                 ),
                               ),

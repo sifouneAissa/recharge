@@ -116,7 +116,7 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
                           height: 50,
                           child: ElevatedButton(
                              style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(FitnessAppTheme.nearlyDarkBlue),
+                            backgroundColor: MaterialStatePropertyAll(FitnessAppTheme.nearlyDarkREd),
                             
                           ),
                              onPressed: _isLoading ? null : handleUpdateEmail,

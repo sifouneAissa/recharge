@@ -14,7 +14,7 @@ class _InviteFriendState extends State<InviteFriend> {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
+    var brightness = Theme.of(context).brightness;
     bool isLightMode = brightness == Brightness.light;
     return Container(
       color: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,

@@ -93,7 +93,7 @@ class _JawakerAcceleratorListViewState extends State<JawakerAcceleratorListView>
             transform: Matrix4.translationValues(
                 0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
             child: Container(
-              height: 216,
+              height: widget.onSelectCallback != null ? 250 : 200,
               width: double.infinity,
               child: ListView.builder(
                 padding: const EdgeInsets.only(
@@ -165,8 +165,7 @@ class JawakerView extends StatefulWidget {
   _JawakerView createState() => _JawakerView();
 }
 class _JawakerView extends State<JawakerView> {
-  PackagePointData? selected; 
-
+  PackagePointData? selected;
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -178,12 +177,12 @@ class _JawakerView extends State<JawakerView> {
             transform: Matrix4.translationValues(
                 100 * (1.0 - widget.animation!.value), 0.0, 0.0),
             child: SizedBox(
-              width: widget.isSelected ? 150 : 130,
+              width: widget.callback != null ? 150 : 130 ,
               child: Stack(
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(
-                        top: !widget.isSelected ? 32 : 8,
+                        top:  32,
                         left: 8,
                         right: 8,
                         bottom: 16),
@@ -194,7 +193,7 @@ class _JawakerView extends State<JawakerView> {
                               color: HexColor(widget.mealsListData!.endColor)
                                   .withOpacity(0.6),
                               offset: const Offset(1.1, 4.0),
-                              blurRadius: widget.isSelected ? 50 : 8.0),
+                              blurRadius:  50 ),
                         ],
                         gradient: LinearGradient(
                           colors: <HexColor>[
@@ -208,7 +207,7 @@ class _JawakerView extends State<JawakerView> {
                           bottomRight: Radius.circular(8.0),
                           bottomLeft: Radius.circular(8.0),
                           topLeft: Radius.circular(8.0),
-                          topRight: Radius.circular(widget.isSelected ? 8.0 : 54.0),
+                          topRight: Radius.circular(8.0),
                         ),
                       ),
                       child: Padding(
@@ -262,7 +261,7 @@ class _JawakerView extends State<JawakerView> {
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: widget.isSelected ? 20 : 24,
+                                          fontSize:  20 ,
                                           letterSpacing: 0,
                                           color: FitnessAppTheme.white,
                                         ),
@@ -306,8 +305,9 @@ class _JawakerView extends State<JawakerView> {
                                       ),
                                     ),
                                   ),
-                            widget.isSelected
-                                ? Container(
+                            widget.callback != null 
+                                ? 
+                                Container(
                                     margin: EdgeInsets.only(top: 20),
                                     child: SpinBox(
                                       max: 100,
@@ -356,7 +356,7 @@ class _JawakerView extends State<JawakerView> {
                       width: 84,
                       height: 84,
                       decoration: BoxDecoration(
-                        color: FitnessAppTheme.nearlyWhite.withOpacity(0.2),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.07),
                         shape: BoxShape.circle,
                       ),
                     ),

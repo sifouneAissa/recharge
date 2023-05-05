@@ -10,7 +10,7 @@ AppBar buildAppBar(BuildContext context,String title) {
     backgroundColor: Colors.transparent,
     title: Text(title,style: TextStyle(
       fontSize: 30,
-      color: FitnessAppTheme.nearlyDarkBlue
+      color: FitnessAppTheme.nearlyDarkREd
     ),),
     elevation: 0,
   );

@@ -112,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: Text(
                               getValue,
-                              style: TextStyle(fontSize: 16, height: 1.4,color: FitnessAppTheme.nearlyDarkBlue),
+                              style: TextStyle(fontSize: 16, height: 1.4,color: FitnessAppTheme.nearlyDarkREd),
                             ))),
                     Icon(
                       Icons.keyboard_arrow_left,

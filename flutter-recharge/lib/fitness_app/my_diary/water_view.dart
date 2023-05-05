@@ -75,7 +75,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 32,
-                                          color: FitnessAppTheme.nearlyDarkBlue,
+                                          color: FitnessAppTheme.nearlyDarkREd,
                                         ),
                                       ),
                                     ),
@@ -90,7 +90,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                           fontWeight: FontWeight.w500,
                                           fontSize: 18,
                                           letterSpacing: -0.2,
-                                          color: FitnessAppTheme.nearlyDarkBlue,
+                                          color: FitnessAppTheme.nearlyDarkREd,
                                         ),
                                       ),
                                     ),
@@ -213,7 +213,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 shape: BoxShape.circle,
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                      color: FitnessAppTheme.nearlyDarkBlue
+                                      color: FitnessAppTheme.nearlyDarkREd
                                           .withOpacity(0.4),
                                       offset: const Offset(4.0, 4.0),
                                       blurRadius: 8.0),
@@ -223,7 +223,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 padding: const EdgeInsets.all(6.0),
                                 child: Icon(
                                   Icons.add,
-                                  color: FitnessAppTheme.nearlyDarkBlue,
+                                  color: FitnessAppTheme.nearlyDarkREd,
                                   size: 24,
                                 ),
                               ),
@@ -237,7 +237,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 shape: BoxShape.circle,
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                      color: FitnessAppTheme.nearlyDarkBlue
+                                      color: FitnessAppTheme.nearlyDarkREd
                                           .withOpacity(0.4),
                                       offset: const Offset(4.0, 4.0),
                                       blurRadius: 8.0),
@@ -247,7 +247,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                 padding: const EdgeInsets.all(6.0),
                                 child: Icon(
                                   Icons.remove,
-                                  color: FitnessAppTheme.nearlyDarkBlue,
+                                  color: FitnessAppTheme.nearlyDarkREd,
                                   size: 24,
                                 ),
                               ),

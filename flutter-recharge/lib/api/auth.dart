@@ -12,27 +12,22 @@ import 'package:dio/dio.dart';
 
 class AuthApi{
 
-  // final String _url = 'https://recharge-web.afandena-cards.com/api/';
-  final String _url = 'http://192.168.1.6/api/';
+  final String _url = 'https://recharge-web.afandena-cards.com/api/';
+  // final String _url = 'http://192.168.1.6/api/';
 
   getUrl(eurl){
     return _url + eurl;
   }
 
   login(data) async {
-
       var fullUrl = _url + 'login';
-
-      print(Uri.parse(fullUrl));
       return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders());
   }
 
   register(data) async {
 
       var token_firebase =  await GetData().getFirebaseToken();
-
       var fullUrl = _url + 'register';
-      
       data['token_firebase'] = token_firebase;
 
       return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders());

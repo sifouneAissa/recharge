@@ -101,7 +101,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                           height: 50,
                           child: ElevatedButton(
                             style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(FitnessAppTheme.nearlyDarkBlue),
+                            backgroundColor: MaterialStatePropertyAll(FitnessAppTheme.nearlyDarkREd),
                           ),
                             onPressed: _isLoading ? null : handleUpdateName,
                             child: const Text(

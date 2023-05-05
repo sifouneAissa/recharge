@@ -177,7 +177,7 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
                             child: ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor: MaterialStatePropertyAll(
-                                    FitnessAppTheme.nearlyDarkBlue),
+                                    FitnessAppTheme.nearlyDarkREd),
                               ),
                               onPressed: _isLoading ? null : handleUpdatePassword,
                               child: const Text(

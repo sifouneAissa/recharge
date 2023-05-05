@@ -43,7 +43,7 @@ class _RecentTokensListViewState extends State<RecentTokensListView>
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.white,
+                  color: FitnessAppTheme.nearlyBlack,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -51,7 +51,7 @@ class _RecentTokensListViewState extends State<RecentTokensListView>
                       topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.2),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.7),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],

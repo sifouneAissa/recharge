@@ -164,7 +164,7 @@ class _EditImagePageState extends State<EditImagePage> {
                     height: 50,
                     child: ElevatedButton(
                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(FitnessAppTheme.nearlyDarkBlue),
+                            backgroundColor: MaterialStatePropertyAll(FitnessAppTheme.nearlyDarkREd),
                             ),
                       onPressed: _isLoading ? null : handleUpdateImage,
                       child: const Text(

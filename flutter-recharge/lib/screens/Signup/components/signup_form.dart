@@ -188,7 +188,7 @@ class _SignUpForm extends State<SignUpForm> {
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child:
-                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkBlue),
+                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkREd),
               ),
             ),
           ),
@@ -210,7 +210,7 @@ class _SignUpForm extends State<SignUpForm> {
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child:
-                      Icon(Icons.phone, color: FitnessAppTheme.nearlyDarkBlue),
+                      Icon(Icons.phone, color: FitnessAppTheme.nearlyDarkREd),
                 ),
               ),
             ),
@@ -233,7 +233,7 @@ class _SignUpForm extends State<SignUpForm> {
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child:
-                      Icon(Icons.email, color: FitnessAppTheme.nearlyDarkBlue),
+                      Icon(Icons.email, color: FitnessAppTheme.nearlyDarkREd),
                 ),
               ),
             ),
@@ -255,7 +255,7 @@ class _SignUpForm extends State<SignUpForm> {
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child:
-                      Icon(Icons.lock, color: FitnessAppTheme.nearlyDarkBlue),
+                      Icon(Icons.lock, color: FitnessAppTheme.nearlyDarkREd),
                 ),
               ),
             ),
@@ -263,7 +263,7 @@ class _SignUpForm extends State<SignUpForm> {
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: FitnessAppTheme.nearlyDarkBlue),
+                backgroundColor: FitnessAppTheme.nearlyDarkREd),
             onPressed: _isLoading ? null : handleRegister,
             child: Text(S.of(context).sign_up.toUpperCase()),
           ),

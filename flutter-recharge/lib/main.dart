@@ -42,7 +42,7 @@ void main() async {
     ..indicatorSize = 45.0
     ..radius = 10.0
     ..progressColor = Colors.yellow
-    ..backgroundColor = FitnessAppTheme.nearlyDarkBlue
+    ..backgroundColor = FitnessAppTheme.nearlyDarkREd
     ..indicatorColor = Colors.yellow
     ..textColor = Colors.yellow
     ..maskColor = Colors.blue.withOpacity(0.5)
@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
@@ -68,11 +69,12 @@ class MyApp extends StatelessWidget {
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
+        
     ));
 
 
     return MaterialApp(
-      title: "Recharge Jawaker",
+      title: "Afandena Cards",
       localizationsDelegates: [
         S.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -87,7 +89,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
+        brightness: Brightness.dark,
       ),
+      themeMode: ThemeMode.dark,
       home: hasToken ? NavigationHomeScreen() : LoginScreen(),
       builder: EasyLoading.init(),
     );

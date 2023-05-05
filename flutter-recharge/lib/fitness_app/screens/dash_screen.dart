@@ -385,11 +385,11 @@ listViews.add(
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.background,
+      color: FitnessAppTheme.nearlyBlack,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(
-          color: FitnessAppTheme.nearlyDarkBlue,
+          color: FitnessAppTheme.nearlyDarkREd,
           onRefresh: getData,
           child: Stack(
           children: <Widget>[
@@ -470,6 +470,10 @@ listViews.add(
   }
 
   Widget getAppBarUI() {
+    
+    var brightness = Theme.of(context).brightness;
+    bool isLightMode = brightness == Brightness.light;
+    
     return Column(
       children: <Widget>[
         AnimatedBuilder(
@@ -482,10 +486,11 @@ listViews.add(
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(topBarOpacity),
+                    color: isLightMode ? FitnessAppTheme.white.withOpacity(topBarOpacity) : FitnessAppTheme.nearlyBlack.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),
+                    
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                           color: FitnessAppTheme.grey
@@ -519,7 +524,7 @@ listViews.add(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22 + 6 - 6 * topBarOpacity,
                                     letterSpacing: -0.5,
-                                    color: FitnessAppTheme.nearlyDarkBlue,
+                                    color: FitnessAppTheme.nearlyDarkREd,
                                   ),
                                 ),
                               ),

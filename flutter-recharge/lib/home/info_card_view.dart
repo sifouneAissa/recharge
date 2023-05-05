@@ -60,7 +60,7 @@ class _InfoCardView extends State<InfoCardView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.white,
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
+                  border: Border.all(color: FitnessAppTheme.nearlyDarkREd),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -108,14 +108,14 @@ class _InfoCardView extends State<InfoCardView> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white,
-                                          border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                                          border: Border.all(color: FitnessAppTheme.nearlyDarkREd)
                                     
                                         ),
                                       child:  Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Icon(
                                         Icons.wallet_outlined,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         size: 50.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
@@ -151,14 +151,14 @@ class _InfoCardView extends State<InfoCardView> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white,
-                                              border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                                              border: Border.all(color: FitnessAppTheme.nearlyDarkREd)
                                     
                                         ),
                                       child:  Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Icon(
                                         IconData(0xf0654, fontFamily: 'MaterialIcons'),
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         size: 50.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),

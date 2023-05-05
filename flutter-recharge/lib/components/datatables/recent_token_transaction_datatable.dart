@@ -55,10 +55,7 @@ class _RecentTokenTransactionDatatable
   __getTransactions() async {
     __getOldTransactions();
     // var t = await AuthApi().getTransactions();
-    var t = await AuthApi().getRecentTransactions({
-      'only'  : 5,
-      'type' : 'token'
-    });
+    var t = await AuthApi().getRecentTransactions({'only': 5, 'type': 'token'});
 
     var body = t.data;
 
@@ -102,7 +99,7 @@ class _RecentTokenTransactionDatatable
     widget.parentScrollController?.addListener(() async {
       if (widget.parentScrollController?.position.pixels ==
           widget.parentScrollController?.position.minScrollExtent) {
-          await __getTransactions();
+        await __getTransactions();
       }
     });
   }
@@ -115,7 +112,9 @@ class _RecentTokenTransactionDatatable
 
   transactionStatus(transaction) {
     String text = transactionText(transaction);
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
+    return Text(text,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: FitnessAppTheme.lightText));
   }
 
   transactionText(transaction) {
@@ -154,7 +153,9 @@ class _RecentTokenTransactionDatatable
       text = 'تم رفض الحزمة';
     else if (transaction['more']) text = transaction['status']['message'];
 
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
+    return Text(text,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: FitnessAppTheme.lightText));
   }
 
   getTokens(tokensPackages) {
@@ -204,7 +205,7 @@ class _RecentTokenTransactionDatatable
           margin: EdgeInsets.only(top: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withOpacity(0.08),
             // border: Border.all(color: Colors.black)
           ),
           child: Padding(
@@ -219,13 +220,19 @@ class _RecentTokenTransactionDatatable
                   child: Text(
                     Common.formatNumber(element.packageData['count']),
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                            color: FitnessAppTheme.nearlyDarkREd,
+                          )
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 20),
                   child: Text(Common.formatNumber(int.parse(element.value)),
-                      overflow: TextOverflow.ellipsis),
+                      overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                            color: FitnessAppTheme.nearlyDarkREd,
+                          )),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
@@ -261,10 +268,10 @@ class _RecentTokenTransactionDatatable
               margin: EdgeInsets.only(right: 5),
               child: Text.rich(TextSpan(children: [
                 TextSpan(
-                    text: '-', style: TextStyle(fontWeight: FontWeight.bold)),
+                    text: '-', style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: S.of(context).transaction_package_selected,
-                    style: TextStyle(fontWeight: FontWeight.bold))
+                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -285,21 +292,27 @@ class _RecentTokenTransactionDatatable
               children: [
                 Container(
                   // margin: EdgeInsets.only(left: 60),
-                  child: Text(S.of(context).transaction_package),
+                  child: Text(S.of(context).transaction_package,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(S.of(context).transaction_package_count),
+                  child: Text(S.of(context).transaction_package_count,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(' الحالة'),
+                  child: Text(' الحالة',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                 )
               ],
             ),
@@ -433,7 +446,9 @@ class _RecentTokenTransactionDatatable
                       children: [
                         Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text('معلومات حول الحزمة'),
+                          child: Text('معلومات حول الحزمة',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         )
                       ],
                     ),
@@ -448,7 +463,7 @@ class _RecentTokenTransactionDatatable
                               Text(transaction['message'].toString(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: FitnessAppTheme.nearlyDarkBlue))
+                                      color: FitnessAppTheme.nearlyDarkREd))
                             ],
                           ),
                         )
@@ -459,7 +474,9 @@ class _RecentTokenTransactionDatatable
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_status),
+                        Text(S.of(context).transaction_status,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -479,10 +496,15 @@ class _RecentTokenTransactionDatatable
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('الحزمة : '),
+                        Text(
+                          'الحزمة : ',
+                          style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          ),
+                        ),
                         Text(
                           Common.formatNumber(transaction['total_tokens']),
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                         )
                       ],
                     ),
@@ -493,9 +515,11 @@ class _RecentTokenTransactionDatatable
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('الكمية : '),
+                        Text('الكمية : ',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         Text(Common.formatNumber(transaction['total_quantity']),
-                            style: TextStyle(fontWeight: FontWeight.bold))
+                            style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
                       ],
                     ),
                   ),
@@ -506,13 +530,15 @@ class _RecentTokenTransactionDatatable
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('الكمية التي تم قبولها : '),
+                              Text('الكمية التي تم قبولها : ',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                               Text(
                                   Common.formatNumber(
                                       transaction['accepted_token'] == null
                                           ? 0
                                           : transaction['accepted_token']),
-                                  style: TextStyle(fontWeight: FontWeight.bold))
+                                  style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
                             ],
                           ),
                         )
@@ -524,13 +550,16 @@ class _RecentTokenTransactionDatatable
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('الكمية التي تم رفضها : '),
+                              Text('الكمية التي تم رفضها : ',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                               Text(
                                   Common.formatNumber(
                                       transaction['rest_token']),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.red))
+                                      color: Colors.red,
+                                      ))
                             ],
                           ),
                         )
@@ -541,11 +570,13 @@ class _RecentTokenTransactionDatatable
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_date),
+                        Text(S.of(context).transaction_date,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: FitnessAppTheme.nearlyDarkBlue))
+                                color: FitnessAppTheme.nearlyDarkREd))
                       ],
                     ),
                   ),
@@ -557,7 +588,8 @@ class _RecentTokenTransactionDatatable
   getTextToCopy(transaction) {
     String status = 'الحالة : ' + transactionText(transaction);
     String quantity = 'الحزم : ' + Common.formatNumber(transaction['count']);
-    String account_id = S.of(context).transaction_player_id + transaction['account_id'];
+    String account_id =
+        S.of(context).transaction_player_id + transaction['account_id'];
     String day = S.of(context).transaction_date + transaction['tdate'];
 
     return '$status $quantity $account_id $day';
@@ -607,10 +639,10 @@ class _RecentTokenTransactionDatatable
                                 },
                                 child: Icon(
                                   Icons.copy,
-                                  size:30,
+                                  size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkBlue,
+                                      : FitnessAppTheme.nearlyDarkREd,
                                 ),
                               ),
                             ),
@@ -625,6 +657,9 @@ class _RecentTokenTransactionDatatable
                             Padding(
                               padding: EdgeInsets.only(bottom: 10),
                               child: Text(
+                                  style: TextStyle(
+                                    color: FitnessAppTheme.lightText,
+                                  ),
                                   S.of(context).bottom_sheet_transaction_token),
                             )
                           ],
@@ -636,7 +671,12 @@ class _RecentTokenTransactionDatatable
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_status),
+                            Text(
+                              S.of(context).transaction_status,
+                              style: TextStyle(
+                                color: FitnessAppTheme.lightText,
+                              ),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -656,10 +696,16 @@ class _RecentTokenTransactionDatatable
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('الحزم : '),
+                            Text(
+                                style: TextStyle(
+                                  color: FitnessAppTheme.lightText,
+                                ),
+                                'الحزم : '),
                             Text(
                               Common.formatNumber(transaction['count']),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: FitnessAppTheme.lightText),
                             )
                           ],
                         ),
@@ -682,9 +728,15 @@ class _RecentTokenTransactionDatatable
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_player_id),
+                            Text(
+                              S.of(context).transaction_player_id,
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText),
+                            ),
                             Text(transaction['account_id'].toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold))
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.lightText))
                           ],
                         ),
                       ),
@@ -694,11 +746,15 @@ class _RecentTokenTransactionDatatable
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_date),
+                            Text(
+                              S.of(context).transaction_date,
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText),
+                            ),
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: FitnessAppTheme.nearlyDarkBlue))
+                                    color: FitnessAppTheme.nearlyDarkREd))
                           ],
                         ),
                       ),
@@ -711,7 +767,7 @@ class _RecentTokenTransactionDatatable
                                       top: 20, right: 30, left: 30),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: FitnessAppTheme.nearlyDarkBlue),
+                                        color: FitnessAppTheme.nearlyDarkREd),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -736,7 +792,7 @@ class _RecentTokenTransactionDatatable
                                                                   FontWeight
                                                                       .bold,
                                                               color: FitnessAppTheme
-                                                                  .nearlyDarkBlue)),
+                                                                  .nearlyDarkREd)),
                                                     )
                                                   ],
                                                 ),
@@ -752,7 +808,13 @@ class _RecentTokenTransactionDatatable
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text('اسم اللاعب : '),
+                                                    Text(
+                                                      'اسم اللاعب : ',
+                                                      style: TextStyle(
+                                                        color: FitnessAppTheme
+                                                            .lightText,
+                                                      ),
+                                                    ),
                                                     Text(
                                                         transaction[
                                                             'player_name'],
@@ -760,7 +822,7 @@ class _RecentTokenTransactionDatatable
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: FitnessAppTheme
-                                                                .nearlyDarkBlue))
+                                                                .nearlyDarkREd))
                                                   ],
                                                 ),
                                               )
@@ -798,7 +860,7 @@ class _RecentTokenTransactionDatatable
                                         //           style: TextStyle(
                                         //               fontWeight: FontWeight.bold,
                                         //               color: FitnessAppTheme
-                                        //                   .nearlyDarkBlue))
+                                        //                   .nearlyDarkREd))
                                         //     ],
                                         //   ),
                                         // ),
@@ -845,17 +907,17 @@ class _RecentTokenTransactionDatatable
         animation: widget.mainScreenAnimationController!,
         builder: (BuildContext context, Widget? child) {
           return AdaptiveScrollbar(
-            underColor: FitnessAppTheme.nearlyDarkBlue.withOpacity(0.3),
-            sliderDefaultColor: FitnessAppTheme.nearlyDarkBlue.withOpacity(0.7),
-            sliderActiveColor: FitnessAppTheme.nearlyDarkBlue,
+            underColor: FitnessAppTheme.nearlyDarkREd.withOpacity(0.3),
+            sliderDefaultColor: FitnessAppTheme.nearlyDarkREd.withOpacity(0.7),
+            sliderActiveColor: FitnessAppTheme.nearlyDarkREd,
             controller: _verticalScrollController,
             child: AdaptiveScrollbar(
                 controller: _horizontalScrollController,
                 position: ScrollbarPosition.bottom,
-                underColor: FitnessAppTheme.nearlyDarkBlue.withOpacity(0.3),
+                underColor: FitnessAppTheme.nearlyDarkREd.withOpacity(0.3),
                 sliderDefaultColor:
-                    FitnessAppTheme.nearlyDarkBlue.withOpacity(0.7),
-                sliderActiveColor: FitnessAppTheme.nearlyDarkBlue,
+                    FitnessAppTheme.nearlyDarkREd.withOpacity(0.7),
+                sliderActiveColor: FitnessAppTheme.nearlyDarkREd,
                 child: Container(
                     margin: EdgeInsets.only(top: 10),
                     child: SingleChildScrollView(
@@ -875,7 +937,7 @@ class _RecentTokenTransactionDatatable
                                             fontSize: 20,
                                             fontWeight: FontWeight.w800,
                                             color:
-                                                FitnessAppTheme.nearlyDarkBlue),
+                                                FitnessAppTheme.nearlyDarkREd),
                                       ))),
                               rows: List<DataRow>.generate(
                                 transactions.length,
@@ -891,7 +953,7 @@ class _RecentTokenTransactionDatatable
                                                 .toString(),
                                         style: TextStyle(
                                             color:
-                                                FitnessAppTheme.nearlyDarkBlue,
+                                                FitnessAppTheme.nearlyDarkREd,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       onTap: () {
@@ -922,7 +984,8 @@ class _RecentTokenTransactionDatatable
                                         Common.formatNumber(
                                             transactions[counter]['count']),
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            color: FitnessAppTheme.lightText),
                                       ),
                                       onTap: () {
                                         bottomSheetBuilder(
@@ -934,15 +997,22 @@ class _RecentTokenTransactionDatatable
                                           Common.formatNumber(
                                               transactions[counter]['cost']),
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  FitnessAppTheme.lightText)),
                                       onTap: () {
                                         bottomSheetBuilder(
                                             transactions[counter]);
                                       },
                                     ),
                                     DataCell(
-                                        Text(transactions[counter]['account_id']
-                                            .toString()), onTap: () {
+                                        Text(
+                                          transactions[counter]['account_id']
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: FitnessAppTheme.lightText,
+                                          ),
+                                        ), onTap: () {
                                       bottomSheetBuilder(transactions[counter]);
                                     }),
                                     DataCell(
@@ -952,7 +1022,7 @@ class _RecentTokenTransactionDatatable
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: FitnessAppTheme
-                                                  .nearlyDarkBlue)),
+                                                  .nearlyDarkREd)),
                                       onTap: () {
                                         bottomSheetBuilder(
                                             transactions[counter]);

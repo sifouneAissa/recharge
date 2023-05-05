@@ -48,7 +48,7 @@ class _Info2CardView extends State<Info2CardView> {
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.white,
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue),
+                  border: Border.all(color: FitnessAppTheme.nearlyDarkREd),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -97,13 +97,13 @@ class _Info2CardView extends State<Info2CardView> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white,
-                                          border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                                          border: Border.all(color: FitnessAppTheme.nearlyDarkREd)
                                         ),
                                       child:  Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Icon(
                                         IconData(0xe481, fontFamily: 'MaterialIcons'),
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         size: 40.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
@@ -139,14 +139,14 @@ class _Info2CardView extends State<Info2CardView> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white,
-                                          border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                                          border: Border.all(color: FitnessAppTheme.nearlyDarkREd)
                                     
                                         ),
                                       child:  Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Icon(
                                         Icons.query_stats_outlined,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         size: 40.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),
@@ -181,14 +181,14 @@ class _Info2CardView extends State<Info2CardView> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white,
-                                          border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                                          border: Border.all(color: FitnessAppTheme.nearlyDarkREd)
                                     
                                         ),
                                       child:  Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Icon(
                                         Icons.notifications_outlined,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         size: 40.0,
                                         semanticLabel: 'Text to announce in accessibility modes',
                                       ),

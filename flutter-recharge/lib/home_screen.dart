@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
+    var brightness = Theme.of(context).brightness;
     bool isLightMode = brightness == Brightness.light;
     return Scaffold(
       backgroundColor:
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   Widget appBar() {
-    var brightness = MediaQuery.of(context).platformBrightness;
+    var brightness = Theme.of(context).brightness;
     bool isLightMode = brightness == Brightness.light;
     return SizedBox(
       height: AppBar().preferredSize.height,
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               child: Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Recharge Jawaker',
+                  'Afandena Cards',
                   style: TextStyle(
                     fontSize: 22,
                     color: isLightMode ? AppTheme.darkText : AppTheme.white,

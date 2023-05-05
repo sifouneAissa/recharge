@@ -96,7 +96,7 @@ class _AddTokenForm extends State<AddTokenForm> {
         margin: EdgeInsets.only(top: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Colors.grey.withOpacity(0.3),
+          color: Colors.grey.withOpacity(0.08),
           // border: Border.all(color: Colors.black)
         ),
         child: Padding(
@@ -111,13 +111,18 @@ class _AddTokenForm extends State<AddTokenForm> {
                 child: Text(
                   Common.formatNumber(element.packageData['count']),
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: FitnessAppTheme.nearlyDarkREd,
+                  ),
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 margin: EdgeInsets.only(right: 80),
                 child: Text(Common.formatNumber(int.parse(element.value)),
-                    overflow: TextOverflow.ellipsis),
+                    overflow: TextOverflow.ellipsis, style: TextStyle(
+                    color: FitnessAppTheme.nearlyDarkREd,
+                  ),),
               ),
               // Container(
               //   width: MediaQuery.of(context).size.width * 0.2,
@@ -182,10 +187,10 @@ class _AddTokenForm extends State<AddTokenForm> {
 
                 TextSpan(
                     text: data.length.toString() + '-',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: 'الحزم التي تم اختيارها',
-                    style: TextStyle(fontWeight: FontWeight.bold))
+                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -206,11 +211,15 @@ class _AddTokenForm extends State<AddTokenForm> {
               children: [
                 Container(
                   margin: EdgeInsets.only(left: 40),
-                  child: Text('الحزمة'),
+                  child: Text('الحزمة', style: TextStyle(
+                    color: FitnessAppTheme.lightText,
+                  ),),
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 80),
-                  child: Text(' الكمية'),
+                  child: Text(' الكمية', style: TextStyle(
+                    color: FitnessAppTheme.lightText,
+                  ),),
                 ),
                 // Container(
                 //   margin: EdgeInsets.only(right: 80),
@@ -300,7 +309,7 @@ class _AddTokenForm extends State<AddTokenForm> {
           decoration: BoxDecoration(
               color: index == position
                   ? Colors.amber
-                  : FitnessAppTheme.nearlyDarkBlue,
+                  : FitnessAppTheme.nearlyDarkREd,
               shape: BoxShape.circle),
         );
       }),
@@ -365,7 +374,9 @@ class _AddTokenForm extends State<AddTokenForm> {
               Container(
                 child: data.isNotEmpty
                     ? _getPackages()
-                    : Text('ادخل الكمية من كل حزمة'),
+                    : Text('ادخل الكمية من كل حزمة',style: TextStyle(
+                      color: FitnessAppTheme.lightText
+                    ),),
               )
             ],
           ),
@@ -392,7 +403,7 @@ class _AddTokenForm extends State<AddTokenForm> {
           //     hintStyle: TextStyle(color : Colors.black),
           //     prefixIcon: Padding(
           //       padding: const EdgeInsets.all(defaultPadding),
-          //       child: Icon(Icons.numbers,color: FitnessAppTheme.nearlyDarkBlue,),
+          //       child: Icon(Icons.numbers,color: FitnessAppTheme.nearlyDarkREd,),
           //     ),
           //   ),
           // ),
@@ -413,7 +424,7 @@ class _AddTokenForm extends State<AddTokenForm> {
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(
                     Icons.person_2,
-                    color: FitnessAppTheme.nearlyDarkBlue,
+                    color: FitnessAppTheme.nearlyDarkREd,
                   ),
                 ),
               ),
@@ -425,7 +436,7 @@ class _AddTokenForm extends State<AddTokenForm> {
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkBlue),
+                    MaterialStateProperty.all(FitnessAppTheme.nearlyDarkREd),
               ),
               onPressed: data.isEmpty || !_hasCash || _isLoading ? null : handleAddToken,
               child: Text(
@@ -437,15 +448,15 @@ class _AddTokenForm extends State<AddTokenForm> {
           const SizedBox(height: defaultPadding),
           RichText(
             text: TextSpan(children: [
+              TextSpan(
+                  text: ' اخر العمليات ',
+                  style: TextStyle(color: FitnessAppTheme.lightText)),
               WidgetSpan(
                   child: Icon(
                 Icons.history,
                 size: 14,
-              )),
-              TextSpan(
-                  text: ' اخر العمليات ',
-                  style: TextStyle(color: Colors.black)),
-              
+                color: FitnessAppTheme.lightText,
+              ))
             ]),
           ),
           RecentTokensListView(

@@ -220,11 +220,11 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.background,
+      color: FitnessAppTheme.nearlyBlack,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(
-          color: FitnessAppTheme.nearlyDarkBlue,
+          color: FitnessAppTheme.nearlyDarkREd,
           onRefresh: getData,
           child: Stack(
           children: <Widget>[
@@ -280,7 +280,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(topBarOpacity),
+                    color: FitnessAppTheme.nearlyBlack.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),
@@ -317,7 +317,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22 + 6 - 6 * topBarOpacity,
                                     letterSpacing: -0.5,
-                                    color: FitnessAppTheme.nearlyDarkBlue,
+                                    color: FitnessAppTheme.nearlyDarkREd,
                                   ),
                                 ),
                               ),

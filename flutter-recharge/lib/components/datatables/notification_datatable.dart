@@ -95,7 +95,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
               decoration: BoxDecoration(
                 
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                  border: Border.all(color: FitnessAppTheme.nearlyDarkREd)
                   ),
               child: Row(
                 children: [
@@ -106,7 +106,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
                           decoration: BoxDecoration(
 
                           borderRadius: BorderRadius.all(Radius.circular(60)),
-                          border: Border.all(color: FitnessAppTheme.nearlyDarkBlue)
+                          border: Border.all(color: FitnessAppTheme.nearlyDarkREd)
                           ),
                           // color: FitnessAppTheme.nearlyDarkBlue, // Button color
                           // shadowColor: FitnessAppTheme.nearlyDarkBlue,

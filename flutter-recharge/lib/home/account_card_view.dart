@@ -81,7 +81,7 @@ class _AccountCardView extends State<AccountCardView> {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.white,
+                  color: FitnessAppTheme.nearlyBlack,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -89,7 +89,7 @@ class _AccountCardView extends State<AccountCardView> {
                       topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.2),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.7),
                         offset: Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -118,7 +118,7 @@ class _AccountCardView extends State<AccountCardView> {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                   letterSpacing: 0,
-                                  color: FitnessAppTheme.darkText),
+                                  color: FitnessAppTheme.lightText),
                             ),
                               _loading ? Container(
                                 margin: EdgeInsets.only(right: 3),
@@ -151,7 +151,7 @@ class _AccountCardView extends State<AccountCardView> {
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 32,
-                                          color: Color.fromARGB(255, 4, 4, 5),
+                                          color: FitnessAppTheme.nearlyDarkREd,
                                         ),
                                       )
                                       ),
@@ -170,7 +170,7 @@ class _AccountCardView extends State<AccountCardView> {
                                   //       fontWeight: FontWeight.w500,
                                   //       fontSize: 18,
                                   //       letterSpacing: -0.2,
-                                  //       color: FitnessAppTheme.nearlyDarkBlue,
+                                  //       color: FitnessAppTheme.nearlyDarkREd,
                                   //     ),
                                   //   ),
                                   // ),
@@ -219,7 +219,7 @@ class _AccountCardView extends State<AccountCardView> {
                               //           fontWeight: FontWeight.w500,
                               //           fontSize: 12,
                               //           letterSpacing: 0.0,
-                              //           color: FitnessAppTheme.nearlyDarkBlue,
+                              //           color: FitnessAppTheme.nearlyDarkREd,
                               //         ),
                               //       ),
                               //     ),
@@ -236,7 +236,7 @@ class _AccountCardView extends State<AccountCardView> {
                       child: Container(
                         height: 2,
                         decoration: BoxDecoration(
-                          color: FitnessAppTheme.background,
+                          color: FitnessAppTheme.nearlyGrey,
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                         ),
                       ),
@@ -261,14 +261,14 @@ class _AccountCardView extends State<AccountCardView> {
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                     letterSpacing: -0.2,
-                                    color: FitnessAppTheme.darkText,
+                                    color: FitnessAppTheme.lightText,
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 6),
                                   child: Icon(
                                     Icons.info_rounded,
-                                    color: FitnessAppTheme.nearlyDarkBlue,
+                                    color: FitnessAppTheme.nearlyDarkREd,
                                     size: 20.0,
                                     semanticLabel:
                                         'Text to announce in accessibility modes',
@@ -296,14 +296,14 @@ class _AccountCardView extends State<AccountCardView> {
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,
                                         letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
+                                        color: FitnessAppTheme.lightText,
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Icon(
                                         Icons.notifications_active,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         size: 20.0,
                                         semanticLabel:
                                             'Text to announce in accessibility modes',
@@ -330,14 +330,14 @@ class _AccountCardView extends State<AccountCardView> {
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,
                                         letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
+                                        color: FitnessAppTheme.lightText,
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Icon(
                                         Icons.money_sharp,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: FitnessAppTheme.nearlyDarkREd,
                                         size: 20.0,
                                         semanticLabel:
                                             'Text to announce in accessibility modes',
