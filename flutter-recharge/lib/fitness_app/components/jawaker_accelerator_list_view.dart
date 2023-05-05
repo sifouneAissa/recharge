@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator/add_jawaker_accelerator_form.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/models/jawaker_list_data.dart';
@@ -54,7 +55,6 @@ class _JawakerAcceleratorListViewState extends State<JawakerAcceleratorListView>
       setState(() {
         var data = AuthApi().getData(body);
         packages = data['packages'];
-        print(packages);
       });
 
       await GetData().updatePointPackages(packages);
@@ -212,7 +212,7 @@ class _JawakerView extends State<JawakerView> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            top: 54, left: 16, right: 16, bottom: 8),
+                            top: 10, left: 16, right: 16, bottom: 8),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,28 +228,28 @@ class _JawakerView extends State<JawakerView> {
                                 color: FitnessAppTheme.white,
                               ),
                             ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 8, bottom: 8),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      widget.mealsListData!.meals!.join('\n'),
-                                      style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10,
-                                        letterSpacing: 0,
-                                        color: FitnessAppTheme.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Expanded(
+                            //   child: Padding(
+                            //     padding:
+                            //         const EdgeInsets.only(top: 8, bottom: 8),
+                            //     child: Row(
+                            //       mainAxisAlignment: MainAxisAlignment.start,
+                            //       crossAxisAlignment: CrossAxisAlignment.start,
+                            //       children: <Widget>[
+                            //         Text(
+                            //           widget.mealsListData!.meals!.join('\n'),
+                            //           style: TextStyle(
+                            //             fontFamily: FitnessAppTheme.fontName,
+                            //             fontWeight: FontWeight.w500,
+                            //             fontSize: 10,
+                            //             letterSpacing: 0,
+                            //             color: FitnessAppTheme.white,
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                             widget.mealsListData?.kacl != 0
                                 ? Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -261,7 +261,7 @@ class _JawakerView extends State<JawakerView> {
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w500,
-                                          fontSize:  20 ,
+                                          fontSize:  15 ,
                                           letterSpacing: 0,
                                           color: FitnessAppTheme.white,
                                         ),
@@ -305,7 +305,23 @@ class _JawakerView extends State<JawakerView> {
                                       ),
                                     ),
                                   ),
-                            widget.callback != null 
+                                  Padding(padding: EdgeInsets.all(10),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        Common.formatNumber(widget.package['cost']),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize:  20 ,
+                                          letterSpacing: 0,
+                                          color: FitnessAppTheme.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                               widget.callback != null 
                                 ? 
                                 Container(
                                     margin: EdgeInsets.only(top: 20),
