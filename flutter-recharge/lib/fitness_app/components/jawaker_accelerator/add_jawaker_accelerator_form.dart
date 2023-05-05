@@ -491,12 +491,12 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             validator: (value) =>
                 value!.isEmpty || (value.isEmpty) ? 'اسم خاطئ' : null,
             controller: name,
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (quantity) {},
             decoration: InputDecoration(
-              hintText: 'اسم اللاعب ',
+              hintText: 'معرف اللاعب ',
               hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),

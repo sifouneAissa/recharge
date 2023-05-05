@@ -53,7 +53,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     'الحالة',
     S().count,
     S().cost_d,
-    'اسم اللاعب',
+    // 'اسم اللاعب',
     'معرف اللاعب',
     S().transaction_type,
     S().date
@@ -110,11 +110,13 @@ class _TransactionDatatable extends State<TransactionDatatable>
     search.addListener(() {
       if (search.value.text.isNotEmpty) {
         var t = transactions
-            .where((element) =>
-                element['account_id'].toString().contains(search.value.text) ||
+            .where((element) {
+              bool isP = element['type'] == 'point';
+              return !isP ? element['account_id'].toString().contains(search.value.text) :
                 element['name_of_player']
                     .toString()
-                    .contains(search.value.text))
+                    .contains(search.value.text);
+            },)
             .toList();
 
         setState(() {
@@ -242,9 +244,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       children: [
                         Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text('معلومات حول الحزمة',style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                          child: Text('معلومات حول الحزمة',
+                              style: TextStyle(
+                                color: FitnessAppTheme.lightText,
+                              )),
                         )
                       ],
                     ),
@@ -270,9 +273,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_status,style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                        Text(S.of(context).transaction_status,
+                            style: TextStyle(
+                              color: FitnessAppTheme.lightText,
+                            )),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -300,7 +304,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                         ),
                         Text(
                           Common.formatNumber(transaction['total_tokens']),
-                          style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: FitnessAppTheme.lightText),
                         )
                       ],
                     ),
@@ -311,11 +317,14 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('الكمية : ',style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                        Text('الكمية : ',
+                            style: TextStyle(
+                              color: FitnessAppTheme.lightText,
+                            )),
                         Text(Common.formatNumber(transaction['total_quantity']),
-                            style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: FitnessAppTheme.lightText))
                       ],
                     ),
                   ),
@@ -326,15 +335,18 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('الكمية التي تم قبولها : ',style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                              Text('الكمية التي تم قبولها : ',
+                                  style: TextStyle(
+                                    color: FitnessAppTheme.lightText,
+                                  )),
                               Text(
                                   Common.formatNumber(
                                       transaction['accepted_token'] == null
                                           ? 0
                                           : transaction['accepted_token']),
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: FitnessAppTheme.lightText))
                             ],
                           ),
                         )
@@ -346,16 +358,17 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('الكمية التي تم رفضها : ',style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                              Text('الكمية التي تم رفضها : ',
+                                  style: TextStyle(
+                                    color: FitnessAppTheme.lightText,
+                                  )),
                               Text(
                                   Common.formatNumber(
                                       transaction['rest_token']),
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red,
-                                      ))
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red,
+                                  ))
                             ],
                           ),
                         )
@@ -366,9 +379,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_date,style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                        Text(S.of(context).transaction_date,
+                            style: TextStyle(
+                              color: FitnessAppTheme.lightText,
+                            )),
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -379,10 +393,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
                 ])),
           );
         });
- }
+  }
 
   showSubSheetBuilderPoint(transaction, ptransaction) {
-   showModalBottomSheet(
+    showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -436,9 +450,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_status,style: TextStyle(
-                              color: FitnessAppTheme.lightText
-                            )),
+                        Text(S.of(context).transaction_status,
+                            style: TextStyle(color: FitnessAppTheme.lightText)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -458,14 +471,15 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('المسرع : ',style: TextStyle(
-                              color: FitnessAppTheme.lightText
-                            )),
+                        Text('المسرع : ',
+                            style: TextStyle(color: FitnessAppTheme.lightText)),
                         Text(
                           ptransaction['package_name'] != null
                               ? ptransaction['package_name']
                               : '',
-                          style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: FitnessAppTheme.lightText),
                         )
                       ],
                     ),
@@ -476,11 +490,12 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('الكمية : ',style: TextStyle(
-                              color: FitnessAppTheme.lightText
-                            )),
+                        Text('الكمية : ',
+                            style: TextStyle(color: FitnessAppTheme.lightText)),
                         Text(Common.formatNumber(transaction['total_quantity']),
-                            style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: FitnessAppTheme.lightText))
                       ],
                     ),
                   ),
@@ -497,7 +512,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                       transaction['accepted_point'] == null
                                           ? 0
                                           : transaction['accepted_point']),
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: FitnessAppTheme.lightText))
                             ],
                           ),
                         )
@@ -526,9 +543,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_date,style: TextStyle(
-                              color: FitnessAppTheme.lightText
-                            )),
+                        Text(S.of(context).transaction_date,
+                            style: TextStyle(color: FitnessAppTheme.lightText)),
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -539,12 +555,12 @@ class _TransactionDatatable extends State<TransactionDatatable>
                 ])),
           );
         });
-   }
+  }
 
   _getItemsList(transaction) {
     var tokensPackages = transaction['token_packages'];
 
-   return List.generate(tokensPackages.length, (index) {
+    return List.generate(tokensPackages.length, (index) {
       PackageTokenData element = PackageTokenData(
           value: tokensPackages[index]['count'] is String
               ? tokensPackages[index]['count']
@@ -576,22 +592,20 @@ class _TransactionDatatable extends State<TransactionDatatable>
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(
-                    Common.formatNumber(element.packageData['count']),
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                            color: FitnessAppTheme.nearlyDarkREd,
-                          )
-                  ),
+                  child: Text(Common.formatNumber(element.packageData['count']),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: FitnessAppTheme.nearlyDarkREd,
+                      )),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 20),
                   child: Text(Common.formatNumber(int.parse(element.value)),
                       overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                            color: FitnessAppTheme.nearlyDarkREd,
-                          )),
+                      style: TextStyle(
+                        color: FitnessAppTheme.nearlyDarkREd,
+                      )),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
@@ -629,7 +643,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
       return GestureDetector(
         onTap: () {
           if (tokensPackages[index]['point_operation'] != null)
-            showSubSheetBuilderPoint(tokensPackages[index]['point_operation'],tokensPackages[index]);
+            showSubSheetBuilderPoint(tokensPackages[index]['point_operation'],
+                tokensPackages[index]);
         },
         child: Container(
           margin: EdgeInsets.only(top: 2),
@@ -648,21 +663,18 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 0),
                   child: Text(
-                    element.packageData != null
-                        ? element.packageData['name']
-                        : '',
-                    overflow: TextOverflow.ellipsis,style: TextStyle(
-                              color: FitnessAppTheme.nearlyDarkREd
-                            )
-                  ),
+                      element.packageData != null
+                          ? element.packageData['name']
+                          : '',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: FitnessAppTheme.nearlyDarkREd)),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 20),
                   child: Text(Common.formatNumber(int.parse(element.value)),
-                      overflow: TextOverflow.ellipsis,style: TextStyle(
-                              color: FitnessAppTheme.nearlyDarkREd
-                            )),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: FitnessAppTheme.nearlyDarkREd)),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
@@ -681,9 +693,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
         ),
       );
     });
- }
+  }
 
-   _getPackages(transaction) {
+  _getPackages(transaction) {
     // var tokensPackages = transaction['token_packages'];
     // int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
     int _tokens = transaction['token_accepted'] != null
@@ -698,10 +710,15 @@ class _TransactionDatatable extends State<TransactionDatatable>
               margin: EdgeInsets.only(right: 5),
               child: Text.rich(TextSpan(children: [
                 TextSpan(
-                    text: '-', style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
+                    text: '-',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: S.of(context).transaction_package_selected,
-                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -722,27 +739,30 @@ class _TransactionDatatable extends State<TransactionDatatable>
               children: [
                 Container(
                   // margin: EdgeInsets.only(left: 60),
-                  child: Text(S.of(context).transaction_package,style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                  child: Text(S.of(context).transaction_package,
+                      style: TextStyle(
+                        color: FitnessAppTheme.lightText,
+                      )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(S.of(context).transaction_package_count,style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                  child: Text(S.of(context).transaction_package_count,
+                      style: TextStyle(
+                        color: FitnessAppTheme.lightText,
+                      )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(' الحالة',style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                  child: Text(' الحالة',
+                      style: TextStyle(
+                        color: FitnessAppTheme.lightText,
+                      )),
                 )
               ],
             ),
@@ -814,6 +834,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
       ],
     );
   }
+
   _getPackagesPoint(transaction) {
     // var tokensPackages = transaction['token_packages'];
     // int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
@@ -821,7 +842,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
         ? transaction['accepted_point']
         : 0;
 
-   return Column(
+    return Column(
       children: [
         Row(
           children: [
@@ -829,10 +850,15 @@ class _TransactionDatatable extends State<TransactionDatatable>
               margin: EdgeInsets.only(right: 5),
               child: Text.rich(TextSpan(children: [
                 TextSpan(
-                    text: '-', style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
+                    text: '-',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: S.of(context).transaction_package_selected,
-                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -853,27 +879,24 @@ class _TransactionDatatable extends State<TransactionDatatable>
               children: [
                 Container(
                   // margin: EdgeInsets.only(left: 60),
-                  child: Text(S.of(context).transaction_package,style: TextStyle(
-                              color: FitnessAppTheme.lightText
-                            )),
+                  child: Text(S.of(context).transaction_package,
+                      style: TextStyle(color: FitnessAppTheme.lightText)),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(S.of(context).transaction_package_count,style: TextStyle(
-                              color: FitnessAppTheme.lightText
-                            )),
+                  child: Text(S.of(context).transaction_package_count,
+                      style: TextStyle(color: FitnessAppTheme.lightText)),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(' الحالة',style: TextStyle(
-                              color: FitnessAppTheme.lightText
-                            )),
+                  child: Text(' الحالة',
+                      style: TextStyle(color: FitnessAppTheme.lightText)),
                 )
               ],
             ),
@@ -922,7 +945,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       fit: BoxFit.scaleDown,
                       child: Text(Common.formatNumber(_tokens),
                           style: TextStyle(
-                              fontSize: 20, color: FitnessAppTheme.nearlyWhite))),
+                              fontSize: 20,
+                              color: FitnessAppTheme.nearlyWhite))),
                 ),
               ),
               // Container(
@@ -941,7 +965,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
         )
       ],
     );
- }
+  }
 
   transactionSubStatus(transaction) {
     String text = '';
@@ -953,7 +977,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
       text = 'تم رفض الحزمة';
     else if (transaction['more']) text = transaction['status']['message'];
 
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText));
+    return Text(text,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: FitnessAppTheme.lightText));
   }
 
   subTransactionIcon(transaction) {
@@ -999,7 +1025,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     setState(() {
       _copied = false;
     });
-     showModalBottomSheet(
+    showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -1578,7 +1604,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [_getPackagesPoint(transaction)],
+                                      children: [
+                                        _getPackagesPoint(transaction)
+                                      ],
                                     ),
                                   )
                                 ],
@@ -1604,7 +1632,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
       text = 'تم رفض طلبك';
     else if (transaction['more']) text = transaction['status']['message'];
 
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText));
+    return Text(text,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: FitnessAppTheme.lightText));
   }
 
   transactionColors(transaction) {
@@ -1660,8 +1690,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
       setState(() {
         stransactions = t;
-        
-        final DateFormat formatter = DateFormat('yyyy-MM-dd','en');
+
+        final DateFormat formatter = DateFormat('yyyy-MM-dd', 'en');
         sDate = formatter.format(args.value.startDate).toString();
         eDate = formatter.format(args.value.endDate).toString();
       });
@@ -1671,12 +1701,25 @@ class _TransactionDatatable extends State<TransactionDatatable>
       });
   }
 
+  getAccount(transaction) {
+    bool isP = transaction['type'].toString() == 'point';
+    if (isP)
+      return transaction['name_of_player'] != null
+          ? transaction['name_of_player'].toString()
+          : '';
+    else
+      return transaction['account_id'] != null
+          ? transaction['account_id'].toString()
+          : '';
+  }
+
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       DropdownMenuItem(
-        child: Text("اختر نوع",style: TextStyle(
-          color: FitnessAppTheme.lightText
-        ),),
+        child: Text(
+          "اختر نوع",
+          style: TextStyle(color: FitnessAppTheme.lightText),
+        ),
         value: "none",
         onTap: () {
           setState(() {
@@ -1685,9 +1728,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
         },
       ),
       DropdownMenuItem(
-        child: Text("توكنز",style: TextStyle(
-          color: FitnessAppTheme.lightText
-        )),
+        child:
+            Text("توكنز", style: TextStyle(color: FitnessAppTheme.lightText)),
         value: "token",
         onTap: () {
           var t = transactions.where(
@@ -1702,9 +1744,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
         },
       ),
       DropdownMenuItem(
-        child: Text("مسرعات",style: TextStyle(
-          color: FitnessAppTheme.lightText
-        )),
+        child:
+            Text("مسرعات", style: TextStyle(color: FitnessAppTheme.lightText)),
         value: "point",
         onTap: () {
           var t = transactions.where(
@@ -1722,41 +1763,37 @@ class _TransactionDatatable extends State<TransactionDatatable>
     return menuItems;
   }
 
-  
+  _launchURL() async {
+    var auth = await GetData().getAuth();
 
-_launchURL() async {
-  
-  var auth = await GetData().getAuth();
+    String b_url =
+        AuthApi().getUrl('transactions/pdf/download/' + auth['id'].toString()) +
+            '?';
 
-  String b_url = AuthApi().getUrl('transactions/pdf/download/'+auth['id'].toString()) + '?';
-  
-  if(ttransaction!=null){
-    b_url = b_url + '&type=' + ttransaction.toString();
-  } 
-  if(sDate != null && eDate != null){
-    b_url = b_url + '&end=' + eDate.toString();
-    b_url = b_url + '&start=' + sDate.toString();
+    if (ttransaction != null) {
+      b_url = b_url + '&type=' + ttransaction.toString();
+    }
+    if (sDate != null && eDate != null) {
+      b_url = b_url + '&end=' + eDate.toString();
+      b_url = b_url + '&start=' + sDate.toString();
+    }
+
+    final uri = Uri.parse(b_url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      print('could not lunch url');
+    }
   }
 
-  final uri = Uri.parse(b_url);
-
-  if (await canLaunchUrl(uri)) {
-    await launchUrl(uri,mode: LaunchMode.externalApplication);
-  } else {
-    print('could not lunch url');
-  }
-}
-
-getSDates(){
-  if(sDate != null && eDate != null){
-      
-    return PickerDateRange(
-      DateTime.parse(sDate ?? ''),
-      DateTime.parse(eDate ?? '')
-    );
-   }
+  getSDates() {
+    if (sDate != null && eDate != null) {
+      return PickerDateRange(
+          DateTime.parse(sDate ?? ''), DateTime.parse(eDate ?? ''));
+    }
     return null;
-}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1774,9 +1811,8 @@ getSDates(){
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: EdgeInsets.all(10),
-                  child: Text('اليوم : ' + todayt.toString(),style: TextStyle(
-          color: FitnessAppTheme.lightText
-        )),
+                  child: Text('اليوم : ' + todayt.toString(),
+                      style: TextStyle(color: FitnessAppTheme.lightText)),
                 ),
               ),
               Row(
@@ -1784,9 +1820,9 @@ getSDates(){
                 children: <Widget>[
                   GestureDetector(
                     child: Text('بحث حسب التاريخ :',
-                    style: TextStyle(
-                            color: FitnessAppTheme.lightText,
-                          )),
+                        style: TextStyle(
+                          color: FitnessAppTheme.lightText,
+                        )),
                     onTap: () {
                       setState(() {
                         _showD = !_showD;
@@ -1794,7 +1830,6 @@ getSDates(){
                     },
                   ),
                   IconButton(
-
                     icon: const Icon(Icons.date_range),
                     tooltip: 'بحث حسب التاريخ',
                     color: _showD ? Colors.green : FitnessAppTheme.lightText,
@@ -1851,9 +1886,14 @@ getSDates(){
                       ),
                     ),
                   )),
-                  IconButton(onPressed: () {
-                    _launchURL();
-                  }, icon: Icon(Icons.download,color: FitnessAppTheme.nearlyDarkREd,))
+                  IconButton(
+                      onPressed: () {
+                        _launchURL();
+                      },
+                      icon: Icon(
+                        Icons.download,
+                        color: FitnessAppTheme.nearlyDarkREd,
+                      ))
                 ],
               ),
               SingleChildScrollView(
@@ -1919,8 +1959,9 @@ getSDates(){
                                   Text(
                                     Common.formatNumber(
                                         stransactions[counter]['count']),
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: FitnessAppTheme.lightText),
                                   ),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
@@ -1936,7 +1977,8 @@ getSDates(){
                                       Common.formatNumber(
                                           stransactions[counter]['cost']),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
+                                          fontWeight: FontWeight.bold,
+                                          color: FitnessAppTheme.lightText)),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'
@@ -1947,16 +1989,10 @@ getSDates(){
                                   },
                                 ),
                                 DataCell(
-                                  Text(
-                                      stransactions[counter]
-                                                  ['name_of_player'] !=
-                                              null
-                                          ? stransactions[counter]
-                                                  ['name_of_player']
-                                              .toString()
-                                          : '',
+                                  Text(getAccount(stransactions[counter]),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
+                                          fontWeight: FontWeight.bold,
+                                          color: FitnessAppTheme.lightText)),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'
@@ -1966,24 +2002,24 @@ getSDates(){
                                             stransactions[counter]);
                                   },
                                 ),
-                                DataCell(
-                                  Text(
-                                      stransactions[counter]['account_id'] !=
-                                              null
-                                          ? stransactions[counter]['account_id']
-                                              .toString()
-                                          : '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
-                                ),
+                                // DataCell(
+                                //   Text(
+                                //       stransactions[counter]['account_id'] !=
+                                //               null
+                                //           ? stransactions[counter]['account_id']
+                                //               .toString()
+                                //           : '',
+                                //       style: TextStyle(
+                                //           fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
+                                //   onTap: () {
+                                //     stransactions[counter]['type'].toString() ==
+                                //             'token'
+                                //         ? bottomSheetBuilderToken(
+                                //             stransactions[counter])
+                                //         : bottomSheetBuilderPoint(
+                                //             stransactions[counter]);
+                                //   },
+                                // ),
                                 DataCell(
                                   stransactions[counter]['type'].toString() ==
                                           'token'

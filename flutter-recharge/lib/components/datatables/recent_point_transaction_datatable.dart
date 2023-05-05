@@ -46,7 +46,7 @@ class _RecentPointTransactionDatatable
     'الحالة',
     S().count,
     S().cost_d,
-    'اسم اللاعب',
+    'معرف اللاعب',
     S().date
   ];
 
@@ -347,7 +347,7 @@ class _RecentPointTransactionDatatable
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text('اسم اللاعب : ',
+                                                    Text('معرف اللاعب : ',
                                                         style: TextStyle(
                                                             color:
                                                                 FitnessAppTheme
