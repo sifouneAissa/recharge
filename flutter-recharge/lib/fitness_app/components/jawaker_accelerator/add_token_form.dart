@@ -419,7 +419,7 @@ class _AddTokenForm extends State<AddTokenForm> {
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: S.of(context).your_id,
-                hintStyle: TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Icon(

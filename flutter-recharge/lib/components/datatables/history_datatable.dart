@@ -114,8 +114,8 @@ class _HistoryDatatable extends State<HistoryDatatable> with TickerProviderState
               ))), rows: List<DataRow>.generate(transactions.length,(counter) => 
                   DataRow(cells: [
                     DataCell(Text('#' + transactions[counter]['id'].toString(),style: TextStyle(color: FitnessAppTheme.nearlyDarkREd,fontWeight: FontWeight.bold),)),
-                    DataCell(Text(transactions[counter]['count'].toString(),style: TextStyle(fontWeight: FontWeight.bold),)),
-                    DataCell(Text(transactions[counter]['cost'].toString(),style: TextStyle(fontWeight: FontWeight.bold))),
+                    DataCell(Text(transactions[counter]['count'].toString(),style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),)),
+                    DataCell(Text(transactions[counter]['cost'].toString(),style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))),
                     DataCell(Text(transactions[counter]['tdate'].toString(),style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.nearlyDarkREd)))
                   ]),
               ))));

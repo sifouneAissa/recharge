@@ -166,7 +166,7 @@ class _BottomBarViewState extends State<BottomBarView>
                         gradient: LinearGradient(
                             colors: [
                               FitnessAppTheme.nearlyDarkREd,
-                              HexColor('#6A88E5'),
+                              HexColor('#000000'),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight),
@@ -174,7 +174,7 @@ class _BottomBarViewState extends State<BottomBarView>
                         boxShadow: <BoxShadow>[
                           BoxShadow(
                               color: FitnessAppTheme.nearlyDarkREd
-                                  .withOpacity(0.4),
+                                  .withOpacity(0.2),
                               offset: const Offset(8.0, 16.0),
                               blurRadius: 16.0),
                         ],

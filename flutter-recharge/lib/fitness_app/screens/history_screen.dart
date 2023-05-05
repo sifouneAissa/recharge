@@ -220,7 +220,7 @@ class _HistoryScreenState extends State<HistoryScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.background,
+      color: FitnessAppTheme.nearlyBlack,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(
@@ -280,7 +280,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(topBarOpacity),
+                    color: FitnessAppTheme.nearlyBlack.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),

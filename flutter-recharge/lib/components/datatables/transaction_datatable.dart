@@ -242,7 +242,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       children: [
                         Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text('معلومات حول الحزمة'),
+                          child: Text('معلومات حول الحزمة',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         )
                       ],
                     ),
@@ -268,7 +270,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_status),
+                        Text(S.of(context).transaction_status,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -288,10 +292,15 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('الحزمة : '),
+                        Text(
+                          'الحزمة : ',
+                          style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          ),
+                        ),
                         Text(
                           Common.formatNumber(transaction['total_tokens']),
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                         )
                       ],
                     ),
@@ -302,9 +311,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('الكمية : '),
+                        Text('الكمية : ',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         Text(Common.formatNumber(transaction['total_quantity']),
-                            style: TextStyle(fontWeight: FontWeight.bold))
+                            style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
                       ],
                     ),
                   ),
@@ -315,13 +326,15 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('الكمية التي تم قبولها : '),
+                              Text('الكمية التي تم قبولها : ',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                               Text(
                                   Common.formatNumber(
                                       transaction['accepted_token'] == null
                                           ? 0
                                           : transaction['accepted_token']),
-                                  style: TextStyle(fontWeight: FontWeight.bold))
+                                  style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
                             ],
                           ),
                         )
@@ -333,13 +346,16 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('الكمية التي تم رفضها : '),
+                              Text('الكمية التي تم رفضها : ',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                               Text(
                                   Common.formatNumber(
                                       transaction['rest_token']),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.red))
+                                      color: Colors.red,
+                                      ))
                             ],
                           ),
                         )
@@ -350,7 +366,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_date),
+                        Text(S.of(context).transaction_date,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -361,10 +379,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
                 ])),
           );
         });
-  }
+ }
 
   showSubSheetBuilderPoint(transaction, ptransaction) {
-    showModalBottomSheet(
+   showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -389,7 +407,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       children: [
                         Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text('معلومات حول المسرع'),
+                          child: Text(
+                            'معلومات حول المسرع',
+                            style: TextStyle(color: FitnessAppTheme.lightText),
+                          ),
                         )
                       ],
                     ),
@@ -415,11 +436,13 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_status),
+                        Text(S.of(context).transaction_status,style: TextStyle(
+                              color: FitnessAppTheme.lightText
+                            )),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            transactionSubStatus(transaction),
+                            transactionSubStatusPoint(transaction),
                             SizedBox(
                               width: 10,
                             ),
@@ -435,12 +458,14 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('المسرع : '),
+                        Text('المسرع : ',style: TextStyle(
+                              color: FitnessAppTheme.lightText
+                            )),
                         Text(
                           ptransaction['package_name'] != null
                               ? ptransaction['package_name']
                               : '',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                         )
                       ],
                     ),
@@ -451,9 +476,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('الكمية : '),
+                        Text('الكمية : ',style: TextStyle(
+                              color: FitnessAppTheme.lightText
+                            )),
                         Text(Common.formatNumber(transaction['total_quantity']),
-                            style: TextStyle(fontWeight: FontWeight.bold))
+                            style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
                       ],
                     ),
                   ),
@@ -470,7 +497,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                       transaction['accepted_point'] == null
                                           ? 0
                                           : transaction['accepted_point']),
-                                  style: TextStyle(fontWeight: FontWeight.bold))
+                                  style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
                             ],
                           ),
                         )
@@ -499,7 +526,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(S.of(context).transaction_date),
+                        Text(S.of(context).transaction_date,style: TextStyle(
+                              color: FitnessAppTheme.lightText
+                            )),
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -510,12 +539,12 @@ class _TransactionDatatable extends State<TransactionDatatable>
                 ])),
           );
         });
-  }
+   }
 
   _getItemsList(transaction) {
     var tokensPackages = transaction['token_packages'];
 
-    return List.generate(tokensPackages.length, (index) {
+   return List.generate(tokensPackages.length, (index) {
       PackageTokenData element = PackageTokenData(
           value: tokensPackages[index]['count'] is String
               ? tokensPackages[index]['count']
@@ -535,7 +564,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
           margin: EdgeInsets.only(top: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withOpacity(0.08),
             // border: Border.all(color: Colors.black)
           ),
           child: Padding(
@@ -550,13 +579,19 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   child: Text(
                     Common.formatNumber(element.packageData['count']),
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                            color: FitnessAppTheme.nearlyDarkREd,
+                          )
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 20),
                   child: Text(Common.formatNumber(int.parse(element.value)),
-                      overflow: TextOverflow.ellipsis),
+                      overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                            color: FitnessAppTheme.nearlyDarkREd,
+                          )),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
@@ -594,14 +629,13 @@ class _TransactionDatatable extends State<TransactionDatatable>
       return GestureDetector(
         onTap: () {
           if (tokensPackages[index]['point_operation'] != null)
-            showSubSheetBuilderPoint(tokensPackages[index]['point_operation'],
-                tokensPackages[index]);
+            showSubSheetBuilderPoint(tokensPackages[index]['point_operation'],tokensPackages[index]);
         },
         child: Container(
           margin: EdgeInsets.only(top: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withOpacity(0.09),
             // border: Border.all(color: Colors.black)
           ),
           child: Padding(
@@ -617,14 +651,18 @@ class _TransactionDatatable extends State<TransactionDatatable>
                     element.packageData != null
                         ? element.packageData['name']
                         : '',
-                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.ellipsis,style: TextStyle(
+                              color: FitnessAppTheme.nearlyDarkREd
+                            )
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
                   margin: EdgeInsets.only(right: 20),
                   child: Text(Common.formatNumber(int.parse(element.value)),
-                      overflow: TextOverflow.ellipsis),
+                      overflow: TextOverflow.ellipsis,style: TextStyle(
+                              color: FitnessAppTheme.nearlyDarkREd
+                            )),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.2,
@@ -643,9 +681,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
         ),
       );
     });
-  }
+ }
 
-  _getPackages(transaction) {
+   _getPackages(transaction) {
     // var tokensPackages = transaction['token_packages'];
     // int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
     int _tokens = transaction['token_accepted'] != null
@@ -660,10 +698,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
               margin: EdgeInsets.only(right: 5),
               child: Text.rich(TextSpan(children: [
                 TextSpan(
-                    text: '-', style: TextStyle(fontWeight: FontWeight.bold)),
+                    text: '-', style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: S.of(context).transaction_package_selected,
-                    style: TextStyle(fontWeight: FontWeight.bold))
+                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -684,21 +722,27 @@ class _TransactionDatatable extends State<TransactionDatatable>
               children: [
                 Container(
                   // margin: EdgeInsets.only(left: 60),
-                  child: Text(S.of(context).transaction_package),
+                  child: Text(S.of(context).transaction_package,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(S.of(context).transaction_package_count),
+                  child: Text(S.of(context).transaction_package_count,style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(' الحالة'),
+                  child: Text(' الحالة',style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                 )
               ],
             ),
@@ -770,7 +814,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
       ],
     );
   }
-
   _getPackagesPoint(transaction) {
     // var tokensPackages = transaction['token_packages'];
     // int _tokens = getTokens(tokensPackages) - transaction['left_accepted'];
@@ -778,7 +821,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
         ? transaction['accepted_point']
         : 0;
 
-    return Column(
+   return Column(
       children: [
         Row(
           children: [
@@ -786,10 +829,10 @@ class _TransactionDatatable extends State<TransactionDatatable>
               margin: EdgeInsets.only(right: 5),
               child: Text.rich(TextSpan(children: [
                 TextSpan(
-                    text: '-', style: TextStyle(fontWeight: FontWeight.bold)),
+                    text: '-', style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: S.of(context).transaction_package_selected,
-                    style: TextStyle(fontWeight: FontWeight.bold))
+                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -810,21 +853,27 @@ class _TransactionDatatable extends State<TransactionDatatable>
               children: [
                 Container(
                   // margin: EdgeInsets.only(left: 60),
-                  child: Text(S.of(context).transaction_package),
+                  child: Text(S.of(context).transaction_package,style: TextStyle(
+                              color: FitnessAppTheme.lightText
+                            )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(S.of(context).transaction_package_count),
+                  child: Text(S.of(context).transaction_package_count,style: TextStyle(
+                              color: FitnessAppTheme.lightText
+                            )),
                 ),
                 Container(
                   width: 60,
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 0),
-                  child: Text(' الحالة'),
+                  child: Text(' الحالة',style: TextStyle(
+                              color: FitnessAppTheme.lightText
+                            )),
                 )
               ],
             ),
@@ -858,15 +907,13 @@ class _TransactionDatatable extends State<TransactionDatatable>
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: <HexColor>[
-                        HexColor('#2633C5'),
-                        HexColor('#2633C5'),
+                        HexColor('#CF2928'),
+                        HexColor('#CF2928'),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15))),
+                    borderRadius: BorderRadius.circular(15)),
 
                 child: Padding(
                   padding:
@@ -875,26 +922,26 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       fit: BoxFit.scaleDown,
                       child: Text(Common.formatNumber(_tokens),
                           style: TextStyle(
-                              fontSize: 20, color: Colors.amberAccent))),
+                              fontSize: 20, color: FitnessAppTheme.nearlyWhite))),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    // color: Colors.white
-                    ),
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text('القيمة : ' + Common.formatNumber(_tokens))),
-                ),
-              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       // color: Colors.white
+              //       ),
+              //   child: Padding(
+              //     padding: EdgeInsets.all(10),
+              //     child: FittedBox(
+              //         fit: BoxFit.scaleDown,
+              //         child: Text('القيمة : ' + Common.formatNumber(_tokens))),
+              //   ),
+              // ),
             ],
           ),
         )
       ],
     );
-  }
+ }
 
   transactionSubStatus(transaction) {
     String text = '';
@@ -906,7 +953,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
       text = 'تم رفض الحزمة';
     else if (transaction['more']) text = transaction['status']['message'];
 
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
+    return Text(text, style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText));
   }
 
   subTransactionIcon(transaction) {
@@ -952,7 +999,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     setState(() {
       _copied = false;
     });
-    showModalBottomSheet(
+     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -1009,6 +1056,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             Padding(
                               padding: EdgeInsets.only(bottom: 10),
                               child: Text(
+                                  style: TextStyle(
+                                    color: FitnessAppTheme.lightText,
+                                  ),
                                   S.of(context).bottom_sheet_transaction_token),
                             )
                           ],
@@ -1020,7 +1070,12 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_status),
+                            Text(
+                              S.of(context).transaction_status,
+                              style: TextStyle(
+                                color: FitnessAppTheme.lightText,
+                              ),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1040,10 +1095,16 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('الحزم : '),
+                            Text(
+                                style: TextStyle(
+                                  color: FitnessAppTheme.lightText,
+                                ),
+                                'الحزم : '),
                             Text(
                               Common.formatNumber(transaction['count']),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: FitnessAppTheme.lightText),
                             )
                           ],
                         ),
@@ -1066,9 +1127,15 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_player_id),
+                            Text(
+                              S.of(context).transaction_player_id,
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText),
+                            ),
                             Text(transaction['account_id'].toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold))
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.lightText))
                           ],
                         ),
                       ),
@@ -1078,7 +1145,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_date),
+                            Text(
+                              S.of(context).transaction_date,
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText),
+                            ),
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -1136,7 +1207,13 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text('اسم اللاعب : '),
+                                                    Text(
+                                                      'اسم اللاعب : ',
+                                                      style: TextStyle(
+                                                        color: FitnessAppTheme
+                                                            .lightText,
+                                                      ),
+                                                    ),
                                                     Text(
                                                         transaction[
                                                             'player_name'],
@@ -1284,7 +1361,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             Padding(
                               padding: EdgeInsets.only(bottom: 10),
                               child: Text(
-                                  S.of(context).bottom_sheet_transaction_token),
+                                  S.of(context).bottom_sheet_transaction_token,
+                                  style: TextStyle(
+                                      color: FitnessAppTheme.lightText)),
                             )
                           ],
                         ),
@@ -1295,7 +1374,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_status),
+                            Text(
+                              S.of(context).transaction_status,
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1315,10 +1398,14 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('القيمة : '),
+                            Text('القيمة : ',
+                                style: TextStyle(
+                                    color: FitnessAppTheme.lightText)),
                             Text(
                               Common.formatNumber(transaction['count']),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: FitnessAppTheme.lightText),
                             )
                           ],
                         ),
@@ -1341,9 +1428,13 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).player_name),
+                            Text(S.of(context).player_name,
+                                style: TextStyle(
+                                    color: FitnessAppTheme.lightText)),
                             Text(transaction['player_name'].toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold))
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.lightText))
                           ],
                         ),
                       ),
@@ -1353,7 +1444,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(S.of(context).transaction_date),
+                            Text(S.of(context).transaction_date,
+                                style: TextStyle(
+                                    color: FitnessAppTheme.lightText)),
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -1411,7 +1504,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text('اسم اللاعب : '),
+                                                    Text('اسم اللاعب : ',
+                                                        style: TextStyle(
+                                                            color:
+                                                                FitnessAppTheme
+                                                                    .lightText)),
                                                     Text(
                                                         transaction[
                                                             'player_name'],
@@ -1457,7 +1554,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                         //           style: TextStyle(
                                         //               fontWeight: FontWeight.bold,
                                         //               color: FitnessAppTheme
-                                        //                   .nearlyDarkREd))
+                                        //                   .nearlyDarkBlue))
                                         //     ],
                                         //   ),
                                         // ),
@@ -1481,9 +1578,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [
-                                        _getPackagesPoint(transaction)
-                                      ],
+                                      children: [_getPackagesPoint(transaction)],
                                     ),
                                   )
                                 ],
@@ -1509,7 +1604,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
       text = 'تم رفض طلبك';
     else if (transaction['more']) text = transaction['status']['message'];
 
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
+    return Text(text, style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText));
   }
 
   transactionColors(transaction) {
@@ -1579,7 +1674,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       DropdownMenuItem(
-        child: Text("اختر نوع"),
+        child: Text("اختر نوع",style: TextStyle(
+          color: FitnessAppTheme.lightText
+        ),),
         value: "none",
         onTap: () {
           setState(() {
@@ -1588,7 +1685,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
         },
       ),
       DropdownMenuItem(
-        child: Text("توكنز"),
+        child: Text("توكنز",style: TextStyle(
+          color: FitnessAppTheme.lightText
+        )),
         value: "token",
         onTap: () {
           var t = transactions.where(
@@ -1603,7 +1702,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
         },
       ),
       DropdownMenuItem(
-        child: Text("مسرعات"),
+        child: Text("مسرعات",style: TextStyle(
+          color: FitnessAppTheme.lightText
+        )),
         value: "point",
         onTap: () {
           var t = transactions.where(
@@ -1673,14 +1774,19 @@ getSDates(){
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: EdgeInsets.all(10),
-                  child: Text('اليوم : ' + todayt.toString()),
+                  child: Text('اليوم : ' + todayt.toString(),style: TextStyle(
+          color: FitnessAppTheme.lightText
+        )),
                 ),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   GestureDetector(
-                    child: Text('بحث حسب التاريخ :'),
+                    child: Text('بحث حسب التاريخ :',
+                    style: TextStyle(
+                            color: FitnessAppTheme.lightText,
+                          )),
                     onTap: () {
                       setState(() {
                         _showD = !_showD;
@@ -1688,9 +1794,10 @@ getSDates(){
                     },
                   ),
                   IconButton(
+
                     icon: const Icon(Icons.date_range),
                     tooltip: 'بحث حسب التاريخ',
-                    color: _showD ? Colors.green : null,
+                    color: _showD ? Colors.green : FitnessAppTheme.lightText,
                     onPressed: () {
                       setState(() {
                         _showD = !_showD;
@@ -1736,7 +1843,7 @@ getSDates(){
                     onSaved: (email) {},
                     decoration: InputDecoration(
                       hintText: 'بحث عن طريق الاسم او معرف الحساب',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(defaultPadding),
                         child: Icon(Icons.search,
@@ -1813,7 +1920,7 @@ getSDates(){
                                     Common.formatNumber(
                                         stransactions[counter]['count']),
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
                                   ),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
@@ -1829,7 +1936,7 @@ getSDates(){
                                       Common.formatNumber(
                                           stransactions[counter]['cost']),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
+                                          fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'
@@ -1849,7 +1956,7 @@ getSDates(){
                                               .toString()
                                           : '',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
+                                          fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'
@@ -1867,7 +1974,7 @@ getSDates(){
                                               .toString()
                                           : '',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
+                                          fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'

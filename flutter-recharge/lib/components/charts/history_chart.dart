@@ -211,11 +211,12 @@ class _HistoryChartState extends State<HistoryChart> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text('بحث حسب التاريخ :'),
+            Text('بحث حسب التاريخ :',
+                style: TextStyle(color: FitnessAppTheme.lightText)),
             IconButton(
               icon: const Icon(Icons.date_range),
               tooltip: 'بحث حسب التاريخ',
-              color: _showD ? Colors.green : null,
+              color: _showD ? Colors.green : FitnessAppTheme.lightText,
               onPressed: () {
                 setState(() {
                   _showD = !_showD;
@@ -240,7 +241,7 @@ class _HistoryChartState extends State<HistoryChart> {
           children: [
             Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: FitnessAppTheme.nearlyBlack,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
@@ -248,7 +249,7 @@ class _HistoryChartState extends State<HistoryChart> {
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
@@ -262,11 +263,14 @@ class _HistoryChartState extends State<HistoryChart> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text.rich(TextSpan(text: 'توكنز : ', children: [
-                        TextSpan(
-                            text: t_tokens.toString(),
-                            style: TextStyle(fontWeight: FontWeight.bold))
-                      ])),
+                      Text.rich(TextSpan(
+                          text: 'توكنز : ',
+                          style: TextStyle(color: FitnessAppTheme.lightText),
+                          children: [
+                            TextSpan(
+                                text: t_tokens.toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                          ])),
                       Container(
                         height: 8,
                         decoration: BoxDecoration(
@@ -280,8 +284,12 @@ class _HistoryChartState extends State<HistoryChart> {
                         padding: EdgeInsets.all(5),
                         child: Column(
                           children: [
-                            Text('مجموع ما شحنت '),
-                            Text('من توكنز'),
+                            Text('مجموع ما شحنت ',
+                                style: TextStyle(
+                                    color: FitnessAppTheme.lightText)),
+                            Text('من توكنز',
+                                style: TextStyle(
+                                    color: FitnessAppTheme.lightText)),
                           ],
                         ),
                       )
@@ -296,7 +304,7 @@ class _HistoryChartState extends State<HistoryChart> {
                 // height: MediaQuery.of(context).size.height * 0.33,
                 // color:Colors.amber,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: FitnessAppTheme.nearlyBlack,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
@@ -304,7 +312,7 @@ class _HistoryChartState extends State<HistoryChart> {
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
@@ -315,11 +323,14 @@ class _HistoryChartState extends State<HistoryChart> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text.rich(TextSpan(text: 'مسرعات : ', children: [
-                        TextSpan(
-                            text: t_points.toString(),
-                            style: TextStyle(fontWeight: FontWeight.bold))
-                      ])),
+                      Text.rich(TextSpan(
+                          text: 'مسرعات : ',
+                          style: TextStyle(color: FitnessAppTheme.lightText),
+                          children: [
+                            TextSpan(
+                                text: t_points.toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                          ])),
                       Container(
                         height: 8,
                         decoration: BoxDecoration(
@@ -330,14 +341,17 @@ class _HistoryChartState extends State<HistoryChart> {
                         margin: EdgeInsets.only(bottom: 5, top: 5),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(5),
-                        child:  Column(
-                          children: [
-                             Text('مجموع ما شحنت '),
-                            Text('من مسرعات'),
-                          ],
-                        )
-                      )
+                          padding: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              Text('مجموع ما شحنت ',
+                                  style: TextStyle(
+                                      color: FitnessAppTheme.lightText)),
+                              Text('من مسرعات',
+                                  style: TextStyle(
+                                      color: FitnessAppTheme.lightText)),
+                            ],
+                          ))
                     ],
                   ),
                 ))
@@ -353,13 +367,16 @@ class _HistoryChartState extends State<HistoryChart> {
   SfCartesianChart _buildDefaultColumnChartPoint() {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'مسرعات نقاط معاملات ومصاريف'),
+      title: ChartTitle(
+          text: 'مسرعات نقاط معاملات ومصاريف',
+          textStyle: TextStyle(color: FitnessAppTheme.lightText)),
       primaryXAxis: CategoryAxis(
         majorGridLines: const MajorGridLines(width: 0),
       ),
       primaryYAxis: NumericAxis(
           axisLine: const AxisLine(width: 0),
           labelFormat: '{value}',
+          labelStyle: TextStyle(color: FitnessAppTheme.lightText),
           majorTickLines: const MajorTickLines(size: 0)),
       series: _getDefaultColumnSeriesPoint(),
     );
@@ -368,13 +385,16 @@ class _HistoryChartState extends State<HistoryChart> {
   SfCartesianChart _buildDefaultColumnChartToken() {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'توكنز معاملات ومصاريف'),
+      title: ChartTitle(
+          text: 'توكنز معاملات ومصاريف',
+          textStyle: TextStyle(color: FitnessAppTheme.lightText)),
       primaryXAxis: CategoryAxis(
         majorGridLines: const MajorGridLines(width: 0),
       ),
       primaryYAxis: NumericAxis(
           axisLine: const AxisLine(width: 0),
           labelFormat: '{value}',
+          labelStyle: TextStyle(color: FitnessAppTheme.lightText),
           majorTickLines: const MajorTickLines(size: 0)),
       series: _getDefaultColumnSeriesToken(),
     );
