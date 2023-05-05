@@ -137,7 +137,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 0),
+                margin: EdgeInsets.only(left: 0),
                 child: Text(
                   element.packageData['name'],
                   overflow: TextOverflow.ellipsis,
@@ -149,8 +149,15 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 80),
+                margin: EdgeInsets.only(right: 40,left: 20),
                 child: Text(Common.formatNumber(int.parse(element.value)),
+                    overflow: TextOverflow.ellipsis,style: TextStyle(
+                    color: FitnessAppTheme.nearlyDarkREd
+                  )),
+              ),Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                margin: EdgeInsets.only(right: 0),
+                child: Text(Common.formatNumber(element.packageData['cost'] * int.parse(element.value)),
                     overflow: TextOverflow.ellipsis,style: TextStyle(
                     color: FitnessAppTheme.nearlyDarkREd
                   )),
@@ -207,14 +214,20 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 40),
+                  margin: EdgeInsets.only(left: 30),
                   child: Text('المسرع',style: TextStyle(
                     color: FitnessAppTheme.lightText
                   ),),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 80),
+                  margin: EdgeInsets.only(right: 40,left: 40),
                   child: Text(' الكمية',style: TextStyle(
+                    color: FitnessAppTheme.lightText
+                  )),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 50,left: 30),
+                  child: Text(' السعر',style: TextStyle(
                     color: FitnessAppTheme.lightText
                   )),
                 ),
