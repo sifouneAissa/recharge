@@ -66,6 +66,7 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(context,'تعديل رقم الهاتف'),
+      backgroundColor: FitnessAppTheme.nearlyBlack,
         body: Container(
           margin: EdgeInsets.only(top: 100),
           child: Form(

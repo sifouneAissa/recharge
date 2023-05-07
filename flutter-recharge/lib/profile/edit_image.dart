@@ -135,6 +135,7 @@ class _EditImagePageState extends State<EditImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FitnessAppTheme.nearlyBlack,
       appBar: buildAppBar(context,'تعديل الصورة الشخصية'),
       body: Container(
         margin: EdgeInsets.only(top: 100),

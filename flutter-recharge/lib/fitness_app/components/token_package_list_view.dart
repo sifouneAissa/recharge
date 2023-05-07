@@ -270,7 +270,8 @@ class _JawakerViewState extends State<JawakerView> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        widget.mealsListData!.meals!.join('\n'),
+                                        '',
+                                        // widget.mealsListData!.meals!.join('\n'),
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w500,

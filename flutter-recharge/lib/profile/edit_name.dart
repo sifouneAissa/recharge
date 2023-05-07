@@ -63,6 +63,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(context,'تعديل الاسم'),
+      backgroundColor: FitnessAppTheme.nearlyBlack,
         body: Container(
           margin: EdgeInsets.only(top: 100),
           child: Form(

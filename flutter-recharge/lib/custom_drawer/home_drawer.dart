@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/profile/display_image_widget.dart';
 import 'package:best_flutter_ui_templates/profile/profile_page.dart';
@@ -112,7 +113,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
     var brightness = Theme.of(context).brightness;
     bool isLightMode = brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: AppTheme.notWhite.withOpacity(0.5),
+      backgroundColor: FitnessAppTheme.nearlyBlackSide.withOpacity(0.5),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -221,7 +222,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
-                    color: AppTheme.darkText,
+                    color: FitnessAppTheme.oligthText,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -311,8 +312,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: widget.screenIndex == listData.index
-                          ? Colors.black
-                          : AppTheme.nearlyBlack,
+                          ? FitnessAppTheme.nearlyWhite
+                          : FitnessAppTheme.oligthText,
                     ),
                     textAlign: TextAlign.left,
                   ),

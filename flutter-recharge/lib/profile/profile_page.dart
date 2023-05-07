@@ -41,6 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: buildAppBar(context, 'تعديل الحساب'),
+      backgroundColor: FitnessAppTheme.nearlyBlack,
       body: Container(
         margin: EdgeInsets.only(top: 20),
         child: Column(
@@ -101,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
-                    color: Colors.grey,
+                    color: FitnessAppTheme.nearlyWhite,
                     width: 1,
                   ))),
                   child: Row(children: [
@@ -112,11 +113,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: Text(
                               getValue,
-                              style: TextStyle(fontSize: 16, height: 1.4,color: FitnessAppTheme.nearlyDarkREd),
+                              style: TextStyle(fontSize: 16, height: 1.4,color: FitnessAppTheme.nearlyWhite),
                             ))),
                     Icon(
                       Icons.keyboard_arrow_left,
-                      color: Colors.grey,
+                      color: FitnessAppTheme.nearlyWhite,
                       size: 40.0,
                     )
                   ]))

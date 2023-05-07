@@ -65,6 +65,7 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
     return Scaffold(
       resizeToAvoidBottomInset : false,
       appBar: buildAppBar(context, 'تعديل كلمة السر'),
+      backgroundColor: FitnessAppTheme.nearlyBlack,
       body: Container(
           margin: EdgeInsets.only(top: 50),
           child: Form(

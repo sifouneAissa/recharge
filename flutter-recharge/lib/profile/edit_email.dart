@@ -66,6 +66,7 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
     return Scaffold(
 
         appBar: buildAppBar(context,'تعديل البريد الالكتروني'),
+      backgroundColor: FitnessAppTheme.nearlyBlack,
         body: Container(
           margin: EdgeInsets.only(top: 100),
           child: Form(

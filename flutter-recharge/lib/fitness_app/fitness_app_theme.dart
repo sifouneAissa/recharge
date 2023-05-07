@@ -12,6 +12,7 @@ class FitnessAppTheme {
   static const Color nearlyBlue = Color(0xFF00B6F0);
   static const Color nearlyBlack = Color(0xFF213333);
   static const Color nearlyBlackCard = Color(0xFF1a2828);
+  static const Color nearlyBlackSide = Color(0xFF0c1212);
   static const Color grey = Color(0xFF3A5160);
   static const Color dark_grey = Color(0xFF313A44);
 
