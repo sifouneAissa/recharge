@@ -330,6 +330,7 @@ class _JawakerView extends State<JawakerView> {
                                       value: selected != null ? int.parse(selected!.value) + 0.0 : 0,
                                       step: 1,
                                       spacing: 1,
+                                      keyboardType: TextInputType.none,
                                       textStyle: TextStyle(color: Colors.white),
                                       iconColor: MaterialStatePropertyAll(
                                           Colors.white),

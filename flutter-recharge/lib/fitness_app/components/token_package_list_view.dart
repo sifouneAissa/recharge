@@ -365,6 +365,7 @@ class _JawakerViewState extends State<JawakerView> {
                                   value: 0,
                                   step: 1,
                                   spacing: 1,
+                                  keyboardType: TextInputType.none,
                                   decoration:
                                       InputDecoration(labelText: 'ادخل الكمية'),
                                       onChanged: (value) {
