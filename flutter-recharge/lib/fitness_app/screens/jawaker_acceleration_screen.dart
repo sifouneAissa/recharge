@@ -19,10 +19,11 @@ import 'package:best_flutter_ui_templates/screens/Login/components/login_form.da
 import 'package:flutter/material.dart';
 
 class JawakerAccelerationScreen extends StatefulWidget {
-  const JawakerAccelerationScreen({Key? key, this.animationController,this.onChangeBody}) : super(key: key);
+  const JawakerAccelerationScreen({Key? key, this.animationController,this.onChangeBody,this.hideBottomBar}) : super(key: key);
 
   final AnimationController? animationController;
   final onChangeBody;
+  final hideBottomBar;
   @override
   _JawakerAccelerationScreenState createState() => _JawakerAccelerationScreenState();
 }
@@ -35,6 +36,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
+  bool _showAppBar = true;
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -66,6 +68,15 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
       }
     });
     super.initState();
+    
+     scrollController?.addListener(() async {
+       setState(() {
+            _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
+          });
+          
+          widget.hideBottomBar(_showAppBar);
+      }
+    );
   }
 
   void addAllListData() {
@@ -230,7 +241,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
           child: Stack(
           children: <Widget>[
             getMainListViewUI(),
-            getAppBarUI(),
+            _showAppBar ? getAppBarUI() : Container(),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
@@ -281,7 +292,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.nearlyBlack.withOpacity(topBarOpacity),
+                    color: FitnessAppTheme.nearlyBlackCard.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),

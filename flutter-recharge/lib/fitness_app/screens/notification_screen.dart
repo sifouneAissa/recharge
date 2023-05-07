@@ -16,9 +16,10 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key, this.animationController}) : super(key: key);
+  const NotificationScreen({Key? key, this.animationController,this.hideBottomBar}) : super(key: key);
 
   final AnimationController? animationController;
+  final hideBottomBar;
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }
@@ -30,6 +31,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
+  bool _showAppBar = true;
 
   @override
   void initState() {
@@ -62,6 +64,14 @@ class _NotificationScreenState extends State<NotificationScreen>
       }
     });
     super.initState();
+    
+     scrollController?.addListener(() async {
+       setState(() {
+            _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
+          });
+          widget.hideBottomBar(_showAppBar);
+      }
+    );
   }
   
   void addAllListData() {
@@ -214,7 +224,7 @@ class _NotificationScreenState extends State<NotificationScreen>
           child: Stack(
           children: <Widget>[
             getMainListViewUI(),
-            getAppBarUI(),
+            _showAppBar ? getAppBarUI() : Container(),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
@@ -265,7 +275,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.nearlyBlack.withOpacity(topBarOpacity),
+                    color: FitnessAppTheme.nearlyBlackCard.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),

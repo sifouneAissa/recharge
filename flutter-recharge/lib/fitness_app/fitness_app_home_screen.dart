@@ -24,6 +24,8 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   Widget tabBody = Container(
     color: FitnessAppTheme.background,
   );
+  bool _showBottomBar = true;
+  bool _isScrolled = false;
 
   @override
   void initState() {
@@ -36,6 +38,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
         duration: const Duration(milliseconds: 600), vsync: this);
     tabBody = DashScreen(
         animationController: animationController,
+        hideBottomBar: (param) {
+          setState(() {
+            _showBottomBar = param;
+            _isScrolled = !param;
+          });
+        },
         onChangeBody: (param) {
           setState(() {
             setBody(param);
@@ -54,22 +62,37 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   Widget build(BuildContext context) {
     return Container(
       color: FitnessAppTheme.background,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: FutureBuilder<bool>(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (!snapshot.hasData) {
-              return const SizedBox();
-            } else {
-              return Stack(
-                children: <Widget>[
-                  tabBody,
-                  bottomBar(),
-                ],
-              );
-            }
-          },
+      child: GestureDetector(
+        onLongPress: () {
+          setState(() {
+            _showBottomBar = false;
+          });
+        },
+        onLongPressEnd: (details) {
+          setState(() {
+            if (_isScrolled)
+              _showBottomBar = false;
+            else
+              _showBottomBar = true;
+          });
+        },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: FutureBuilder<bool>(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (!snapshot.hasData) {
+                return const SizedBox();
+              } else {
+                return Stack(
+                  children: <Widget>[
+                    tabBody,
+                    _showBottomBar ? bottomBar() : Container(),
+                  ],
+                );
+              }
+            },
+          ),
         ),
       ),
     );
@@ -79,6 +102,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
     if (name == 'dash')
       tabBody = DashScreen(
           animationController: animationController,
+          hideBottomBar: (param) {
+            setState(() {
+              _showBottomBar = param;
+              _isScrolled = !param;
+            });
+          },
           onChangeBody: (param) {
             setState(() {
               setBody(param);
@@ -86,6 +115,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
           });
     else if (name == 'jawaker_acceleration')
       tabBody = JawakerAccelerationScreen(
+          hideBottomBar: (param) {
+            setState(() {
+              _showBottomBar = param;
+              _isScrolled = !param;
+            });
+          },
           animationController: animationController,
           onChangeBody: (param) {
             setState(() {
@@ -94,6 +129,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
           });
     else if (name == 'token')
       tabBody = TokenScreen(
+          hideBottomBar: (param) {
+            setState(() {
+              _showBottomBar = param;
+              _isScrolled = !param;
+            });
+          },
           animationController: animationController,
           onChangeBody: (param) {
             setState(() {
@@ -101,11 +142,34 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
             });
           });
     else if (name == 'notification')
-      tabBody = NotificationScreen(animationController: animationController);
+      tabBody = NotificationScreen(
+          animationController: animationController,
+          hideBottomBar: (param) {
+            setState(() {
+              _showBottomBar = param;
+              _isScrolled = !param;
+            });
+          });
     else if (name == 'transaction')
-      tabBody = TransactionScreen(animationController: animationController);
+      tabBody = TransactionScreen(
+        animationController: animationController,
+        hideBottomBar: (param) {
+          setState(() {
+            _showBottomBar = param;
+            _isScrolled = !param;
+          });
+        },
+      );
     else if (name == 'history')
-      tabBody = HistoryScreen(animationController: animationController);
+      tabBody = HistoryScreen(
+        animationController: animationController,
+        hideBottomBar: (param) {
+          setState(() {
+            _showBottomBar = param;
+            _isScrolled = !param;
+          });
+        },
+      );
 
     tabIconsList.forEach((element) {
       element.isSelected = false;
@@ -137,6 +201,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 setState(() {
                   tabBody = DashScreen(
                     animationController: animationController,
+                    hideBottomBar: (param) {
+                      setState(() {
+                        _showBottomBar = param;
+                        _isScrolled = !param;
+                      });
+                    },
                     onChangeBody: (param) {
                       setState(() {
                         setBody(param);
@@ -152,6 +222,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody = JawakerAccelerationScreen(
+                      hideBottomBar: (param) {
+                        setState(() {
+                          _showBottomBar = param;
+                          _isScrolled = !param;
+                        });
+                      },
                       animationController: animationController,
                       onChangeBody: (param) {
                         setState(() {
@@ -167,6 +243,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody = TokenScreen(
+                    hideBottomBar: (param) {
+                      setState(() {
+                        _showBottomBar = param;
+                        _isScrolled = !param;
+                      });
+                    },
                     animationController: animationController,
                     onChangeBody: (param) {
                       setState(() {
@@ -183,6 +265,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody = NotificationScreen(
+                      hideBottomBar: (param) {
+                        setState(() {
+                          _showBottomBar = param;
+                          _isScrolled = !param;
+                        });
+                      },
                       animationController: animationController);
                 });
               });
@@ -193,6 +281,12 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 }
                 setState(() {
                   tabBody = TransactionScreen(
+                      hideBottomBar: (param) {
+                        setState(() {
+                          _showBottomBar = param;
+                          _isScrolled = !param;
+                        });
+                      },
                       animationController: animationController);
                 });
               });
@@ -202,8 +296,15 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      HistoryScreen(animationController: animationController);
+                  tabBody = HistoryScreen(
+                    animationController: animationController,
+                    hideBottomBar: (param) {
+                      setState(() {
+                        _showBottomBar = param;
+                        _isScrolled = !param;
+                      });
+                    },
+                  );
                 });
               });
             }

@@ -594,7 +594,7 @@ class _RecentTokenTransactionDatatable
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: FitnessAppTheme.nearlyDarkREd))
+                                color: FitnessAppTheme.white))
                       ],
                     ),
                   ),
@@ -663,7 +663,7 @@ class _RecentTokenTransactionDatatable
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(left: 10),
+                              margin: EdgeInsets.only(left: 20),
                               child: GestureDetector(
                                 onTap: () async {
                                   Clipboard.setData(ClipboardData(
@@ -672,7 +672,7 @@ class _RecentTokenTransactionDatatable
                                     _copied = true;
                                   });
                                   await Future.delayed(
-                                      const Duration(seconds: 1));
+                                      const Duration(milliseconds: 200));
                                   setState(() {
                                     _copied = false;
                                   });
@@ -682,7 +682,7 @@ class _RecentTokenTransactionDatatable
                                   size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkREd,
+                                      : FitnessAppTheme.lightText,
                                 ),
                               ),
                             ),
@@ -778,7 +778,7 @@ class _RecentTokenTransactionDatatable
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: FitnessAppTheme.nearlyDarkREd))
+                                    color: FitnessAppTheme.white))
                           ],
                         ),
                       ),

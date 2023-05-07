@@ -9,6 +9,7 @@ import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_acceler
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/models/jawaker_list_data.dart';
+import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     'الحالة',
     S().count,
     S().cost_d,
-    // 'اسم اللاعب',
+    'اسم اللاعب',
     'معرف اللاعب',
     S().transaction_type,
     S().date
@@ -109,15 +110,17 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
     search.addListener(() {
       if (search.value.text.isNotEmpty) {
-        var t = transactions
-            .where((element) {
-              bool isP = element['type'] == 'point';
-              return !isP ? element['account_id'].toString().contains(search.value.text) :
+        var t = transactions.where(
+          (element) {
+            bool isP = element['type'] == 'point';
+            return element['account_id']
+                    .toString()
+                    .contains(search.value.text) ||
                 element['name_of_player']
                     .toString()
                     .contains(search.value.text);
-            },)
-            .toList();
+          },
+        ).toList();
 
         setState(() {
           stransactions = t;
@@ -386,7 +389,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: FitnessAppTheme.nearlyDarkREd))
+                                color: FitnessAppTheme.white))
                       ],
                     ),
                   ),
@@ -548,7 +551,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: FitnessAppTheme.nearlyDarkREd))
+                                color: FitnessAppTheme.white))
                       ],
                     ),
                   ),
@@ -664,7 +667,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   margin: EdgeInsets.only(right: 0),
                   child: Text(
                       element.packageData != null
-                          ? element.packageData['name']
+                          ? element.packageData['code']
                           : '',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: FitnessAppTheme.nearlyWhite)),
@@ -1063,7 +1066,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                           ],
                         ),
                       ),
-                          Container(
+                      Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -1071,14 +1074,14 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             Container(
                               margin: EdgeInsets.only(left: 10),
                               child: GestureDetector(
-                                onTap: () async{
+                                onTap: () async {
                                   Clipboard.setData(ClipboardData(
                                       text: getTextToCopy(transaction)));
-                                   setState(() {
+                                  setState(() {
                                     _copied = true;
                                   });
                                   await Future.delayed(
-                                      const Duration(seconds: 1));
+                                      const Duration(milliseconds: 200));
                                   setState(() {
                                     _copied = false;
                                   });
@@ -1088,14 +1091,14 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                   size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkREd,
+                                      : FitnessAppTheme.white,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                  
+
                       Container(
                         margin: EdgeInsets.only(right: 10),
                         child: Row(
@@ -1185,7 +1188,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: FitnessAppTheme.nearlyDarkREd))
+                                    color: FitnessAppTheme.white))
                           ],
                         ),
                       ),
@@ -1198,7 +1201,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                       top: 20, right: 30, left: 30),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: FitnessAppTheme.nearlyDarkREd),
+                                        color: FitnessAppTheme.oligthText),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -1253,7 +1256,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: FitnessAppTheme
-                                                                .nearlyDarkREd))
+                                                                .white))
                                                   ],
                                                 ),
                                               )
@@ -1358,7 +1361,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   margin: EdgeInsets.only(top: 0),
                   child: Column(
                     children: [
-                      
                       Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1373,7 +1375,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             )
                           ],
                         ),
-                      ),Container(
+                      ),
+                      Container(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -1384,11 +1387,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                 onTap: () async {
                                   Clipboard.setData(ClipboardData(
                                       text: getTextToCopyPoint(transaction)));
-                                   setState(() {
+                                  setState(() {
                                     _copied = true;
                                   });
                                   await Future.delayed(
-                                      const Duration(seconds: 1));
+                                      const Duration(microseconds: 200));
                                   setState(() {
                                     _copied = false;
                                   });
@@ -1398,7 +1401,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                   size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkREd,
+                                      : FitnessAppTheme.white,
                                 ),
                               ),
                             ),
@@ -1487,7 +1490,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: FitnessAppTheme.nearlyDarkREd))
+                                    color: FitnessAppTheme.white))
                           ],
                         ),
                       ),
@@ -1500,7 +1503,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                       top: 20, right: 30, left: 30),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: FitnessAppTheme.nearlyDarkREd),
+                                        color: FitnessAppTheme.oligthText),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -1553,7 +1556,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: FitnessAppTheme
-                                                                .nearlyDarkREd))
+                                                                .white))
                                                   ],
                                                 ),
                                               )
@@ -1813,19 +1816,46 @@ class _TransactionDatatable extends State<TransactionDatatable>
         builder: (BuildContext context, Widget? child) {
           return Column(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.33,
-                margin: EdgeInsets.only(right: 250),
-                // height: MediaQuery.of(context).size.height * 0.33,
-                decoration: BoxDecoration(
-                    border: Border.all(color: FitnessAppTheme.nearlyDarkREd),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text('اليوم : ' + todayt.toString(),
-                      style: TextStyle(color: FitnessAppTheme.lightText)),
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 170, right: 0),
+                        child: Text(
+                          S().new_transactions,
+                          // textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontFamily: FitnessAppTheme.fontName,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            letterSpacing: 0,
+                            color: FitnessAppTheme.lightText,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // width: MediaQuery.of(context).size.width * 0.20,
+                    // margin: EdgeInsets.only(right: 250),
+                    // height: MediaQuery.of(context).size.height * 0.33,
+                    decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              color:
+                                  FitnessAppTheme.lightText.withOpacity(0.3))),
+                    ),
+                    child:Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text('اليوم : ' + todayt.toString(),
+                            style: TextStyle(color: FitnessAppTheme.lightText)),
+                      ),
+                  ),
+                ],
               ),
+              Container(height: defaultHeight,),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -1850,6 +1880,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       });
                     },
                   ),
+                  Container(height: 20,),
                   Container(
                     margin: EdgeInsets.only(right: 10),
                     child: DropdownButton(
@@ -1904,6 +1935,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       icon: Icon(
                         Icons.download,
                         color: FitnessAppTheme.nearlyDarkREd,
+                        size: 30,
                       ))
                 ],
               ),
@@ -1920,7 +1952,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w800,
-                                        color: FitnessAppTheme.nearlyDarkREd),
+                                        color: FitnessAppTheme.white),
                                   ))),
                           rows: List<DataRow>.generate(
                             stransactions.length,
@@ -1933,7 +1965,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                     '#' +
                                         transactions[counter]['id'].toString(),
                                     style: TextStyle(
-                                        color: FitnessAppTheme.nearlyDarkREd,
+                                        color: FitnessAppTheme.lightText,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   onTap: () {
@@ -2013,24 +2045,25 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                             stransactions[counter]);
                                   },
                                 ),
-                                // DataCell(
-                                //   Text(
-                                //       stransactions[counter]['account_id'] !=
-                                //               null
-                                //           ? stransactions[counter]['account_id']
-                                //               .toString()
-                                //           : '',
-                                //       style: TextStyle(
-                                //           fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
-                                //   onTap: () {
-                                //     stransactions[counter]['type'].toString() ==
-                                //             'token'
-                                //         ? bottomSheetBuilderToken(
-                                //             stransactions[counter])
-                                //         : bottomSheetBuilderPoint(
-                                //             stransactions[counter]);
-                                //   },
-                                // ),
+                                DataCell(
+                                  Text(
+                                      stransactions[counter]['account_id'] !=
+                                              null
+                                          ? stransactions[counter]['account_id']
+                                              .toString()
+                                          : '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: FitnessAppTheme.lightText)),
+                                  onTap: () {
+                                    stransactions[counter]['type'].toString() ==
+                                            'token'
+                                        ? bottomSheetBuilderToken(
+                                            stransactions[counter])
+                                        : bottomSheetBuilderPoint(
+                                            stransactions[counter]);
+                                  },
+                                ),
                                 DataCell(
                                   stransactions[counter]['type'].toString() ==
                                           'token'
@@ -2057,8 +2090,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                           .toString(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color:
-                                              FitnessAppTheme.nearlyDarkREd)),
+                                          color: FitnessAppTheme.lightText)),
                                   onTap: () {
                                     stransactions[counter]['type'].toString() ==
                                             'token'

@@ -15,9 +15,10 @@ import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({Key? key, this.animationController}) : super(key: key);
+  const HistoryScreen({Key? key, this.animationController,this.hideBottomBar}) : super(key: key);
 
   final AnimationController? animationController;
+  final hideBottomBar;
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
 }
@@ -29,6 +30,8 @@ class _HistoryScreenState extends State<HistoryScreen>
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
+  
+  bool _showAppBar = true;
 
   @override
   void initState() {
@@ -61,6 +64,14 @@ class _HistoryScreenState extends State<HistoryScreen>
       }
     });
     super.initState();
+    
+     scrollController?.addListener(() async {
+       setState(() {
+            _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
+          });
+          widget.hideBottomBar(_showAppBar);
+      }
+    );
   }
 
   void addAllListData() {
@@ -229,7 +240,7 @@ class _HistoryScreenState extends State<HistoryScreen>
           child: Stack(
           children: <Widget>[
             getMainListViewUI(),
-            getAppBarUI(),
+            _showAppBar ? getAppBarUI() : Container(),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )

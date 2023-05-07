@@ -142,7 +142,7 @@ class _RecentPointTransactionDatatable
     return '$status $quantity $account_id $day';
   }
   setCopied() async {
-          await Future.delayed(const Duration(seconds: 1));
+          await Future.delayed(const Duration(milliseconds: 200));
   }
   bottomSheetBuilder(transaction) {
     bool isW = transaction['waiting'];
@@ -193,7 +193,7 @@ class _RecentPointTransactionDatatable
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(left: 10),
+                              margin: EdgeInsets.only(left: 20,bottom: 20),
                               child: GestureDetector(
                                 onTap: () async{
                                   Clipboard.setData(ClipboardData(
@@ -211,7 +211,7 @@ class _RecentPointTransactionDatatable
                                   size: 30,
                                   color: _copied
                                       ? Colors.greenAccent
-                                      : FitnessAppTheme.nearlyDarkREd,
+                                      : FitnessAppTheme.lightText,
                                 ),
                               ),
                             ),
@@ -300,7 +300,7 @@ class _RecentPointTransactionDatatable
                             Text(transaction['tdate'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: FitnessAppTheme.nearlyDarkREd))
+                                    color: FitnessAppTheme.lightText))
                           ],
                         ),
                       ),
@@ -313,7 +313,7 @@ class _RecentPointTransactionDatatable
                                       top: 20, right: 30, left: 30),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: FitnessAppTheme.nearlyDarkREd),
+                                        color: FitnessAppTheme.oligthText),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -366,7 +366,7 @@ class _RecentPointTransactionDatatable
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: FitnessAppTheme
-                                                                .nearlyDarkREd))
+                                                                .lightText))
                                                   ],
                                                 ),
                                               )
@@ -657,7 +657,7 @@ class _RecentPointTransactionDatatable
                   margin: EdgeInsets.only(right: 0),
                   child: Text(
                     element.packageData != null
-                        ? element.packageData['name']
+                        ? element.packageData['code']
                         : '',
                     overflow: TextOverflow.ellipsis,style: TextStyle(
                               color: FitnessAppTheme.nearlyWhite
@@ -1008,7 +1008,7 @@ class _RecentPointTransactionDatatable
                         Text(transaction['tupdated_at'].toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: FitnessAppTheme.nearlyDarkREd))
+                                color: FitnessAppTheme.white))
                       ],
                     ),
                   ),

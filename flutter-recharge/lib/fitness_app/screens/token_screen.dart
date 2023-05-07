@@ -17,10 +17,11 @@ import 'package:best_flutter_ui_templates/home/account_card_view.dart';
 import 'package:flutter/material.dart';
 
 class TokenScreen extends StatefulWidget {
-  const TokenScreen({Key? key, this.animationController, this.onChangeBody}) : super(key: key);
+  const TokenScreen({Key? key, this.animationController, this.onChangeBody,this.hideBottomBar}) : super(key: key);
 
   final AnimationController? animationController;
   final onChangeBody;
+  final hideBottomBar;
 
   @override
   _TokenScreenState createState() => _TokenScreenState();
@@ -34,6 +35,7 @@ class _TokenScreenState extends State<TokenScreen>
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
   bool refresh = false;
+  bool _showAppBar = true;
 
   @override
   void initState() {
@@ -69,6 +71,15 @@ class _TokenScreenState extends State<TokenScreen>
       }
     });
     super.initState();
+    
+     scrollController?.addListener(() async {
+       setState(() {
+            _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
+          });
+          
+          widget.hideBottomBar(_showAppBar);
+      }
+    );
   }
 
   void addAllListData() {
@@ -237,7 +248,7 @@ class _TokenScreenState extends State<TokenScreen>
           child: Stack(
           children: <Widget>[
             getMainListViewUI(),
-            getAppBarUI(),
+            _showAppBar ? getAppBarUI() : Container(),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
@@ -288,7 +299,7 @@ class _TokenScreenState extends State<TokenScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.nearlyBlack.withOpacity(topBarOpacity),
+                    color: FitnessAppTheme.nearlyBlackCard.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),

@@ -15,9 +15,10 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class DashScreen extends StatefulWidget {
-  const DashScreen({Key? key, this.animationController, this.onChangeBody})
+  const DashScreen({Key? key, this.animationController, this.onChangeBody,this.hideBottomBar})
       : super(key: key);
   final onChangeBody;
+  final hideBottomBar;
 
   final AnimationController? animationController;
   @override
@@ -32,7 +33,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
   final ScrollController scrollController = ScrollController();
   final ScrollController scrollControllerG = ScrollController();
   double topBarOpacity = 0.0;
-
+  bool _showAppBar = true;
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -65,6 +66,17 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
       }
     });
     super.initState();
+
+     scrollController?.addListener(() async {
+
+       setState(() {
+            _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
+            
+          });
+          widget.hideBottomBar(_showAppBar);
+       
+      }
+    );
   }
 
   void addAllListData() {
@@ -96,6 +108,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
       ),
     );
 listViews.add(SizedBox(height: defaultHeight,));
+
 listViews.add(
       TitleView(
         titleTxt: "اشحن واطلع على معلوماتك بشكل يومي : ",
@@ -397,7 +410,7 @@ listViews.add(
           child: Stack(
           children: <Widget>[
             getMainListViewUI(),
-            getAppBarUI(),
+            _showAppBar ? getAppBarUI() : Container(),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
@@ -495,7 +508,7 @@ listViews.add(
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: isLightMode ? FitnessAppTheme.white.withOpacity(topBarOpacity) : FitnessAppTheme.nearlyBlack.withOpacity(topBarOpacity),
+                    color: isLightMode ? FitnessAppTheme.white.withOpacity(topBarOpacity) : FitnessAppTheme.nearlyBlackCard.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),

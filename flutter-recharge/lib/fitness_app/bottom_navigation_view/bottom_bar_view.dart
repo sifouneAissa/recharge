@@ -46,7 +46,7 @@ class _BottomBarViewState extends State<BottomBarView>
             return Transform(
               transform: Matrix4.translationValues(0.0, 0.0, 0.0),
               child: PhysicalShape(
-                color: FitnessAppTheme.nearlyBlack,
+                color: FitnessAppTheme.nearlyBlackCard,
                 elevation: 16.0,
                 clipper: TabClipper(
                     radius: Tween<double>(begin: 0.0, end: 1.0)
@@ -54,7 +54,7 @@ class _BottomBarViewState extends State<BottomBarView>
                                 parent: animationController!,
                                 curve: Curves.fastOutSlowIn))
                             .value *
-                        38.0),
+                        30.0),
                 child: Column(
                   children: <Widget>[
                     SizedBox(
@@ -174,7 +174,7 @@ class _BottomBarViewState extends State<BottomBarView>
                         boxShadow: <BoxShadow>[
                           BoxShadow(
                               color: FitnessAppTheme.nearlyDarkREd
-                                  .withOpacity(0.2),
+                                  .withOpacity(0.0),
                               offset: const Offset(8.0, 16.0),
                               blurRadius: 16.0),
                         ],
