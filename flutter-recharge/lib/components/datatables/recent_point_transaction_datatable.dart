@@ -1083,17 +1083,17 @@ class _RecentPointTransactionDatatable
         animation: widget.mainScreenAnimationController!,
         builder: (BuildContext context, Widget? child) {
           return AdaptiveScrollbar(
-            underColor: FitnessAppTheme.white.withOpacity(0.3),
-            sliderDefaultColor: FitnessAppTheme.white.withOpacity(0.7),
-            sliderActiveColor: FitnessAppTheme.white,
+            underColor: FitnessAppTheme.grey.withOpacity(0.3),
+            sliderDefaultColor: FitnessAppTheme.grey.withOpacity(0.7),
+            sliderActiveColor: FitnessAppTheme.grey,
             controller: _verticalScrollController,
             child: AdaptiveScrollbar(
                 controller: _horizontalScrollController,
                 position: ScrollbarPosition.bottom,
-                underColor: FitnessAppTheme.white.withOpacity(0.3),
+                underColor: FitnessAppTheme.grey.withOpacity(0.3),
                 sliderDefaultColor:
-                    FitnessAppTheme.white.withOpacity(0.7),
-                sliderActiveColor: FitnessAppTheme.white,
+                    FitnessAppTheme.grey.withOpacity(0.7),
+                sliderActiveColor: FitnessAppTheme.grey,
                 child: Container(
                     margin: EdgeInsets.only(top: 10),
                     child: SingleChildScrollView(
