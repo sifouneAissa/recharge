@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator/add_jawaker_accelerator_form.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
@@ -115,7 +116,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
       ),
     );
 
-
+    listViews.add(SizedBox(height: defaultHeight,));
     listViews.add(
       AcceleratorListView(
         parentScrollController :scrollController,
