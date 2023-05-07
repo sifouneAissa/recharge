@@ -66,24 +66,67 @@ class _NotificationDatatable extends State<NotificationDatatable> {
   _getColumns() {
     return List<Column>.generate(
         diffs.length,
-        (index) => Column(
-
+        (index) => index != 0
+            ? Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 15),
-                    child: Text(
-                      diffs[index],
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: FitnessAppTheme.lightText),
+                    Container(
+                      margin: EdgeInsets.only(left: 15),
+                      child: Text(
+                        diffs[index],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: FitnessAppTheme.lightText),
+                      ),
                     ),
-                  ),
-                  Column(
-                    children: _getSubContainer(notifications[index]),
-                  )
-                ]));
+                    Column(
+                      children: _getSubContainer(notifications[index]),
+                    )
+                  ])
+            : Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 120),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 24, right: 24),
+                            child: Text(
+                              S().last_notifications,
+                              // textAlign: TextAlign.right,
+                              style: TextStyle(
+                                fontFamily: FitnessAppTheme.fontName,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                letterSpacing: 0,
+                                color: FitnessAppTheme.lightText,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 15),
+                          child: Text(
+                            diffs[index],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: FitnessAppTheme.lightText),
+                          ),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: _getSubContainer(notifications[index]),
+                    )
+                  ]));
   }
 
   _getSubContainer(notifications) {

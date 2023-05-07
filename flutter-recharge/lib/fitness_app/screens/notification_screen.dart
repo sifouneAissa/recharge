@@ -79,17 +79,17 @@ class _NotificationScreenState extends State<NotificationScreen>
   void addAllListData() {
     // const int count = 1;
 
-    listViews.add(
-      TitleView(
-        titleTxt: S().last_notifications,
-        // subTxt: 'Shop',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().last_notifications,
+    //     // subTxt: 'Shop',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
 
     listViews.add(NotificationDatatable());
 
