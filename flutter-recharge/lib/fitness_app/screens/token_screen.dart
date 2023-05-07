@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
@@ -103,10 +104,9 @@ class _TokenScreenState extends State<TokenScreen>
         animationController: widget.animationController!,
       ),
     );
-
+    listViews.add(SizedBox(height: defaultHeight,));
     listViews.add(
       TokenListView(
-        
       parentScrollController: scrollController,
         onChangeBody: () {
           widget.onChangeBody('transaction');

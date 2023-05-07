@@ -39,7 +39,7 @@ class _TokenListViewState extends State<TokenListView> with TickerProviderStateM
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlack,
+                  color: FitnessAppTheme.nearlyBlackCard,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -47,7 +47,7 @@ class _TokenListViewState extends State<TokenListView> with TickerProviderStateM
                       topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],

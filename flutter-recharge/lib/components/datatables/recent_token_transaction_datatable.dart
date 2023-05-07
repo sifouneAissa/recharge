@@ -931,17 +931,17 @@ class _RecentTokenTransactionDatatable
         animation: widget.mainScreenAnimationController!,
         builder: (BuildContext context, Widget? child) {
           return AdaptiveScrollbar(
-            underColor: FitnessAppTheme.nearlyDarkREd.withOpacity(0.3),
-            sliderDefaultColor: FitnessAppTheme.nearlyDarkREd.withOpacity(0.7),
-            sliderActiveColor: FitnessAppTheme.nearlyDarkREd,
+            underColor: FitnessAppTheme.white.withOpacity(0.3),
+            sliderDefaultColor: FitnessAppTheme.white.withOpacity(0.7),
+            sliderActiveColor: FitnessAppTheme.white,
             controller: _verticalScrollController,
             child: AdaptiveScrollbar(
                 controller: _horizontalScrollController,
                 position: ScrollbarPosition.bottom,
-                underColor: FitnessAppTheme.nearlyDarkREd.withOpacity(0.3),
+                underColor: FitnessAppTheme.white.withOpacity(0.3),
                 sliderDefaultColor:
-                    FitnessAppTheme.nearlyDarkREd.withOpacity(0.7),
-                sliderActiveColor: FitnessAppTheme.nearlyDarkREd,
+                    FitnessAppTheme.white.withOpacity(0.7),
+                sliderActiveColor: FitnessAppTheme.white,
                 child: Container(
                     margin: EdgeInsets.only(top: 10),
                     child: SingleChildScrollView(
@@ -961,7 +961,7 @@ class _RecentTokenTransactionDatatable
                                             fontSize: 20,
                                             fontWeight: FontWeight.w800,
                                             color:
-                                                FitnessAppTheme.nearlyDarkREd),
+                                                FitnessAppTheme.white),
                                       ))),
                               rows: List<DataRow>.generate(
                                 transactions.length,
@@ -977,7 +977,7 @@ class _RecentTokenTransactionDatatable
                                                 .toString(),
                                         style: TextStyle(
                                             color:
-                                                FitnessAppTheme.nearlyDarkREd,
+                                                FitnessAppTheme.lightText,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       onTap: () {
@@ -1046,7 +1046,7 @@ class _RecentTokenTransactionDatatable
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: FitnessAppTheme
-                                                  .nearlyDarkREd)),
+                                                  .lightText)),
                                       onTap: () {
                                         bottomSheetBuilder(
                                             transactions[counter]);

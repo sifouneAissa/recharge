@@ -382,18 +382,18 @@ class _JawakerViewState extends State<JawakerView> {
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: Container(
-                        width: 84,
-                        height: 84,
-                        decoration: BoxDecoration(
-                          color: FitnessAppTheme.nearlyWhite.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 0,
+                    //   left: 0,
+                    //   child: Container(
+                    //     width: 84,
+                    //     height: 84,
+                    //     decoration: BoxDecoration(
+                    //       color: FitnessAppTheme.nearlyWhite.withOpacity(0.2),
+                    //       shape: BoxShape.circle,
+                    //     ),
+                    //   ),
+                    // ),
                     Positioned(
                       top: 0,
                       left: 8,
