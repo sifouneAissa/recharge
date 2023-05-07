@@ -13,6 +13,7 @@ import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.d
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({Key? key, this.animationController,this.hideBottomBar}) : super(key: key);
@@ -69,7 +70,8 @@ class _TransactionScreenState extends State<TransactionScreen>
             _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
           });
           
-          widget.hideBottomBar(_showAppBar);
+          widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
+       
       }
     );
   }

@@ -253,7 +253,7 @@ class _AccountCardView extends State<AccountCardView> {
                               children: <Widget>[
                                 Text(
                                   user != null
-                                      ? user['tcount'].toString()
+                                      ? user['tpcountd'].toString()
                                       : '0',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -266,13 +266,10 @@ class _AccountCardView extends State<AccountCardView> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 6),
-                                  child: Icon(
-                                    Icons.info_rounded,
-                                    color: FitnessAppTheme.nearlyDarkREd,
-                                    size: 20.0,
-                                    semanticLabel:
-                                        'Text to announce in accessibility modes',
-                                  ),
+                                  child: Image.asset(
+                                          'assets/fitness_app/tab_3s.png',
+                                          width: 20,
+                                        ),
                                 ),
                               ],
                             ),
@@ -288,9 +285,8 @@ class _AccountCardView extends State<AccountCardView> {
                                   children: <Widget>[
                                     Text(
                                       user != null
-                                          ? user['ncount'].toString()
+                                          ? user['ttcountd'].toString()
                                           : '0',
-                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
@@ -301,13 +297,10 @@ class _AccountCardView extends State<AccountCardView> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
-                                      child: Icon(
-                                        Icons.notifications_active,
-                                        color: FitnessAppTheme.nearlyDarkREd,
-                                        size: 20.0,
-                                        semanticLabel:
-                                            'Text to announce in accessibility modes',
-                                      ),
+                                      child: Image.asset(
+                                          'assets/fitness_app/tab_2s.png',
+                                          width: 20,
+                                        ),
                                     ),
                                   ],
                                 ),
@@ -323,8 +316,12 @@ class _AccountCardView extends State<AccountCardView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
+                                    
                                     Text(
-                                      '0',
+                                      user != null
+                                          ? user['ncountd'].toString()
+                                          : '0',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
@@ -336,7 +333,7 @@ class _AccountCardView extends State<AccountCardView> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Icon(
-                                        Icons.money_sharp,
+                                        Icons.notifications_active,
                                         color: FitnessAppTheme.nearlyDarkREd,
                                         size: 20.0,
                                         semanticLabel:

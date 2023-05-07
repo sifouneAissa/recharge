@@ -13,6 +13,7 @@ import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.d
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class DashScreen extends StatefulWidget {
   const DashScreen({Key? key, this.animationController, this.onChangeBody,this.hideBottomBar})
@@ -68,12 +69,10 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
     super.initState();
 
      scrollController?.addListener(() async {
-
-       setState(() {
+      setState(() {
             _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
-            
           });
-          widget.hideBottomBar(_showAppBar);
+        widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
        
       }
     );

@@ -17,6 +17,7 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/home/account_card_view.dart';
 import 'package:best_flutter_ui_templates/screens/Login/components/login_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class JawakerAccelerationScreen extends StatefulWidget {
   const JawakerAccelerationScreen({Key? key, this.animationController,this.onChangeBody,this.hideBottomBar}) : super(key: key);
@@ -74,7 +75,8 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
             _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
           });
           
-          widget.hideBottomBar(_showAppBar);
+          widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
+       
       }
     );
   }
