@@ -114,7 +114,7 @@ class _JawakerAcceleratorListViewState extends State<JawakerAcceleratorListView>
                   var package;
                   try {
                     package = packages.firstWhere((element) =>
-                        element['name'] == mealsListData[index].value);
+                        element['code'] == mealsListData[index].value);
                   } catch (error) {}
                   return GestureDetector(
                       onTap: () {

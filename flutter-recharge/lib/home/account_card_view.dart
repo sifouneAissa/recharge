@@ -48,6 +48,8 @@ class _AccountCardView extends State<AccountCardView> {
     
     var data = await AuthApi().getData(jsonDecode(res.body));
 
+    print(data);
+    print('data');
     setState(() {
         user = data['user'];
     });
@@ -81,15 +83,16 @@ class _AccountCardView extends State<AccountCardView> {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlack,
+                  border: Border.all(color: Colors.black26),
+                  color: FitnessAppTheme.nearlyBlackCard,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(8.0)),
+                      topLeft: Radius.circular(20.0),
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
                         offset: Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],

@@ -5,3 +5,4 @@ const kPrimaryLightColor = Color(0xFFF1E6FF);
 
 const double defaultPadding = 16.0;
 const double defaultAcceleratorToken = 190000;
+const double defaultHeight = 10.0;

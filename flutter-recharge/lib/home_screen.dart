@@ -151,8 +151,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return user['is_active'] ==1 ? buildActiveScreen() : buildDisabledScreen();
+    if(user!=null)
+    return user['is_active'] == 1 ? buildActiveScreen() : buildDisabledScreen();
+    return buildDisabledScreen();
   }
+
 
   Widget appBar() {
     var brightness = Theme.of(context).brightness;

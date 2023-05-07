@@ -64,16 +64,18 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
               padding: const EdgeInsets.only(
                   left: 5, right: 5, top: 5, bottom: 5),
               child: Container(
+                margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlack,
+                  border: Border.all(color: Colors.black26),
+                  color: FitnessAppTheme.nearlyBlackCard,
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(8.0)),
+                      topLeft: Radius.circular(20.0),
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.2),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -112,7 +114,7 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           color: FitnessAppTheme.nearlyDarkREd,
                                         ),
                                       ),
@@ -193,7 +195,7 @@ class _NotificationListViewState extends State<NotificationListView> with Ticker
                                             fontFamily:
                                                 FitnessAppTheme.fontName,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 14,
+                                            fontSize: 11,
                                             letterSpacing: 0.0,
                                             color: FitnessAppTheme.lightText,
                                           ),

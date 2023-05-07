@@ -139,7 +139,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                 width: MediaQuery.of(context).size.width * 0.2,
                 margin: EdgeInsets.only(left: 0),
                 child: Text(
-                  element.packageData['name'],
+                  element.packageData['code'],
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: FitnessAppTheme.lightText

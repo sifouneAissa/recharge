@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
@@ -94,7 +95,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
         mainScreenAnimationController: widget.animationController,
       ),
     );
-
+listViews.add(SizedBox(height: defaultHeight,));
 listViews.add(
       TitleView(
         titleTxt: "اشحن واطلع على معلوماتك بشكل يومي : ",
@@ -269,6 +270,8 @@ listViews.add(
       ),
     );
 
+
+
     gridViews.add(
       NotificationListView(
         
@@ -436,6 +439,11 @@ listViews.add(
   }
 
   Widget getGridViewUI() {
+    
+    /*24 is for notification bar on Android*/
+    // final double itemHeight = (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 2;
+    // final double itemWidth = MediaQuery.of(context).size.width / 2;
+
     return FutureBuilder<bool>(
       future: getData(),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -454,6 +462,7 @@ listViews.add(
               //       24) * 3.7,
               //   bottom: 10 + MediaQuery.of(context).padding.bottom,
               // ),
+              
               itemCount: gridViews.length,
               shrinkWrap: true,
               physics: ScrollPhysics(),
