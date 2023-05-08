@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:best_flutter_ui_templates/responsive.dart';
 
@@ -11,6 +12,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FitnessAppTheme.nearlyBlack,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Responsive(

@@ -108,14 +108,25 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
       }
     });
     super.initState();
-
+    
      scrollController?.addListener(() async {
+      
+      widget.hideBottomBar(false);
+
+      scrollController.position.isScrollingNotifier.addListener(() {
+          
+          widget.hideBottomBar(!scrollController.position.isScrollingNotifier.value);
+          
+      });
+
       setState(() {
             _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
           });
-        widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
-       
+        
+      
       }
+
+      
 
     );
     

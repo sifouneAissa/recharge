@@ -71,12 +71,13 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
     super.initState();
     
      scrollController?.addListener(() async {
-       setState(() {
+      setState(() {
             _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
           });
-          
-          widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
-       
+        
+      scrollController.position.isScrollingNotifier.addListener(() { 
+          widget.hideBottomBar(!scrollController.position.isScrollingNotifier.value);
+      });
       }
     );
   }

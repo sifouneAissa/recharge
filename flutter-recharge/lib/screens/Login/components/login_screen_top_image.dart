@@ -27,8 +27,10 @@ class LoginScreenTopImage extends StatelessWidget {
         // SizedBox(height: defaultPadding * 2),
         Text(
           S.of(context).login,
-          style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText,
-),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: FitnessAppTheme.lightText,
+          ),
         ),
         SizedBox(height: defaultPadding * 0.5),
       ],

@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/responsive.dart';
@@ -12,6 +13,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FitnessAppTheme.nearlyBlack,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Responsive(
@@ -22,14 +24,15 @@ class SignUpScreen extends StatelessWidget {
                 child: SignUpScreenTopImage(),
               ),
               Expanded(
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     SizedBox(
                       width: 450,
                       child: SignUpForm(),
                     ),
-                    SizedBox(height: defaultPadding / 2),
+                    // SizedBox(height: defaultPadding / 2),
                     // SocalSignUp()
                   ],
                 ),
@@ -51,15 +54,17 @@ class MobileSignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const SignUpScreenTopImage(),
         Row(
           children: const [
-            Spacer(),
+            // Spacer(),
             Expanded(
               flex: 8,
               child: SignUpForm(),
             ),
+            
             // Spacer(),
           ],
         ),

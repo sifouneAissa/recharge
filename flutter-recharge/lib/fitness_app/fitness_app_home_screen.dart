@@ -74,6 +74,8 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
               _showBottomBar = false;
             else
               _showBottomBar = true;
+
+              print('this is long press');
           });
         },
         child: Scaffold(

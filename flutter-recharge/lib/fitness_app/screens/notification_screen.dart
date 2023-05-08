@@ -67,11 +67,14 @@ class _NotificationScreenState extends State<NotificationScreen>
     super.initState();
     
      scrollController?.addListener(() async {
-       setState(() {
+      widget.hideBottomBar(false);
+      setState(() {
             _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
           });
-          widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
-       
+        
+      scrollController.position.isScrollingNotifier.addListener(() { 
+          widget.hideBottomBar(!scrollController.position.isScrollingNotifier.value);
+      });
       }
     );
   }

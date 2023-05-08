@@ -222,7 +222,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
-                    color: FitnessAppTheme.oligthText,
+                    color: FitnessAppTheme.nearlyWhite,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -297,12 +297,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           child: Image.asset(listData.imageName,
                               color: widget.screenIndex == listData.index
                                   ? Colors.blue
-                                  : AppTheme.nearlyBlack),
+                                  : FitnessAppTheme.oligthText),
                         )
                       : Icon(listData.icon?.icon,
                           color: widget.screenIndex == listData.index
                               ? Colors.blue
-                              : AppTheme.nearlyBlack),
+                              : FitnessAppTheme.oligthText),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
                   ),
@@ -313,7 +313,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       fontSize: 16,
                       color: widget.screenIndex == listData.index
                           ? FitnessAppTheme.nearlyWhite
-                          : FitnessAppTheme.oligthText,
+                          : FitnessAppTheme.nearlyWhite,
                     ),
                     textAlign: TextAlign.left,
                   ),

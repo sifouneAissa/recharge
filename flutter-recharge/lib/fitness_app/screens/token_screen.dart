@@ -72,14 +72,17 @@ class _TokenScreenState extends State<TokenScreen>
       }
     });
     super.initState();
-    
-     scrollController?.addListener(() async {
-       setState(() {
+
+    scrollController?.addListener(() async {
+      widget.hideBottomBar(false);
+
+      setState(() {
             _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
           });
-          
-          widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
-       
+        
+      scrollController.position.isScrollingNotifier.addListener(() { 
+          widget.hideBottomBar(!scrollController.position.isScrollingNotifier.value);
+      });
       }
     );
   }

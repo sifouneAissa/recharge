@@ -71,14 +71,17 @@ class _TransactionScreenState extends State<TransactionScreen>
     super.initState();
 
     scrollController?.addListener(() async {
-      setState(() {
-        _showAppBar = !(scrollController!.position!.pixels >
-            scrollController!.position!.minScrollExtent);
-      });
+      widget.hideBottomBar(false);
 
-      widget.hideBottomBar(scrollController!.position.userScrollDirection ==
-          ScrollDirection.forward);
-    });
+      setState(() {
+            _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
+          });
+        
+      scrollController.position.isScrollingNotifier.addListener(() { 
+          widget.hideBottomBar(!scrollController.position.isScrollingNotifier.value);
+      });
+      }
+    );
   }
 
   void addAllListData() {

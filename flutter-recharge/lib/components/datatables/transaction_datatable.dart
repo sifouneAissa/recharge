@@ -59,7 +59,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     '#',
     'الحالة',
     S().count,
-    S().cost_d,
+    // S().cost_d,
     'اسم اللاعب',
     'معرف اللاعب',
     S().transaction_type,
@@ -2029,22 +2029,22 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                             stransactions[counter]);
                                   },
                                 ),
-                                DataCell(
-                                  Text(
-                                      Common.formatNumber(
-                                          stransactions[counter]['cost']),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: FitnessAppTheme.lightText)),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
-                                ),
+                                // DataCell(
+                                //   Text(
+                                //       Common.formatNumber(
+                                //           stransactions[counter]['cost']),
+                                //       style: TextStyle(
+                                //           fontWeight: FontWeight.bold,
+                                //           color: FitnessAppTheme.lightText)),
+                                //   onTap: () {
+                                //     stransactions[counter]['type'].toString() ==
+                                //             'token'
+                                //         ? bottomSheetBuilderToken(
+                                //             stransactions[counter])
+                                //         : bottomSheetBuilderPoint(
+                                //             stransactions[counter]);
+                                //   },
+                                // ),
                                 DataCell(
                                   Text(getAccount(stransactions[counter]),
                                       style: TextStyle(
