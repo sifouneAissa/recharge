@@ -1881,6 +1881,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       });
                     },
                   ),
+                  
                   IconButton(
                     icon: const Icon(Icons.date_range),
                     tooltip: 'بحث حسب التاريخ',
@@ -1891,7 +1892,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       });
                     },
                   ),
-                  Container(height: 20,),
+                  Container(width: 105,),
                   Container(
                     margin: EdgeInsets.only(right: 10),
                     child: DropdownButton(
