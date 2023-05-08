@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:best_flutter_ui_templates/custom_drawer/drawer_user_controller.dart';
 import 'package:best_flutter_ui_templates/custom_drawer/home_drawer.dart';
@@ -16,16 +20,53 @@ class NavigationHomeScreen extends StatefulWidget {
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
+  var user;
 
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
     screenView = const MyHomePage();
+    _getUser();
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
+
+  _getUser() async {
+    var auth = await GetData().getAuth();
+
+    setState(() {
+      user = auth;
+    });
+
+    // update user
+    var res = await AuthApi().getUser();
+
+    var data = await AuthApi().getData(JsonDecoder(res.body));
+
+    setState(() {
+      user = data['user'];
+    });
+
+    await AuthApi().updateUser(data);
+  }
+  
+  handleSnackBarError() {
+    final snackBar = SnackBar(
+      content: Text('حسابك قيد التفعيل الرجاء الانتظار'),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  buildActiveWidget(){
     return Container(
       color: AppTheme.white,
       child: SafeArea(
@@ -46,6 +87,21 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         ),
       ),
     );
+  }
+  buildDisabledWidget(){
+      return GestureDetector(
+      onTap: () {
+        handleSnackBarError();
+        },
+        child: AbsorbPointer(
+          child: buildActiveWidget(),
+        ) 
+      ,);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return user['is_active'] == 1 ? buildActiveWidget() : buildDisabledWidget();
   }
 
   void changeIndex(DrawerIndex drawerIndexdata) {

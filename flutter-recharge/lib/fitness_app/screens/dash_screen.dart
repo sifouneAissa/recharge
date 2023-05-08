@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
@@ -12,6 +16,7 @@ import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -35,6 +40,42 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
   final ScrollController scrollControllerG = ScrollController();
   double topBarOpacity = 0.0;
   bool _showAppBar = true;
+  var user;
+
+  
+  _getUser() async {
+
+    var auth = await GetData().getAuth();
+
+    setState(() {
+      user = auth;
+    });
+
+    // update user
+    var res = await AuthApi().getUser();
+    print(res);
+    var data = await AuthApi().getData(jsonDecode(res.body));
+
+    setState(() {
+      user = data['user'];
+    });
+
+    await AuthApi().updateUser(data);
+
+
+    
+      if(user['is_active'] == 0)
+      Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NavigationHomeScreen();
+              },
+            ),
+      );
+  }
+
+  
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -43,7 +84,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
             curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
     addAllListData();
     addAllGridData();
-
+    // _getUser();
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
         if (topBarOpacity != 1.0) {
@@ -75,7 +116,15 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
         widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
        
       }
+
     );
+    
+      scrollController?.addListener(() async {
+      if (scrollController?.position.pixels ==
+          scrollController?.position.minScrollExtent) {
+        await _getUser();
+      }
+    });
   }
 
   void addAllListData() {

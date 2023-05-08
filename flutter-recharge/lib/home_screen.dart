@@ -29,7 +29,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _getUser();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
@@ -151,9 +150,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if(user!=null)
-    return user['is_active'] == 1 ? buildActiveScreen() : buildDisabledScreen();
-    return buildDisabledScreen();
+    // if(user!=null)
+    // return user['is_active'] == 1 ? buildActiveScreen() : buildDisabledScreen();
+    return buildActiveScreen();
   }
 
 
