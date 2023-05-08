@@ -45,7 +45,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   double _cost = 0;
   bool _hasCash = true;
   bool _showRecent = false;
-  int _tokens = 0;
+  double _tokens = 0;
   List<PackagePointData> data = [];
 
   String? selectedPoint;
@@ -94,7 +94,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
           .toString();
       String text = 'لقد اخترت ';
       var ncost = 0.0;
-      var ttokens = 0;
+      var ttokens = 0.0;
       data.forEach((element) {
         String cost =
             (element.packageData['cost'] * double.parse(element.value))
@@ -108,9 +108,9 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             cost.substring(0, cost.length > 5 ? 5 : cost.length);
         text = text + '\n' + subtext;
         ncost =
-            element.packageData['cost'] * double.parse(element.value) + ncost;
+            element.packageData['cost'] *  double.parse(element.value) + ncost;
         ttokens =
-            element.packageData['cost'] * int.parse(element.value) + ttokens;
+            element.packageData['cost'] * double.parse(element.value) + ttokens;
       });
 
       setState(() {

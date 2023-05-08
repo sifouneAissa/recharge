@@ -16,10 +16,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class TransactionScreen extends StatefulWidget {
-  const TransactionScreen({Key? key, this.animationController,this.hideBottomBar}) : super(key: key);
+  const TransactionScreen(
+      {Key? key, this.animationController, this.hideBottomBar})
+      : super(key: key);
 
   final AnimationController? animationController;
   final hideBottomBar;
+
   @override
   _TransactionScreenState createState() => _TransactionScreenState();
 }
@@ -27,12 +30,14 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen>
     with TickerProviderStateMixin {
   Animation<double>? topBarAnimation;
+  TransactionDatatable? child;
+  // var download;
 
   List<Widget> listViews = <Widget>[];
+
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
   bool _showAppBar = true;
-
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -64,22 +69,21 @@ class _TransactionScreenState extends State<TransactionScreen>
       }
     });
     super.initState();
-    
-     scrollController?.addListener(() async {
-       setState(() {
-            _showAppBar = !(scrollController!.position!.pixels > scrollController!.position!.minScrollExtent);
-          });
-          
-          widget.hideBottomBar(scrollController!.position.userScrollDirection == ScrollDirection.forward);
-       
-      }
-    );
+
+    scrollController?.addListener(() async {
+      setState(() {
+        _showAppBar = !(scrollController!.position!.pixels >
+            scrollController!.position!.minScrollExtent);
+      });
+
+      widget.hideBottomBar(scrollController!.position.userScrollDirection ==
+          ScrollDirection.forward);
+    });
   }
 
   void addAllListData() {
     // const int count = 1;
-  
-    
+
     // listViews.add(
     //   TitleView(
     //     titleTxt: S().new_transactions,
@@ -91,16 +95,19 @@ class _TransactionScreenState extends State<TransactionScreen>
     //     animationController: widget.animationController!,
     //   ),
     // );
-
-    listViews.add(TransactionDatatable(
+    TransactionDatatable v = new TransactionDatatable(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController!,
-                curve: Interval(0.7, 1.0,
-                    curve: Curves.slowMiddle))),
+                curve: Interval(0.7, 1.0, curve: Curves.slowMiddle))),
         mainScreenAnimationController: widget.animationController,
-        parentScrollController : scrollController
-    ));
+        parentScrollController: scrollController,
+        // download: (param) {
+        //   download = param;
+        // }
+        );
+
+    listViews.add(v);
 
     // listViews.add(
     //   JawakerAcceleratorListView(
@@ -113,7 +120,6 @@ class _TransactionScreenState extends State<TransactionScreen>
     //   ),
     // );
 
-    
     // listViews.add(
     //   TitleView(
     //     titleTxt: 'Jawaker Shipping',
@@ -136,7 +142,6 @@ class _TransactionScreenState extends State<TransactionScreen>
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-    
 
     // listViews.add(
     //   TitleView(
@@ -160,7 +165,6 @@ class _TransactionScreenState extends State<TransactionScreen>
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-    
 
     // listViews.add(
     //   TitleView(
@@ -183,7 +187,6 @@ class _TransactionScreenState extends State<TransactionScreen>
     //     mainScreenAnimationController: widget.animationController!,
     //   ),
     // );
-  
 
     // listViews.add(
     //   TitleView(
@@ -233,14 +236,14 @@ class _TransactionScreenState extends State<TransactionScreen>
           color: FitnessAppTheme.nearlyDarkREd,
           onRefresh: getData,
           child: Stack(
-          children: <Widget>[
-            getMainListViewUI(),
-            _showAppBar ? getAppBarUI() : Container(),
-            SizedBox(
-              height: MediaQuery.of(context).padding.bottom,
-            )
-          ],
-        ),
+            children: <Widget>[
+              getMainListViewUI(),
+              _showAppBar ? getAppBarUI() : Container(),
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -286,7 +289,8 @@ class _TransactionScreenState extends State<TransactionScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.nearlyBlackCard.withOpacity(topBarOpacity),
+                    color: FitnessAppTheme.nearlyBlackCard
+                        .withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),
@@ -312,6 +316,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -328,6 +333,15 @@ class _TransactionScreenState extends State<TransactionScreen>
                                 ),
                               ),
                             ),
+                            // IconButton(
+                            //     onPressed: () {
+                            //       download();
+                            //     },
+                            //     icon: Icon(
+                            //       Icons.download,
+                            //       color: FitnessAppTheme.nearlyDarkREd,
+                            //       size: 40,
+                            //     )),
                             // SizedBox(
                             //   height: 38,
                             //   width: 38,

@@ -19,16 +19,21 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TransactionDatatable extends StatefulWidget {
-  const TransactionDatatable(
-      {Key? key,
+  
+  
+   TransactionDatatable(
+      {Key? globalKey,
       this.mainScreenAnimationController,
       this.mainScreenAnimation,
+      // this.download,
       this.parentScrollController})
-      : super(key: key);
+      : super(key: globalKey);
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
   final ScrollController? parentScrollController;
+  // var download;
+  
 
   @override
   _TransactionDatatable createState() => _TransactionDatatable();
@@ -37,6 +42,7 @@ class TransactionDatatable extends StatefulWidget {
 class _TransactionDatatable extends State<TransactionDatatable>
     with TickerProviderStateMixin {
   AnimationController? animationController;
+
 
   var transactions = [];
   var stransactions = [];
@@ -97,10 +103,13 @@ class _TransactionDatatable extends State<TransactionDatatable>
   void initState() {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
-
+    
+    // widget.download((){
+    //   _launchURL();
+    // });
+    
     __getTransactions();
     super.initState();
-
     widget.parentScrollController?.addListener(() async {
       if (widget.parentScrollController?.position.pixels ==
           widget.parentScrollController?.position.minScrollExtent) {
@@ -1811,7 +1820,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
   @override
   Widget build(BuildContext context) {
+    
     return AnimatedBuilder(
+        // key: widget.key,
         animation: widget.mainScreenAnimationController!,
         builder: (BuildContext context, Widget? child) {
           return Column(
@@ -1905,6 +1916,8 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       ),
                     )
                   : Container(),
+                  
+              Container(height: defaultHeight,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
