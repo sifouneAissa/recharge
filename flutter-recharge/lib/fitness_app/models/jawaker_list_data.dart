@@ -26,7 +26,7 @@ class JawakerListData {
       kacl: 100,
       meals: <String>['100 %'],
       startColor: '#e65019',
-      endColor: '#e65019',
+      endColor: '#8e310f',
       value:'100%',
     ),
     JawakerListData(

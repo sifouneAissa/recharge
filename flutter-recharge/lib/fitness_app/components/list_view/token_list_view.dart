@@ -39,7 +39,16 @@ class _TokenListViewState extends State<TokenListView> with TickerProviderStateM
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlackCard,
+                  
+                  gradient: LinearGradient(colors: [
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    // HexColor(FitnessAppTheme.gradiantFc).withOpacity(0.7),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+
+                    HexColor(FitnessAppTheme.gradiantFc),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  // color: FitnessAppTheme.nearlyBlackCard,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),

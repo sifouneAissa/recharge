@@ -5,6 +5,7 @@ import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
 class AccountCardView extends StatefulWidget {
@@ -12,55 +13,66 @@ class AccountCardView extends StatefulWidget {
   final Animation<double>? animation;
   final ScrollController? parentScrollController;
   final bool? isPoint;
-  const AccountCardView({Key? key, this.animationController, this.animation,this.parentScrollController,this.isPoint})
+  const AccountCardView(
+      {Key? key,
+      this.animationController,
+      this.animation,
+      this.parentScrollController,
+      this.isPoint})
       : super(key: key);
-  
+
   @override
   _AccountCardView createState() => _AccountCardView();
 }
 
 class _AccountCardView extends State<AccountCardView> {
   var user;
-  bool  _loading = false;
+  bool _loading = false;
 
   @override
   void initState() {
     _getUser();
     super.initState();
     widget.parentScrollController?.addListener(() async {
-      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
-          await _getUser();
-       }
+      if (widget.parentScrollController?.position.pixels ==
+          widget.parentScrollController?.position.minScrollExtent) {
+        await _getUser();
       }
-    );
+    });
   }
 
   _getUser() async {
     _loading = !_loading;
     var auth = await GetData().getAuth();
-    
+
     setState(() {
       user = auth;
     });
-    
-    // update user 
+
+    // update user
     var res = await AuthApi().getUser();
-    
+
     var data = await AuthApi().getData(jsonDecode(res.body));
     setState(() {
-        user = data['user'];
+      user = data['user'];
     });
 
     await AuthApi().updateUser(data);
-  
+
     _loading = !_loading;
   }
 
-  getCash(){
+  getCash() {
     String textToShow = '';
     bool forPoint = widget.isPoint != null;
-    if(!forPoint) textToShow =  user != null && user['cash'] != null ? Common.formatNumber(user['cash']) : '0';
-    else textToShow = user != null && user['cash_point'] != null ? Common.formatNumber(user['cash_point']) : '0'; 
+    if (!forPoint)
+      textToShow = user != null && user['cash'] != null
+          ? Common.formatNumber(user['cash'])
+          : '0';
+    else
+      textToShow = user != null && user['cash_point'] != null
+          ? Common.formatNumber(user['cash_point'])
+          : '0';
 
     return textToShow;
   }
@@ -80,8 +92,19 @@ class _AccountCardView extends State<AccountCardView> {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black26),
-                  color: FitnessAppTheme.nearlyBlackCard,
+                  // color: FitnessAppTheme.nearlyBlackCard,
+                  gradient: LinearGradient(colors: [
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  border: Border.all(color: Colors.black87),
+                  // border: Border.all(color: Colors.black26),
+                  // color: FitnessAppTheme.nearlyBlackCard,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       bottomLeft: Radius.circular(20.0),
@@ -111,19 +134,23 @@ class _AccountCardView extends State<AccountCardView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                              S.of(context).balance,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: FitnessAppTheme.fontName,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  letterSpacing: 0,
-                                  color: FitnessAppTheme.lightText),
-                            ),
-                              _loading ? Container(
-                                margin: EdgeInsets.only(right: 3),
-                                child : Image.asset('assets/icons/loading.gif',width: 20,)
-                              ) : Container()
+                                  S.of(context).balance,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      letterSpacing: 0,
+                                      color: FitnessAppTheme.lightText),
+                                ),
+                                _loading
+                                    ? Container(
+                                        margin: EdgeInsets.only(right: 3),
+                                        child: Image.asset(
+                                          'assets/icons/loading.gif',
+                                          width: 20,
+                                        ))
+                                    : Container()
                               ],
                             ),
                           ),
@@ -137,24 +164,25 @@ class _AccountCardView extends State<AccountCardView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 0,
-                                        left: 0, bottom: 3),
+                                    padding: const EdgeInsets.only(
+                                        right: 0, left: 0, bottom: 3),
                                     child: Container(
                                       child: FittedBox(
-                                        fit : BoxFit.scaleDown,
-                                        child : Text(
-                                        getCash(),
-                                        softWrap: false,
-                                        textAlign: TextAlign.center,
-                                        // overflow: TextOverflow.fade,
-                                        style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 32,
-                                          color: FitnessAppTheme.nearlyWhite,
-                                        ),
-                                      )
-                                      ),
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(
+                                            getCash(),
+                                            softWrap: false,
+                                            textAlign: TextAlign.center,
+                                            // overflow: TextOverflow.fade,
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  FitnessAppTheme.fontName,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 32,
+                                              color:
+                                                  FitnessAppTheme.nearlyWhite,
+                                            ),
+                                          )),
                                       width: MediaQuery.of(context).size.width *
                                           0.7,
                                     ),
@@ -267,9 +295,9 @@ class _AccountCardView extends State<AccountCardView> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 6),
                                   child: Image.asset(
-                                          'assets/fitness_app/tab_3s.png',
-                                          width: 20,
-                                        ),
+                                    'assets/fitness_app/tab_3s.png',
+                                    width: 20,
+                                  ),
                                 ),
                               ],
                             ),
@@ -298,9 +326,9 @@ class _AccountCardView extends State<AccountCardView> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Image.asset(
-                                          'assets/fitness_app/tab_2s.png',
-                                          width: 20,
-                                        ),
+                                        'assets/fitness_app/tab_2s.png',
+                                        width: 20,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -316,7 +344,6 @@ class _AccountCardView extends State<AccountCardView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    
                                     Text(
                                       user != null
                                           ? user['ncountd'].toString()

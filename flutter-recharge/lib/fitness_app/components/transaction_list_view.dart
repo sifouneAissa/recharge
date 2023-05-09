@@ -62,9 +62,17 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
               child: Container(
                 margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  
-                  border: Border.all(color: Colors.black26),
-                  color: FitnessAppTheme.nearlyBlackCard,
+                  // color: FitnessAppTheme.nearlyBlackCard,
+                  gradient: LinearGradient(colors: [
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    // HexColor(FitnessAppTheme.gradiantFc).withOpacity(0.7),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    
+                    HexColor(FitnessAppTheme.gradiantFc),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  border: Border.all(color: Colors.black87),
+                  // color: FitnessAppTheme.nearlyBlackCard,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       bottomLeft: Radius.circular(20.0),
@@ -72,7 +80,7 @@ class _TransactionListViewState extends State<TransactionListView> with TickerPr
                       topRight: Radius.circular(20.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.2),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],

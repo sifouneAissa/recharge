@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/ui_view/wave_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
@@ -7,7 +8,11 @@ import 'package:flutter/material.dart';
 
 class JawakerListView extends StatefulWidget {
   const JawakerListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation,this.onChangeBody,this.parentScrollController})
+      {Key? key,
+      this.mainScreenAnimationController,
+      this.mainScreenAnimation,
+      this.onChangeBody,
+      this.parentScrollController})
       : super(key: key);
 
   final AnimationController? mainScreenAnimationController;
@@ -19,7 +24,8 @@ class JawakerListView extends StatefulWidget {
   _JawakerListViewState createState() => _JawakerListViewState();
 }
 
-class _JawakerListViewState extends State<JawakerListView> with TickerProviderStateMixin {
+class _JawakerListViewState extends State<JawakerListView>
+    with TickerProviderStateMixin {
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
@@ -28,23 +34,24 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
   var user;
 
   @override
-  void initState(){
+  void initState() {
     _getUser();
     super.initState();
 
     widget.parentScrollController?.addListener(() async {
-      if (widget.parentScrollController?.position.pixels == widget.parentScrollController?.position.minScrollExtent) {
-          await _getUser();
-       }
-      });
+      if (widget.parentScrollController?.position.pixels ==
+          widget.parentScrollController?.position.minScrollExtent) {
+        await _getUser();
+      }
+    });
   }
 
-  _getUser() async{
-      var auth = await GetData().getAuth();
-      setState(() {
-        user = auth;
-        print(user);
-      });
+  _getUser() async {
+    var auth = await GetData().getAuth();
+    setState(() {
+      user = auth;
+      print(user);
+    });
   }
 
   @override
@@ -53,20 +60,26 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
       animation: widget.mainScreenAnimationController!,
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
-
           opacity: widget.mainScreenAnimation!,
           child: Transform(
-            
             transform: Matrix4.translationValues(
                 0.0, 30 * (1.0 - widget.mainScreenAnimation!.value), 0.0),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 5, right: 5, top: 5, bottom: 5),
+              padding:
+                  const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
               child: Container(
                 margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlackCard,
-                  border: Border.all(color: Colors.black26),
+                  // color: FitnessAppTheme.nearlyBlackCard,
+                  gradient: LinearGradient(colors: [
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    // HexColor(FitnessAppTheme.gradiantFc).withOpacity(0.7),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    
+                    HexColor(FitnessAppTheme.gradiantFc),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  border: Border.all(color: Colors.black87),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       bottomLeft: Radius.circular(20.0),
@@ -74,7 +87,7 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                       topRight: Radius.circular(20.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.2),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -91,16 +104,20 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                
                                 GestureDetector(
-                                  child: Image.asset('assets/fitness_app/tab_3s.png',width: 45,),
-                              onTap: () {
-                                widget.onChangeBody();
-                              },
+                                  child: Image.asset(
+                                    'assets/fitness_app/tab_3s.png',
+                                    width: 45,
+                                  ),
+                                  onTap: () {
+                                    widget.onChangeBody();
+                                  },
                                 ),
-                                Text('شحن توكنز جواكر',style: TextStyle(
-                                  color: FitnessAppTheme.lightText
-                                ),),
+                                Text(
+                                  'شحن توكنز جواكر',
+                                  style: TextStyle(
+                                      color: FitnessAppTheme.lightText),
+                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,7 +126,9 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                                       padding: const EdgeInsets.only(
                                           left: 0, bottom: 3),
                                       child: Text(
-                                        user !=null ? user['ttcount'].toString() : '0',
+                                        user != null
+                                            ? user['ttcount'].toString()
+                                            : '0',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -188,20 +207,26 @@ class _JawakerListViewState extends State<JawakerListView> with TickerProviderSt
                                       Expanded(
                                         // padding:
                                         //     const EdgeInsets.only(left: 4.0),
-                                        child: Container (
+                                        child: Container(
                                           child: Text(
-                                          user !=null ? S.of(context).last_shop + (user['lst_shop_token'] != null ? user['lst_shop_token'].toString() : 'لايوجد') : '',
-                                          textAlign: TextAlign.center,
-                                          
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FitnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 11,
-                                            letterSpacing: 0.0,
-                                            color: FitnessAppTheme.lightText,
+                                            user != null
+                                                ? S.of(context).last_shop +
+                                                    (user['lst_shop_token'] !=
+                                                            null
+                                                        ? user['lst_shop_token']
+                                                            .toString()
+                                                        : 'لايوجد')
+                                                : '',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  FitnessAppTheme.fontName,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 11,
+                                              letterSpacing: 0.0,
+                                              color: FitnessAppTheme.lightText,
+                                            ),
                                           ),
-                                        ),
                                         ),
                                       ),
                                     ],

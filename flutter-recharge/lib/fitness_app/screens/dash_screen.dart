@@ -16,6 +16,7 @@ import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/meals_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/my_diary/water_view.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -346,7 +347,6 @@ listViews.add(
 
     gridViews.add(
       NotificationListView(
-        
         parentScrollController: scrollController,
          onChangeBody: (){
           widget.onChangeBody('notification');
@@ -460,7 +460,8 @@ listViews.add(
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.nearlyBlack,
+      // color: FitnessAppTheme.nearlyBlack,
+      decoration: getBoxBackgroud(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(

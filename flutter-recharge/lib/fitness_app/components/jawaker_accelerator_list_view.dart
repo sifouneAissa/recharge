@@ -198,6 +198,7 @@ class _JawakerView extends State<JawakerView> {
                         gradient: LinearGradient(
                           colors: <HexColor>[
                             HexColor(widget.mealsListData!.startColor),
+                            HexColor('#3B0656'),
                             HexColor(widget.mealsListData!.endColor),
                           ],
                           begin: Alignment.topLeft,

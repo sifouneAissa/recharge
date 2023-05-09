@@ -1,4 +1,6 @@
 import 'dart:math' as math;
+import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/fitness_app/models/tabIcon_data.dart';
 import 'package:best_flutter_ui_templates/main.dart';
@@ -44,99 +46,106 @@ class _BottomBarViewState extends State<BottomBarView>
           animation: animationController!,
           builder: (BuildContext context, Widget? child) {
             return Transform(
-              transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-              child: PhysicalShape(
-                color: FitnessAppTheme.nearlyBlackCard,
-                elevation: 16.0,
-                clipper: TabClipper(
-                    radius: Tween<double>(begin: 0.0, end: 1.0)
-                            .animate(CurvedAnimation(
-                                parent: animationController!,
-                                curve: Curves.fastOutSlowIn))
-                            .value *
-                        30.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 62,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 8, right: 8, top: 4),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[4],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[4]);
-                                    widget.changeIndex!(4);
-                                  }),
+                transform: Matrix4.translationValues(0.0, 0.0, 0.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.gradiantSc),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+                  child: PhysicalShape(
+                    color: Colors.transparent,
+                    elevation: 16.0,
+                    clipper: TabClipper(
+                        radius: Tween<double>(begin: 0.0, end: 1.0)
+                                .animate(CurvedAnimation(
+                                    parent: animationController!,
+                                    curve: Curves.fastOutSlowIn))
+                                .value *
+                            30.0),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 62,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8, right: 8, top: 4),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: TabIcons(
+                                      tabIconData: widget.tabIconsList?[4],
+                                      removeAllSelect: () {
+                                        setRemoveAllSelection(
+                                            widget.tabIconsList?[4]);
+                                        widget.changeIndex!(4);
+                                      }),
+                                ),
+                                Expanded(
+                                  child: TabIcons(
+                                      tabIconData: widget.tabIconsList?[1],
+                                      removeAllSelect: () {
+                                        setRemoveAllSelection(
+                                            widget.tabIconsList?[1]);
+                                        widget.changeIndex!(1);
+                                      }),
+                                ),
+                                SizedBox(
+                                  width: Tween<double>(begin: 0.0, end: 1.0)
+                                          .animate(CurvedAnimation(
+                                              parent: animationController!,
+                                              curve: Curves.fastOutSlowIn))
+                                          .value *
+                                      64.0,
+                                ),
+                                Expanded(
+                                  child: TabIcons(
+                                      tabIconData: widget.tabIconsList?[2],
+                                      removeAllSelect: () {
+                                        setRemoveAllSelection(
+                                            widget.tabIconsList?[2]);
+                                        widget.changeIndex!(2);
+                                      }),
+                                ),
+                                Expanded(
+                                  child: TabIcons(
+                                      tabIconData: widget.tabIconsList?[3],
+                                      removeAllSelect: () {
+                                        setRemoveAllSelection(
+                                            widget.tabIconsList?[3]);
+                                        widget.changeIndex!(3);
+                                      }),
+                                ),
+                                // Expanded(
+                                //   child: TabIcons(
+                                //       tabIconData: widget.tabIconsList?[4],
+                                //       removeAllSelect: () {
+                                //         setRemoveAllSelection(
+                                //             widget.tabIconsList?[4]);
+                                //         widget.changeIndex!(4);
+                                //       }),
+                                // ),
+                                // Expanded(
+                                //   child: TabIcons(
+                                //       tabIconData: widget.tabIconsList?[5],
+                                //       removeAllSelect: () {
+                                //         setRemoveAllSelection(
+                                //             widget.tabIconsList?[5]);
+                                //         widget.changeIndex!(5);
+                                //       }),
+                                // ),
+                              ],
                             ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[1],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[1]);
-                                    widget.changeIndex!(1);
-                                  }),
-                            ),
-                            SizedBox(
-                              width: Tween<double>(begin: 0.0, end: 1.0)
-                                      .animate(CurvedAnimation(
-                                          parent: animationController!,
-                                          curve: Curves.fastOutSlowIn))
-                                      .value *
-                                  64.0,
-                            ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[2],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[2]);
-                                    widget.changeIndex!(2);
-                                  }),
-                            ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[3],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[3]);
-                                    widget.changeIndex!(3);
-                                  }),
-                            ),
-                            // Expanded(
-                            //   child: TabIcons(
-                            //       tabIconData: widget.tabIconsList?[4],
-                            //       removeAllSelect: () {
-                            //         setRemoveAllSelection(
-                            //             widget.tabIconsList?[4]);
-                            //         widget.changeIndex!(4);
-                            //       }),
-                            // ),
-                            // Expanded(
-                            //   child: TabIcons(
-                            //       tabIconData: widget.tabIconsList?[5],
-                            //       removeAllSelect: () {
-                            //         setRemoveAllSelection(
-                            //             widget.tabIconsList?[5]);
-                            //         widget.changeIndex!(5);
-                            //       }),
-                            // ),
-                          ],
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.bottom,
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.bottom,
-                    )
-                  ],
-                ),
-              ),
-            );
+                  ),
+                ));
           },
         ),
         Padding(
@@ -223,12 +232,12 @@ class _BottomBarViewState extends State<BottomBarView>
 }
 
 class TabIcons extends StatefulWidget {
-  TabIcons({Key? key, this.tabIconData, this.removeAllSelect,this.size})
+  TabIcons({Key? key, this.tabIconData, this.removeAllSelect, this.size})
       : super(key: key);
 
   final TabIconData? tabIconData;
   final Function()? removeAllSelect;
-  var size ;
+  var size;
   @override
   _TabIconsState createState() => _TabIconsState();
 }
@@ -279,9 +288,13 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                           parent: widget.tabIconData!.animationController!,
                           curve:
                               Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
-                  child: Image.asset(widget.tabIconData!.isSelected
-                      ? widget.tabIconData!.selectedImagePath
-                      : widget.tabIconData!.imagePath,width: widget.size != null ? widget.size : MediaQuery.of(context).size.width * 0.085),
+                  child: Image.asset(
+                      widget.tabIconData!.isSelected
+                          ? widget.tabIconData!.selectedImagePath
+                          : widget.tabIconData!.imagePath,
+                      width: widget.size != null
+                          ? widget.size
+                          : MediaQuery.of(context).size.width * 0.085),
                 ),
                 Positioned(
                   top: 4,

@@ -10,6 +10,7 @@ import 'package:best_flutter_ui_templates/fitness_app/ui_view/title_view.dart';
 import 'package:best_flutter_ui_templates/home/account_card_view.dart';
 import 'package:best_flutter_ui_templates/home/info2_card_view.dart';
 import 'package:best_flutter_ui_templates/home/info_card_view.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 import 'model/homelist.dart';
 
@@ -161,7 +162,32 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     bool isLightMode = brightness == Brightness.light;
     return SizedBox(
       height: AppBar().preferredSize.height,
-      child: Row(
+      child: Container(
+        decoration: BoxDecoration(
+                        color: FitnessAppTheme.nearlyDarkREd,
+                        gradient: LinearGradient(
+                            colors: [
+                              HexColor('#3B0656'),
+                              HexColor('#3B0656'),
+                              HexColor('#3B0656'),
+                              HexColor('#3B0656'),
+                              // HexColor('#4F1516'),
+                              // HexColor('#080808'),
+                              HexColor('#080808'),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight
+                            ),
+                        // shape: BoxShape.circle,
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: FitnessAppTheme.nearlyDarkREd
+                                  .withOpacity(0.0),
+                              offset: const Offset(8.0, 16.0),
+                              blurRadius: 16.0),
+                        ],
+                      ),
+        child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
@@ -191,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             child: Container(
               width: AppBar().preferredSize.height - 8,
               height: AppBar().preferredSize.height - 8,
-              color: isLightMode ? Colors.white : AppTheme.nearlyBlack,
+              // color: isLightMode ? Colors.white : AppTheme.nearlyBlack,
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
@@ -203,6 +229,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             ),
           ),
         ],
+      ),
       ),
     );
   }
