@@ -34,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "care": MessageLookupByLibrary.simpleMessage("اهتم"),
         "choose_image":
             MessageLookupByLibrary.simpleMessage("تحميل صورة عن طريق"),
-        "confirm": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
+        "confirm": MessageLookupByLibrary.simpleMessage("ارسال"),
         "cost": MessageLookupByLibrary.simpleMessage("الكلفة : "),
         "cost_d": MessageLookupByLibrary.simpleMessage("الكلفة"),
         "count": MessageLookupByLibrary.simpleMessage("الكمية"),

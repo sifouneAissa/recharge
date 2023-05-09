@@ -84,6 +84,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
         brightness: Brightness.dark,
+        backgroundColor: Colors.transparent
       ),
       themeMode: ThemeMode.dark,
       home: hasToken

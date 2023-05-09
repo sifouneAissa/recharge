@@ -480,10 +480,10 @@ class S {
     );
   }
 
-  /// `تأكيد الطلب`
+  /// `ارسال`
   String get confirm {
     return Intl.message(
-      'تأكيد الطلب',
+      'ارسال',
       name: 'confirm',
       desc: '',
       args: [],

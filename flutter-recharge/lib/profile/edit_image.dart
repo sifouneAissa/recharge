@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/profile/appbar_widget.dart';
@@ -135,9 +136,14 @@ class _EditImagePageState extends State<EditImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FitnessAppTheme.nearlyBlack,
-      appBar: buildAppBar(context,'تعديل الصورة الشخصية'),
+      // backgroundColor: FitnessAppTheme.nearlyBlack,
+      // appBar: buildAppBar(context,'تعديل الصورة الشخصية'),
       body: Container(
+       decoration: getBoxBackgroud(),
+        child: Column(
+          children: [
+            buildAppBar(context,'تعديل الصورة الشخصية'),
+            Container(
         margin: EdgeInsets.only(top: 100),
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,7 +186,10 @@ class _EditImagePageState extends State<EditImagePage> {
         ],
       ),
       )
-      );
+      
+          ],
+        ),
+      ));
   }
 
      handleUpdateImage() async {
