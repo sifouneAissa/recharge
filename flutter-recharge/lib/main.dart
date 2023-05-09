@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/introduction_animation_screen.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
@@ -17,9 +18,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:best_flutter_ui_templates/screens/Login/login_screen.dart';
 import 'generated/l10n.dart';
 
-
 void main() async {
-
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
@@ -28,13 +27,13 @@ void main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp(hasToken: token !=null,)));
+  ]).then((_) => runApp(MyApp(
+        hasToken: token != null,
+      )));
   configLoading();
 }
 
-
-
-  void configLoading() {
+void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
@@ -51,16 +50,12 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
-  const MyApp({
-    this.hasToken = false
-  });
+  const MyApp({this.hasToken = false});
 
   final bool hasToken;
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
@@ -69,9 +64,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
-        
     ));
-
 
     return MaterialApp(
       title: "Afandena Cards",
@@ -81,10 +74,11 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [ // OR 
+      supportedLocales: [
+        // OR
         Locale('ar', 'AE')
       ],
-          debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: AppTheme.textTheme,
@@ -92,7 +86,12 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.dark,
-      home: hasToken ? NavigationHomeScreen() : LoginScreen(),
+      home: hasToken
+          ? NavigationHomeScreen()
+          : Container(
+              decoration: getBoxBackgroud(),
+              child: LoginScreen(),
+            ),
       builder: EasyLoading.init(),
     );
   }

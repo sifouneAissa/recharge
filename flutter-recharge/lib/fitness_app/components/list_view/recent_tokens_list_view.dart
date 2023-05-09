@@ -43,7 +43,18 @@ class _RecentTokensListViewState extends State<RecentTokensListView>
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlack,
+                  // color: FitnessAppTheme.nearlyBlack,
+                   gradient: LinearGradient(colors: [
+                    // HexColor('#F0AB2B'),
+                    // HexColor(FitnessAppTheme.gradiantFc).withOpacity(0.7),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    // HexColor('#F0AB2B'),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  // color: FitnessAppTheme.nearlyBlackCard,
+                 
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -51,7 +62,7 @@ class _RecentTokensListViewState extends State<RecentTokensListView>
                       topRight: Radius.circular(8.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],

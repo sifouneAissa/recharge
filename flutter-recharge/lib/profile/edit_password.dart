@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_home_screen.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/profile/appbar_widget.dart';
@@ -63,133 +64,151 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
-      appBar: buildAppBar(context, 'تعديل كلمة السر'),
-      backgroundColor: FitnessAppTheme.nearlyBlack,
-      body: Container(
-          margin: EdgeInsets.only(top: 50),
-          child: Form(
-            key: _formKey,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                      width: 320,
-                      child: const Text(
-                        "ادخل كلمة السر القديمة !",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
-                      )),
-                      
-                _hasError ? Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: Text('كلمة السر غير متطابقة',style: TextStyle(
-                    color: Colors.red
-                  ),),
-                ) : Container(),
-                  Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                          height: 100,
-                          width: 320,
-                          child: TextFormField(
-                            obscureText: true,
-                            textInputAction: TextInputAction.next,
-                            // Handles Form Validation
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) =>
-                                value!.isEmpty || (value.isEmpty)
-                                    ? 'كلمة السر خاطئة'
-                                    : null,
-                            controller: oldPassword,
-                            textDirection: TextDirection.ltr,
-                            // decoration: const InputDecoration(
-                            //   labelText: '********',
-                            // ),
-                          ))),
-                  SizedBox(
-                      width: 320,
-                      child: const Text(
-                        "ادخل كلمة السر الجديدة !",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
-                      )),
-                  Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                          height: 100,
-                          width: 320,
-                          child: TextFormField(
-                            
-                            obscureText: true,
-                            textInputAction: TextInputAction.next,
-                            // Handles Form Validation
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) =>
-                                value!.isEmpty || (value.isEmpty)
-                                    ? 'كلمة السر خاطئة'
-                                    : null,
-                            controller: password,
-                            textDirection: TextDirection.ltr,
-                            // decoration: const InputDecoration(
-                            //   labelText: '********',
-                            // ),
-                          ))),
-                           SizedBox(
-                      width: 320,
-                      child: const Text(
-                        "اعد كلمة السر مرة اخرى !",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
-                      )),
-                  Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                          height: 100,
-                          width: 320,
-                          child: TextFormField(
-                            obscureText: true,
-                            // Handles Form Validation
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                                return 
-                                value!.isEmpty || (value.isNotEmpty && value != password.value.text)
-                                    ? 'كلمة السر خاطئة'
-                                    : null;
-                            },
-                            controller: confirmPassword,
-                            textDirection: TextDirection.ltr,
-                            textInputAction: TextInputAction.done,
-                            // decoration: const InputDecoration(
-                            //   labelText: '********',
-                            // ),
-                          ))),
-                  Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: SizedBox(
-                            width: 320,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    FitnessAppTheme.nearlyDarkREd),
-                              ),
-                              onPressed: _isLoading ? null : handleUpdatePassword,
+        resizeToAvoidBottomInset: false,
+        // appBar: buildAppBar(context, 'تعديل كلمة السر'),
+        // backgroundColor: FitnessAppTheme.nearlyBlack,
+        body: Container(
+          decoration: getBoxBackgroud(),
+          child: Column(
+            children: [
+              buildAppBar(context, 'تعديل كلمة السر'),
+              Container(
+                  margin: EdgeInsets.only(top: 50),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                              width: 320,
                               child: const Text(
-                                'تعديل',
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            ),
-                          )))
-                ]),
-          )),
-    );
+                                "ادخل كلمة السر القديمة !",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.lightText),
+                              )),
+                          _hasError
+                              ? Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    'كلمة السر غير متطابقة',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                )
+                              : Container(),
+                          Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: SizedBox(
+                                  height: 100,
+                                  width: 320,
+                                  child: TextFormField(
+                                    obscureText: true,
+                                    textInputAction: TextInputAction.next,
+                                    // Handles Form Validation
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) =>
+                                        value!.isEmpty || (value.isEmpty)
+                                            ? 'كلمة السر خاطئة'
+                                            : null,
+                                    controller: oldPassword,
+                                    textDirection: TextDirection.ltr,
+                                    // decoration: const InputDecoration(
+                                    //   labelText: '********',
+                                    // ),
+                                  ))),
+                          SizedBox(
+                              width: 320,
+                              child: const Text(
+                                "ادخل كلمة السر الجديدة !",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.lightText),
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: SizedBox(
+                                  height: 100,
+                                  width: 320,
+                                  child: TextFormField(
+                                    obscureText: true,
+                                    textInputAction: TextInputAction.next,
+                                    // Handles Form Validation
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) =>
+                                        value!.isEmpty || (value.isEmpty)
+                                            ? 'كلمة السر خاطئة'
+                                            : null,
+                                    controller: password,
+                                    textDirection: TextDirection.ltr,
+                                    // decoration: const InputDecoration(
+                                    //   labelText: '********',
+                                    // ),
+                                  ))),
+                          SizedBox(
+                              width: 320,
+                              child: const Text(
+                                "اعد كلمة السر مرة اخرى !",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.lightText),
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: SizedBox(
+                                  height: 100,
+                                  width: 320,
+                                  child: TextFormField(
+                                    obscureText: true,
+                                    // Handles Form Validation
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      return value!.isEmpty ||
+                                              (value.isNotEmpty &&
+                                                  value != password.value.text)
+                                          ? 'كلمة السر خاطئة'
+                                          : null;
+                                    },
+                                    controller: confirmPassword,
+                                    textDirection: TextDirection.ltr,
+                                    textInputAction: TextInputAction.done,
+                                    // decoration: const InputDecoration(
+                                    //   labelText: '********',
+                                    // ),
+                                  ))),
+                          Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: SizedBox(
+                                    width: 320,
+                                    height: 50,
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                FitnessAppTheme.nearlyDarkREd),
+                                      ),
+                                      onPressed: _isLoading
+                                          ? null
+                                          : handleUpdatePassword,
+                                      child: const Text(
+                                        'تعديل',
+                                        style: TextStyle(fontSize: 25),
+                                      ),
+                                    ),
+                                  )))
+                        ]),
+                  )),
+            ],
+          ),
+        ));
   }
 
   handleUpdatePassword() async {
@@ -206,9 +225,9 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
       });
 
       var data = {
-        'password' : password.value.text,
-        'password_confirmation' : confirmPassword.value.text,
-        'old_password' : oldPassword.value.text 
+        'password': password.value.text,
+        'password_confirmation': confirmPassword.value.text,
+        'old_password': oldPassword.value.text
       };
 
       try {
@@ -228,7 +247,6 @@ class EditPasswordFormPageState extends State<EditPasswordFormPage> {
           });
         }
       } catch (error) {
-
         handleSnackBarError();
       }
 

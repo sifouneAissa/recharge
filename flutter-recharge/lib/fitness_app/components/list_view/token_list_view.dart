@@ -41,12 +41,13 @@ class _TokenListViewState extends State<TokenListView> with TickerProviderStateM
                 decoration: BoxDecoration(
                   
                   gradient: LinearGradient(colors: [
-                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor('#F0AB2B'),
                     // HexColor(FitnessAppTheme.gradiantFc).withOpacity(0.7),
                     HexColor(FitnessAppTheme.gradiantFc),
                     HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
 
                     HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor('#F0AB2B'),
                   ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   // color: FitnessAppTheme.nearlyBlackCard,
                   borderRadius: const BorderRadius.only(

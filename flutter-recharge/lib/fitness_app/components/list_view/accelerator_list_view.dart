@@ -39,7 +39,16 @@ class _AcceleratorListViewState extends State<AcceleratorListView> with TickerPr
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlackCard,
+                  gradient: LinearGradient(colors: [
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  border: Border.all(color: Colors.black87),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),

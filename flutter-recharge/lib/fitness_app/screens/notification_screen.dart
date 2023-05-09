@@ -1,5 +1,6 @@
 import 'package:best_flutter_ui_templates/components/datatables/notification_datatable.dart';
 import 'package:best_flutter_ui_templates/components/table.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
@@ -220,7 +221,8 @@ class _NotificationScreenState extends State<NotificationScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.nearlyBlack,
+      // color: FitnessAppTheme.nearlyBlack,
+      decoration: getBoxBackgroud(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(

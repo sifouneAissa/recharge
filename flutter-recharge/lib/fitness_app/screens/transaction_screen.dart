@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/components/datatables/transaction_datatable.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
@@ -232,7 +233,8 @@ class _TransactionScreenState extends State<TransactionScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.nearlyBlack,
+      // color: FitnessAppTheme.nearlyBlack,
+      decoration: getBoxBackgroud(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(

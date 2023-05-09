@@ -240,7 +240,8 @@ Future<UserCredential> signInWithFacebook() async {
               ),
             ),
           ),
-          const SizedBox(height: defaultPadding), AlreadyHaveAnAccountCheck(
+          const SizedBox(height: defaultPadding),
+           AlreadyHaveAnAccountCheck(
             press: () {
               Navigator.push(
                 context,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/profile/display_image_widget.dart';
@@ -113,8 +114,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
     var brightness = Theme.of(context).brightness;
     bool isLightMode = brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: FitnessAppTheme.nearlyBlackSide.withOpacity(0.5),
-      body: Column(
+    
+      // backgroundColor: FitnessAppTheme.nearlyBlackSide.withOpacity(0.5),
+      body: Container(
+        decoration: getBoxBackgroud(),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -241,6 +245,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ),
         ],
       ),
+      )
     );
   }
 

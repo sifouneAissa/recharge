@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator/add_jawaker_accelerator_form.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
@@ -45,7 +46,7 @@ class _RecentPointTransactionDatatable
     '#',
     'الحالة',
     S().count,
-    S().cost_d,
+    // S().cost_d,
     'معرف اللاعب',
     S().date
   ];
@@ -161,9 +162,17 @@ class _RecentPointTransactionDatatable
               StateSetter setState /*You can rename this!*/) {
             return Container(
               height: 450,
+              
               child: Container(
                   decoration: BoxDecoration(
-                    color: transactionColors(transaction),
+                    gradient: LinearGradient(colors: [
+                      HexColor((transactionColors(transaction) as Color).value.toString()),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      // HexColor(FitnessAppTheme.gradiantSc),
+                      // HexColor(FitnessAppTheme.gradiantSc),
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    // color: transactionColors(transaction),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
@@ -867,6 +876,7 @@ class _RecentPointTransactionDatatable
         context: context,
         builder: (context) {
           return Container(
+            decoration: getBoxBackgroud(),
             height: 250,
             child: Container(
                 decoration: BoxDecoration(
@@ -1160,19 +1170,19 @@ class _RecentPointTransactionDatatable
                                             transactions[counter]);
                                       },
                                     ),
-                                    DataCell(
-                                      Text(
-                                          Common.formatNumber(
-                                              transactions[counter]['cost']),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color:
-                                                  FitnessAppTheme.lightText)),
-                                      onTap: () {
-                                        bottomSheetBuilder(
-                                            transactions[counter]);
-                                      },
-                                    ),
+                                    // DataCell(
+                                    //   Text(
+                                    //       Common.formatNumber(
+                                    //           transactions[counter]['cost']),
+                                    //       style: TextStyle(
+                                    //           fontWeight: FontWeight.bold,
+                                    //           color:
+                                    //               FitnessAppTheme.lightText)),
+                                    //   onTap: () {
+                                    //     bottomSheetBuilder(
+                                    //         transactions[counter]);
+                                    //   },
+                                    // ),
                                     DataCell(
                                       Text(
                                           transactions[counter]

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_home_screen.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/profile/appbar_widget.dart';
@@ -18,7 +19,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 // This class handles the Page to edit the Name Section of the User Profile.
 class EditNameFormPage extends StatefulWidget {
-  const EditNameFormPage({Key? key,this.updateUser}) : super(key: key);
+  const EditNameFormPage({Key? key, this.updateUser}) : super(key: key);
   final updateUser;
   @override
   EditNameFormPageState createState() {
@@ -33,7 +34,6 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   User user = UserData.myUser;
   bool _hasError = false;
   bool _isLoading = false;
-
 
   @override
   initState() {
@@ -62,114 +62,123 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context,'تعديل الاسم'),
-      backgroundColor: FitnessAppTheme.nearlyBlack,
+        // appBar: buildAppBar(context, 'تعديل الاسم'),
+        // backgroundColor: FitnessAppTheme.nearlyBlack,
         body: Container(
-          margin: EdgeInsets.only(top: 100),
-          child: Form(
-          key: _formKey,
+          decoration: getBoxBackgroud(),
           child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                    width: 320,
-                    child: const Text(
-                      "ادخل الاسم !",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText),
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(top: 40),
-                    child: SizedBox(
-                        height: 100,
-                        width: 320,
-                        child: TextFormField(
-                          // Handles Form Validation
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) => value!.isEmpty || (value.isEmpty) ? 'اسم خاطئ' : null,
-                          controller: firstNameController,
-                          decoration: const InputDecoration(
-                            labelText: 'الاسم',
-                          ),
-                        ))),
-                Padding(
-                    padding: EdgeInsets.only(top: 50),
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                          width: 320,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(FitnessAppTheme.nearlyDarkREd),
-                          ),
-                            onPressed: _isLoading ? null : handleUpdateName,
-                            child: const Text(
-                            'تعديل',
-                            style: TextStyle(fontSize: 25),
-                          ),
-                          ),
-                        )))
-              ]),
-        )),
-        );
+            children: [
+              buildAppBar(context,'تعديل الاسم'),
+              Container(
+                  margin: EdgeInsets.only(top: 100),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                              width: 320,
+                              child: const Text(
+                                "ادخل الاسم !",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: FitnessAppTheme.lightText),
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(top: 40),
+                              child: SizedBox(
+                                  height: 100,
+                                  width: 320,
+                                  child: TextFormField(
+                                    // Handles Form Validation
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) =>
+                                        value!.isEmpty || (value.isEmpty)
+                                            ? 'اسم خاطئ'
+                                            : null,
+                                    controller: firstNameController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'الاسم',
+                                    ),
+                                  ))),
+                          Padding(
+                              padding: EdgeInsets.only(top: 50),
+                              child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: SizedBox(
+                                    width: 320,
+                                    height: 50,
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                FitnessAppTheme.nearlyDarkREd),
+                                      ),
+                                      onPressed:
+                                          _isLoading ? null : handleUpdateName,
+                                      child: const Text(
+                                        'تعديل',
+                                        style: TextStyle(fontSize: 25),
+                                      ),
+                                    ),
+                                  )))
+                        ]),
+                  )),
+            ],
+          ),
+        ));
   }
 
-    handleUpdateName() async {
-      if (_formKey.currentState!.validate()) {
-        print('Form is valid');
+  handleUpdateName() async {
+    if (_formKey.currentState!.validate()) {
+      print('Form is valid');
 
-        // here test the cost if is it bigger then the cash of the user
-       
-        setState(() {
-          _isLoading = true;
+      // here test the cost if is it bigger then the cash of the user
 
-          EasyLoading.show(
-              status: 'جاري التعديل',
-              maskType: EasyLoadingMaskType.custom);
-        });
+      setState(() {
+        _isLoading = true;
 
+        EasyLoading.show(
+            status: 'جاري التعديل', maskType: EasyLoadingMaskType.custom);
+      });
 
-        var data = {
-          'name': firstNameController.text
-        };
+      var data = {'name': firstNameController.text};
 
-        try {
-          var res = await AuthApi().update(data);
+      try {
+        var res = await AuthApi().update(data);
 
-          var body = jsonDecode(res.body);
+        var body = jsonDecode(res.body);
 
-          if (body['status']) {
-
-            var data = AuthApi().getData(body);
-            await AuthApi().updateUser(data);
-            handleSnackBar();
-            widget.updateUser();
-
-          } else {
-            setState(() {
-              _hasError = false;
-            });
-          }
-        } catch (error) {
-          handleSnackBarError();
+        if (body['status']) {
+          var data = AuthApi().getData(body);
+          await AuthApi().updateUser(data);
+          handleSnackBar();
+          widget.updateUser();
+        } else {
+          setState(() {
+            _hasError = false;
+          });
         }
-
-        setState(() {
-          _isLoading = false;
-        });
-        EasyLoading.dismiss();
-      } else {
-        print('Form is invalid');
-
-        setState(() {
-          _hasError = false;
-        });
+      } catch (error) {
+        handleSnackBarError();
       }
-    }
 
-    
+      setState(() {
+        _isLoading = false;
+      });
+      EasyLoading.dismiss();
+    } else {
+      print('Form is invalid');
+
+      setState(() {
+        _hasError = false;
+      });
+    }
+  }
+
   handleSnackBar() {
     final snackBar = SnackBar(
       content: Text('تم تعديل الاسم '),
@@ -186,9 +195,6 @@ class EditNameFormPageState extends State<EditNameFormPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     // widget.onChangeBody();
   }
-
- 
- 
 
   handleSnackBarError() {
     final snackBar = SnackBar(

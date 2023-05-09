@@ -243,6 +243,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
             height: 250,
             child: Container(
                 decoration: BoxDecoration(
+                  gradient: getGradianBg(),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
@@ -420,6 +421,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
             height: 250,
             child: Container(
                 decoration: BoxDecoration(
+                  gradient: getGradianBg(),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
@@ -1029,7 +1031,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
       text = 'تم رفض المسرع';
     else if (transaction['more']) text = transaction['status']['message'];
 
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold));
+    return Text(text, style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText));
   }
 
   bottomSheetBuilderToken(transaction) {
@@ -1050,8 +1052,18 @@ class _TransactionDatatable extends State<TransactionDatatable>
             return Container(
               height: 450,
               child: Container(
+                
                   decoration: BoxDecoration(
-                    color: transactionColors(transaction),
+                     gradient: LinearGradient(colors: [
+                      HexColor((transactionColors(transaction) as Color).value.toString()),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      // HexColor(FitnessAppTheme.gradiantSc),
+                      // HexColor(FitnessAppTheme.gradiantSc),
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    // color: transactionColors(transaction),
+                   
+                    // color: transactionColors(transaction),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
@@ -1362,7 +1374,16 @@ class _TransactionDatatable extends State<TransactionDatatable>
               height: 450,
               child: Container(
                   decoration: BoxDecoration(
-                    color: transactionColors(transaction),
+                    // color: transactionColors(transaction),
+                    gradient: LinearGradient(colors: [
+                      HexColor((transactionColors(transaction) as Color).value.toString()),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      // HexColor(FitnessAppTheme.gradiantSc),
+                      // HexColor(FitnessAppTheme.gradiantSc),
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    // color: transactionColors(transaction),
+                   
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
@@ -2046,7 +2067,12 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                 //   },
                                 // ),
                                 DataCell(
-                                  Text(getAccount(stransactions[counter]),
+                                  Text(
+                                      stransactions[counter]['player_name'] !=
+                                              null
+                                          ? stransactions[counter]['player_name']
+                                              .toString()
+                                          : '',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: FitnessAppTheme.lightText)),
@@ -2078,6 +2104,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                             stransactions[counter]);
                                   },
                                 ),
+                                
                                 DataCell(
                                   stransactions[counter]['type'].toString() ==
                                           'token'

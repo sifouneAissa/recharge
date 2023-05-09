@@ -1,3 +1,4 @@
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:best_flutter_ui_templates/responsive.dart';
@@ -12,12 +13,14 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FitnessAppTheme.nearlyBlack,
+      // backgroundColor: FitnessAppTheme.nearlyBlack,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Responsive(
-          mobile: const MobileLoginScreen(),
-          desktop: Row(
+          mobile:  MobileLoginScreen(),
+          desktop: Container(
+          decoration: getBoxBackgroud(),
+            child: Row(
             children: [
               const Expanded(
                 child: LoginScreenTopImage(),
@@ -35,6 +38,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ],
           ),
+          ),
         ),
       ),
     );
@@ -48,12 +52,14 @@ class MobileLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Container(
+          decoration: getBoxBackgroud(),
+      child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const LoginScreenTopImage(),
+       LoginScreenTopImage(),
         Row(
-          children: const [
+          children:  [
             Spacer(),
             Expanded(
               flex: 8,
@@ -62,7 +68,9 @@ class MobileLoginScreen extends StatelessWidget {
             Spacer(),
           ],
         ),
+        Container(height: 80,)
       ],
+    ),
     );
   }
 }

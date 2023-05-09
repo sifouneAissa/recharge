@@ -235,7 +235,7 @@ class _JawakerAccelerationScreenState extends State<JawakerAccelerationScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.nearlyBlack,
+      decoration: getBoxBackgroud(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(

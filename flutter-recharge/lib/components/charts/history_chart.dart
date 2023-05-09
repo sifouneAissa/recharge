@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -241,6 +242,15 @@ class _HistoryChartState extends State<HistoryChart> {
           children: [
             Container(
                 decoration: BoxDecoration(
+                   border: Border.all(color: Colors.black87),
+                  gradient: LinearGradient(colors: [
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   color: FitnessAppTheme.nearlyBlack,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
@@ -249,7 +259,7 @@ class _HistoryChartState extends State<HistoryChart> {
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
+                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
@@ -303,8 +313,19 @@ class _HistoryChartState extends State<HistoryChart> {
                 width: MediaQuery.of(context).size.width * 0.45,
                 // height: MediaQuery.of(context).size.height * 0.33,
                 // color:Colors.amber,
+                
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyBlack,
+                  // color: FitnessAppTheme.nearlyBlack,
+                   border: Border.all(color: Colors.black87),
+                  gradient: LinearGradient(colors: [
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                    HexColor(FitnessAppTheme.gradiantFc),
+                    
+                    HexColor('00FFFFFF').withOpacity(0.5),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
@@ -312,7 +333,7 @@ class _HistoryChartState extends State<HistoryChart> {
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
-                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.4),
+                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow

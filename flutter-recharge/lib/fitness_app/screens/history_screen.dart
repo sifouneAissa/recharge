@@ -1,5 +1,6 @@
 import 'package:best_flutter_ui_templates/components/charts/history_chart.dart';
 import 'package:best_flutter_ui_templates/components/datatables/history_datatable.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/history_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_accelerator_list_view.dart';
 import 'package:best_flutter_ui_templates/fitness_app/components/jawaker_list_view.dart';
@@ -238,7 +239,8 @@ class _HistoryScreenState extends State<HistoryScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.nearlyBlack,
+      // color: FitnessAppTheme.nearlyBlack,
+      decoration: getBoxBackgroud(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: RefreshIndicator(
