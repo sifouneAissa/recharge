@@ -13,6 +13,9 @@ class _AboutScreenState extends State<AboutScreen> {
     super.initState();
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     var brightness = Theme.of(context).brightness;
@@ -75,7 +78,8 @@ class _AboutScreenState extends State<AboutScreen> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            launch("tel:00962792891533");
+                            // launch("tel:00962792891533")
+                            launchUrl(Uri.parse("https://wa.me/+962792891533"),mode: LaunchMode.externalApplication);
                           },
                           child: Center(
                             child: Padding(
@@ -85,15 +89,15 @@ class _AboutScreenState extends State<AboutScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                  Text(
-                                'اتصل بنا',
+                                'تواصل معنا',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color:
-                                      isLightMode ? Colors.white : Colors.black,
+                                      isLightMode ? Colors.greenAccent : Colors.black,
                                 ),
                                ),  
                                Container(width: 5,),
-                               Icon(Icons.call,size: 20,color: Colors.blueAccent,),
+                               Icon(Icons.call,size: 20,color: Colors.greenAccent,),
                                 ],
                               ),
                             ),

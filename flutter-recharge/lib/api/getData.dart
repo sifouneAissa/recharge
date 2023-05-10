@@ -117,6 +117,7 @@ class GetData {
         var storage = await GetData().getInstance();
         storage.setString('firebase_token',value);
     },);
+    
   }
 }
 
