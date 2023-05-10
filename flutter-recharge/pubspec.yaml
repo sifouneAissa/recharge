@@ -52,6 +52,7 @@ dependencies:
     flutter_spinbox: ^0.13.0
     flutter_native_splash: ^2.2.19
     url_launcher: ^6.1.10
+    internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
     flutter_test:

@@ -35,6 +35,7 @@ class AddJawakerAcceleratorForm extends StatefulWidget {
 
 class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   final ImagePicker _picker = ImagePicker();
+  bool _hasConnection = true;
 
   PickedFile? _imageFile;
   TextEditingController quantity = TextEditingController();
@@ -50,9 +51,9 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
 
   String? selectedPoint;
   var costs = {
-      '100%' : defaultAcceleratorToken,
-      '150%' : defaultAcceleratorToken * 2,
-      '300%' : defaultAcceleratorToken * 3
+    '100%': defaultAcceleratorToken,
+    '150%': defaultAcceleratorToken * 2,
+    '300%': defaultAcceleratorToken * 3
   };
 
   void _checkCash() async {
@@ -63,9 +64,24 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     });
   }
 
+  setHasConnection(hasI) {
+    setState(() {
+      _hasConnection = hasI;
+    });
+    if (_hasConnection) {
+      print('has connection');
+    } else {
+      print('has no connection');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+
+    setConnectionListner((hasI) {
+      setHasConnection(hasI);
+    });
     // quantity.addListener(() {
     //   final isV = quantity.value.text.isEmpty;
     //   if (!isV) {
@@ -87,9 +103,8 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
 
   _getItemsList() {
     return List.generate(data.length, (index) {
-
       PackagePointData element = data[index];
-      
+
       String cost = (element.packageData['cost'] * double.parse(element.value))
           .toString();
       String text = 'لقد اخترت ';
@@ -108,7 +123,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             cost.substring(0, cost.length > 5 ? 5 : cost.length);
         text = text + '\n' + subtext;
         ncost =
-            element.packageData['cost'] *  double.parse(element.value) + ncost;
+            element.packageData['cost'] * double.parse(element.value) + ncost;
         ttokens =
             element.packageData['cost'] * double.parse(element.value) + ttokens;
       });
@@ -138,29 +153,25 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 margin: EdgeInsets.only(left: 0),
-                child: Text(
-                  element.packageData['code'],
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: FitnessAppTheme.lightText
-                  )
-          
-                ),
+                child: Text(element.packageData['code'],
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: FitnessAppTheme.lightText)),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.2,
-                margin: EdgeInsets.only(right: 40,left: 20),
+                margin: EdgeInsets.only(right: 40, left: 20),
                 child: Text(Common.formatNumber(int.parse(element.value)),
-                    overflow: TextOverflow.ellipsis,style: TextStyle(
-                    color: FitnessAppTheme.lightText
-                  )),
-              ),Container(
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: FitnessAppTheme.lightText)),
+              ),
+              Container(
                 width: MediaQuery.of(context).size.width * 0.2,
                 margin: EdgeInsets.only(right: 0),
-                child: Text(Common.formatNumber(element.packageData['cost'] * int.parse(element.value)),
-                    overflow: TextOverflow.ellipsis,style: TextStyle(
-                    color: FitnessAppTheme.lightText
-                  )),
+                child: Text(
+                    Common.formatNumber(
+                        element.packageData['cost'] * int.parse(element.value)),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: FitnessAppTheme.lightText)),
               ),
               // Container(
               //   width: MediaQuery.of(context).size.width * 0.2,
@@ -191,10 +202,14 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
 
                 TextSpan(
                     text: data.length.toString() + '-',
-                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText)),
                 TextSpan(
                     text: 'المسرعات التي تم اختيارها',
-                    style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText))
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: FitnessAppTheme.lightText))
               ])),
             ),
           ],
@@ -215,21 +230,20 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               children: [
                 Container(
                   margin: EdgeInsets.only(left: 30),
-                  child: Text('المسرع',style: TextStyle(
-                    color: FitnessAppTheme.lightText
-                  ),),
+                  child: Text(
+                    'المسرع',
+                    style: TextStyle(color: FitnessAppTheme.lightText),
+                  ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 40,left: 40),
-                  child: Text(' الكمية',style: TextStyle(
-                    color: FitnessAppTheme.lightText
-                  )),
+                  margin: EdgeInsets.only(right: 40, left: 40),
+                  child: Text(' الكمية',
+                      style: TextStyle(color: FitnessAppTheme.lightText)),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 50,left: 30),
-                  child: Text(' السعر',style: TextStyle(
-                    color: FitnessAppTheme.lightText
-                  )),
+                  margin: EdgeInsets.only(right: 50, left: 30),
+                  child: Text(' السعر',
+                      style: TextStyle(color: FitnessAppTheme.lightText)),
                 ),
                 // Container(
                 //   margin: EdgeInsets.only(right: 80),
@@ -279,11 +293,11 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                   padding:
                       EdgeInsets.only(top: 20, bottom: 20, right: 50, left: 50),
                   child: FittedBox(
-                    fit : BoxFit.scaleDown,
-                    child : Text(Common.formatNumber(_tokens),
-                      style:
-                          TextStyle(fontSize: 20, color: FitnessAppTheme.nearlyWhite))
-                  ),
+                      fit: BoxFit.scaleDown,
+                      child: Text(Common.formatNumber(_tokens),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: FitnessAppTheme.nearlyWhite))),
                 ),
               ),
               // Container(
@@ -304,7 +318,6 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
       ],
     );
   }
-
 
   Widget imageProfile() {
     return Center(
@@ -404,29 +417,30 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     widget.onChangeBody();
   }
 
-  
   handleSelectPackage(PackagePointData extra) {
-            PackagePointData elementt = extra;
-              // get the list without the selected element
-              List<PackagePointData> nData = data
-                  .where((element) => element.packageId != elementt.packageId)
-                  .toList();
-              // update the data
-              nData.add(elementt);
-              // validate all data
-              nData = nData.where((element) => element.value != '' && element.value !='0').toList();
-              // set the data
-              setState(() {
-                data = nData;
-              });
-        print(data.length);
-        // setState(() {
-        //     // _checkCash();
-        // });
+    PackagePointData elementt = extra;
+    // get the list without the selected element
+    List<PackagePointData> nData = data
+        .where((element) => element.packageId != elementt.packageId)
+        .toList();
+    // update the data
+    nData.add(elementt);
+    // validate all data
+    nData = nData
+        .where((element) => element.value != '' && element.value != '0')
+        .toList();
+    // set the data
+    setState(() {
+      data = nData;
+    });
+    print(data.length);
+    // setState(() {
+    //     // _checkCash();
+    // });
 
-        // setState(() {
-        //   _cost = 0;
-        // });
+    // setState(() {
+    //   _cost = 0;
+    // });
   }
 
   handleSnackBarError() {
@@ -444,6 +458,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
     // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -493,9 +508,10 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               Container(
                 child: data.isNotEmpty
                     ? _getPackages()
-                    : Text('ادخل الكمية من كل حزمة',style: TextStyle(
-                      color: FitnessAppTheme.lightText
-                    ),),
+                    : Text(
+                        'ادخل الكمية من كل حزمة',
+                        style: TextStyle(color: FitnessAppTheme.lightText),
+                      ),
               )
             ],
           ),
@@ -513,8 +529,7 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
               hintStyle: TextStyle(color: FitnessAppTheme.nearlyWhite),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
-                child:
-                    Icon(Icons.person, color: FitnessAppTheme.nearlyDarkREd),
+                child: Icon(Icons.person, color: FitnessAppTheme.nearlyDarkREd),
               ),
             ),
           ),
@@ -571,11 +586,8 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
                   text: ' اخر العمليات ',
                   style: TextStyle(color: FitnessAppTheme.lightText)),
               WidgetSpan(
-                  child: Icon(
-                Icons.history,
-                size: 14,
-                color: FitnessAppTheme.lightText
-              ))
+                  child: Icon(Icons.history,
+                      size: 14, color: FitnessAppTheme.lightText))
             ]),
           ),
           RecentPointsListView(
@@ -592,71 +604,72 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
   }
 
   handleAddToken() async {
-    if (_hasCash ) {
-      if (_formKey.currentState!.validate()) {
-        print('Form is valid');
-
-        // here test the cost if is it bigger then the cash of the user
-        setState(() {
-          _isLoading = true;
-          EasyLoading.show(
-              status: S().sending_add_jawker,
-              maskType: EasyLoadingMaskType.custom);
-        });
+    if (_hasConnection) {
+      if (_hasCash) {
         
-        var packages = [];
+        if (_formKey.currentState!.validate()) {
+          // here test the cost if is it bigger then the cash of the user
+          setState(() {
+            _isLoading = true;
+            EasyLoading.show(
+                status: S().sending_add_jawker,
+                maskType: EasyLoadingMaskType.custom);
+          });
 
-        data.forEach((element) {
-          packages
-              .add({'package_id': element.packageId, 'count': element.value});
-        });
+          var packages = [];
 
+          data.forEach((element) {
+            packages
+                .add({'package_id': element.packageId, 'count': element.value});
+          });
 
-        var ndata = {
-          'name_of_player': name.text,
-          'count': _cost.toString(),
-          'cost': _cost,
-          'point_packages' : packages,
-          'type': 'point',
-          
-        };
+          var ndata = {
+            'name_of_player': name.text,
+            'count': _cost.toString(),
+            'cost': _cost,
+            'point_packages': packages,
+            'type': 'point',
+          };
 
-        // print(ndata);
+          AuthApi().updatePointCashUser(_cost);
 
-        try {
-          var res = await AuthApi().addPointWithoutP(ndata);
-          var body = jsonDecode(res.body);
+          try {
+            var res = await AuthApi().addPointWithoutP(ndata,_hasConnection);
+            var body = jsonDecode(res.body);
 
-          if (body['status']) {
-            var data = AuthApi().getData(body);
-            await AuthApi().updateUser(data);
-            handleSnackBar();
-          } else {
-            print(body);
-            setState(() {
-              _hasError = false;
-            });
+            if (body['status']) {
+              var data = AuthApi().getData(body);
+              await AuthApi().updateUser(data);
+              handleSnackBar();
+            } else {
+              
+              AuthApi().updatePointCashUser(-_cost);
+              setState(() {
+                _hasError = false;
+              });
+            }
+          } catch (error) {
+            AuthApi().updatePointCashUser(-_cost);
+            handleSnackBarError();
           }
-        } catch (error) {
-          handleSnackBarError();
+
+          setState(() {
+            _isLoading = false;
+          });
+          EasyLoading.dismiss();
+        } else {
+          
+
+          setState(() {
+            _hasError = false;
+          });
         }
-
-        setState(() {
-          _isLoading = false;
-        });
-        EasyLoading.dismiss();
-      } else {
-        print('Form is invalid');
-
-        setState(() {
-          _hasError = false;
-        });
       }
+    } else {
+      handleSnackBarErrorConnection(context);
     }
   }
 }
-
-
 
 class PackagePointData {
   PackagePointData({this.value = '', this.packageId = '', this.packageData});

@@ -13,31 +13,51 @@ import 'package:dio/dio.dart';
 class AuthApi{
 
   final String _url = 'https://recharge-web.afandena-cards.com/api/';
-  // final String _url = 'http://192.168.1.6/api/';
+  // final String _url = 'http://192.168.1.4/api/';
 
   getUrl(eurl){
     return _url + eurl;
   }
 
   login(data) async {
+
+//     try {
+//   final result = await InternetAddress.lookup('google.com');
+//   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+//     print('connected');
+//   }
+// } on SocketException catch (_) {
+//   print('not connected');
+// }
+
       var fullUrl = _url + 'login';
+
       return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders());
   }
 
-  register(data) async {
+  register(data,_hasConnection) async {
 
       var token_firebase =  await GetData().getFirebaseToken();
       var fullUrl = _url + 'register';
       data['token_firebase'] = token_firebase;
 
-      return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders());
+      return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders()).timeout(_hasConnection ? Duration(seconds: 60) : Duration.zero);
   }
 
   getUser() async {
     
+//     try {
+//   final result = await InternetAddress.lookup('google.com');
+//   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+//     print('connected');
+//   }
+// } on SocketException catch (_) {
+//   print('not connected');
+// }
       var auth = await GetData().getAuth();
       var token = await GetData().getToken();
-
+      // print(auth);
+      // print(token);
 
       var fullUrl = _url + 'user/'+auth['id'].toString();
 
@@ -59,7 +79,7 @@ class AuthApi{
 
 
 
-  addToken(data) async {
+  addToken(data,_hasConnection) async {
 
       var auth = await GetData().getAuth();
       var token = await GetData().getToken();
@@ -67,7 +87,9 @@ class AuthApi{
 
       var fullUrl = _url + 'transactions/'+auth['id'].toString();
 
-     return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeadersAuthorization(token));
+     return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeadersAuthorization(token)).timeout(
+      _hasConnection ? Duration(seconds: 60) : Duration.zero
+     );
  
   }
 
@@ -100,9 +122,50 @@ class AuthApi{
 
   }
 
+  updatePointCashUser(var cash) async {
+    
+      var auth = await GetData().getAuth();
+
+      var ocash = auth['cash_point'];
+
+      var ncash = ocash;
+      try{
+          ncash = ncash - cash;
+      }catch(error){
+      }
+      
+      auth['cash_point'] = ncash;
+
+      updateUser({
+        'user' : auth 
+      });
+
+  }
+
+  
+  updateTokenCashUser(var cash) async {
+    
+      var auth = await GetData().getAuth();
+
+      var ocash = auth['cash'];
+
+      var ncash = ocash;
+      try{
+          ncash = ncash - cash;
+      }catch(error){
+      }
+      
+      auth['cash'] = ncash;
+
+      updateUser({
+        'user' : auth 
+      });
+
+  }
+
   
 
-  addPointWithoutP(data) async{
+  addPointWithoutP(data,hasConnection) async{
       
       var auth = await GetData().getAuth();
       var token = await GetData().getToken();
@@ -110,7 +173,7 @@ class AuthApi{
 
       var fullUrl = _url + 'transactions/'+auth['id'].toString();
 
-     return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeadersAuthorization(token));
+     return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeadersAuthorization(token)).timeout(hasConnection ? Duration(seconds: 60) : Duration.zero);
  
       // var auth = await GetData().getAuth();
       // var token = await GetData().getToken();

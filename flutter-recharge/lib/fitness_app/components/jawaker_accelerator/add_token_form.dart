@@ -48,12 +48,29 @@ class _AddTokenForm extends State<AddTokenForm> {
   bool _hasCash = true;
   bool _showRecent = false;
   int position = 1;
+  bool _hasConnection = true;
 
   List<PackageTokenData> data = [];
 
   @override
   void initState() {
     super.initState();
+    
+    setConnectionListner((hasI) {
+      setHasConnection(hasI);
+    });
+  }
+
+  
+  setHasConnection(hasI) {
+    setState(() {
+      _hasConnection = hasI;
+    });
+    if (_hasConnection) {
+      print('has connection');
+    } else {
+      print('has no connection');
+    }
   }
 
   void _checkCash() async {
@@ -548,10 +565,12 @@ class _AddTokenForm extends State<AddTokenForm> {
   }
 
   handleAddToken() async {
+    if(_hasConnection)
+    {
+      
     if (_hasCash) {
       if (_formKey.currentState!.validate()) {
         print('Form is valid');
-
         // here test the cost if is it bigger then the cash of the user
 
         setState(() {
@@ -578,9 +597,9 @@ class _AddTokenForm extends State<AddTokenForm> {
         };
 
         var res = null;
-
+        AuthApi().updateTokenCashUser(_cost);
         try {
-          var res = await AuthApi().addToken(ddata);
+          var res = await AuthApi().addToken(ddata,_hasConnection);
           var body = jsonDecode(res.body);
 
           if (body['status']) {
@@ -592,11 +611,12 @@ class _AddTokenForm extends State<AddTokenForm> {
             });
           } else {
             setState(() {
+              AuthApi().updateTokenCashUser(-_cost);
               _hasError = false;
-              print(body);
             });
           }
         } catch (error) {
+          AuthApi().updateTokenCashUser(-_cost);
           handleSnackBarError();
         }
 
@@ -606,13 +626,15 @@ class _AddTokenForm extends State<AddTokenForm> {
 
         EasyLoading.dismiss();
       } else {
-        print('Form is invalid');
-
         setState(() {
           _hasError = true;
         });
       }
     } else {}
+    }
+    else {
+      handleSnackBarErrorConnection(context);
+    }
   }
 }
 

@@ -42,7 +42,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
   double topBarOpacity = 0.0;
   bool _showAppBar = true;
   var user;
-
+  bool _hasConnection = true;
   
   _getUser() async {
 
@@ -110,6 +110,11 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
     });
     super.initState();
     
+
+    setConnectionListner((hasI) {
+      setHasConnection(hasI);
+    });
+
      scrollController?.addListener(() async {
       
       widget.hideBottomBar(false);
@@ -129,7 +134,10 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
 
       
 
+      
+
     );
+    
     
       scrollController?.addListener(() async {
       if (scrollController?.position.pixels ==
@@ -139,6 +147,19 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
     });
   }
 
+
+  setHasConnection(hasI) {
+      print('hasI');
+      print(hasI);
+    setState(() {
+      _hasConnection = hasI;
+    });
+    if (_hasConnection) {
+      print('has connection');
+    } else {
+      print('has no connection');
+    }
+  }
   void addAllListData() {
     const int count = 10;
 
@@ -453,6 +474,9 @@ listViews.add(
   }
 
   Future<bool> getData() async {
+    // if(_hasConnection){
+    //   handleSnackBarErrorConnection(context);
+    // }
     await Future<dynamic>.delayed(const Duration(milliseconds: 100));
     return true;
   }

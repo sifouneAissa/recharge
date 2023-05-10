@@ -44,7 +44,7 @@ class _AccountCardView extends State<AccountCardView> {
   _getUser() async {
     _loading = !_loading;
     var auth = await GetData().getAuth();
-
+    
     setState(() {
       user = auth;
     });
@@ -53,9 +53,12 @@ class _AccountCardView extends State<AccountCardView> {
     var res = await AuthApi().getUser();
 
     var data = await AuthApi().getData(jsonDecode(res.body));
+    // print('data');
+    // print(data);
     setState(() {
       user = data['user'];
     });
+
 
     await AuthApi().updateUser(data);
 

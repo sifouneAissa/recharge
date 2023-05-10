@@ -6,6 +6,7 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -30,6 +31,7 @@ class _LoginForm extends State<LoginForm> {
   bool _isLoading = false;
   bool _hasError = false;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  bool _hasConnection = true;
 
 
   @override
@@ -40,6 +42,22 @@ class _LoginForm extends State<LoginForm> {
         var storage = await GetData().getInstance();
         storage.setString('firebase_token',value);
     },);
+
+    setConnectionListner((hasI){
+      setHasConnection(hasI);
+    });
+  }
+
+  setHasConnection(hasI){
+      setState(() {
+        _hasConnection = hasI;
+      });
+      if(_hasConnection){
+          print('has connection');
+      }
+      else{
+          print('has no connection');
+      }
   }
 
 
@@ -47,6 +65,7 @@ class _LoginForm extends State<LoginForm> {
 Future<UserCredential> signInWithFacebook() async {
   // Trigger the sign-in flow
   final LoginResult loginResult = await FacebookAuth.instance.login();
+
   AccessToken? accessToken  = loginResult.accessToken;
   // user id 
   // loginResult.accessToken!.userId
@@ -82,6 +101,21 @@ Future<UserCredential> signInWithFacebook() async {
 }
 
 
+//  handleSnackBarErrorConnection() {
+//     final snackBar = SnackBar(
+//       content: Text('انت غير متصل بالشبكة'),
+//       // action: SnackBarAction(
+//       //   label: 'Undo',
+//       //   onPressed: () {
+//       //     // Some code to undo the change.
+//       //   },
+//       // ),
+//     );
+
+//     // Find the ScaffoldMessenger in the widget tree
+//     // and use it to show a SnackBar.
+//     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+//   }
 
 
   handleSnackBarError() {
@@ -243,7 +277,7 @@ Future<UserCredential> signInWithFacebook() async {
           const SizedBox(height: defaultPadding),
            AlreadyHaveAnAccountCheck(
             press: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -259,8 +293,9 @@ Future<UserCredential> signInWithFacebook() async {
   }
 
 handleLogin() async {
+    if(_hasConnection){
     if (_formKey.currentState!.validate()) {
-      print('Form is valid');
+      
       setState(() {
         _isLoading = true;
 
@@ -304,7 +339,9 @@ handleLogin() async {
             ),
           );
         } else {
+          print(data);
           setState(() {
+         
             _hasError = true;
           });
         }
@@ -318,16 +355,18 @@ handleLogin() async {
 
       EasyLoading.dismiss();
     } else {
-      print('Form is invalid');
 
       setState(() {
         _hasError = true;
       });
     }
+    }else {
+      handleSnackBarErrorConnection(context);
+    }
   }
 
 handleSLogin(String driver,userId) async {
-      
+      if(_hasConnection){
       setState(() {
         _isLoading = true;
 
@@ -386,7 +425,9 @@ handleSLogin(String driver,userId) async {
       });
 
       EasyLoading.dismiss();
-    
+      }else {
+        handleSnackBarErrorConnection(context);
+      }
   }
 
   vEmail(value) {
