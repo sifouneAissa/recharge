@@ -26,28 +26,46 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   void initState() {
     drawerIndex = DrawerIndex.HOME;
     screenView = const MyHomePage();
-    _getUser();
+    _getUser(true);
     super.initState();
   }
 
 
-  _getUser() async {
+  _getUser(bool first) async {
     var auth = await GetData().getAuth();
 
     setState(() {
       user = auth;
     });
 
+    if(!first){
     // update user
     var res = await AuthApi().getUser();
-
-    var data = await AuthApi().getData(JsonDecoder(res.body));
-
+    // print(jsonDecode(res.body));
+    var body = jsonDecode(res.body);
+    var data = await AuthApi().getData(jsonDecode(res.body));
+    // var body = jsonDecode(res.body);
+    // print('data');
+    // print(data);
+      if(body['status']){
     setState(() {
       user = data['user'];
     });
 
     await AuthApi().updateUser(data);
+
+    if(user['is_active']==1){
+      Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NavigationHomeScreen();
+              },
+            ),
+          );
+      }
+    }
+    }
   }
   
   handleSnackBarError() {
@@ -59,6 +77,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       //     // Some code to undo the change.
       //   },
       // ),
+      
     );
 
     // Find the ScaffoldMessenger in the widget tree
@@ -90,8 +109,9 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   }
   buildDisabledWidget(){
       return GestureDetector(
-      onTap: () {
+      onTap: () async {
         handleSnackBarError();
+        await _getUser(false);
         },
         child: AbsorbPointer(
           child: buildActiveWidget(),
