@@ -19,9 +19,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TransactionDatatable extends StatefulWidget {
-  
-  
-   TransactionDatatable(
+  TransactionDatatable(
       {Key? globalKey,
       this.mainScreenAnimationController,
       this.mainScreenAnimation,
@@ -33,7 +31,6 @@ class TransactionDatatable extends StatefulWidget {
   final Animation<double>? mainScreenAnimation;
   final ScrollController? parentScrollController;
   // var download;
-  
 
   @override
   _TransactionDatatable createState() => _TransactionDatatable();
@@ -42,7 +39,6 @@ class TransactionDatatable extends StatefulWidget {
 class _TransactionDatatable extends State<TransactionDatatable>
     with TickerProviderStateMixin {
   AnimationController? animationController;
-
 
   var transactions = [];
   var stransactions = [];
@@ -103,11 +99,11 @@ class _TransactionDatatable extends State<TransactionDatatable>
   void initState() {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
-    
+
     // widget.download((){
     //   _launchURL();
     // });
-    
+
     __getTransactions();
     super.initState();
     widget.parentScrollController?.addListener(() async {
@@ -1031,7 +1027,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
       text = 'تم رفض المسرع';
     else if (transaction['more']) text = transaction['status']['message'];
 
-    return Text(text, style: TextStyle(fontWeight: FontWeight.bold,color: FitnessAppTheme.lightText));
+    return Text(text,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: FitnessAppTheme.lightText));
   }
 
   bottomSheetBuilderToken(transaction) {
@@ -1052,17 +1050,18 @@ class _TransactionDatatable extends State<TransactionDatatable>
             return Container(
               height: 450,
               child: Container(
-                
                   decoration: BoxDecoration(
-                     gradient: LinearGradient(colors: [
-                      HexColor((transactionColors(transaction) as Color).value.toString()),
+                    gradient: LinearGradient(colors: [
+                      HexColor((transactionColors(transaction) as Color)
+                          .value
+                          .toString()),
                       HexColor(FitnessAppTheme.gradiantFc),
                       HexColor(FitnessAppTheme.gradiantFc),
                       // HexColor(FitnessAppTheme.gradiantSc),
                       // HexColor(FitnessAppTheme.gradiantSc),
                     ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                     // color: transactionColors(transaction),
-                   
+
                     // color: transactionColors(transaction),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -1276,8 +1275,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            color: FitnessAppTheme
-                                                                .white))
+                                                            color:
+                                                                FitnessAppTheme
+                                                                    .white))
                                                   ],
                                                 ),
                                               )
@@ -1376,14 +1376,16 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   decoration: BoxDecoration(
                     // color: transactionColors(transaction),
                     gradient: LinearGradient(colors: [
-                      HexColor((transactionColors(transaction) as Color).value.toString()),
+                      HexColor((transactionColors(transaction) as Color)
+                          .value
+                          .toString()),
                       HexColor(FitnessAppTheme.gradiantFc),
                       HexColor(FitnessAppTheme.gradiantFc),
                       // HexColor(FitnessAppTheme.gradiantSc),
                       // HexColor(FitnessAppTheme.gradiantSc),
                     ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                     // color: transactionColors(transaction),
-                   
+
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
@@ -1585,8 +1587,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            color: FitnessAppTheme
-                                                                .white))
+                                                            color:
+                                                                FitnessAppTheme
+                                                                    .white))
                                                   ],
                                                 ),
                                               )
@@ -1841,7 +1844,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
   @override
   Widget build(BuildContext context) {
-    
     return AnimatedBuilder(
         // key: widget.key,
         animation: widget.mainScreenAnimationController!,
@@ -1879,15 +1881,17 @@ class _TransactionDatatable extends State<TransactionDatatable>
                               color:
                                   FitnessAppTheme.lightText.withOpacity(0.3))),
                     ),
-                    child:Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text('اليوم : ' + todayt.toString(),
-                            style: TextStyle(color: FitnessAppTheme.lightText)),
-                      ),
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text('اليوم : ' + todayt.toString(),
+                          style: TextStyle(color: FitnessAppTheme.lightText)),
+                    ),
                   ),
                 ],
               ),
-              Container(height: defaultHeight,),
+              Container(
+                height: defaultHeight,
+              ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -1902,7 +1906,6 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       });
                     },
                   ),
-                  
                   IconButton(
                     icon: const Icon(Icons.date_range),
                     tooltip: 'بحث حسب التاريخ',
@@ -1913,7 +1916,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       });
                     },
                   ),
-                  Container(width: 105,),
+                  Container(
+                    width: 105,
+                  ),
                   Container(
                     margin: EdgeInsets.only(right: 10),
                     child: DropdownButton(
@@ -1938,8 +1943,9 @@ class _TransactionDatatable extends State<TransactionDatatable>
                       ),
                     )
                   : Container(),
-                  
-              Container(height: defaultHeight,),
+              Container(
+                height: defaultHeight,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -1979,172 +1985,184 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
-                          columns: List<DataColumn>.generate(
-                              columns.length,
-                              (counter) => DataColumn(
-                                      label: Text(
-                                    columns[counter],
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w800,
-                                        color: FitnessAppTheme.white),
-                                  ))),
-                          rows: List<DataRow>.generate(
-                            stransactions.length,
-                            (counter) => DataRow(
-                              color: MaterialStatePropertyAll(
-                                  transactionColors(transactions[counter])),
-                              cells: [
-                                DataCell(
-                                  Text(
-                                    '#' +
-                                        transactions[counter]['id'].toString(),
-                                    style: TextStyle(
-                                        color: FitnessAppTheme.lightText,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
+                        columns: List<DataColumn>.generate(
+                            columns.length,
+                            (counter) => DataColumn(
+                                    label: Text(
+                                  columns[counter],
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800,
+                                      color: FitnessAppTheme.white),
+                                ))),
+                        rows: List<DataRow>.generate(
+                          stransactions.length,
+                          (counter) => DataRow(
+                            color: MaterialStatePropertyAll(
+                                transactionColors(transactions[counter])),
+                            cells: [
+                              DataCell(
+                                Text(
+                                  '#' + transactions[counter]['id'].toString(),
+                                  style: TextStyle(
+                                      color: FitnessAppTheme.lightText,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                DataCell(
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      transactionStatus(stransactions[counter]),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      transactionIcon(stransactions[counter])
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
-                                ),
-                                DataCell(
-                                  Text(
-                                    Common.formatNumber(
-                                        stransactions[counter]['count']),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: FitnessAppTheme.lightText),
-                                  ),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
-                                ),
-                                // DataCell(
-                                //   Text(
-                                //       Common.formatNumber(
-                                //           stransactions[counter]['cost']),
-                                //       style: TextStyle(
-                                //           fontWeight: FontWeight.bold,
-                                //           color: FitnessAppTheme.lightText)),
-                                //   onTap: () {
-                                //     stransactions[counter]['type'].toString() ==
-                                //             'token'
-                                //         ? bottomSheetBuilderToken(
-                                //             stransactions[counter])
-                                //         : bottomSheetBuilderPoint(
-                                //             stransactions[counter]);
-                                //   },
-                                // ),
-                                DataCell(
-                                  Text(
-                                      stransactions[counter]['player_name'] !=
-                                              null
-                                          ? stransactions[counter]['player_name']
-                                              .toString()
-                                          : '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: FitnessAppTheme.lightText)),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
-                                ),
-                                DataCell(
-                                  Text(
-                                      stransactions[counter]['account_id'] !=
-                                              null
-                                          ? stransactions[counter]['account_id']
-                                              .toString()
-                                          : '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: FitnessAppTheme.lightText)),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
-                                ),
-                                
-                                DataCell(
+                                onTap: () {
                                   stransactions[counter]['type'].toString() ==
                                           'token'
-                                      ? Image.asset(
-                                          'assets/fitness_app/tab_3s.png',
-                                          width: 40,
-                                        )
-                                      : Image.asset(
-                                          'assets/fitness_app/tab_2s.png',
-                                          width: 40,
-                                        ),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
+                                      ? bottomSheetBuilderToken(
+                                          stransactions[counter])
+                                      : bottomSheetBuilderPoint(
+                                          stransactions[counter]);
+                                },
+                              ),
+                              DataCell(
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    transactionStatus(stransactions[counter]),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    transactionIcon(stransactions[counter])
+                                  ],
                                 ),
-                                DataCell(
-                                  Text(
-                                      stransactions[counter]['tdate']
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: FitnessAppTheme.lightText)),
-                                  onTap: () {
-                                    stransactions[counter]['type'].toString() ==
-                                            'token'
-                                        ? bottomSheetBuilderToken(
-                                            stransactions[counter])
-                                        : bottomSheetBuilderPoint(
-                                            stransactions[counter]);
-                                  },
-                                )
-                              ],
-                              // color: transactions[counter]['type'].toString() == 'token' ? MaterialStateProperty.all(Colors.lightGreen) : MaterialStateProperty.all(Colors.pinkAccent)
-                            ),
-                          ))))
+                                onTap: () {
+                                  stransactions[counter]['type'].toString() ==
+                                          'token'
+                                      ? bottomSheetBuilderToken(
+                                          stransactions[counter])
+                                      : bottomSheetBuilderPoint(
+                                          stransactions[counter]);
+                                },
+                              ),
+                              DataCell(
+                                Text(
+                                  Common.formatNumber(
+                                      stransactions[counter]['count']),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: FitnessAppTheme.lightText),
+                                ),
+                                onTap: () {
+                                  stransactions[counter]['type'].toString() ==
+                                          'token'
+                                      ? bottomSheetBuilderToken(
+                                          stransactions[counter])
+                                      : bottomSheetBuilderPoint(
+                                          stransactions[counter]);
+                                },
+                              ),
+                              // DataCell(
+                              //   Text(
+                              //       Common.formatNumber(
+                              //           stransactions[counter]['cost']),
+                              //       style: TextStyle(
+                              //           fontWeight: FontWeight.bold,
+                              //           color: FitnessAppTheme.lightText)),
+                              //   onTap: () {
+                              //     stransactions[counter]['type'].toString() ==
+                              //             'token'
+                              //         ? bottomSheetBuilderToken(
+                              //             stransactions[counter])
+                              //         : bottomSheetBuilderPoint(
+                              //             stransactions[counter]);
+                              //   },
+                              // ),
+                              DataCell(
+                                Text(
+                                    stransactions[counter]['player_name'] !=
+                                            null
+                                        ? stransactions[counter]['player_name']
+                                            .toString()
+                                        : '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: FitnessAppTheme.lightText)),
+                                onTap: () {
+                                  stransactions[counter]['type'].toString() ==
+                                          'token'
+                                      ? bottomSheetBuilderToken(
+                                          stransactions[counter])
+                                      : bottomSheetBuilderPoint(
+                                          stransactions[counter]);
+                                },
+                              ),
+                              DataCell(
+                                Text(
+                                    stransactions[counter]['account_id'] != null
+                                        ? stransactions[counter]['account_id']
+                                            .toString()
+                                        : '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: FitnessAppTheme.lightText)),
+                                onTap: () {
+                                  stransactions[counter]['type'].toString() ==
+                                          'token'
+                                      ? bottomSheetBuilderToken(
+                                          stransactions[counter])
+                                      : bottomSheetBuilderPoint(
+                                          stransactions[counter]);
+                                },
+                              ),
+
+                              DataCell(
+                                stransactions[counter]['type'].toString() ==
+                                        'token'
+                                    ? Image.asset(
+                                        'assets/fitness_app/tab_3s.png',
+                                        width: 40,
+                                      )
+                                    : Image.asset(
+                                        'assets/fitness_app/tab_2s.png',
+                                        width: 40,
+                                      ),
+                                onTap: () {
+                                  stransactions[counter]['type'].toString() ==
+                                          'token'
+                                      ? bottomSheetBuilderToken(
+                                          stransactions[counter])
+                                      : bottomSheetBuilderPoint(
+                                          stransactions[counter]);
+                                },
+                              ),
+                              DataCell(
+                                Text(stransactions[counter]['tdate'].toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: FitnessAppTheme.lightText)),
+                                onTap: () {
+                                  stransactions[counter]['type'].toString() ==
+                                          'token'
+                                      ? bottomSheetBuilderToken(
+                                          stransactions[counter])
+                                      : bottomSheetBuilderPoint(
+                                          stransactions[counter]);
+                                },
+                              )
+                            ],
+                            // color: transactions[counter]['type'].toString() == 'token' ? MaterialStateProperty.all(Colors.lightGreen) : MaterialStateProperty.all(Colors.pinkAccent)
+                          ),
+                        ),
+                      ))),
+              stransactions.length == 0 ?  Container(
+                margin: EdgeInsets.only(top: 50, bottom: 50),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: HexColor(FitnessAppTheme.gradiantFc)
+                            .withOpacity(0.5)),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: EdgeInsets.all(11),
+                  child: Text(
+                    'لا توجد اي معاملات',
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  ),
+                ),
+              ) : Container()
             ],
           );
         });

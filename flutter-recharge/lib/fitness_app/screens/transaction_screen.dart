@@ -242,7 +242,7 @@ class _TransactionScreenState extends State<TransactionScreen>
           onRefresh: getData,
           child: Stack(
             children: <Widget>[
-              getMainListViewUI(),
+               getMainListViewUI(),
               _showAppBar ? getAppBarUI() : Container(),
               SizedBox(
                 height: MediaQuery.of(context).padding.bottom,
@@ -263,6 +263,7 @@ class _TransactionScreenState extends State<TransactionScreen>
         } else {
           return ListView.builder(
             controller: scrollController,
+            physics: AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.only(
               top: AppBar().preferredSize.height +
                   MediaQuery.of(context).padding.top +

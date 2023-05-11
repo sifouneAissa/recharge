@@ -5,6 +5,7 @@ import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 
 class NotificationDatatable extends StatefulWidget {
@@ -402,7 +403,27 @@ class _NotificationDatatable extends State<NotificationDatatable> {
         child: SingleChildScrollView(
             // scrollDirection: Axis.horizontal,
             child: Column(
-          children: _getColumns(),
+              
+          children: [
+            notifications.length == 0 ?  Container(
+                margin: EdgeInsets.only(top: 50, bottom: 50),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: HexColor(FitnessAppTheme.gradiantFc)
+                            .withOpacity(0.5)),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: EdgeInsets.all(11),
+                  child: Text(
+                    'لا توجد اي اشعارات',
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  ),
+                ),
+              ) : Container(),
+            Column(
+              children: _getColumns(),
+            )
+          ],
         )));
   }
 }

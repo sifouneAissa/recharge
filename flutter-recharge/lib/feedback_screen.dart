@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackScreen extends StatefulWidget {
@@ -26,7 +27,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           body: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: Column(
+              child: Container(
+                decoration: getBoxBackgroud(),
+                child: Column(
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(
@@ -38,7 +41,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   Container(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      'Your FeedBack',
+                      'تعليقك',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -48,7 +51,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   Container(
                     padding: const EdgeInsets.only(top: 16),
                     child: Text(
-                      'Give your best time for this moment.',
+                      'امنح أفضل وقت لهذه اللحظة.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 16,
@@ -83,7 +86,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  'Send',
+                                  'ارسال',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: isLightMode
@@ -100,7 +103,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   )
                 ],
               ),
-            ),
+            
+              )),
           ),
         ),
       ),

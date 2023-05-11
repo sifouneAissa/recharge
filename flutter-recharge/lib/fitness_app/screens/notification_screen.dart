@@ -258,6 +258,7 @@ class _NotificationScreenState extends State<NotificationScreen>
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
             itemCount: listViews.length,
+            physics: AlwaysScrollableScrollPhysics(),
             scrollDirection: Axis.vertical,
             itemBuilder: (BuildContext context, int index) {
               widget.animationController?.forward();

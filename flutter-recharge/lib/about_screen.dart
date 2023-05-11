@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,7 +28,9 @@ class _AboutScreenState extends State<AboutScreen> {
         child: Scaffold(
           backgroundColor:
               isLightMode ? AppTheme.nearlyWhite : AppTheme.nearlyBlack,
-          body: Column(
+          body: Container(
+            decoration: getBoxBackgroud(),
+            child: Column(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(
@@ -110,7 +113,8 @@ class _AboutScreenState extends State<AboutScreen> {
               )
             ],
           ),
-        ),
+       
+          ) ),
       ),
     );
   }

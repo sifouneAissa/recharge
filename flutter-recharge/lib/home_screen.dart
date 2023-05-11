@@ -46,13 +46,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     // update user
     var res = await AuthApi().getUser();
 
-    var data = await AuthApi().getData(JsonDecoder(res.body));
+    var data = await AuthApi().getData(jsonDecode(res.body));
 
-    setState(() {
-      user = data['user'];
-    });
+    var body = jsonDecode(res.body);
+    
+      if(body['status']){
+        setState(() {
+          user = data['user'];
+        });
 
-    await AuthApi().updateUser(data);
+        await AuthApi().updateUser(data);
+          }
   }
 
   Future<bool> getData() async {

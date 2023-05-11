@@ -1,4 +1,5 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:flutter/material.dart';
 
 class HelpScreen extends StatefulWidget {
@@ -17,13 +18,16 @@ class _HelpScreenState extends State<HelpScreen> {
     var brightness = Theme.of(context).brightness;
     bool isLightMode = brightness == Brightness.light;
     return Container(
-      color: isLightMode ? AppTheme.nearlyWhite : AppTheme.nearlyBlack,
+      // color: isLightMode ? AppTheme.nearlyWhite : AppTheme.nearlyBlack,
+      decoration: getBoxBackgroud(),
       child: SafeArea(
         top: false,
         child: Scaffold(
           backgroundColor:
               isLightMode ? AppTheme.nearlyWhite : AppTheme.nearlyBlack,
-          body: Column(
+          body: Container(
+            decoration: getBoxBackgroud(),
+            child: Column(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(
@@ -35,7 +39,7 @@ class _HelpScreenState extends State<HelpScreen> {
               Container(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'How can we help you?',
+                  'كيف نساعدك ؟ ',
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -45,7 +49,7 @@ class _HelpScreenState extends State<HelpScreen> {
               Container(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(
-                  'It looks like you are experiencing problems\nwith our sign up process. We are here to\nhelp so please get in touch with us',
+                  'يبدو أنك تواجه مشاكل \n في عملية التسجيل لدينا. نحن هنا للمساعدة ،\n لذا يرجى التواصل معنا',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 16,
@@ -78,7 +82,7 @@ class _HelpScreenState extends State<HelpScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
-                                'Chat with Us',
+                                'تواصل معنا',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color:
@@ -94,6 +98,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 ),
               )
             ],
+          ),
           ),
         ),
       ),
