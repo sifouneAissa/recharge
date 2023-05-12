@@ -46,6 +46,7 @@ class _RecentTokenTransactionDatatable
     S().count,
     // S().cost_d,
     'معرف الحساب',
+    'اسم اللاعب',
     S().date
   ];
 
@@ -1040,6 +1041,16 @@ class _RecentTokenTransactionDatatable
                                     DataCell(
                                         Text(
                                           transactions[counter]['account_id']
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: FitnessAppTheme.lightText,
+                                          ),
+                                        ), onTap: () {
+                                      bottomSheetBuilder(transactions[counter]);
+                                    }),
+                                    DataCell(
+                                        Text(
+                                          transactions[counter]['player_name']
                                               .toString(),
                                           style: TextStyle(
                                             color: FitnessAppTheme.lightText,

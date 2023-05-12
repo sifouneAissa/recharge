@@ -48,6 +48,7 @@ class _RecentPointTransactionDatatable
     S().count,
     // S().cost_d,
     'معرف اللاعب',
+    'اسم اللاعب',
     S().date
   ];
 
@@ -1193,6 +1194,24 @@ class _RecentPointTransactionDatatable
                                                   null
                                               ? transactions[counter]
                                                       ['name_of_player']
+                                                  .toString()
+                                              : '',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  FitnessAppTheme.lightText)),
+                                      onTap: () {
+                                        bottomSheetBuilder(
+                                            transactions[counter]);
+                                      },
+                                    ),
+                                    DataCell(
+                                      Text(
+                                          transactions[counter]
+                                                      ['player_name'] !=
+                                                  null
+                                              ? transactions[counter]
+                                                      ['player_name']
                                                   .toString()
                                               : '',
                                           style: TextStyle(

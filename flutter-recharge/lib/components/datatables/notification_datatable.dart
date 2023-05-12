@@ -41,12 +41,12 @@ class _NotificationDatatable extends State<NotificationDatatable> {
     var body = jsonDecode(t.body);
 
     if (body['status']) {
-      if(this.mounted)
-      setState(() {
-        var data = AuthApi().getData(body);
-        notifications = data['notifications'];
-        diffs = data['diffs'];
-      });
+      if (this.mounted)
+        setState(() {
+          var data = AuthApi().getData(body);
+          notifications = data['notifications'];
+          diffs = data['diffs'];
+        });
 
       await GetData().updateNotifications(notifications);
       await GetData().updateDiffs(diffs);
@@ -404,23 +404,36 @@ class _NotificationDatatable extends State<NotificationDatatable> {
         child: SingleChildScrollView(
             // scrollDirection: Axis.horizontal,
             child: Column(
-              
           children: [
-            notifications.length == 0 ?  Container(
-                margin: EdgeInsets.only(top: 50, bottom: 50),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: HexColor(FitnessAppTheme.gradiantFc)
-                            .withOpacity(0.5)),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: EdgeInsets.all(11),
-                  child: Text(
-                    'لا توجد اي اشعارات',
-                    style: TextStyle(color: Colors.white, fontSize: 40),
-                  ),
-                ),
-              ) : Container(),
+            notifications.length == 0
+                ? Container(
+                    margin: EdgeInsets.only(top: 0, bottom: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: HexColor(FitnessAppTheme.gradiantFc)
+                                .withOpacity(0.5)),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                      children: [
+                         Container(
+                          padding: EdgeInsets.only(
+                              // top: MediaQuery.of(context).padding.top,
+                              left: 16,
+                              right: 16),
+                          child: Image.asset('assets/icons/logot.png',width: 250,),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 11,left: 11,bottom: 11),
+                          child: Text(
+                            'لا توجد أي إشعارات',
+                            style: TextStyle(color: Colors.white, fontSize: 40),
+                          ),
+                        ),
+                       
+                      ],
+                    ),
+                  )
+                : Container(),
             Column(
               children: _getColumns(),
             )
