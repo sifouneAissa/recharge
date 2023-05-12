@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/main.dart';
@@ -94,6 +95,8 @@ class _HistoryChartState extends State<HistoryChart> {
     };
   }
 
+  var pointPackages; 
+
   getSDates() {
     if (sDate != null && eDate != null) {
       return PickerDateRange(
@@ -102,6 +105,102 @@ class _HistoryChartState extends State<HistoryChart> {
     return null;
   }
 
+  initPointPackages(){
+    return{
+      '100%' : 0,
+      '150%' : 0,
+      '300%' : 0
+    };
+  }
+
+  getPointPackages(){
+    
+    var codes = [
+      '100%',
+      '150%',
+      '300%'
+    ];
+
+    var names = [
+      'مسرع احمر',
+      'مسرع أزرق',
+      'مسرع أسود'
+    ];
+
+    var colors = [
+      Colors.red,
+      Colors.blue,
+      Colors.black87
+    ];
+
+    return List.generate(pointPackages.length, (index) => 
+           Padding(padding: EdgeInsets.all(10),
+           child: Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.remove,
+                              color: colors[index],
+                            ),
+                            Text(
+                              'مجموع ماشحنت من ' + names[index] + ' : ',
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText),
+                            ),
+                            Text(
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText,fontSize: 15),Common.formatNumber(pointPackages[codes[index]].toString())),
+                          ],
+                        ),
+                      ),
+           )
+    );
+  }
+
+  bottomSheetPoint(){
+      showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (BuildContext context,
+              StateSetter setState /*You can rename this!*/) {
+            return Container(
+              decoration: getBoxBackgroud(),
+              height: 200,
+              child: Column(
+                children: [
+                  Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                  'معلومات حول المسرعات',
+                                  style: TextStyle(
+                                      color: FitnessAppTheme.lightText)),
+                            )
+                          ],
+                        ),
+                  ),
+                  Column(
+                    children: getPointPackages(),
+                  )
+                ],
+              ),
+            );
+          });
+        });
+  
+  }
 
   __getOldTransactions() async {
     var t = await GetData().getTransaction();
@@ -147,6 +246,7 @@ class _HistoryChartState extends State<HistoryChart> {
       var stokens = 0.0;
       var scost = 0.0;
       var smonths = initSMonths();
+      var sPointPackages = initPointPackages();
       // send api to the server filtering data
       if ((startDate != null && endDate != null) || force) {
         var t = transactions;
@@ -163,13 +263,20 @@ class _HistoryChartState extends State<HistoryChart> {
             bool isToken = element['type'] == 'token';
             var value = smonths[
                 (DateTime.parse(element['created_at']).month + 1).toString()];
-
+            
             if (isToken) {
               stokens = stokens + element['count'];
               value!['token_cash'] = value!['token_cash']! + element!['count'];
             } else {
-              scost = scost + element['cost'];
-              value!['point_cash'] = value!['point_cash']! + element!['cost'];
+              var packagePoints = element['point_packages'];
+              
+              packagePoints.forEach((p){
+                sPointPackages[p['package_name']] = p['count'] + sPointPackages[p['package_name']];
+              });
+
+              scost = scost + element['point_quantity'];
+              
+              value!['point_cash'] = value!['point_cash']! + element!['point_quantity'];
             }
             // set array
           },
@@ -185,6 +292,7 @@ class _HistoryChartState extends State<HistoryChart> {
           t_points = scost;
           t_tokens = stokens;
           data = smonths;
+          pointPackages = sPointPackages;
         });
       } else
         setState(() {
@@ -428,7 +536,11 @@ class _HistoryChartState extends State<HistoryChart> {
             Container(
               width: MediaQuery.of(context).size.width * 0.1,
             ),
-            Container(
+            GestureDetector(
+              onTap: () {
+                bottomSheetPoint();
+              },
+              child: Container(
                 width: MediaQuery.of(context).size.width * 0.45,
                 // height: MediaQuery.of(context).size.height * 0.33,
                 // color:Colors.amber,
@@ -469,7 +581,7 @@ class _HistoryChartState extends State<HistoryChart> {
                           style: TextStyle(color: FitnessAppTheme.lightText),
                           children: [
                             TextSpan(
-                                text: Common.formatNumber(t_points.toString()),
+                                text: Common.formatNumber(t_points.toInt().toString()),
                                 style: TextStyle(fontWeight: FontWeight.bold))
                           ])),
                       ),
@@ -497,7 +609,9 @@ class _HistoryChartState extends State<HistoryChart> {
                     ],
                   ),
                 ))
-          ],
+              ,
+            )
+            ],
         ),
         _buildDefaultColumnChartToken(),
         _buildDefaultColumnChartPoint(),
