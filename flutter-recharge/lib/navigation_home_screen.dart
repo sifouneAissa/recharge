@@ -143,16 +143,16 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           // screenView = MyHomePage();
         });
         break;
-      case DrawerIndex.Help:
-        setState(() {
-          screenView = HelpScreen();
-        });
-        break;
-      case DrawerIndex.FeedBack:
-        setState(() {
-          screenView = FeedbackScreen();
-        });
-        break;
+      // case DrawerIndex.Help:
+      //   setState(() {
+      //     screenView = HelpScreen();
+      //   });
+      //   break;
+      // case DrawerIndex.FeedBack:
+      //   setState(() {
+      //     screenView = FeedbackScreen();
+      //   });
+      //   break;
       case DrawerIndex.Invite:
         setState(() {
           screenView = InviteFriend();

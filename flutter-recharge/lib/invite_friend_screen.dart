@@ -1,6 +1,7 @@
 import 'package:best_flutter_ui_templates/app_theme.dart';
 import 'package:best_flutter_ui_templates/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class InviteFriend extends StatefulWidget {
   @override
@@ -11,6 +12,11 @@ class _InviteFriendState extends State<InviteFriend> {
   @override
   void initState() {
     super.initState();
+  }
+
+_shareData(){
+  String name = 'com.example.test';
+  Share.share('check out my app https://play.google.com/store/apps/details?id='+name);
   }
 
   @override
@@ -79,7 +85,9 @@ class _InviteFriendState extends State<InviteFriend> {
                         child: InkWell(
                           onTap: () {
                             //method here for functionality
-                            print('Share Action.');
+                            // print('Share Action.');
+                            
+                            _shareData();
                           },
                           child: Center(
                             child: Row(

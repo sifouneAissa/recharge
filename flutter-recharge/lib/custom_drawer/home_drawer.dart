@@ -80,27 +80,27 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: S().home,
         icon: Icon(Icons.home),
       ),
-      DrawerList(
-        index: DrawerIndex.Help,
-        labelName: S().help,
-        isAssetsImage: true,
-        imageName: 'assets/images/supportIcon.png',
-      ),
-      DrawerList(
-        index: DrawerIndex.FeedBack,
-        labelName: S().feedback,
-        icon: Icon(Icons.help),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Help,
+      //   labelName: S().help,
+      //   isAssetsImage: true,
+      //   imageName: 'assets/images/supportIcon.png',
+      // ),
+      // DrawerList(
+      //   index: DrawerIndex.FeedBack,
+      //   labelName: S().feedback,
+      //   icon: Icon(Icons.help),
+      // ),
       DrawerList(
         index: DrawerIndex.Invite,
         labelName: S().invite_friend,
         icon: Icon(Icons.group),
       ),
-      DrawerList(
-        index: DrawerIndex.Share,
-        labelName: S().rate_the_app,
-        icon: Icon(Icons.share),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Share,
+      //   labelName: S().rate_the_app,
+      //   icon: Icon(Icons.share),
+      // ),
       DrawerList(
         index: DrawerIndex.About,
         labelName: S().about_us,
