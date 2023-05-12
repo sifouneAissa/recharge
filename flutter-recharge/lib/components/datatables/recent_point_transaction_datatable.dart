@@ -58,6 +58,7 @@ class _RecentPointTransactionDatatable
   bool _copied = false;
 
   __getTransactions() async {
+
     __getOldTransactions();
     // var t = await AuthApi().getTransactions();
     var t = await AuthApi().getRecentTransactions({'only': 5, 'type': 'point'});
@@ -65,6 +66,7 @@ class _RecentPointTransactionDatatable
     var body = t.data;
 
     if (body['status']) {
+      if(this.mounted)
       setState(() {
         var data = AuthApi().getData(body);
 
@@ -1046,6 +1048,7 @@ class _RecentPointTransactionDatatable
   @override
   void dispose() {
     animationController?.dispose();
+    widget.parentScrollController?.dispose();
     super.dispose();
   }
 

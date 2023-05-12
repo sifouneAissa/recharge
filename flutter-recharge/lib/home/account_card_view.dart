@@ -44,7 +44,7 @@ class _AccountCardView extends State<AccountCardView> {
   _getUser() async {
     _loading = !_loading;
     var auth = await GetData().getAuth();
-    
+    if(this.mounted)
     setState(() {
       user = auth;
     });
@@ -55,6 +55,7 @@ class _AccountCardView extends State<AccountCardView> {
     var data = await AuthApi().getData(jsonDecode(res.body));
     // print('data');
     // print(data);
+    if(this.mounted)
     setState(() {
       user = data['user'];
     });

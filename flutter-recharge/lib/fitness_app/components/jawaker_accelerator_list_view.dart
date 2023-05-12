@@ -52,6 +52,7 @@ class _JawakerAcceleratorListViewState extends State<JawakerAcceleratorListView>
     var body = jsonDecode(res.body);
 
     if (body['status']) {
+      if(this.mounted)
       setState(() {
         var data = AuthApi().getData(body);
         packages = data['packages'];
@@ -310,7 +311,7 @@ class _JawakerView extends State<JawakerView> {
                                     child: FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Text(
-                                        Common.formatNumber(widget.package['cost']),
+                                        Common.formatNumber(widget.package!= null ? widget.package['cost'] : 0),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,

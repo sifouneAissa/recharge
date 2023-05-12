@@ -72,6 +72,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
     var t = await AuthApi().getTransactions();
     var body = jsonDecode(t.body);
     if (body['status']) {
+      if(this.mounted)
       setState(() {
         var data = AuthApi().getData(body);
         transactions = data['transactions'];
@@ -140,6 +141,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
   @override
   void dispose() {
     animationController?.dispose();
+    widget.parentScrollController?.dispose();
     super.dispose();
   }
 
@@ -1034,6 +1036,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
 
   bottomSheetBuilderToken(transaction) {
     bool isW = transaction['waiting'];
+    if(this.mounted)
     setState(() {
       _copied = false;
     });
@@ -1821,6 +1824,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
       b_url = b_url + '&type=' + ttransaction.toString();
     }
     if (sDate != null && eDate != null) {
+
       b_url = b_url + '&end=' + eDate.toString();
       b_url = b_url + '&start=' + sDate.toString();
     }
@@ -1971,6 +1975,7 @@ class _TransactionDatatable extends State<TransactionDatatable>
                   )),
                   IconButton(
                       onPressed: () {
+                        // print(sDate);
                         _launchURL();
                       },
                       icon: Icon(

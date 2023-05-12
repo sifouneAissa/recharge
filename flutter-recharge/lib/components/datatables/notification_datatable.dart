@@ -41,6 +41,7 @@ class _NotificationDatatable extends State<NotificationDatatable> {
     var body = jsonDecode(t.body);
 
     if (body['status']) {
+      if(this.mounted)
       setState(() {
         var data = AuthApi().getData(body);
         notifications = data['notifications'];

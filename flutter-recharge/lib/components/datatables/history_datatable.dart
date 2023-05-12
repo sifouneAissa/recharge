@@ -42,11 +42,13 @@ class _HistoryDatatable extends State<HistoryDatatable> with TickerProviderState
     
 
    __getTransactions() async {
+    
     __getOldTransactions();
       var t = await AuthApi().getTransactions();
       var body = jsonDecode(t.body);
       if(body['status'])
       {
+        if(this.mounted)
         setState(() {
           var data = AuthApi().getData(body);
           transactions = data['transactions'];
@@ -62,6 +64,7 @@ class _HistoryDatatable extends State<HistoryDatatable> with TickerProviderState
   __getOldTransactions() async{
     var t = await GetData().getTransaction();
     if(t!=null){
+      if(this.mounted)
       setState(() {
           transactions = jsonDecode(t);
       });

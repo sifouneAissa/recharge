@@ -122,7 +122,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   @override
   Widget build(BuildContext context) {
     // return buildActiveWidget();
-    return user['is_active'] == 1 ? buildActiveWidget() : buildDisabledWidget();
+
+    return (user != null  &&  user['is_active'] == 1)  ? buildActiveWidget() : buildDisabledWidget();
   }
 
   void changeIndex(DrawerIndex drawerIndexdata) {

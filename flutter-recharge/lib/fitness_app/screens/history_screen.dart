@@ -97,27 +97,27 @@ class _HistoryScreenState extends State<HistoryScreen>
     listViews.add(HistoryChart());
 
 
-    listViews.add(
-      TitleView(
-        titleTxt: S().old_transactions,
-        // subTxt: 'Shop',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: S().old_transactions,
+    //     // subTxt: 'Shop',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
 
 
 
-    listViews.add(HistoryDatatable(
-      parentScrollController : scrollController,
-      mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(
-              parent: widget.animationController!,
-              curve: Interval(0.7, 1.0, curve: Curves.slowMiddle))),
-      mainScreenAnimationController: widget.animationController,
-    ));
+    // listViews.add(HistoryDatatable(
+    //   parentScrollController : scrollController,
+    //   mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //       CurvedAnimation(
+    //           parent: widget.animationController!,
+    //           curve: Interval(0.7, 1.0, curve: Curves.slowMiddle))),
+    //   mainScreenAnimationController: widget.animationController,
+    // ));
 
     // listViews.add(
     //   JawakerAcceleratorListView(

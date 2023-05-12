@@ -61,6 +61,7 @@ class _RecentTokenTransactionDatatable
     var body = t.data;
 
     if (body['status']) {
+      if(this.mounted)
       setState(() {
         var data = AuthApi().getData(body);
         transactions = data['transactions'];
@@ -108,6 +109,7 @@ class _RecentTokenTransactionDatatable
   @override
   void dispose() {
     animationController?.dispose();
+    widget.parentScrollController?.dispose();
     super.dispose();
   }
 

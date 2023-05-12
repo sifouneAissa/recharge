@@ -56,7 +56,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
     var res = await AuthApi().getUser();
     print(res);
     var data = await AuthApi().getData(jsonDecode(res.body));
-
+    if(this.mounted)
     setState(() {
       user = data['user'];
     });
@@ -350,6 +350,36 @@ listViews.add(
     // );
 
     gridViews.add(
+      HistoryListView(
+        parentScrollController: scrollController,
+         onChangeBody: (){
+          widget.onChangeBody('history');
+        },
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.animationController!,
+                curve: Interval((1 / count) * 7, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.animationController!,
+      ),
+    );
+
+    gridViews.add(
+      TransactionListView(
+        parentScrollController: scrollController,
+         onChangeBody: (){
+          widget.onChangeBody('transaction');
+        },
+        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+                parent: widget.animationController!,
+                curve: Interval((1 / count) * 7, 1.0,
+                    curve: Curves.fastOutSlowIn))),
+        mainScreenAnimationController: widget.animationController!,
+      ),
+    );
+
+    gridViews.add(
       JawakerListView(
         parentScrollController: scrollController,
          onChangeBody: (){
@@ -363,8 +393,7 @@ listViews.add(
         mainScreenAnimationController: widget.animationController!,
       ),
     );
-
-
+    
 
     gridViews.add(
       NotificationListView(
@@ -381,36 +410,10 @@ listViews.add(
       ),
     );
 
-    gridViews.add(
-      TransactionListView(
-        
-        parentScrollController: scrollController,
-         onChangeBody: (){
-          widget.onChangeBody('transaction');
-        },
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval((1 / count) * 7, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController!,
-      ),
-    );
 
-    gridViews.add(
-      HistoryListView(
-        parentScrollController: scrollController,
-         onChangeBody: (){
-          widget.onChangeBody('history');
-        },
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval((1 / count) * 7, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController!,
-      ),
-    );
+
+    
+
 
     // listViews.add(
     //   TitleView(

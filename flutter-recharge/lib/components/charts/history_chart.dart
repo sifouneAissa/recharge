@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
+import 'package:best_flutter_ui_templates/fitness_app/common.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -25,7 +27,10 @@ class _HistoryChartState extends State<HistoryChart> {
   bool _loading = false;
   double t_tokens = 0;
   double t_points = 0;
-
+  var transactions;
+  var stransactions;
+  String? sDate;
+  String? eDate;
   List<String> months = [
     'جانفي',
     'فيفري',
@@ -41,6 +46,21 @@ class _HistoryChartState extends State<HistoryChart> {
     'ديسمبر'
   ];
 
+  var monthsN = {
+    '1': {'token_cash': 0, 'point_cash': 0.0},
+    '2': {'token_cash': 0, 'point_cash': 0.0},
+    '3': {'token_cash': 0, 'point_cash': 0.0},
+    '4': {'token_cash': 0, 'point_cash': 0.0},
+    '5': {'token_cash': 0, 'point_cash': 0.0},
+    '6': {'token_cash': 0, 'point_cash': 0.0},
+    '7': {'token_cash': 0, 'point_cash': 0.0},
+    '8': {'token_cash': 0, 'point_cash': 0.0},
+    '9': {'token_cash': 0, 'point_cash': 0.0},
+    '10': {'token_cash': 0, 'point_cash': 0.0},
+    '11': {'token_cash': 0, 'point_cash': 0.0},
+    '12': {'token_cash': 0, 'point_cash': 0.0}
+  };
+
   @override
   void initState() {
     _zoomPanBehavior = ZoomPanBehavior(
@@ -51,8 +71,46 @@ class _HistoryChartState extends State<HistoryChart> {
       selectionRectColor: Colors.grey,
       enablePinching: true,
     );
+
+    __getOldTransactions();
     _getData();
     super.initState();
+  }
+
+  initSMonths() {
+    return {
+      '1': {'token_cash': 0, 'point_cash': 0.0},
+      '2': {'token_cash': 0, 'point_cash': 0.0},
+      '3': {'token_cash': 0, 'point_cash': 0.0},
+      '4': {'token_cash': 0, 'point_cash': 0.0},
+      '5': {'token_cash': 0, 'point_cash': 0.0},
+      '6': {'token_cash': 0, 'point_cash': 0.0},
+      '7': {'token_cash': 0, 'point_cash': 0.0},
+      '8': {'token_cash': 0, 'point_cash': 0.0},
+      '9': {'token_cash': 0, 'point_cash': 0.0},
+      '10': {'token_cash': 0, 'point_cash': 0.0},
+      '11': {'token_cash': 0, 'point_cash': 0.0},
+      '12': {'token_cash': 0, 'point_cash': 0.0}
+    };
+  }
+
+  getSDates() {
+    if (sDate != null && eDate != null) {
+      return PickerDateRange(
+          DateTime.parse(sDate ?? ''), DateTime.parse(eDate ?? ''));
+    }
+    return null;
+  }
+
+
+  __getOldTransactions() async {
+    var t = await GetData().getTransaction();
+
+    if (t != null) {
+      setState(() {
+        transactions = jsonDecode(t);
+      });
+    }
   }
 
   _getData() async {
@@ -64,9 +122,8 @@ class _HistoryChartState extends State<HistoryChart> {
       var dataa = AuthApi().getData(body);
 
       setState(() {
-        t_tokens = 0;
-        t_points = 0;
         data = dataa['months'];
+        updateData(null, null, true);
       });
 
       await GetData().updateMonths(data);
@@ -79,7 +136,80 @@ class _HistoryChartState extends State<HistoryChart> {
     if (t != null) {
       setState(() {
         data = jsonDecode(t);
+        updateData(null, null, true);
       });
+    }
+  }
+
+
+  updateData(startDate,endDate,bool force){
+     if ((startDate != null && endDate != null) || force) {
+      var stokens = 0.0;
+      var scost = 0.0;
+      var smonths = initSMonths();
+      // send api to the server filtering data
+      if ((startDate != null && endDate != null) || force) {
+        var t = transactions;
+        if(!force)
+         t = transactions.where(
+          (element) {
+            var ldate = DateTime.parse(element['created_at']);
+            return ldate.isBefore(endDate) && ldate.isAfter(startDate);
+          },
+        ).toList();
+
+        t.forEach(
+          (element) {
+            bool isToken = element['type'] == 'token';
+            var value = smonths[
+                (DateTime.parse(element['created_at']).month + 1).toString()];
+
+            if (isToken) {
+              stokens = stokens + element['count'];
+              value!['token_cash'] = value!['token_cash']! + element!['count'];
+            } else {
+              scost = scost + element['cost'];
+              value!['point_cash'] = value!['point_cash']! + element!['cost'];
+            }
+            // set array
+          },
+        );
+
+        setState(() {
+          stransactions = t;
+          final DateFormat formatter = DateFormat('yyyy-MM-dd', 'en');
+          if(startDate !=null&& endDate !=null){
+            sDate = formatter.format(startDate).toString();
+            eDate = formatter.format(endDate).toString();
+          }
+          t_points = scost;
+          t_tokens = stokens;
+          data = smonths;
+        });
+      } else
+        setState(() {
+          stransactions = transactions;
+        });
+
+      // setState(() {
+      //   _loading = true;
+      // });
+
+      // var res = await AuthApi().filterDates(
+      //     {'end': endDate.toString(), 'start': startDate.toString()});
+
+      // var body = res.data;
+
+      // if (body['status']) {
+      //   var dataa = AuthApi().getData(body);
+
+      //   setState(() {
+      //     t_tokens = 0;
+      //     t_points = 0;
+      //     data = dataa['months'];
+      //   });
+      // }
+      //
     }
   }
 
@@ -87,28 +217,7 @@ class _HistoryChartState extends State<HistoryChart> {
     var startDate = args.value.startDate;
     var endDate = args.value.endDate;
 
-    if (startDate != null && endDate != null) {
-      // send api to the server filtering data
-      setState(() {
-        _loading = true;
-      });
-
-      var res = await AuthApi().filterDates(
-          {'end': endDate.toString(), 'start': startDate.toString()});
-
-      var body = res.data;
-
-      if (body['status']) {
-        var dataa = AuthApi().getData(body);
-
-        setState(() {
-          t_tokens = 0;
-          t_points = 0;
-          data = dataa['months'];
-        });
-      }
-      //
-    }
+    updateData(startDate, endDate, false);
   }
 
   getSalesDataToken() {
@@ -118,7 +227,7 @@ class _HistoryChartState extends State<HistoryChart> {
     else
       return List<SalesData>.generate(months.length, (index) {
         setState(() {
-          t_tokens = t_tokens + data[(index + 1).toString()]['token_cash'];
+          // t_tokens = t_tokens + data[(index + 1).toString()]['token_cash'];
         });
 
         return SalesData(
@@ -135,7 +244,7 @@ class _HistoryChartState extends State<HistoryChart> {
     else
       return List<SalesData>.generate(months.length, (index) {
         setState(() {
-          t_points = t_points + data[(index + 1).toString()]['point_cash'];
+          // t_points = t_points + data[(index + 1).toString()]['point_cash'];
         });
 
         return SalesData(
@@ -152,7 +261,7 @@ class _HistoryChartState extends State<HistoryChart> {
     else
       return List<ChartSampleData>.generate(months.length, (index) {
         setState(() {
-          t_points = t_points + data[(index + 1).toString()]['token_cash'];
+          // t_points = t_points + data[(index + 1).toString()]['token_cash'];
         });
 
         return ChartSampleData(
@@ -169,7 +278,7 @@ class _HistoryChartState extends State<HistoryChart> {
     else
       return List<ChartSampleData>.generate(months.length, (index) {
         setState(() {
-          t_points = t_points + data[(index + 1).toString()]['point_cash'];
+          // t_points = t_points + data[(index + 1).toString()]['point_cash'];
         });
 
         return ChartSampleData(
@@ -212,8 +321,16 @@ class _HistoryChartState extends State<HistoryChart> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text('بحث حسب التاريخ :',
+            GestureDetector(
+              child: Text('بحث حسب التاريخ :',
                 style: TextStyle(color: FitnessAppTheme.lightText)),
+            
+            onTap: () {
+              setState(() {
+                  _showD = !_showD;
+                });
+            },
+            ),
             IconButton(
               icon: const Icon(Icons.date_range),
               tooltip: 'بحث حسب التاريخ',
@@ -221,8 +338,6 @@ class _HistoryChartState extends State<HistoryChart> {
               onPressed: () {
                 setState(() {
                   _showD = !_showD;
-                  t_tokens = 0;
-                  t_points = 0;
                 });
               },
             ),
@@ -234,6 +349,7 @@ class _HistoryChartState extends State<HistoryChart> {
                   selectionMode: DateRangePickerSelectionMode.range,
                   navigationMode: DateRangePickerNavigationMode.snap,
                   onSelectionChanged: _onSelectionChanged,
+                  initialSelectedRange: getSDates(),
                 ),
               )
             : Container(),
@@ -242,7 +358,7 @@ class _HistoryChartState extends State<HistoryChart> {
           children: [
             Container(
                 decoration: BoxDecoration(
-                   border: Border.all(color: Colors.black87),
+                  border: Border.all(color: Colors.black87),
                   gradient: LinearGradient(colors: [
                     HexColor('00FFFFFF').withOpacity(0.5),
                     HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
@@ -273,14 +389,17 @@ class _HistoryChartState extends State<HistoryChart> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text.rich(TextSpan(
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text.rich(TextSpan(
                           text: 'توكنز : ',
                           style: TextStyle(color: FitnessAppTheme.lightText),
                           children: [
                             TextSpan(
-                                text: t_tokens.toString(),
+                                text: Common.formatNumber(t_tokens.toInt().toString()),
                                 style: TextStyle(fontWeight: FontWeight.bold))
                           ])),
+                      ),
                       Container(
                         height: 8,
                         decoration: BoxDecoration(
@@ -313,17 +432,16 @@ class _HistoryChartState extends State<HistoryChart> {
                 width: MediaQuery.of(context).size.width * 0.45,
                 // height: MediaQuery.of(context).size.height * 0.33,
                 // color:Colors.amber,
-                
+
                 decoration: BoxDecoration(
                   // color: FitnessAppTheme.nearlyBlack,
-                   border: Border.all(color: Colors.black87),
+                  border: Border.all(color: Colors.black87),
                   gradient: LinearGradient(colors: [
                     HexColor('00FFFFFF').withOpacity(0.5),
                     HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
                     HexColor(FitnessAppTheme.gradiantFc),
                     HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
                     HexColor(FitnessAppTheme.gradiantFc),
-                    
                     HexColor('00FFFFFF').withOpacity(0.5),
                   ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   borderRadius: BorderRadius.only(
@@ -344,14 +462,17 @@ class _HistoryChartState extends State<HistoryChart> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text.rich(TextSpan(
+                      FittedBox(
+                        fit:BoxFit.scaleDown,
+                        child: Text.rich(TextSpan(
                           text: 'مسرعات : ',
                           style: TextStyle(color: FitnessAppTheme.lightText),
                           children: [
                             TextSpan(
-                                text: t_points.toString(),
+                                text: Common.formatNumber(t_points.toString()),
                                 style: TextStyle(fontWeight: FontWeight.bold))
                           ])),
+                      ),
                       Container(
                         height: 8,
                         decoration: BoxDecoration(

@@ -55,7 +55,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
     var res = await AuthApi().getUser();
     
     var data = await AuthApi().getData(jsonDecode(res.body));
-
+    if(this.mounted)
     setState(() {
         user = data['user'];
     });

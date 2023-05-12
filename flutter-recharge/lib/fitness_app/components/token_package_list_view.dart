@@ -70,6 +70,7 @@ class _TokenPackageListViewState extends State<TokenPackageListView>
     var body = jsonDecode(res.body);
 
     if (body['status']) {
+      if(this.mounted)
       setState(() {
         var data = AuthApi().getData(body);
         packages = data['packages'];

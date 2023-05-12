@@ -85,6 +85,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
   }
 
   Future<bool> getInitState() async {
+    if (scrollController!.hasClients)
     scrollController?.jumpTo(
       widget.drawerWidth,
     );
