@@ -30,6 +30,10 @@ class AuthApi{
 //   print('not connected');
 // }
 
+      var token_firebase =  await GetData().getFirebaseToken();
+
+      data['token_firebase'] = token_firebase;
+
       var fullUrl = _url + 'login';
 
       return await http.post(Uri.parse(fullUrl),body: jsonEncode(data),headers: _setHeaders());

@@ -51,6 +51,14 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
         });
     super.initState();
   }
+  isBottomBarActive(){
+    return !isKeybordV() && _showBottomBar;
+  }
+
+  isKeybordV(){
+    return  WidgetsBinding.instance.window.viewInsets.bottom > 0.0; 
+  }
+
 
   @override
   void dispose() {
@@ -75,7 +83,6 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
             else
               _showBottomBar = true;
 
-              print('this is long press');
           });
         },
         child: Scaffold(
@@ -89,7 +96,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 return Stack(
                   children: <Widget>[
                     tabBody,
-                    _showBottomBar ? bottomBar() : Container(),
+                    isBottomBarActive() ? bottomBar() : Container(),
                   ],
                 );
               }

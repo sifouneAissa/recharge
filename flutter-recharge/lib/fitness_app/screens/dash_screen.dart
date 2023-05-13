@@ -50,6 +50,7 @@ class _DashScreenState extends State<DashScreen> with TickerProviderStateMixin {
 
     setState(() {
       user = auth;
+      print(user['firebase_token']);
     });
 
     // update user

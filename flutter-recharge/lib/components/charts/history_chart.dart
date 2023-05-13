@@ -95,7 +95,7 @@ class _HistoryChartState extends State<HistoryChart> {
     };
   }
 
-  var pointPackages; 
+  var pointPackages;
 
   getSDates() {
     if (sDate != null && eDate != null) {
@@ -105,63 +105,48 @@ class _HistoryChartState extends State<HistoryChart> {
     return null;
   }
 
-  initPointPackages(){
-    return{
-      '100%' : 0,
-      '150%' : 0,
-      '300%' : 0
-    };
+  initPointPackages() {
+    return {'100%': 0, '150%': 0, '300%': 0};
   }
 
-  getPointPackages(){
-    
-    var codes = [
-      '100%',
-      '150%',
-      '300%'
-    ];
+  getPointPackages() {
+    var codes = ['100%', '150%', '300%'];
 
-    var names = [
-      'مسرع احمر',
-      'مسرع أزرق',
-      'مسرع أسود'
-    ];
+    var names = ['مسرع احمر', 'مسرع أزرق', 'مسرع أسود'];
 
-    var colors = [
-      Colors.red,
-      Colors.blue,
-      Colors.black87
-    ];
+    var colors = [Colors.red, Colors.blue, Colors.black87];
 
-    return List.generate(pointPackages.length, (index) => 
-           Padding(padding: EdgeInsets.all(10),
-           child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.remove,
-                              color: colors[index],
-                            ),
-                            Text(
-                              'مجموع ماشحنت من ' + names[index] + ' : ',
-                              style:
-                                  TextStyle(color: FitnessAppTheme.lightText),
-                            ),
-                            Text(
-                              style:
-                                  TextStyle(color: FitnessAppTheme.lightText,fontSize: 15),Common.formatNumber(pointPackages[codes[index]].toString())),
-                          ],
-                        ),
-                      ),
-           )
-    );
+    return List.generate(
+        pointPackages.length,
+        (index) => Padding(
+              padding: EdgeInsets.all(10),
+              child: Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.remove,
+                      color: colors[index],
+                    ),
+                    Text(
+                      'مجموع ماشحنت من ' + names[index] + ' : ',
+                      style: TextStyle(color: FitnessAppTheme.lightText),
+                    ),
+                    Text(
+                        style: TextStyle(
+                            color: FitnessAppTheme.lightText, fontSize: 15),
+                        Common.formatNumber(
+                            pointPackages[codes[index]].toString())),
+                  ],
+                ),
+              ),
+            ));
   }
 
-  bottomSheetPoint(){
-      showModalBottomSheet(
+  bottomSheetPoint() {
+    showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -177,19 +162,18 @@ class _HistoryChartState extends State<HistoryChart> {
               child: Column(
                 children: [
                   Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                  'معلومات حول المسرعات',
-                                  style: TextStyle(
-                                      color: FitnessAppTheme.lightText)),
-                            )
-                          ],
-                        ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text('معلومات حول المسرعات',
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText)),
+                        )
+                      ],
+                    ),
                   ),
                   Column(
                     children: getPointPackages(),
@@ -199,7 +183,6 @@ class _HistoryChartState extends State<HistoryChart> {
             );
           });
         });
-  
   }
 
   __getOldTransactions() async {
@@ -240,9 +223,8 @@ class _HistoryChartState extends State<HistoryChart> {
     }
   }
 
-
-  updateData(startDate,endDate,bool force){
-     if ((startDate != null && endDate != null) || force) {
+  updateData(startDate, endDate, bool force) {
+    if ((startDate != null && endDate != null) || force) {
       var stokens = 0.0;
       var scost = 0.0;
       var smonths = initSMonths();
@@ -250,33 +232,35 @@ class _HistoryChartState extends State<HistoryChart> {
       // send api to the server filtering data
       if ((startDate != null && endDate != null) || force) {
         var t = transactions;
-        if(!force)
-         t = transactions.where(
-          (element) {
-            var ldate = DateTime.parse(element['created_at']);
-            return ldate.isBefore(endDate) && ldate.isAfter(startDate);
-          },
-        ).toList();
+        if (!force)
+          t = transactions.where(
+            (element) {
+              var ldate = DateTime.parse(element['created_at']);
+              return ldate.isBefore(endDate) && ldate.isAfter(startDate);
+            },
+          ).toList();
 
         t.forEach(
           (element) {
             bool isToken = element['type'] == 'token';
             var value = smonths[
                 (DateTime.parse(element['created_at']).month + 1).toString()];
-            
+
             if (isToken) {
               stokens = stokens + element['count'];
               value!['token_cash'] = value!['token_cash']! + element!['count'];
             } else {
               var packagePoints = element['point_packages'];
-              
-              packagePoints.forEach((p){
-                sPointPackages[p['package_name']] = p['count'] + sPointPackages[p['package_name']];
+
+              packagePoints.forEach((p) {
+                sPointPackages[p['package_name']] =
+                    p['count'] + sPointPackages[p['package_name']];
               });
 
-              scost = scost + element['point_quantity'];
-              
-              value!['point_cash'] = value!['point_cash']! + element!['point_quantity'];
+              scost = scost + element['cost'];
+
+              value!['point_cash'] =
+                  value!['point_cash']! + element!['cost'];
             }
             // set array
           },
@@ -285,7 +269,7 @@ class _HistoryChartState extends State<HistoryChart> {
         setState(() {
           stransactions = t;
           final DateFormat formatter = DateFormat('yyyy-MM-dd', 'en');
-          if(startDate !=null&& endDate !=null){
+          if (startDate != null && endDate != null) {
             sDate = formatter.format(startDate).toString();
             eDate = formatter.format(endDate).toString();
           }
@@ -431,13 +415,12 @@ class _HistoryChartState extends State<HistoryChart> {
           children: <Widget>[
             GestureDetector(
               child: Text('بحث حسب التاريخ :',
-                style: TextStyle(color: FitnessAppTheme.lightText)),
-            
-            onTap: () {
-              setState(() {
+                  style: TextStyle(color: FitnessAppTheme.lightText)),
+              onTap: () {
+                setState(() {
                   _showD = !_showD;
                 });
-            },
+              },
             ),
             IconButton(
               icon: const Icon(Icons.date_range),
@@ -461,8 +444,7 @@ class _HistoryChartState extends State<HistoryChart> {
                 ),
               )
             : Container(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Column(
           children: [
             Container(
                 decoration: BoxDecoration(
@@ -490,7 +472,8 @@ class _HistoryChartState extends State<HistoryChart> {
                     ),
                   ],
                 ),
-                width: MediaQuery.of(context).size.width * 0.4,
+                margin: EdgeInsets.only(right: 10,left: 10),
+                // width: MediaQuery.of(context).size.width * 0.3,
                 // height: MediaQuery.of(context).size.height * 0.33,
                 // color:Colors.amber,
                 child: Padding(
@@ -500,13 +483,14 @@ class _HistoryChartState extends State<HistoryChart> {
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text.rich(TextSpan(
-                          text: 'توكنز : ',
-                          style: TextStyle(color: FitnessAppTheme.lightText),
-                          children: [
-                            TextSpan(
-                                text: Common.formatNumber(t_tokens.toInt().toString()),
-                                style: TextStyle(fontWeight: FontWeight.bold))
-                          ])),
+                            text: 'توكنز : ',
+                            style: TextStyle(color: FitnessAppTheme.lightText),
+                            children: [
+                              TextSpan(
+                                  text: Common.formatNumber(
+                                      t_tokens.toInt().toString()),
+                                  style: TextStyle(fontWeight: FontWeight.bold))
+                            ])),
                       ),
                       Container(
                         height: 8,
@@ -533,88 +517,92 @@ class _HistoryChartState extends State<HistoryChart> {
                     ],
                   ),
                 )),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.1,
-            ),
+            _buildDefaultColumnChartToken()
+          ],
+        ),
+        Column(
+          children: [
             GestureDetector(
               onTap: () {
                 bottomSheetPoint();
               },
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.45,
-                // height: MediaQuery.of(context).size.height * 0.33,
-                // color:Colors.amber,
+                  // width: MediaQuery.of(context).size.width * 0.45,
+                  // height: MediaQuery.of(context).size.height * 0.33,
+                  // color:Colors.amber,
 
-                decoration: BoxDecoration(
-                  // color: FitnessAppTheme.nearlyBlack,
-                  border: Border.all(color: Colors.black87),
-                  gradient: LinearGradient(colors: [
-                    HexColor('00FFFFFF').withOpacity(0.5),
-                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
-                    HexColor(FitnessAppTheme.gradiantFc),
-                    HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
-                    HexColor(FitnessAppTheme.gradiantFc),
-                    HexColor('00FFFFFF').withOpacity(0.5),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      FittedBox(
-                        fit:BoxFit.scaleDown,
-                        child: Text.rich(TextSpan(
-                          text: 'مسرعات : ',
-                          style: TextStyle(color: FitnessAppTheme.lightText),
-                          children: [
-                            TextSpan(
-                                text: Common.formatNumber(t_points.toInt().toString()),
-                                style: TextStyle(fontWeight: FontWeight.bold))
-                          ])),
+                margin: EdgeInsets.only(right: 10,left: 10),
+                  decoration: BoxDecoration(
+                    // color: FitnessAppTheme.nearlyBlack,
+                    border: Border.all(color: Colors.black87),
+                    gradient: LinearGradient(colors: [
+                      HexColor('00FFFFFF').withOpacity(0.5),
+                      HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      HexColor(FitnessAppTheme.nearlyBlack.value.toString()),
+                      HexColor(FitnessAppTheme.gradiantFc),
+                      HexColor('00FFFFFF').withOpacity(0.5),
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: FitnessAppTheme.nearlyDarkREd.withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
-                      Container(
-                        height: 8,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              10), // <= No more error here :)
-                          color: Colors.red,
-                        ),
-                        margin: EdgeInsets.only(bottom: 5, top: 5),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Column(
-                            children: [
-                              Text('مجموع ما شحنت ',
-                                  style: TextStyle(
-                                      color: FitnessAppTheme.lightText)),
-                              Text('من مسرعات',
-                                  style: TextStyle(
-                                      color: FitnessAppTheme.lightText)),
-                            ],
-                          ))
                     ],
                   ),
-                ))
-              ,
-            )
-            ],
-        ),
-        _buildDefaultColumnChartToken(),
-        _buildDefaultColumnChartPoint(),
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text.rich(TextSpan(
+                              text: 'مسرعات : ',
+                              style:
+                                  TextStyle(color: FitnessAppTheme.lightText),
+                              children: [
+                                TextSpan(
+                                    text: Common.formatNumber(
+                                        t_points.toInt().toString()),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold))
+                              ])),
+                        ),
+                        Container(
+                          height: 8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                10), // <= No more error here :)
+                            color: Colors.red,
+                          ),
+                          margin: EdgeInsets.only(bottom: 5, top: 5),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Column(
+                              children: [
+                                Text('مجموع ما شحنت ',
+                                    style: TextStyle(
+                                        color: FitnessAppTheme.lightText)),
+                                Text('من مسرعات',
+                                    style: TextStyle(
+                                        color: FitnessAppTheme.lightText)),
+                              ],
+                            ))
+                      ],
+                    ),
+                  )),
+            ),
+            _buildDefaultColumnChartPoint(),
+          ],
+        )
       ],
     );
   }

@@ -11,6 +11,7 @@ import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 
@@ -55,13 +56,12 @@ class _AddTokenForm extends State<AddTokenForm> {
   @override
   void initState() {
     super.initState();
-    
+
     setConnectionListner((hasI) {
       setHasConnection(hasI);
     });
   }
 
-  
   setHasConnection(hasI) {
     setState(() {
       _hasConnection = hasI;
@@ -446,6 +446,12 @@ class _AddTokenForm extends State<AddTokenForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
+              inputFormatters: <TextInputFormatter>[
+                // for below version 2 use this
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                // for version 2 and greater youcan also use this
+                FilteringTextInputFormatter.digitsOnly
+              ],
               controller: id,
               keyboardType: TextInputType.number,
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -565,74 +571,71 @@ class _AddTokenForm extends State<AddTokenForm> {
   }
 
   handleAddToken() async {
-    if(_hasConnection)
-    {
-      
-    if (_hasCash) {
-      if (_formKey.currentState!.validate()) {
-        print('Form is valid');
-        // here test the cost if is it bigger then the cash of the user
+    if (_hasConnection) {
+      if (_hasCash) {
+        if (_formKey.currentState!.validate()) {
+          print('Form is valid');
+          // here test the cost if is it bigger then the cash of the user
 
-        setState(() {
-          _isLoading = true;
+          setState(() {
+            _isLoading = true;
 
-          EasyLoading.show(
-              status: S().sending_add_tokens,
-              maskType: EasyLoadingMaskType.custom);
-        });
+            EasyLoading.show(
+                status: S().sending_add_tokens,
+                maskType: EasyLoadingMaskType.custom);
+          });
 
-        var packages = [];
+          var packages = [];
 
-        data.forEach((element) {
-          packages
-              .add({'package_id': element.packageId, 'count': element.value});
-        });
+          data.forEach((element) {
+            packages
+                .add({'package_id': element.packageId, 'count': element.value});
+          });
 
-        var ddata = {
-          'account_id': id.text,
-          'count': _tokens.toString(),
-          'cost': _cost.toString(),
-          'packages': packages,
-          'type': 'token'
-        };
+          var ddata = {
+            'account_id': id.text,
+            'count': _tokens.toString(),
+            'cost': _cost.toString(),
+            'packages': packages,
+            'type': 'token'
+          };
 
-        var res = null;
-        AuthApi().updateTokenCashUser(_cost);
-        try {
-          var res = await AuthApi().addToken(ddata,_hasConnection);
-          var body = jsonDecode(res.body);
+          var res = null;
+          AuthApi().updateTokenCashUser(_cost);
+          try {
+            var res = await AuthApi().addToken(ddata, _hasConnection);
+            var body = jsonDecode(res.body);
 
-          if (body['status']) {
-            var data = AuthApi().getData(body);
-            await AuthApi().updateUser(data);
-            handleSnackBar();
-            setState(() {
-              _hasError = false;
-            });
-          } else {
-            setState(() {
-              AuthApi().updateTokenCashUser(-_cost);
-              _hasError = false;
-            });
+            if (body['status']) {
+              var data = AuthApi().getData(body);
+              await AuthApi().updateUser(data);
+              handleSnackBar();
+              setState(() {
+                _hasError = false;
+              });
+            } else {
+              setState(() {
+                AuthApi().updateTokenCashUser(-_cost);
+                _hasError = false;
+              });
+            }
+          } catch (error) {
+            AuthApi().updateTokenCashUser(-_cost);
+            handleSnackBarError();
           }
-        } catch (error) {
-          AuthApi().updateTokenCashUser(-_cost);
-          handleSnackBarError();
+
+          setState(() {
+            _isLoading = false;
+          });
+
+          EasyLoading.dismiss();
+        } else {
+          setState(() {
+            _hasError = true;
+          });
         }
-
-        setState(() {
-          _isLoading = false;
-        });
-
-        EasyLoading.dismiss();
-      } else {
-        setState(() {
-          _hasError = true;
-        });
-      }
-    } else {}
-    }
-    else {
+      } else {}
+    } else {
       handleSnackBarErrorConnection(context);
     }
   }

@@ -10,6 +10,7 @@ import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
 import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../constants.dart';
 import 'package:image_picker/image_picker.dart';
@@ -516,6 +517,12 @@ class _AddJawakerAcceleratorForm extends State<AddJawakerAcceleratorForm> {
             ],
           ),
           TextFormField(
+             inputFormatters: <TextInputFormatter>[
+                // for below version 2 use this
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+// for version 2 and greater youcan also use this
+                FilteringTextInputFormatter.digitsOnly
+              ],
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) =>
                 value!.isEmpty || (value.isEmpty) ? 'اسم خاطئ' : null,

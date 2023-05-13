@@ -7,6 +7,7 @@ import 'package:best_flutter_ui_templates/profile/appbar_widget.dart';
 import 'package:best_flutter_ui_templates/profile/user/user.dart';
 import 'package:best_flutter_ui_templates/profile/user/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 // This class handles the Page to edit the Phone Section of the User Profile.
@@ -103,6 +104,13 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
                               height: 100,
                               width: 320,
                               child: TextFormField(
+                                inputFormatters: <TextInputFormatter>[
+                                  // for below version 2 use this
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'[0-9]')),
+// for version 2 and greater youcan also use this
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 keyboardType: TextInputType.phone,
                                 textDirection: TextDirection.ltr,
                                 // Handles Form Validation
