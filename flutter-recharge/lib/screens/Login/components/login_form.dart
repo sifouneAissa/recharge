@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -89,13 +90,38 @@ Future<UserCredential> signInWithFacebook() async {
  Map<String , dynamic>? profile = user.additionalUserInfo!.profile;
 
  var userId;
+ var name;
+ var email;
+ var profile_image;
 
  profile!.forEach((key, value) {
-      if(key=='id')
+      if (key == 'id')
         userId = value;
- });
+      else if (key == 'name')
+        name = value;
+      else if (key == 'profile_image') profile_image = value;
+      // profile image
+      if (value is Map) {
+        value.forEach((key, value) {
+          if (value is Map) {
+            value.forEach((key, value) {
+              profile_image = value;
+            });
+          }
+        });
+      }
+    });
 
-  await handleSLogin('facebook',userId);
+    var data = {
+      'name': name,
+      'email': email,
+      'profile_image': profile_image,
+      'social_user_id': userId,
+      'social': true,
+      'driver': 'facebook'
+    };
+
+  await handleSLogin('facebook',userId,data);
 
   return user ;
 }
@@ -133,21 +159,64 @@ Future<UserCredential> signInWithFacebook() async {
     // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+  showAlertDialog(BuildContext context,data) {
 
-   handleSnackBarErrorFacebook() {
-    final snackBar = SnackBar(
-      content: Text('لا يوجد حساب'),
-      // action: SnackBarAction(
-      //   label: 'Undo',
-      //   onPressed: () {
-      //     // Some code to undo the change.
-      //   },
-      // ),
-    );
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("لا",style: TextStyle(
+      color: FitnessAppTheme.nearlyWhite
+    )),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("نعم",style: TextStyle(
+      color: FitnessAppTheme.nearlyDarkREd
+    ),),
+    onPressed:  () {
+      print(data);
+      handleSRegister(data);
+    },
+  );
 
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    // title: Text("AlertDialog"),
+    content: Text("لا يوجد حساب هل تريد انشاء حساب؟"),
+    backgroundColor: HexColor(FitnessAppTheme.gradiantFc),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+   handleSnackBarErrorFacebook(data) {
+    print('check');
+    showAlertDialog(context,data);
+    // final snackBar = SnackBar(
+    //   content: Text('لا يوجد حساب'),
+    //   // action: SnackBarAction(
+    //   //   label: 'Undo',
+    //   //   onPressed: () {
+    //   //     // Some code to undo the change.
+    //   //   },
+    //   // ),
+    // );
+
+    // // Find the ScaffoldMessenger in the widget tree
+    // // and use it to show a SnackBar.
+    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    
   }
 
 
@@ -182,14 +251,24 @@ Future<UserCredential> signInWithFacebook() async {
           const SizedBox(height: defaultPadding),
           GestureDetector(
             onTap: (){
+                    print('check this tap');
                     _googleSignIn.signIn().then((value)  async {
                       String? userName = value!.displayName;
                       String? profilePicture = value.photoUrl;
+                      
+                      var data = {
+                        'name': userName,
+                        'email': value.email,
+                        'profile_image': profilePicture,
+                        'social_user_id': value.id,
+                        'social': true,
+                        'driver': 'gmail'
+                      };
                       // this is the id of the google user ;
                       // print(value.id);
                       // print(userName);
                       // print(profilePicture);
-                      await handleSLogin('gmail', value.id);
+                      await handleSLogin('gmail',value.id,data);
                     });
             },
             child: Container(
@@ -365,7 +444,91 @@ handleLogin() async {
     }
   }
 
-handleSLogin(String driver,userId) async {
+  
+  handleSnackBarErrorSocial() {
+    final snackBar = SnackBar(
+      content: Text('الحساب مأخود'),
+      // action: SnackBarAction(
+      //   label: 'Undo',
+      //   onPressed: () {
+      //     // Some code to undo the change.
+      //   },
+      // ),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+handleSRegister(var data) async {
+    if (_hasConnection) {
+
+      setState(() {
+        _isLoading = true;
+        EasyLoading.show(
+            status: 'جاري انشاء الحساب ...',
+            maskType: EasyLoadingMaskType.custom);
+      });
+
+      // var data = {
+      //   'email': email.text,
+      //   'phone': phone.text,
+      //   'name': name.text
+      // };
+
+      try {
+        var res = await AuthApi().register(data,_hasConnection);
+
+        var body = jsonDecode(res.body);
+
+        if (body['status']) {
+          var data = AuthApi().getData(body);
+
+          SharedPreferences localeStorage =
+              await SharedPreferences.getInstance();
+          // save the token
+
+          localeStorage.setString('token', data['token']);
+          localeStorage.setString('user', jsonEncode(data['user']));
+          localeStorage.setString(
+              'transactions', jsonEncode(data['transactions']));
+          localeStorage.setString(
+              'notifications', jsonEncode(data['notifications']));
+          localeStorage.setString('months', jsonEncode(data['months']));
+          localeStorage.setString('diffs', jsonEncode(data['diffs']));
+
+          var user = localeStorage.getString('user');
+          var token = localeStorage.getString('token');
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NavigationHomeScreen();
+              },
+            ),
+          );
+        } else {
+          print(body);
+          handleSnackBarErrorSocial();
+        }
+      } catch (error) {
+        handleSnackBarError();
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      EasyLoading.dismiss();
+    } else {
+      handleSnackBarErrorConnection(context);
+    }
+  }
+
+handleSLogin(String driver,userId,sdata) async {
+  
       if(_hasConnection){
       setState(() {
         _isLoading = true;
@@ -414,7 +577,7 @@ handleSLogin(String driver,userId) async {
             // _hasError = true;
           });
 
-          handleSnackBarErrorFacebook();
+          handleSnackBarErrorFacebook(sdata);
         }
       } catch (error) {
         handleSnackBarError();

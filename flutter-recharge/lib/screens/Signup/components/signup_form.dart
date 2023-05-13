@@ -4,6 +4,7 @@ import 'package:best_flutter_ui_templates/api/auth.dart';
 import 'package:best_flutter_ui_templates/api/getData.dart';
 import 'package:best_flutter_ui_templates/fitness_app/fitness_app_theme.dart';
 import 'package:best_flutter_ui_templates/generated/l10n.dart';
+import 'package:best_flutter_ui_templates/main.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -343,20 +344,129 @@ class _SignUpForm extends State<SignUpForm> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  handleSnackBarErrorSocial() {
-    final snackBar = SnackBar(
-      content: Text('الحساب مأخود'),
-      // action: SnackBarAction(
-      //   label: 'Undo',
-      //   onPressed: () {
-      //     // Some code to undo the change.
-      //   },
-      // ),
-    );
 
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  handleSLogin(String driver,userId) async {
+  
+      if(_hasConnection){
+      setState(() {
+        _isLoading = true;
+
+        EasyLoading.show(
+            status: 'جاري التحقق ...', maskType: EasyLoadingMaskType.custom);
+      });
+
+      var data = {'driver': driver, 'userId': userId,'social' : true};
+
+      try {
+        var res = await AuthApi().login(data);
+
+        var body = jsonDecode(res.body);
+
+        if (body['status']) {
+          var data = AuthApi().getData(body);
+
+          SharedPreferences localeStorage =
+              await SharedPreferences.getInstance();
+          // save the token
+
+          localeStorage.setString('token', data['token']);
+          localeStorage.setString('user', jsonEncode(data['user']));
+
+          localeStorage.setString(
+              'transactions', jsonEncode(data['transactions']));
+          localeStorage.setString(
+              'notifications', jsonEncode(data['notifications']));
+          localeStorage.setString('months', jsonEncode(data['months']));
+          localeStorage.setString('diffs', jsonEncode(data['diffs']));
+
+          var user = localeStorage.getString('user');
+          var token = localeStorage.getString('token');
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return NavigationHomeScreen();
+              },
+            ),
+          );
+        } else {
+          setState(() {
+            // _hasError = true;
+          });
+
+          // handleSnackBarErrorFacebook(sdata);
+        }
+      } catch (error) {
+        handleSnackBarError();
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      EasyLoading.dismiss();
+      }else {
+        handleSnackBarErrorConnection(context);
+      }
+  }
+
+showAlertDialog(BuildContext context,data) {
+
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("لا",style: TextStyle(
+      color: FitnessAppTheme.nearlyWhite
+    )),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("نعم",style: TextStyle(
+      color: FitnessAppTheme.nearlyDarkREd
+    ),),
+    onPressed:  () {
+      handleSLogin( data['driver'], data['social_user_id']);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    // title: Text("AlertDialog"),
+    backgroundColor: HexColor(FitnessAppTheme.gradiantFc),
+    content: Text("يوجد حساب هل تريد تسجيل الدخول ؟ "),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+  handleSnackBarErrorSocial(data) {
+    
+    showAlertDialog(context,data);
+    // final snackBar = SnackBar(
+    //   content: Text('الحساب مأخود'),
+    //   // action: SnackBarAction(
+    //   //   label: 'Undo',
+    //   //   onPressed: () {
+    //   //     // Some code to undo the change.
+    //   //   },
+    //   // ),
+    // );
+
+    // // Find the ScaffoldMessenger in the widget tree
+    // // and use it to show a SnackBar.
+    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   handleSRegister(var data) async {
@@ -408,7 +518,7 @@ class _SignUpForm extends State<SignUpForm> {
             ),
           );
         } else {
-          handleSnackBarErrorSocial();
+          handleSnackBarErrorSocial(data);
         }
       } catch (error) {
         handleSnackBarError();
